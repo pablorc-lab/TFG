@@ -1,19 +1,4 @@
-import PropTypes from 'prop-types';
-
-// Definición de PropTypes
-Anf_card.propTypes = {
-  Casa_img: PropTypes.string.isRequired,
-  Perfil_img: PropTypes.string.isRequired,
-  Nombre: PropTypes.string.isRequired,
-  Gustos_imgs: PropTypes.arrayOf(PropTypes.string).isRequired, 
-  Valoracion: PropTypes.number.isRequired,
-  Ubicacion: PropTypes.string.isRequired,
-  Precio: PropTypes.string.isRequired,
-  Descripcion: PropTypes.string.isRequired,
-  prof_number: PropTypes.string.isRequired
-};
-
-export default function Anf_card({ Casa_img, Perfil_img, Nombre, Gustos_imgs, Valoracion, Ubicacion, Precio, Descripcion, prof_number}) {
+export default function Anf_card({ Casa_img, Perfil_img, Nombre="-", Gustos_imgs, Valoracion="/", Ubicacion="-", Precio="-", Descripcion="-", prof_number}) {
   
   return (
     <div className={`general_prof ${prof_number}`}>

@@ -1,6 +1,5 @@
 import Anf_card from "./anf_card";
-
-// Importar imagenes ESTÁTICAS de los ANFITRIONES
+import Inq_card from "./inq_card";
  
 export default function Populars() {
   return (
@@ -28,6 +27,23 @@ export default function Populars() {
           Descripcion="Amante de la aventura y los viajes improvisados"
           prof_number="prof_1"
         />
+        
+        {/*?Perfil Viajero 1*/}
+        <Inq_card
+					Perfil_img="images/landing_page/persona_3.png"
+					Nombre="Juanma"
+					Valoracion="4.51"
+					Num_viajes="82"
+					Edad="56"
+					Profesion="Mécanico"
+					Descripcion="Soy un hombre apasionado por conocer nuevas personas y sitios desconocidos"
+					Gustos_imgs={[
+            "/images/usuarios/Gustos/pesca.png",
+            "/images/usuarios/Gustos/social.png",
+            "/images/usuarios/Gustos/baseball.png",
+          ]}
+					prof_number="prof_3"
+				/>
 
         {/*?Perfil Anfitrion 2*/}
         <Anf_card
@@ -46,6 +62,22 @@ export default function Populars() {
           prof_number="prof_2"
         />
 
+				{/*?Perfil Viajero 2*/}
+				<Inq_card
+					Perfil_img="/images/landing_page/persona_4.png"
+					Nombre="Alejandra"
+					Valoracion="4.81"
+					Num_viajes="21"
+					Edad="41"
+					Profesion="Bióloga"
+					Descripcion="Me gusta sitios tranquilos rodeados de naturaleza, y si es acompañado de alguien que conozca la zona mejor."
+					Gustos_imgs={[
+						"/images/usuarios/Gustos/baseball.png",
+						"/images/usuarios/Gustos/poker.png",
+						"/images/usuarios/Gustos/social.png"
+					]}
+					prof_number="prof_4"
+				/>
       </section>
     </>
     
