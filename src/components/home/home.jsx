@@ -1,9 +1,4 @@
-import Logo_verde from "../../assets/images/logos/logo_verde.png"
-import Icono_menu from '../../assets/images/landing_page/menu.png';
-import Icono_user_blanco from "../../assets/images/usuarios/logo_usuario_blanco.png"
-import Icono_anfitrion from "../../assets/images/landing_page/anfitrion.png"
-import Icono_inquilino from "../../assets/images/landing_page/inquilino.png"
-
+import Populars from "./populars";
 import "./home.css"
 
 export default function Home_page() {
@@ -12,13 +7,13 @@ export default function Home_page() {
 		<>
       {/*Cabecera*/}
 			<header>
-				<figure class="header_logo">
-					<img src={Logo_verde} alt="Logo Bearfrens" width="150" />
+				<figure className="header_logo">
+					<img src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
 					<figcaption>Bearfrens</figcaption>
 				</figure>
-				<div class="header_menu">
+				<div className="header_menu">
 					<div id="menu_icon" >
-						<img src={Icono_menu} alt="Icono de menú" />
+						<img src="images/logos/menu.png" alt="Icono de menú" />
 					</div>
 
 					<nav id="header_nav">
@@ -28,9 +23,9 @@ export default function Home_page() {
 						<a>Soporte</a>
 					</nav>
 
-					<div class="header_user">
-						<img src={Icono_user_blanco} alt="Logo usuario" width="50" />
-						<a href="#" class="client_access">Acceder</a>
+					<div className="header_user">
+						<img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50" />
+						<a href="#" className="client_access">Acceder</a>
 					</div>
 				</div>
 			</header>
@@ -39,7 +34,7 @@ export default function Home_page() {
         {/*?LOGO INICIAL*/}
         <div className="main_container">
           <div id="logo_main">
-            <img src={Logo_verde} alt="Logo Bearfrens" width={150} />
+            <img src="images/logos/logo_verde.png" alt="Logo Bearfrens" width={150} />
           </div>
 
           {/*?BOTON INQUILINOS Y VIAJEROS*/}
@@ -47,27 +42,29 @@ export default function Home_page() {
             <div className="button_container">
               <h2>Encuentra el alojamiento perfecto</h2>
               <div id="btn_alojamientos">
-                <img src={Icono_anfitrion} alt="Icono casa" />
+                <img src="images/logos/anfitrion.png" alt="Icono casa" />
                 <p>Hospedajes</p>
               </div>
             </div>
             <div className="button_container">
               <h2>Conecta con todo tipo de personas</h2>
               <div id="btn_inquilinos">
-                <img src={Icono_inquilino} alt="Icono inquilino" />
+                <img src="images/logos/inquilino.png" alt="Icono inquilino" />
                 <p>Inquilinos</p>
               </div>
             </div>
           </section>	
         </div>
 
+        {/*?SECCION DE LOS POPULARES*/}
+        <Populars/>
 			</main>
 
       {/*Pie de pagina*/}
 			<footer>
 				{/*Logo*/}
 				<figure id="logo_footer">
-					<img src={Logo_verde} alt="Logo Bearfrens" width={150} />
+					<img src="images/logos/logo_verde.png" alt="Logo Bearfrens" width={150} />
 					<figcaption>Bearfrens</figcaption>
 				</figure>
 				{/*Información de contacto*/}
@@ -77,10 +74,10 @@ export default function Home_page() {
 						<p>Teléfono: <strong>+34 666-666-666</strong></p>
 					</div>
 					<div className="social-media">
-						<img src="../src/assets/images/logos/instagram_logo.png" alt="instagram_logo" width={50} />
-						<img src="../src/assets/images/logos/x_logo.png" alt="x_logo" width={50} />
-						<img src="../src/assets/images/logos/youtube_logo.png" alt="youtube_logo" width={50} />
-						<img src="../src/assets/images/logos/facebook_logo.png" alt="facebook_logo" width={50} />
+						<img src="./images/logos/instagram_logo.png" alt="instagram_logo" width={50} />
+						<img src="./images/logos/x_logo.png" alt="x_logo" width={50} />
+						<img src="./images/logos/youtube_logo.png" alt="youtube_logo" width={50} />
+						<img src="./images/logos/facebook_logo.png" alt="facebook_logo" width={50} />
 					</div>
 				</div>
 				{/*Políticias de privacidad*/}

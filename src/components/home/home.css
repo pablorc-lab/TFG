@@ -141,7 +141,7 @@ header a {text-decoration: none;}
 /*?================================*/
 .main_container {
   padding: 100px 0;  
-  background-image: url("../../assets/images/landing_page/bosque.jpeg");
+  background-image: url("../../../public/images/landing_page/bosque.jpeg");
   background-position: center;
   background-size: cover;
 }
