@@ -1,5 +1,6 @@
 # Getting Started with Create React App
 
+Una vez descargado, ejecutar con `npm start` y `npm build` para subirlo a tu github pages.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
