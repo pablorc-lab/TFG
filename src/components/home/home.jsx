@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import Populars from "./populars_section/populars";
+import Populars from "./popular_section/populars";
+
 import "./home.css"
 
 // Datos de las ventajas
@@ -15,17 +16,17 @@ const advantages = [
 // Datos de las opiniones
 const opinions = [
   { text: "Esta plataforma cambió por completo la forma en que viajo. No solo encontré alojamientos increíbles, sino que pude conectar con anfitriones que comparten mis intereses en fotografía y senderismo. Es una experiencia mucho más personal que otras webs.",
-    img: "images/landing_page/persona_4.png",
+    img: "images/landing_page/persona_4.webp",
     name: "Alejandra Domínguez",
     role: "Viajero"
 	},
   {text: "Recibir viajeros a través de esta aplicación ha sido una gran experiencia. Me encanta que los viajeros con los que conecto tienen intereses en común conmigo, lo que ha hecho que las estancias sean mucho más amenas y agradables. He conocido a personas increíbles aqui.",
-    img: "images/landing_page/persona_1.png",
+    img: "images/landing_page/persona_1.webp",
     name: "Henry Cavill",
     role: "Anfitrión",
   },
   {text: "He probado otras plataformas, pero esta destaca por la conexión con los anfitriones. Encontré a alguien que ama los deportes tanto como yo, lo cual hizo que mi estancia fuera mucho más divertida. Además, las valoraciones son muy precisas, lo que me dio mucha confianza al elegir vivienda.",
-    img: "images/landing_page/persona_3.png",
+    img: "images/landing_page/persona_3.webp",
     name: "Jose Miguel Sosa",
     role: "Viajero",
   },

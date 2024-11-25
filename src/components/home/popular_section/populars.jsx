@@ -13,8 +13,8 @@ export default function Populars() {
       <section className="popular_section">
         {/*?Perfil Anfitrion 1*/}
         <Anf_card
-          Casa_img="/images/landing_page/casa_1.png"
-          Perfil_img="/images/landing_page/persona_1.png"
+          Casa_img="/images/landing_page/casa_1.webp"
+          Perfil_img="/images/landing_page/persona_1.webp"
           Nombre="Pablo"
           Gustos_imgs={[
             "/images/usuarios/Gustos/baseball.png",
@@ -30,7 +30,7 @@ export default function Populars() {
         
         {/*?Perfil Viajero 1*/}
         <Inq_card
-					Perfil_img="images/landing_page/persona_3.png"
+					Perfil_img="images/landing_page/persona_3.webp"
 					Nombre="Juanma"
 					Valoracion="4.51"
 					Num_viajes="82"
@@ -47,8 +47,8 @@ export default function Populars() {
 
         {/*?Perfil Anfitrion 2*/}
         <Anf_card
-          Casa_img="/images/landing_page/casa_2.png"
-          Perfil_img="/images/landing_page/persona_2.png"
+          Casa_img="/images/landing_page/casa_2.webp"
+          Perfil_img="/images/landing_page/persona_2.webp"
           Nombre="Pablo"
           Gustos_imgs={[
             "/images/usuarios/Gustos/pesca.png",
@@ -64,7 +64,7 @@ export default function Populars() {
 
 				{/*?Perfil Viajero 2*/}
 				<Inq_card
-					Perfil_img="/images/landing_page/persona_4.png"
+					Perfil_img="/images/landing_page/persona_4.webp"
 					Nombre="Alejandra"
 					Valoracion="4.81"
 					Num_viajes="21"
