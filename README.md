@@ -8,9 +8,9 @@ El sistema está optimizado para facilitar la creación de perfiles y la gestió
 
 --- 
 
-## Instrucciones para el Proyecto
+## Instrucciones para poder visualizar el  proyecto
 
-Este proyecto está diseñado para ser ejecutado localmente y desplegado en GitHub Pages. A continuación, se detallan los pasos para configurar y ejecutar la aplicación.
+Este proyecto está diseñado para ser solo ejecutado localmente. 
 
 ### 1. Instalación Local
 
@@ -27,7 +27,7 @@ npm install
 
 ### 2. Ejecutar la Aplicación en Localhost
 
-#### **Paso 3: Iniciar en nuestro servidor local **
+#### **Paso 3: Iniciar en nuestro servidor local**
 ```bash
 npm start
 ```
