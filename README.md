@@ -7,6 +7,27 @@ A lo largo de la web, los usuarios pueden interactuar con perfiles detallados de
 El sistema está optimizado para facilitar la creación de perfiles y la gestión de estos desde ambos lados: anfitriones que desean ofrecer su vivienda y viajeros que buscan la mejor opción para hospedarse. Todo esto se gestiona de manera fluida gracias a la integración de React para el frontend y Spring Boot para el backend, lo que garantiza un rendimiento eficiente y una experiencia de usuario agradable.
 
 --- 
-Una vez descargado:
-- Localhost: `npm start` para iniciar el servidor local y ver la app en nuestro navegador.
-- Github Pages :  `npm run deploy` para compilar y subir la app a GitHub Pages. 
+
+## Instrucciones para el Proyecto
+
+Este proyecto está diseñado para ser ejecutado localmente y desplegado en GitHub Pages. A continuación, se detallan los pasos para configurar y ejecutar la aplicación.
+
+### 1. Instalación Local
+
+#### **Paso 1: Clonar el repositorio en nuestra máquina local**
+```bash
+git clone https://github.com/{usuario}/{tu_repositorio}.git
+cd tu_repositorio
+```
+
+#### **Paso 2: Instalar las dependencias necesarias**
+```bash
+npm install
+```
+
+### 2. Ejecutar la Aplicación en Localhost
+
+#### **Paso 3: Iniciar en nuestro servidor local **
+```bash
+npm start
+```
