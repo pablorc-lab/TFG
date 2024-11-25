@@ -12,22 +12,18 @@ El sistema está optimizado para facilitar la creación de perfiles y la gestió
 
 Este proyecto está diseñado para ser solo ejecutado localmente. 
 
-### 1. Instalación Local
-
-#### **Paso 1: Clonar el repositorio en nuestra máquina local**
+### **Paso 1: Clonar el repositorio en nuestra máquina local**
 ```bash
 git clone https://github.com/{usuario}/{tu_repositorio}.git
 cd tu_repositorio
 ```
 
-#### **Paso 2: Instalar las dependencias necesarias**
+### **Paso 2: Instalar las dependencias necesarias**
 ```bash
 npm install
 ```
 
-### 2. Ejecutar la Aplicación en Localhost
-
-#### **Paso 3: Iniciar en nuestro servidor local**
+### **Paso 3: Iniciar en nuestro servidor local**
 ```bash
 npm start
 ```
