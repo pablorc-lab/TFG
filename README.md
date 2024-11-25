@@ -1,4 +1,4 @@
-# Bearfren
+# Bearfrens
 
 Aplicación web full stack para el Trabajo de Fin de Grado (TFG) de la UGR (Ingeniería informática) diseñada con React en el frontend y Spring Boot en el backend, dirigida a conectar viajeros con anfitriones. Esta aplicación está pensada para aquellos viajeros que buscan opciones de alojamiento económicas, pero con un enfoque personalizado. Los viajeros pueden elegir hospedarse en viviendas ofrecidas por anfitriones que comparten sus intereses, valores o características personales, permitiendo una conexión más allá de los simples servicios de alojamiento. Además, los anfitriones tienen la posibilidad de seleccionar viajeros (inquilinos) que encajen con su estilo de vida o preferencias, lo que genera un sistema de "match" similar al de otras plataformas de citas o colaboración. 
 
