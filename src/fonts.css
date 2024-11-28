@@ -11,3 +11,10 @@
   font-weight: 100 900;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Chewy';
+  src: url('../public/fonts/Chewy-Regular.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+}

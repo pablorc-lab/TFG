@@ -5,24 +5,22 @@ body {
 }
 
 /*? ==================
-/*? CABECERA Y CUERPO
+/*?      HEADER
 /*? ===================*/
 header {
-  background-color: rgba(224,219,217,.70);
-
+  backdrop-filter: blur(8px);
+  width: calc(100% - 100px);
+  position: absolute;
   padding: 20px 50px;
   display: flex;
-  backdrop-filter: blur(20px);
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 0 5px rgb(184, 180, 178);
 }
 
-.header_logo img {
+.header_logo  {
   width: 60px;
   height: auto;
 }
-
 .header_logo {
   font-family: "Coco Gothic";
   letter-spacing: 1px;
@@ -86,7 +84,7 @@ header a {text-decoration: none;}
   padding: 5px 15px;
   border-radius: 50px;
   transition: transform 0.3s;
-  background-color: #909c9b;
+  background-color: #009080;
 }
 
 .header_user a {
@@ -98,68 +96,108 @@ header a {text-decoration: none;}
 .header_user img { width: 3em;}
 .header_user:hover{
   transition:  0.3s;
-  background-color: #00ae9d;
+  background-color: rgba(0, 174, 157, 0.8);
 }
+
+
+
+
 
 
 
 /*?=============================
 /*?    PARTE INICIAL DEL LOGO
 /*?===========================*/
-#logo_main img {
-  width: 180px;
-  height: auto;
-  margin: 20px auto;
+.main_container {
+  padding: 0 50px;
+  padding-bottom: 100px;
+  padding-top: 200px;  
+  background-image: url("../../../public/images/landing_page/header_back.webp");
+  background-position: center;
+  background-size: cover;
+  display: grid;
+  align-items: center;
+  justify-content: center;
 }
+
+
 #logo_main {
+  flex: 1;
   margin: 0;
   display: grid;
   align-items: center;
   justify-content: center;
   gap: 0.5vw;
 }
+#logo_main img {
+  width: 200px;
+  height: auto;
+  margin: 20px auto;
+}
+
+#logo_main figcaption {
+  font-family: "Coco Gothic";
+  color: #009080;
+  font-weight: 700;
+  font-size: 80px;
+  text-align: center;
+}
+
+.main_descrpt {
+  margin-top: 20px;
+  font-family: "Nunito";
+  color: #3c302a;
+  font-weight: 700;
+  font-size: 45px;
+  text-align: center;
+}
+
+
+
+
+
+
+/*?==================================
+/*? CARDS SECTIONS
+/*?================================*/
+.card_section {
+  padding: 5.2vw 4vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10%;
+}
+.anf_card { background-color: #c6e2ce;}
+.inq_card {background-color: #e9e3d5;}
+
+
+.button_container {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 15px;
+}
+.button_container h2 {
+  text-align: center;
+  font-family: "Chewy";
+  font-size: 40px;
+}
+
+.anf_card h2 {color: #0a7273;}
+.inq_card h2 {color: #3c302a;}
+#btn_alojamientos {
+  color: #f6f7f8;
+  background-color: #0a7273;
+}
+
+#btn_inquilinos {
+  color: #f6f7f8;
+  background-color: #3c302a;
+}
 
 /*?==================================
 /*? BOTONES ANFITRIONES O INQUILINOS
 /*?================================*/
-.main_container {
-  padding: 100px 0;  
-  background-image: url("../../../public/images/landing_page/bosque.jpeg");
-  background-position: center;
-  background-size: cover;
-}
-
-.button_section {
-  cursor: default;
-  display: flex;
-  justify-content: center;
-}
-
-.button_section h2 {
-  font-style: italic;
-  font-family: "Nunito";
-  text-align: center;
-  color: #18171c;
-  margin: 0;
-  margin-top: 0;
-}
-
-.button_container {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  background-color: rgba(255,255,255,.55);
-  backdrop-filter: blur(5px);
-  border-radius: 15px;
-  display: grid;
-  justify-content: center;
-  transition: background-color 0.2s;
-}
-
-.button_container:hover { 
-  background-color: rgba(255,255,255,.75);
-  transition: background-color 0.2s;
-}
-
-
 #btn_alojamientos, #btn_inquilinos {
   margin: 0 auto;
   font-family: "Nunito";
@@ -190,65 +228,16 @@ header a {text-decoration: none;}
   transform: scale(1.1);
 }
 
-#btn_alojamientos {
-  color: white;
-  background-color: #009080;
-}
 
-#btn_inquilinos {
-  border-color: #009080;
-  color: #009080;
-  background-color: #f5f5f5;
-}
 
 
 
 /*?=============================
-/*?        LOS MAS POPULARES
+/*?       GENERAL CARDS
 /*?===========================*/
-#movil_title { 
-  display: none;
-  padding: 0 5px;
-}
-#popular_titles{
-  border-top: 2px solid rgba(0, 144, 128, 0.4);
-  padding: 0 5vw;
-  background-color: #dfdfdf;
-  display: flex;
-  gap: 5.25vw;
-}
-#popular_titles h2 {
-  border-radius: 5px;
-  text-align: center;
-  width: 50%;
-  text-align: center;
-  font-family: "Nunito";
-  font-weight: 750;
-  font-size: 3vw;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-#popular_titles h2:nth-child(1), #popular_titles h2:nth-child(3){
-  background-color: #009080;
-  color: #f5f5f5;
-}
-#popular_titles h2:nth-child(2){
-  background-color: #f5f5f5;
-  color: #009080;
-}
-
-.popular_section {
-  position: relative;
-  display: grid;
-  padding: 0 5vw;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 6.25vw;
-  gap: 5.25vw;
-}
-
 /*? SECCIONES GENERALES*/
 .general_prof {
+  flex: 1; 
   position: relative; /* Contenedor padre */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   font-family: "Nunito";
@@ -419,16 +408,16 @@ header a {text-decoration: none;}
 /*?===========================*/
 .advantages {
   position: relative;
-  background-color: #3c302a;
+  background-color: #c6e2ce;
   font-family: "Nunito";
-  padding-top: 3vw;
+  padding: 100px 0;
 }
 
+.advantages h2 {color: #0a7273;}
 .advantages h2, .opinions h2 {
   margin-top: 0;
   margin-bottom: 3vw;
-  color: white;
-  font-family: "Nunito";
+  font-family: "Chewy";
   font-weight:800;
   text-align: center;
   font-size: 3vw;
@@ -455,11 +444,13 @@ header a {text-decoration: none;}
   background-color: white;
   border-radius: 10px;
   padding: 10px 0;
+  box-shadow: 0 0 10px rgba(0,0,0,.35);
 }
 .advantage_item:hover {
-  box-shadow: 0 0 10px 5px rgba(224,219,217,.35);
+  box-shadow: 0 0 10px 5px rgba(0,0,0,.30);
 }
 .advantage_text h3 {
+  color: #0a7273;
   margin: 0.26vw 0 0.26vw 0;
   font-size: 1.3vw;
 }
@@ -477,22 +468,16 @@ header a {text-decoration: none;}
   padding-right: 20px;
 }
 
-.gradient_block {
-  margin-top: 3vw;
-  position: relative;
-  width: 100%; /*? Ajusta el ancho del bloque */
-  height: 15vh; /*? Ajusta la altura del bloque */
-  background: linear-gradient(to bottom, #3c302a 0%, #3c302a 30%, #009080 100%); /*? Degradado marrón a negro */
-}
-
 
 /*?=============================
 /*?        OPINIONES
 /*?===========================*/
+.opinions h2 {color: #3c302a;}
 .opinions {
-  background-color: #009080;
+  background-color: #e9e3d5;
   font-family: "Nunito";
-  padding: 3.5vw 5vw 8vw 5vw ;
+  padding: 100px 5vw 100px 5vw ;
+
 }
 
 /*? Burbuja*/
@@ -545,9 +530,10 @@ header a {text-decoration: none;}
 }
 
 .info_opinion h3{
+  color: #3c302a;
   margin: 0px;
   padding-bottom: 7px;
-  border-bottom: 4px solid #009080;
+  border-bottom: 4px solid #3c302a;
   font-size: 1.2vw;
   font-weight: 700;
 }
@@ -565,7 +551,7 @@ header a {text-decoration: none;}
 /*?        FOOTER
 /*?===========================*/
 footer {
-  background-color: #e0dbd9;
+  background-color: #0a7273;
   padding: 1.6vw 0px;
   font-family: "Nunito";
   display: flex;
@@ -590,7 +576,7 @@ footer {
   font-family: "Coco Gothic";
   letter-spacing: 1px;
   font-weight: bold;
-  color: #009080;
+  color: #e9e3d5;
   font-size: 2.5vw;
 }
 
@@ -599,11 +585,14 @@ footer {
 #text-info {
   display: inline-flex;
   gap: 2vw;
+  color: white;
 }
 #text-info p { font-weight: 500;}
-#text-info strong { font-weight: 800;}
 
-.social-media img {width: 2.1vw;}
+.social-media img {
+  width: 2.1vw;
+  cursor: pointer;
+}
 .social-media {
   display: flex;
   justify-content: center;
@@ -612,7 +601,7 @@ footer {
 
 /*? Politicias de privacidad*/
 .privacy-policy a {
-  color: black;
+  color: white;
   font-size: 1.4vw;
   margin-right: 3vw;
   text-decoration: none;
@@ -625,12 +614,40 @@ footer {
 
 
 
+
+
+
+
+
 /*? =============
 /*?   RESPONSIVE
 /*? =============*/
 /**============================
 /**      MOVILES
 /**============================*/
+/*GRID OPINIONES 1000px max*/
+@media (max-width:999px){
+  .card_section {
+    padding: 100px 38px;
+    display: grid;
+    grid-template-rows: auto auto; /* Define al menos dos filas explícitas */
+    gap: 0;
+  }
+  .inq_card .button_container { grid-row: 1;}
+  .inq_card.card_container { grid-row: 2;}
+
+  /*?* OPINIONES*/
+  .opinions_container {
+    display: grid;
+    margin: 0 7vw;
+    gap: 9vw;
+  }
+  .bubble_text {padding: 3vw;}
+  .bubble_text p {font-size: 2.4vw;}
+  .prof_opinion img{width: 11vw; height: 11vw;}
+  .info_opinion h3, .info_opinion p{ font-size: 3vw;}
+
+}
 
 @media (max-width: 769px) {
   /*?* CABECERA */
@@ -648,63 +665,40 @@ footer {
   #header_nav {display: none;}
   
   /*?* BOTONES*/
-  .button_section {
-    gap: 8%;
-    border-radius: 10px;
-    padding: 25px 0; 
-    margin-bottom: 0;
-  }
-  .button_container {
-    width: 40%;
-    padding: 10px 5px;
-  
-  }
-
   #btn_alojamientos img, #btn_inquilinos img{
-    width: 5vw;
+    width: 40px;
     height: auto;
-  }
-  .button_section h2 {
-    font-size: 3.5vw;
-    margin: 0 10px;
-    margin-bottom: 18px;
-    text-wrap: pretty;
   }
 
   #btn_alojamientos, #btn_inquilinos {
-    padding: 10px;
-    font-size: 3.5vw;
-    width: 25vw;
-    margin-bottom: 12px;
-
+    padding: 15px;
+    font-size: 30px;
+    width: 270px;
   }
 
   /*?* LOGO INICIAL*/
   #logo_main img {width: 120px;}
-
-  /*?* POPULARES general */
-  #popular_titles h2:nth-child(1), 
-  #popular_titles h2:nth-child(2){ 
-    display: none; 
+  #logo_main figcaption {
+    font-size: 65px;
+  }
+  .main_descrpt, .button_container h2 {
+    font-size: 40px;
   }
 
-  #popular_titles h2 { font-size: 5vw; }
- 
-  #movil_title { 
-    flex: 1;
-    display: flex; 
-    justify-content: center;
+  .button_container h2 {margin: 0 0 10px 0;}
+  .button_container {
+    margin-bottom: 10%;
   }
-  .popular_section { 
-    grid-template-rows: repeat(4, 1fr); 
-  }
+  
+
+  /*?* CARDS general */
   .prof_1 { grid-row: 1; }
   .prof_2 { grid-row: 3; }
   .prof_3 { grid-row: 2; }
   .prof_4 { grid-row: 4; }
   
   .general_prof {
-    width: 300px;
+    max-width: 300px;
     margin: 0 auto;
   }
   .btn_conectar {
@@ -715,7 +709,7 @@ footer {
     margin-bottom: 10px;
   }
 
-  /*?* POPULARES (ANFITRIÓN)*/
+  /*?* CARD (ANFITRIÓN) */
   .anf_info { padding: 0px 15px; }
   .house { height: 130px; }
   .profile_img {
@@ -760,7 +754,7 @@ footer {
   .score img, .score_viajero img { width: 25px; }
   .anf_score p { font-size: 24px; }
 
-  /*?* POPULARES (VIAJEROS)*/
+  /*?* CARD (VIAJEROS)*/
   .viaj_prof { padding: 10px 15px; }
   .viaj_img {
     width: 90px;
@@ -778,7 +772,10 @@ footer {
   .btn_viaj { margin-bottom: 8px; }
 
   /*?* VENTAJAS */
-  .advantages h2, .opinions h2 {font-size: 30px;}
+  .advantages h2, .opinions h2 {
+    font-size: 40px;
+    margin-bottom: 40px;
+  }
   .advantage_text h3 {font-size: 15px;}
   .advantage_text p {font-size: 14px;}
   .advantage_item img { 
@@ -792,20 +789,30 @@ footer {
     gap: 20px;
   }
 
-  /*?* OPINIONES*/
-  .opinions_container {
+  /*?*FOOTER*/  
+  footer {
     display: grid;
-    margin: 0 7vw;
-    gap: 9vw;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 0;
   }
-  .bubble_text {padding: 3vw;}
-  .bubble_text p {font-size: 2.4vw;}
-  .prof_opinion img{width: 11vw; height: 11vw;}
-  .info_opinion h3, .info_opinion p{ font-size: 3vw;}
 
-  /*?*FOOTER*/
-  #text-info p { font-size: 1.5vw;}
-  .privacy-policy a{ font-size: 2vw; }
+  #logo_footer img{
+    width: 50px;
+  }
+  #logo_footer figcaption{
+    font-size: 20px;
+  }
+
+  .social-media img{
+    width: 20px;
+    height: 20px;
+  }
+  #text-info p { font-size: 13px;}
+
+  .privacy-policy {text-align: center;}
+  .privacy-policy a{ font-size: 20px; }
 }
 
 
@@ -813,187 +820,29 @@ footer {
 /**============================
 /**      TABLET
 /**============================*/
-@media (min-width: 770px) {
-  .popular_section {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-  }
-}
-@media (min-width: 770px){
-.central {
-  position: relative;
-  transform: translateY(-3.5vw);
-}
-}
-@media (min-width: 770px) and (max-width: 1199px) {
-  /*?* CABECERA */
-  #header_nav {display: none;}
-
-  /*?* LOGO INICIAL */
-
+@media (min-width:770px){
   /*?* BOTONES */
   .button_container {
     border-radius: 15px;
-    padding: 20px 15px;
-    width: 37%;
-    margin: 20px 0;
-  }
-  .button_section {
-    gap: 6%;
-    border-radius: 10px;
-  }
-  .button_section h2 {
-    font-size: 3vw;
-    margin-bottom: 20px;
-  }
-  
-  #btn_alojamientos img, #btn_inquilinos img{
-    width: 35px;
-    height: auto;
-  }
-  #btn_alojamientos, #btn_inquilinos {
-    width: 60%;
-
-    font-size: 3vw;
-    border-radius: 15px;
-    padding: 14px;
-    margin-bottom: 5px;
-    gap: 15px;
-  }
-  
-
-  /*?* POPULARES general */
-  .general_prof {width: 300px;} 
-  .btn_conectar {
-    border-radius: 5px;
-    border: 2px solid #009080;
-    font-size: 17px; 
-    padding: 8px 15px;
-    margin-bottom: 8px;
+    margin-bottom: 10%;
   }
 
-  /*?* POPULARES (ANFITRIÓN)*/
-  .anf_info { padding: 0px 15px; } 
-  .house {height: 140px;} 
-  .profile_img {
-    margin-left: 3px;
-    padding: 2px;
-    width: 90px; 
-  }
-
-  .anf_personal_info { 
-    transform: translateY(-40px); 
-    width: calc(100% - 15px); 
-  }
-  .anf_name {
-    border-bottom: 1px solid #d0dbd9;
-    margin: 0 15px;
-    margin-bottom: 12px;
-  }
-  .anf_name h3, .text_column_viaj h3 {
-    font-weight: 700;
-    font-size: 20px; 
-    margin: 0;
-  }
-
-  .anf_rating {
-    margin: 0px 4px 6px 4px; 
-    padding-top: 60px;
-    gap: 12%;
-  }
-  .anf_likes img { width: 25px; } 
-
-  .address img { width: 15px; } 
-  .address {
-    margin-top: 12px;
-    font-size: 16px; 
-    gap: 5px;
-  }
-  .description {
-    font-size: 16px; 
-    margin-top: 6px;
-    margin-bottom: 10px;
-  }
-  .score img, .score_viajero img {width: 22px;}
-  .anf_score p {font-size: 22px;} 
-
-  /*?* POPULARES (VIAJEROS)*/
-  .viaj_prof { padding: 8px 15px;} 
-  .viaj_img {
-    width: 90px; 
-    height: 90px;
-  }
-  .text_column_viaj p, .score_viajero p { font-size: 24px;} 
-  .text_column_viaj { margin: 5px 5px 5px 20px;} 
-  .age {
-    margin-top: 6px;
-    font-size: 16px; 
-  }
-  
-  .viaj_likes { margin: 15px 20px 15px 20px; } 
-  .viaj_likes img { width: 30px; } 
-  .btn_viaj { margin-bottom: 6px; } 
-
-  /*?* VENTAJAS */
-  .advantages h2, .opinions h2 {font-size: 4vw;}
-  .advantages_container {margin: 0 5vw;}
-  .advantage_text h3 {font-size: 1.7vw;}
-  .advantage_text p {font-size: 1.5vw;}
-
-  /*?* OPINIONES*/
-  .bubble_text {padding: 2vw;}
-  .bubble_text p {font-size: 1.45vw;}
-  .info_opinion h3, .info_opinion p{ font-size: 1.6vw;}
-
-  /*?*FOOTER*/
-  #text-info p { font-size: 1.4vw;}
-  .privacy-policy a{ font-size: 1.5vw; }
-}
-
-
-
-/**============================
-/**      ORDENADOR
-/**============================*/
-@media (min-width: 1200px) {
-  #menu_icon {display: none;}
-
-  /*?* LOGO INICIAL*/
-  #container_logo { font-size: clamp(25px, 1.5vw, 1.5vw);}
-
-  /*?* BOTON QUE BUSCAS*/
-  .button_container {
-    border-radius: 15px;
-    padding: 20px 15px;
-    width: 500px;
-    margin: 20px 0;
-  }
-  .button_section {
-    gap: 6%;
-    border-radius: 10px;
-  }
-  .button_section h2 {
-    font-size: 30px;
-    margin-bottom: 20px;
-  }
-  
   #btn_alojamientos img, #btn_inquilinos img{
     width: 40px;
     height: auto;
   }
   #btn_alojamientos, #btn_inquilinos {
     width: 300px;
-
+  
     font-size: 35px;
     border-radius: 15px;
     padding: 17px;
     margin-bottom: 5px;
     gap: 15px;
   }
-  
-
-  /*?* POPULARES general */
-  .general_prof {width: 380px;} 
+    
+  /*?* CARDS general */
+  .general_prof {max-width: 380px;} 
   .btn_conectar {
     border-radius: 6px;
     border: 2px solid #009080;
@@ -1002,7 +851,11 @@ footer {
     margin-bottom: 10px;
   }
 
-  /*?* POPULARES (ANFITRIÓN)*/
+  .button_container {
+    gap: 0;
+  }
+
+  /*?* CARD (ANFITRIÓN) */
   .anf_info { padding: 0px 22px; }
   .house {height: 160px;} 
   .profile_img {
@@ -1011,10 +864,7 @@ footer {
     width: 110px; 
   }
 
-  .anf_personal_info { 
-    transform: translateY(-50px); 
-    width: calc(100% - 22px); 
-  }
+
   .anf_name {
     border-bottom: 1px solid #d0dbd9;
     margin: 0 20px;
@@ -1047,7 +897,8 @@ footer {
   .score img, .score_viajero img {width: 30px;} 
   .anf_score p {font-size: 28px;} 
 
-  /*?* POPULARES (VIAJEROS)*/
+    
+  /*?* CARD (VIAJEROS)*/
   .viaj_prof { padding: 10px 20px;} 
   .viaj_img {
     width: 110px; 
@@ -1065,62 +916,127 @@ footer {
   .btn_viaj { margin-bottom: 8px; } 
 }
 
-@media (min-width:1500px){
-  /*?* POPULARES general */
-  .general_prof {width: 512px; }
-  .btn_conectar {
-    border-radius: 10px;
-    border: 3px solid #009080;
-    font-size: 25px;
-    padding: 18px 29px;
-    margin-bottom: 20px;
+@media (min-width: 770px) and (max-width: 999px) {
+  /*?* CABECERA */
+  #header_nav {display: none;}
+
+  /*?* LOGO INICIAL */
+  #logo_main img {
+    width: 180px;
   }
 
-
-  /*?* POPULARES (ANFITRIÓN)*/
-  .anf_info { padding: 0px 30px; }
-  .house {height: 250px;}
-  .profile_img {
-    width: 165px;
+  /*?* CARDS general */
+  .button_container h2 {
+    font-size: 45px;
+    margin-top: 0;
   }
 
   .anf_personal_info { 
-    transform: translateY(-80px);
-    width: calc(100% - 30px); 
+    transform: translateY(-50px);
+    width: calc(100% - 25px); 
+  }
+
+
+  /*?* VENTAJAS */
+  .advantages h2, .opinions h2 {
+    font-size: 45px;
+    margin-bottom: 40px;
+  }
+  .advantages_container {margin: 0 5vw;}
+  .advantage_text h3 {font-size: 1.7vw;}
+  .advantage_text p {font-size: 1.5vw;}
+
+  /*?* OPINIONES*/
+  .bubble_text {margin: 0 9vw;}
+  .bubble_text p {font-size: 18px;}
+  .prof_opinion img{width: 90px; height: 90px;}
+  .info_opinion h3, .info_opinion p{ font-size: 20px;}
+
+  /*?*FOOTER*/
+  #text-info p { font-size: 1.4vw;}
+  .privacy-policy a{ font-size: 1.5vw; }
+}
+
+
+
+/**============================
+/**      ORDENADOR
+/**============================*/
+@media (min-width: 1000px) {
+  #menu_icon {display: none;}
+
+  /*?* LOGO INICIAL*/
+  #container_logo { font-size: clamp(25px, 1.5vw, 1.5vw);}
+
+  /* CARDS*/
+  .button_container {
+    margin-bottom: 0;
+  }
+
+  .anf_personal_info { 
+    transform: translateY(-50px);
+    width: calc(100% - 25px); 
+  }
+  
+  /* VENTAJAS*/
+  .central {
+    position: relative;
+    transform: translateY(-3.5vw);
+  }
+}
+
+@media (min-width:1500px){
+  /*?* CARDS general */
+  .general_prof { max-width: 480px;}
+  .btn_conectar {
+    border-radius: 8px;
+    border: 2px solid #009080;
+    font-size: 22px;
+    padding: 15px 25px;
+    margin-bottom: 18px;
+  }
+
+  /*?* CARD (ANFITRIÓN) */
+  .button_container h2 {
+    font-size: 45px;
+  }
+  .anf_info { padding: 0px 25px; }
+  .house { height: 230px; }
+  .profile_img { width: 150px; }
+
+  .anf_personal_info { 
+    transform: translateY(-70px);
+    width: calc(100% - 25px); 
   }
   .anf_name {
     border-bottom: 1px solid #d0dbd9;
-    margin: 0 25px;
-    margin-bottom: 20px;
-    
+    margin: 0 20px;
+    margin-bottom: 18px;
   }
-  .anf_name h3, .text_column_viaj h3 { font-size: 39px;}
+  .anf_name h3, .text_column_viaj h3 { font-size: 35px; }
 
   .anf_rating {
-    margin: 0px 11.5px 15px 11.5px; 
-    padding-top: 110px;
-    gap: 15%;
+    margin: 0px 10px 13px 10px; 
+    padding-top: 100px;
+    gap: 12%;
   }
-  .anf_likes img { width: 45px; }
-  
+  .anf_likes img { width: 40px; }
 
-  .address img { width: 26px;}
+  .address img { width: 22px; }
   .address {
-    margin-top: 25px;
-    font-size: 27px;
-    gap: 10px;
+    margin-top: 20px;
+    font-size: 24px;
+    gap: 8px;
   }
   .description {
-    font-size: 28px;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    font-size: 24px;
+    margin-top: 12px;
+    margin-bottom: 18px;
   }
-  .score img, .score_viajero img {width: 43px;}
-  .anf_score p {font-size: 42px;}
+  .score img, .score_viajero img { width: 38px; }
+  .anf_score p { font-size: 36px; }
 
-
-
-  /*?* POPULARES (VIAJEROS)*/
+  /*?* CARD (VIAJEROS)*/
   .viaj_prof { padding: 20px 30px;}
   .viaj_img {
     width: 163px;
