@@ -968,7 +968,7 @@ footer {
   /*?* LOGO INICIAL*/
   #container_logo { font-size: clamp(25px, 1.5vw, 1.5vw);}
 
-  /* CARDS*/
+  /** CARDS*/
   .button_container {
     margin-bottom: 0;
   }
@@ -978,7 +978,17 @@ footer {
     width: calc(100% - 25px); 
   }
   
-  /* VENTAJAS*/
+  /** VENTAJAS*/
+  .advantages h2, .opinions h2 {
+    font-size: 45px;
+    margin-bottom: 40px;
+  }
+  .advantages_container {
+    margin: 0 6vw;
+    gap: 10%;
+  }
+  .advantage_text h3 {font-size: 18.5px;}
+  .advantage_text p {font-size: 17px;}
   .central {
     position: relative;
     transform: translateY(-3.5vw);
@@ -1052,4 +1062,7 @@ footer {
   .viaj_likes { margin : 40px 51px 40px 51px; }
   .viaj_likes img { width: 60px; }
   .btn_viaj { margin-bottom: 12px; }
+
+  .advantages_container {margin: 0 15vw;}
+
 }
