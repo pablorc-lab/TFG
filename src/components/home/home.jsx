@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Anf_card from "../users_cards/anf_card";
 import Inq_card from "../users_cards/inq_card";
+import Question from "./questions";
 
 import "./home.css"
 
@@ -43,13 +44,8 @@ export default function Home_page() {
     <>
       {/*Cabecera*/}
       <header>
-        <img 
-          className="header_logo"
-          src="images/logos/logo_verde.png"
-          alt="Logo Bearfrens"
-          width="150"
-        />
-        <div className="header_menu">
+        <img className="header_logo" src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150"/>
+        <article className="header_menu">
           <div id="menu_icon">
             <img src="images/logos/menu.png" alt="Icono de menú" />
           </div>
@@ -62,16 +58,10 @@ export default function Home_page() {
           </nav>
 
           <div className="header_user">
-            <img
-              src="images/logos/logo_usuario_blanco.png"
-              alt="Logo usuario"
-              width="50"
-            />
-            <a href="#" className="client_access">
-              Acceder
-            </a>
+            <img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50"/>
+            <a href="#" className="client_access"> Acceder </a>
           </div>
-        </div>
+        </article>
       </header>
 
       <main>
@@ -86,15 +76,15 @@ export default function Home_page() {
 
         {/*?SECCION DE LOS ANFITRIONES*/}
         <section className="card_section anf_card">
-          <div className="button_container">
+          <article className="button_container">
             <h2>Encuentra el alojamiento perfecto</h2>
             <div id="btn_alojamientos">
               <img src="images/logos/anfitrion.png" alt="Icono casa" />
               <p>Hospedajes</p>
             </div>
-          </div>
+          </article>
           
-          <div className="card_container">
+          <article className="card_container">
             <Anf_card
               Casa_img="/images/landing_page/casa_1.webp"
               Perfil_img="/images/landing_page/persona_1.webp"
@@ -110,12 +100,12 @@ export default function Home_page() {
               Descripcion="Amante de la aventura y los viajes improvisados"
               prof_number="prof_1"
             />
-          </div>
+          </article>
         </section>
         
         {/*?SECCION DE LOS VIAJEROS*/}
         <section className="card_section inq_card">
-          <div className="card_container">
+          <article className="card_container">
             <Inq_card
               Perfil_img="images/landing_page/persona_3.webp"
               Nombre="Juanma"
@@ -131,21 +121,21 @@ export default function Home_page() {
               ]}
               prof_number="prof_3"
             />
-          </div>
+          </article>
 
-          <div className="button_container">
+          <article className="button_container">
             <h2>Conecta con personas mundialmente</h2>
             <div id="btn_inquilinos">
                 <img src="images/logos/inquilino.png" alt="Icono inquilino" />
                 <p>Inquilinos</p>
             </div>
-          </div>
+          </article>
         </section>
 
         {/*?VENTAJAS*/}
         <section className="advantages">
           <h2>VENTAJAS</h2>
-          <div className="advantages_container">
+          <article className="advantages_container">
             {advantages.map((advantage, index) => (
               <article className="advantage_item" key={index}>
                 <img
@@ -160,20 +150,20 @@ export default function Home_page() {
                 </div>
               </article>
             ))}
-          </div>
+          </article>
         </section>
 
         {/*?OPINIONES*/}
         <section className="opinions">
           <h2>OPINIONES DE NUESTROS CLIENTES</h2>
-          <div className="opinions_container">
+          <article className="opinions_container">
             {opinions.map(({ text, img, name, role }, index) => (
               <div
                 key={index}
                 className={`bubble_text ${index === 1 ? "central" : ""}`}
               >
                 <p>{text}</p>
-                <div className="prof_opinion">
+                <article className="prof_opinion">
                   <img
                     className="profile_img"
                     src={img}
@@ -184,10 +174,35 @@ export default function Home_page() {
                     <h3>{name}</h3>
                     <p>{role}</p>
                   </div>
-                </div>
+                </article>
               </div>
             ))}
-          </div>
+          </article>
+        </section>
+
+        {/*FAQs*/}
+        <section className="freq_questions">
+          <h2>PREGUNTAS FRECUENTES</h2>
+          <Question
+            pregunta={"¿Como conecto con otros Viajeros o Anfitriones?"}
+            respuesta={"texto ejemplo"}
+          />
+          <Question
+            pregunta={"¿Que es y como se produce un “match”?"}
+          />
+          <Question
+            pregunta={"¿Puedo cancelar un hospedaje ya acordado?"}
+          />
+          <Question
+            pregunta={"¿Puedo viajar con más personas?"}
+          />
+          <Question
+            pregunta={"¿Cómo busco a un Viajero/Anfitrión que conozco?"}
+          />
+          <Question
+            pregunta={"¿Puedo encontrar personas que compartan mis intereses?"}
+          />
+          <button>Mas preguntas en nuestro FAQ</button>
         </section>
       </main>
 

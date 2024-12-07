@@ -204,7 +204,7 @@ header a {text-decoration: none;}
   font-weight: 800;
   font-size: clamp(30px, 2vw, 2vw);
   border: 0;
-  border-radius: 15px;
+  border-radius: 40px;
   padding: 1.3vw;
   display: block;
   width: 20vw;
@@ -217,15 +217,24 @@ header a {text-decoration: none;}
   align-items: center;
   justify-content: center;
   gap: 2vw;
+  transition: 0.2s;
 }
 
 #btn_alojamientos p, #btn_inquilinos p {
   margin: 0;
 }
 
-#btn_alojamientos:hover, #btn_inquilinos:hover {
-  transition: 0.4s;
-  transform: scale(1.1);
+#btn_alojamientos:hover{
+  transition: 0.2s;
+  background-color: #23898a;
+  box-shadow: 0 0 13px #23898a;
+}
+
+#btn_inquilinos:hover {
+  transition: 0.2s;
+  background-color: #5f4a40;
+  box-shadow: 0 0 13px #5f4a40;
+
 }
 
 
@@ -414,7 +423,7 @@ header a {text-decoration: none;}
 }
 
 .advantages h2 {color: #0a7273;}
-.advantages h2, .opinions h2 {
+.advantages h2, .opinions h2, .freq_questions h2 {
   margin-top: 0;
   margin-bottom: 3vw;
   font-family: "Chewy";
@@ -477,7 +486,6 @@ header a {text-decoration: none;}
   background-color: #e9e3d5;
   font-family: "Nunito";
   padding: 100px 5vw 100px 5vw ;
-
 }
 
 /*? Burbuja*/
@@ -548,6 +556,61 @@ header a {text-decoration: none;}
 
 
 /*?=============================
+/*?        FAQs
+/*?===========================*/
+.freq_questions {
+  background-color: #f0f0f0;
+  font-family: "Nunito";
+  padding: 100px 5vw 100px 5vw ;
+}
+
+.question_item {
+  cursor: pointer;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  padding: 0 20px;
+  margin-bottom: 30px;
+}
+
+.question_item:hover {
+  border: 2px solid #0a7273;
+}
+.question_title {
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.question_title img{
+  width: 50px;
+  height: 50px;
+}
+
+.freq_questions button{
+  cursor: pointer;
+  display: block;
+  font-family: "Nunito";
+  background-color: #0a7273;
+  color: white;
+  font-weight: 800;
+  border: none;
+  border-radius: 40px;
+  margin: 0 auto;
+  margin-top: 50px;
+  transition: 0.1s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.freq_questions button:hover {
+  transition: 0.2s;
+  background-color: #23898a;
+  box-shadow: 0 0 10px #23898a;
+}
+
+.question_content p{margin-top: 0;}
+/*?=============================
 /*?        FOOTER
 /*?===========================*/
 footer {
@@ -570,14 +633,14 @@ footer {
   margin-left: 3vw;
 }
 
-#logo_footer img {width: 6vw; height: auto;}
+#logo_footer img {width: 5vw; height: auto;}
 #logo_footer figcaption {
   margin-left: 0.7vw;
   font-family: "Coco Gothic";
   letter-spacing: 1px;
   font-weight: bold;
   color: #e9e3d5;
-  font-size: 2.5vw;
+  font-size: 2vw;
 }
 
 /*? Informacion de contacto*/
@@ -647,6 +710,11 @@ footer {
   .prof_opinion img{width: 11vw; height: 11vw;}
   .info_opinion h3, .info_opinion p{ font-size: 3vw;}
 
+  /**FAQ*/
+  .freq_questions button{
+    font-size: 20px;
+    padding: 20px 25px;
+  }
 }
 
 @media (max-width: 769px) {
@@ -772,7 +840,7 @@ footer {
   .btn_viaj { margin-bottom: 8px; }
 
   /*?* VENTAJAS */
-  .advantages h2, .opinions h2 {
+  .advantages h2, .opinions h2, .freq_questions h2 {
     font-size: 40px;
     margin-bottom: 40px;
   }
@@ -788,6 +856,11 @@ footer {
     align-items: center;
     gap: 20px;
   }
+
+
+  /**FAQ*/
+  .question_item {max-width: 510px;}
+
 
   /*?*FOOTER*/  
   footer {
@@ -835,7 +908,6 @@ footer {
     width: 300px;
   
     font-size: 35px;
-    border-radius: 15px;
     padding: 17px;
     margin-bottom: 5px;
     gap: 15px;
@@ -936,9 +1008,8 @@ footer {
     width: calc(100% - 25px); 
   }
 
-
   /*?* VENTAJAS */
-  .advantages h2, .opinions h2 {
+  .advantages h2, .opinions h2, .freq_questions h2 {
     font-size: 45px;
     margin-bottom: 40px;
   }
@@ -952,6 +1023,12 @@ footer {
   .prof_opinion img{width: 90px; height: 90px;}
   .info_opinion h3, .info_opinion p{ font-size: 20px;}
 
+  /**FAQ*/
+  .question_item h3 {font-size: 21px;}
+  .question_item {max-width: 650px;}
+  .question_content p{font-size: 16px;}
+
+  
   /*?*FOOTER*/
   #text-info p { font-size: 1.4vw;}
   .privacy-policy a{ font-size: 1.5vw; }
@@ -979,13 +1056,12 @@ footer {
   }
   
   /** VENTAJAS*/
-  .advantages h2, .opinions h2 {
+  .advantages h2, .opinions h2, .freq_questions h2 {
     font-size: 45px;
     margin-bottom: 40px;
   }
   .advantages_container {
     margin: 0 6vw;
-    gap: 10%;
   }
   .advantage_text h3 {font-size: 18.5px;}
   .advantage_text p {font-size: 17px;}
@@ -993,6 +1069,16 @@ footer {
     position: relative;
     transform: translateY(-3.5vw);
   }
+
+   /**FAQs*/
+   .question_item h3 {font-size: 23px;}
+   .question_item {max-width: 710px;}
+   .question_content p{font-size: 18px;}
+
+   .freq_questions button{
+     font-size: 22px;
+     padding: 20px 25px;
+   }
 }
 
 @media (min-width:1500px){
@@ -1065,4 +1151,8 @@ footer {
 
   .advantages_container {margin: 0 15vw;}
 
+   /**FAQs*/
+   .question_item h3 {font-size: 25px;}
+   .question_item {max-width: 810px;}
+   .question_content p{font-size: 20px;}
 }
