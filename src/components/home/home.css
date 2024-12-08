@@ -469,6 +469,7 @@ header a {text-decoration: none;}
   color: #a6a6a6;
   margin: 0;
   font-size: 1.2vw;
+  margin-bottom: 0.26vw;
 }
 
 .advantage_text {
@@ -583,6 +584,8 @@ header a {text-decoration: none;}
   align-items: center;
   justify-content: space-between;
 }
+
+.question_title h3 {margin: 20px 0;}
 .question_title img{
   width: 50px;
   height: 50px;
@@ -609,7 +612,10 @@ header a {text-decoration: none;}
   box-shadow: 0 0 10px #23898a;
 }
 
-.question_content p{margin-top: 0;}
+.question_content p{
+  color: #000000CC;
+  margin-top: 0; 
+}
 /*?=============================
 /*?        FOOTER
 /*?===========================*/

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Anf_card from "../users_cards/anf_card";
 import Inq_card from "../users_cards/inq_card";
 import Question from "./questions";
-
+import faqData from "./Data_faq_home";
 import "./home.css"
 
 // Datos de las ventajas
@@ -183,25 +183,13 @@ export default function Home_page() {
         {/*FAQs*/}
         <section className="freq_questions">
           <h2>PREGUNTAS FRECUENTES</h2>
-          <Question
-            pregunta={"¿Como conecto con otros Viajeros o Anfitriones?"}
-            respuesta={"texto ejemplo"}
-          />
-          <Question
-            pregunta={"¿Que es y como se produce un “match”?"}
-          />
-          <Question
-            pregunta={"¿Puedo cancelar un hospedaje ya acordado?"}
-          />
-          <Question
-            pregunta={"¿Puedo viajar con más personas?"}
-          />
-          <Question
-            pregunta={"¿Cómo busco a un Viajero/Anfitrión que conozco?"}
-          />
-          <Question
-            pregunta={"¿Puedo encontrar personas que compartan mis intereses?"}
-          />
+          {faqData.map((item, index) => (
+            <Question
+              key={index}
+              pregunta={item.pregunta}
+              respuesta={item.respuesta}
+            />
+          ))}
           <button>Mas preguntas en nuestro FAQ</button>
         </section>
       </main>
