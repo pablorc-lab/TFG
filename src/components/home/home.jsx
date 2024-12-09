@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Anf_card from "../users_cards/anf_card";
 import Inq_card from "../users_cards/inq_card";
 import Question from "./questions";
@@ -35,6 +35,9 @@ const opinions = [
 ];
 
 export default function Home_page() {
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+
 	// Cambia el título solo al montar el componente
 	useEffect(() => {
     document.title = "Beafrens"; 
@@ -44,24 +47,33 @@ export default function Home_page() {
     <>
       {/*Cabecera*/}
       <header>
+        <div id="menu_icon">
+          <img src="images/logos/menu.png" alt="Icono de menú" />
+        </div>
+        
         <img className="header_logo" src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150"/>
-        <article className="header_menu">
-          <div id="menu_icon">
-            <img src="images/logos/menu.png" alt="Icono de menú" />
-          </div>
-
-          <nav id="header_nav">
-            <a>Inicio</a>
+        <section className="header_menu">
+         <nav id="header_nav">
             <a>Alojamientos</a>
             <a>Inquilinos</a>
             <a>Soporte</a>
           </nav>
 
-          <div className="header_user">
-            <img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50"/>
-            <a href="#" className="client_access"> Acceder </a>
-          </div>
-        </article>
+          <article className="header_user">
+            <div className="user_button" onClick={() => setMenuOpen(!isMenuOpen)}>
+              <img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50"/>
+              <a href="#" className="client_access"> Acceder </a>
+            </div>
+          
+            <div className={`dropdown_menu  ${isMenuOpen ? "open" : ""}`}>
+              <ul>
+                <li>Inicio Sesión</li>
+                <li>Registro Usuario</li>
+                <li>Soporte</li>
+              </ul>
+            </div>
+          </article>
+        </section>
       </header>
 
       <main>
