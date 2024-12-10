@@ -47,19 +47,6 @@ header {
 header a {text-decoration: none;}
 
 /** Texto central */
-#menu_icon img{
-  width: 50px;
-}
-#menu_icon {
-  cursor: pointer;
-  padding: 7px 10px;
-}
-#menu_icon:hover{
-  background-color: rgb(175, 175, 175, .4);
-  
-  border-radius: 20%;
-}
-
 #header_nav {
   display: block;
   color: #3c302a;
@@ -96,11 +83,12 @@ header a {text-decoration: none;}
   background-color: #009080;
 }
 
-.user_button a {
-  color: #f0f0f0;
-  font-size: 1.4em;
-  font-weight: 800;
+
+.user_button img:nth-child(2) {
+  transition: transform 0.25s ease-in-out; 
+  transform: rotate(180deg); /* Posición inicial */
 }
+.header_user.open .user_button img:nth-child(2) {transform: rotate(360deg);}
 
 .user_button img { width: 3em;}
 .user_button:hover{
@@ -117,7 +105,7 @@ header a {text-decoration: none;}
   background-color: rgba(255, 255, 255, 1);
   backdrop-filter: blur(4px);
   transform: translateY(5px) ;
-  box-shadow: 0 0px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   overflow: hidden;
   width:200px;
@@ -125,7 +113,7 @@ header a {text-decoration: none;}
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.dropdown_menu.open {
+.header_user.open .dropdown_menu {
   opacity: 1;
   transform: translateY(10px);
   pointer-events: auto;
@@ -145,8 +133,8 @@ header a {text-decoration: none;}
   display: block;
   padding: 10px 20px;
 }
-.dropdown_menu li:nth-child(1){ margin-top: 10px;}
-.dropdown_menu li:nth-child(2){ margin-bottom: 10px ;}
+#li_iniciar_sesion, #li_alojamientos { margin-top: 7px;}
+#li_registrate { margin-bottom: 7px ;}
 .dropdown_menu li:last-child {
   padding: 7px 0;
   border-top: 1px solid lightgray;
@@ -154,8 +142,10 @@ header a {text-decoration: none;}
 .dropdown_menu li:hover span {
   background-color: #ddeeec;
 }
-
-
+#li_guia {
+  padding: 7px 0;
+  border-bottom: 1px solid lightgray;
+}
 
 
 
@@ -778,11 +768,7 @@ footer {
 /**============================
 /**      MOVILES
 /**============================*/
-/*GRID OPINIONES 1000px max*/
 @media (max-width:899px){
-  #menu_icon{
-    margin-right: 20px;
-  }
   .card_section {
     padding: 100px 38px;
     display: grid;
@@ -814,16 +800,14 @@ footer {
  
   /*?* CABECERA */
   header {
-    width: calc(100% - 50px);
-    gap: 15px;
+    width: calc(100% - 60px);
+    padding: 20px 30px;
     justify-content: space-between;
-    padding: 25px ;
   }
   .header_menu {
     width: 100%;
     justify-content: end;
   }
-
   #header_nav {display: none;}
   
   /*?* BOTONES*/
@@ -839,7 +823,7 @@ footer {
   }
 
   /*?* LOGO INICIAL*/
-  #logo_main img {width: 120px;}
+  #logo_main img {width: 170px;}
   #logo_main figcaption {
     font-size: 65px;
   }
@@ -1083,9 +1067,6 @@ footer {
 }
 
 @media (min-width: 770px) and (max-width: 899px) {
-  /*?* CABECERA */
-  #header_nav {display: none;}
-
   /*?* LOGO INICIAL */
   #logo_main img {
     width: 180px;
@@ -1134,7 +1115,6 @@ footer {
 /**      ORDENADOR
 /**============================*/
 @media (min-width: 900px) {
-  #menu_icon {display: none;}
 
   /*?* LOGO INICIAL*/
   #container_logo { font-size: clamp(25px, 1.5vw, 1.5vw);}

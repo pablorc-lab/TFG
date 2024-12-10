@@ -36,6 +36,8 @@ const opinions = [
 
 export default function Home_page() {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isNavVisible, setNavVisible] = useState(true);
+  const headerNavRef = useRef(null);
   const menu_user_Ref = useRef(null);
   const userRef = useRef(null);
 
@@ -45,32 +47,36 @@ export default function Home_page() {
       setMenuOpen(false); // Cierra el menú
   };
 
+  // Establecer navVisible a true si el ancho de la ventana es menor o igual a 769px
+  const checkNavVisibility = () => {
+    setNavVisible(window.innerWidth > 769);
+  };
+
   useEffect(() => {
     // Cambia el título solo al montar el componente
     document.title = "Beafrens";
 
     // Escuchar clics en todo el documento
     document.addEventListener("mousedown", handleClickOutside_Menu);
-    
+   
+    checkNavVisibility();
+    window.addEventListener("resize", checkNavVisibility); // Cada vez que cambie el tamaño de la ventana se evalua
+
     // Función de limpieza (esto se ejecutará cuando el componente se desmonta o antes de que se ejecute de nuevo el efecto).
     // Asegura que se elimine el evento cuando el componente ya no esté en la página.
     return () => {
-      //Eliminar el evento 'mousedown' cuando el componente se desmonta.
+      //Eliminar los evento cuando el componente se desmonta.
       // Evita que el manejador de eventos siga activo cuando el componente ya no esté visible.
       document.removeEventListener("mousedown", handleClickOutside_Menu);
+      window.removeEventListener("resize", checkNavVisibility);
     };
   }, []);
-
-
 
 	return (
     <>
       {/*Cabecera*/}
       <header>
-        <div id="menu_icon">
-          <img src="images/logos/menu.png" alt="Icono de menú" />
-        </div>
-        
+
         <img className="header_logo" src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150"/>
         <section className="header_menu">
          <nav id="header_nav">
@@ -79,16 +85,23 @@ export default function Home_page() {
             <a>Guía</a>
           </nav>
 
-          <article className="header_user" >
+          <article className={`header_user  ${isMenuOpen ? "open" : ""}`}>
             <div className="user_button" onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
               <img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50"/>
-              <a href="#" className="client_access"> Acceder </a>
+              <img src="images/landing_page/menu_user.png" className="client_acces"/>
             </div>
           
-            <div className={`dropdown_menu  ${isMenuOpen ? "open" : ""}`} ref={menu_user_Ref}>
+            <div className="dropdown_menu" ref={menu_user_Ref}>
               <ul>
-                <li><span><strong>Registrate</strong></span></li>
-                <li><span>Iniciar sesión</span></li>
+                {!isNavVisible && (
+                  <>
+                    <li id="li_alojamientos"><span>Alojamientos</span></li>
+                    <li><span>Inquilinos</span></li>
+                    <li id="li_guia"><span>Guía</span></li>
+                  </>
+                )}
+                <li id="li_iniciar_sesion"><span>Iniciar sesión</span></li>
+                <li id="li_registrate"><span>Registrarse</span></li>
                 <li><span>Soporte</span></li>
               </ul>
             </div>
