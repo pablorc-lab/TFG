@@ -9,6 +9,7 @@ body {
 /*? ===================*/
 header {
   width: calc(100% - 100px);
+  backdrop-filter: blur(4px);
   position: absolute;
   padding: 20px 50px;
   display: flex;
@@ -45,7 +46,7 @@ header {
 
 header a {text-decoration: none;}
 
-/*? Texto central */
+/** Texto central */
 #menu_icon img{
   width: 50px;
 }
@@ -75,7 +76,7 @@ header a {text-decoration: none;}
 }
 
 
-/*? Acceso cliente*/
+/** Acceso cliente*/
 .header_user {
   display: grid;
   justify-content: center;
@@ -108,17 +109,18 @@ header a {text-decoration: none;}
 }
 
 .dropdown_menu {
+  user-select: none;
   position: absolute;
   right:0;
   top: 100%;
   opacity:0;
   background-color: rgba(255, 255, 255, 1);
   backdrop-filter: blur(4px);
- 
+  transform: translateY(5px) ;
   box-shadow: 0 0px 6px rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
+  border-radius: 10px;
   overflow: hidden;
-  width:max-content;
+  width:200px;
   pointer-events: none; /*No podrá recibir clics cerrado*/
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
@@ -136,17 +138,21 @@ header a {text-decoration: none;}
 }
 
 .dropdown_menu li {
-  font-size: 22px;
+  font-size: 20px;
   cursor: pointer;
-  padding: 10px 15px;
 }
-
+.dropdown_menu span {
+  display: block;
+  padding: 10px 20px;
+}
+.dropdown_menu li:nth-child(1){ margin-top: 10px;}
+.dropdown_menu li:nth-child(2){ margin-bottom: 10px ;}
 .dropdown_menu li:last-child {
-  border-bottom: none;
+  padding: 7px 0;
+  border-top: 1px solid lightgray;
 }
-
-.dropdown_menu li:hover {
-  background-color: #9accc7;
+.dropdown_menu li:hover span {
+  background-color: #ddeeec;
 }
 
 

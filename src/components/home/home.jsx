@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Anf_card from "../users_cards/anf_card";
 import Inq_card from "../users_cards/inq_card";
 import Question from "./questions";
@@ -36,12 +36,32 @@ const opinions = [
 
 export default function Home_page() {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const menu_user_Ref = useRef(null);
+  const userRef = useRef(null);
+
+  // Manejar el clic fuera del menú y fuera del botón de usuario
+  const handleClickOutside_Menu = (event) => {
+    if (menu_user_Ref.current && !menu_user_Ref.current.contains(event.target) && !userRef.current.contains(event.target))
+      setMenuOpen(false); // Cierra el menú
+  };
+
+  useEffect(() => {
+    // Cambia el título solo al montar el componente
+    document.title = "Beafrens";
+
+    // Escuchar clics en todo el documento
+    document.addEventListener("mousedown", handleClickOutside_Menu);
+    
+    // Función de limpieza (esto se ejecutará cuando el componente se desmonta o antes de que se ejecute de nuevo el efecto).
+    // Asegura que se elimine el evento cuando el componente ya no esté en la página.
+    return () => {
+      //Eliminar el evento 'mousedown' cuando el componente se desmonta.
+      // Evita que el manejador de eventos siga activo cuando el componente ya no esté visible.
+      document.removeEventListener("mousedown", handleClickOutside_Menu);
+    };
+  }, []);
 
 
-	// Cambia el título solo al montar el componente
-	useEffect(() => {
-    document.title = "Beafrens"; 
-  }, []); 
 
 	return (
     <>
@@ -56,20 +76,20 @@ export default function Home_page() {
          <nav id="header_nav">
             <a>Alojamientos</a>
             <a>Inquilinos</a>
-            <a>Soporte</a>
+            <a>Guía</a>
           </nav>
 
-          <article className="header_user">
-            <div className="user_button" onClick={() => setMenuOpen(!isMenuOpen)}>
+          <article className="header_user" >
+            <div className="user_button" onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
               <img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50"/>
               <a href="#" className="client_access"> Acceder </a>
             </div>
           
-            <div className={`dropdown_menu  ${isMenuOpen ? "open" : ""}`}>
+            <div className={`dropdown_menu  ${isMenuOpen ? "open" : ""}`} ref={menu_user_Ref}>
               <ul>
-                <li>Inicio Sesión</li>
-                <li>Registro Usuario</li>
-                <li>Soporte</li>
+                <li><span><strong>Registrate</strong></span></li>
+                <li><span>Iniciar sesión</span></li>
+                <li><span>Soporte</span></li>
               </ul>
             </div>
           </article>
@@ -202,7 +222,7 @@ export default function Home_page() {
               respuesta={item.respuesta}
             />
           ))}
-          <button>Mas preguntas en nuestro FAQ</button>
+          <button>Mas preguntas en nuestra Guía</button>
         </section>
       </main>
 
