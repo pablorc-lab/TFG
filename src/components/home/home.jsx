@@ -95,11 +95,13 @@ export default function Home_page() {
               <ul>
                 {!isNavVisible && (
                   <>
+                    <li className="title_menu_header">Navegar</li>
                     <li id="li_alojamientos"><span>Alojamientos</span></li>
                     <li><span>Inquilinos</span></li>
                     <li id="li_guia"><span>Guía</span></li>
                   </>
                 )}
+                <li className="title_menu_header">Acceder</li>
                 <li id="li_iniciar_sesion"><span>Iniciar sesión</span></li>
                 <li id="li_registrate"><span>Registrarse</span></li>
                 <li><span>Soporte</span></li>

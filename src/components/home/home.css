@@ -96,6 +96,7 @@ header a {text-decoration: none;}
   background-color: rgba(0, 154, 137, 0.9);
 }
 
+/**MENU DESPLEGABLE*/
 .dropdown_menu {
   user-select: none;
   position: absolute;
@@ -129,23 +130,36 @@ header a {text-decoration: none;}
   font-size: 20px;
   cursor: pointer;
 }
+.dropdown_menu li.title_menu_header {
+  padding: 10px 10px 0px 15px;
+
+  font-size: 21px;
+  cursor: default;
+  font-weight: 700;
+  color: black; 
+}
+
 .dropdown_menu span {
   display: block;
-  padding: 10px 20px;
+  padding: 10px 30px;
 }
-#li_iniciar_sesion, #li_alojamientos { margin-top: 7px;}
 #li_registrate { margin-bottom: 7px ;}
 .dropdown_menu li:last-child {
   padding: 7px 0;
   border-top: 1px solid lightgray;
 }
+.dropdown_menu li:last-child span {
+  padding: 10px 15px;
+}
+
 .dropdown_menu li:hover span {
   background-color: #ddeeec;
 }
 #li_guia {
-  padding: 7px 0;
+  padding-bottom: 7px;
   border-bottom: 1px solid lightgray;
 }
+
 
 
 
