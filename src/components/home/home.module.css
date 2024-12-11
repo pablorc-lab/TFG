@@ -1,13 +1,8 @@
 
-body {
-  margin: 0 auto;
-  background-color: #dfdfdf;
-}
-
 /*? ==================
 /*?      HEADER
 /*? ===================*/
-header {
+.header {
   width: calc(100% - 100px);
   backdrop-filter: blur(4px);
   position: absolute;
@@ -44,18 +39,18 @@ header {
   gap: 30px;
 }
 
-header a {text-decoration: none;}
+.header a {text-decoration: none;}
 
 /** Texto central */
-#header_nav {
+.header_nav {
   display: block;
   color: #3c302a;
   font-size: 25px;
   font-weight: 600;  
 }
 
-#header_nav a {margin-left: 35px;}
-#header_nav a:hover {
+.header_nav a {margin-left: 35px;}
+.header_nav a:hover {
   transition: 0.1s;
   color: #009080;
   border-bottom: 4px solid #009080;
@@ -143,7 +138,7 @@ header a {text-decoration: none;}
   display: block;
   padding: 10px 30px;
 }
-#li_registrate { margin-bottom: 7px ;}
+.li_registrate { margin-bottom: 7px ;}
 .dropdown_menu li:last-child {
   padding: 7px 0;
   border-top: 1px solid lightgray;
@@ -155,12 +150,6 @@ header a {text-decoration: none;}
 .dropdown_menu li:hover span {
   background-color: #ddeeec;
 }
-#li_guia {
-  padding-bottom: 7px;
-  border-bottom: 1px solid lightgray;
-}
-
-
 
 
 /*?=============================
@@ -179,7 +168,7 @@ header a {text-decoration: none;}
 }
 
 
-#logo_main {
+.logo_main {
   flex: 1;
   margin: 0;
   display: grid;
@@ -187,13 +176,13 @@ header a {text-decoration: none;}
   justify-content: center;
   gap: 0.5vw;
 }
-#logo_main img {
+.logo_main img {
   width: 200px;
   height: auto;
   margin: 20px auto;
 }
 
-#logo_main figcaption {
+.logo_main figcaption {
   font-family: "Coco Gothic";
   color: #009080;
   font-weight: 700;
@@ -243,12 +232,12 @@ header a {text-decoration: none;}
 
 .anf_card h2 {color: #0a7273;}
 .inq_card h2 {color: #3c302a;}
-#btn_alojamientos {
+.btn_alojamientos {
   color: #f6f7f8;
   background-color: #0a7273;
 }
 
-#btn_inquilinos {
+.btn_inquilinos {
   color: #f6f7f8;
   background-color: #3c302a;
 }
@@ -256,7 +245,7 @@ header a {text-decoration: none;}
 /*?==================================
 /*? BOTONES ANFITRIONES O INQUILINOS
 /*?================================*/
-#btn_alojamientos, #btn_inquilinos {
+.btn_alojamientos, .btn_inquilinos {
   margin: 0 auto;
   font-family: "Nunito";
   font-weight: 800;
@@ -278,17 +267,17 @@ header a {text-decoration: none;}
   transition: 0.2s;
 }
 
-#btn_alojamientos p, #btn_inquilinos p {
+.btn_alojamientos p, .btn_inquilinos p {
   margin: 0;
 }
 
-#btn_alojamientos:hover{
+.btn_alojamientos:hover{
   transition: 0.2s;
   background-color: #23898a;
   box-shadow: 0 0 13px #23898a;
 }
 
-#btn_inquilinos:hover {
+.btn_inquilinos:hover {
   transition: 0.2s;
   background-color: #5f4a40;
   box-shadow: 0 0 13px #5f4a40;
@@ -707,7 +696,7 @@ header a {text-decoration: none;}
 /*?=============================
 /*?        FOOTER
 /*?===========================*/
-footer {
+.footer {
   background-color: #0a7273;
   padding: 1.6vw 0px;
   font-family: "Nunito";
@@ -718,7 +707,7 @@ footer {
 }
 
 /*? Logo*/
-#logo_footer {
+.logo_footer {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -727,8 +716,8 @@ footer {
   margin-left: 3vw;
 }
 
-#logo_footer img {width: 5vw; height: auto;}
-#logo_footer figcaption {
+.logo_footer img {width: 5vw; height: auto;}
+.logo_footer figcaption {
   margin-left: 0.7vw;
   font-family: "Coco Gothic";
   letter-spacing: 1px;
@@ -738,33 +727,33 @@ footer {
 }
 
 /*? Informacion de contacto*/
-.contact-info {font-size: 1vw; text-align: center;}
-#text-info {
+.contact_info {font-size: 1vw; text-align: center;}
+.text_info {
   display: inline-flex;
   gap: 2vw;
   color: white;
 }
-#text-info p { font-weight: 500;}
+.text_info p { font-weight: 500;}
 
-.social-media img {
+.social_media img {
   width: 2.1vw;
   cursor: pointer;
 }
-.social-media {
+.social_media {
   display: flex;
   justify-content: center;
   gap: 2vw;
 }
 
 /*? Politicias de privacidad*/
-.privacy-policy a {
+.privacy_policy a {
   color: white;
   font-size: 1.4vw;
   margin-right: 3vw;
   text-decoration: none;
 }
 
-.privacy-policy a:hover{
+.privacy_policy a:hover{
   text-decoration: underline;
 }
 
@@ -811,9 +800,9 @@ footer {
 }
 
 @media (max-width: 769px) {
- 
+
   /*?* CABECERA */
-  header {
+  .header {
     width: calc(100% - 60px);
     padding: 20px 30px;
     justify-content: space-between;
@@ -822,23 +811,23 @@ footer {
     width: 100%;
     justify-content: end;
   }
-  #header_nav {display: none;}
+  .header_nav {display: none;}
   
   /*?* BOTONES*/
-  #btn_alojamientos img, #btn_inquilinos img{
+  .btn_alojamientos img, .btn_inquilinos img{
     width: 40px;
     height: auto;
   }
 
-  #btn_alojamientos, #btn_inquilinos {
+  .btn_alojamientos, .btn_inquilinos {
     padding: 15px;
     font-size: 30px;
     width: 270px;
   }
 
   /*?* LOGO INICIAL*/
-  #logo_main img {width: 170px;}
-  #logo_main figcaption {
+  .logo_main img {width: 170px;}
+  .logo_main figcaption {
     font-size: 65px;
   }
   .main_descrpt, .button_container h2 {
@@ -955,7 +944,7 @@ footer {
 
 
   /*?*FOOTER*/  
-  footer {
+  .footer {
     display: grid;
     justify-content: center;
     align-items: center;
@@ -963,21 +952,21 @@ footer {
     padding: 40px 0;
   }
 
-  #logo_footer img{
+  .logo_footer img{
     width: 50px;
   }
-  #logo_footer figcaption{
+  .logo_footer figcaption{
     font-size: 20px;
   }
 
-  .social-media img{
+  .social_media img{
     width: 20px;
     height: 20px;
   }
-  #text-info p { font-size: 13px;}
+  .text_info p { font-size: 13px;}
 
-  .privacy-policy {text-align: center;}
-  .privacy-policy a{ font-size: 20px; }
+  .privacy_policy {text-align: center;}
+  .privacy_policy a{ font-size: 20px; }
 }
 
 
@@ -992,11 +981,11 @@ footer {
     margin-bottom: 10%;
   }
 
-  #btn_alojamientos img, #btn_inquilinos img{
+  .btn_alojamientos img, .btn_inquilinos img{
     width: 40px;
     height: auto;
   }
-  #btn_alojamientos, #btn_inquilinos {
+  .btn_alojamientos, .btn_inquilinos {
     width: 300px;
   
     font-size: 35px;
@@ -1082,7 +1071,7 @@ footer {
 
 @media (min-width: 770px) and (max-width: 899px) {
   /*?* LOGO INICIAL */
-  #logo_main img {
+  .logo_main img {
     width: 180px;
   }
 
@@ -1119,8 +1108,8 @@ footer {
 
   
   /*?*FOOTER*/
-  #text-info p { font-size: 1.4vw;}
-  .privacy-policy a{ font-size: 1.5vw; }
+  .text_info p { font-size: 1.4vw;}
+  .privacy_policy a{ font-size: 1.5vw; }
 }
 
 
@@ -1129,9 +1118,6 @@ footer {
 /**      ORDENADOR
 /**============================*/
 @media (min-width: 900px) {
-
-  /*?* LOGO INICIAL*/
-  #container_logo { font-size: clamp(25px, 1.5vw, 1.5vw);}
 
   /** CARDS*/
   .button_container {

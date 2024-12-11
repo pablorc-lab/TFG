@@ -1,0 +1,33 @@
+/*? ==================
+/*?      HEADER
+/*? ===================*/
+
+.header{
+  width: (100%-50px) ;
+  padding: 20px 25px;
+  background-color: #e9e3d5;
+
+}
+
+.header_logo img {
+  width: 60px;
+  height: auto;
+  
+}
+
+.header_logo {
+  width:max-content;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+}
+
+.header_logo h1{
+  font-size: 22px;
+}
+
+.header_logo h2{
+  font-size: 10px;
+}

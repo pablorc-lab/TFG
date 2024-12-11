@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import Anf_card from "../users_cards/anf_card";
 import Inq_card from "../users_cards/inq_card";
 import Question from "./questions";
-import faqData from "./Data_faq_home";
-import "./home.css"
+import faqData from "./questions_data";
+import styles from "./home.module.css"
 
 // Datos de las ventajas
 const advantages = [
@@ -37,7 +37,6 @@ const opinions = [
 export default function Home_page() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isNavVisible, setNavVisible] = useState(true);
-  const headerNavRef = useRef(null);
   const menu_user_Ref = useRef(null);
   const userRef = useRef(null);
 
@@ -75,35 +74,34 @@ export default function Home_page() {
 	return (
     <>
       {/*Cabecera*/}
-      <header>
-
-        <img className="header_logo" src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150"/>
-        <section className="header_menu">
-         <nav id="header_nav">
+      <header className={styles.header}>
+        <img className={styles.header_logo} src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
+        <section className={styles.header_menu}>
+          <nav className={styles.header_nav}>
             <a>Alojamientos</a>
             <a>Inquilinos</a>
             <a>Guía</a>
           </nav>
 
-          <article className={`header_user  ${isMenuOpen ? "open" : ""}`}>
-            <div className="user_button" onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
-              <img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50"/>
-              <img src="images/landing_page/menu_user.png" className="client_acces"/>
+          <article className={`${styles.header_user} ${isMenuOpen && styles.open}`}>
+            <div className={styles.user_button} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
+              <img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50" />
+              <img className={styles.client_acces} src="images/landing_page/menu_user.png"/>
             </div>
-          
-            <div className="dropdown_menu" ref={menu_user_Ref}>
+
+            <div className={styles.dropdown_menu} ref={menu_user_Ref}>
               <ul>
                 {!isNavVisible && (
                   <>
-                    <li className="title_menu_header">Navegar</li>
-                    <li id="li_alojamientos"><span>Alojamientos</span></li>
+                    <li className={styles.title_menu_header}>Navegar</li>
+                    <li><span>Alojamientos</span></li>
                     <li><span>Inquilinos</span></li>
-                    <li id="li_guia"><span>Guía</span></li>
+                    <li><span>Guía</span></li>
                   </>
                 )}
-                <li className="title_menu_header">Acceder</li>
-                <li id="li_iniciar_sesion"><span>Iniciar sesión</span></li>
-                <li id="li_registrate"><span>Registrarse</span></li>
+                <li className={styles.title_menu_header}>Acceder</li>
+                <li><span>Iniciar sesión</span></li>
+                <li className={styles.li_registrate}><span>Registrarse</span></li>
                 <li><span>Soporte</span></li>
               </ul>
             </div>
@@ -113,26 +111,27 @@ export default function Home_page() {
 
       <main>
         {/*?LOGO INICIAL*/}
-        <section className="main_container">
-          <figure id="logo_main">
+        <section className={styles.main_container}>
+          <figure className={styles.logo_main}>
             <img src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150"/>
             <figcaption>Bearfrens</figcaption>
           </figure>
-        	<p className="main_descrpt">Donde viajeros y anfitriones se encuentran</p>
+        	<p className={styles.main_descrpt}>Donde viajeros y anfitriones se encuentran</p>
         </section>
 
         {/*?SECCION DE LOS ANFITRIONES*/}
-        <section className="card_section anf_card">
-          <article className="button_container">
+        <section className={`${styles.card_section} ${styles.anf_card}`}>
+          <article className={styles.button_container}>
             <h2>Encuentra el alojamiento perfecto</h2>
-            <div id="btn_alojamientos">
+            <div className={styles.btn_alojamientos}>
               <img src="images/logos/anfitrion.png" alt="Icono casa" />
               <p>Hospedajes</p>
             </div>
           </article>
           
-          <article className="card_container">
+          <article className={styles.card_container}>
             <Anf_card
+              styles={styles}
               Casa_img="/images/landing_page/casa_1.webp"
               Perfil_img="/images/landing_page/persona_1.webp"
               Nombre="Pablo"
@@ -145,15 +144,15 @@ export default function Home_page() {
               Ubicacion="Barcelona"
               Precio="300"
               Descripcion="Amante de la aventura y los viajes improvisados"
-              prof_number="prof_1"
             />
           </article>
         </section>
         
         {/*?SECCION DE LOS VIAJEROS*/}
-        <section className="card_section inq_card">
-          <article className="card_container">
+        <section className={`${styles.card_section} ${styles.inq_card}`}>
+          <article className={styles.card_container}>
             <Inq_card
+              styles={styles}
               Perfil_img="images/landing_page/persona_3.webp"
               Nombre="Juanma"
               Valoracion="4.51"
@@ -166,13 +165,12 @@ export default function Home_page() {
                 "/images/usuarios/Gustos/social.png",
                 "/images/usuarios/Gustos/baseball.png",
               ]}
-              prof_number="prof_3"
             />
           </article>
 
-          <article className="button_container">
+          <article className={styles.button_container}>
             <h2>Conecta con personas mundialmente</h2>
-            <div id="btn_inquilinos">
+            <div className={styles.btn_inquilinos}>
                 <img src="images/logos/inquilino.png" alt="Icono inquilino" />
                 <p>Inquilinos</p>
             </div>
@@ -180,18 +178,18 @@ export default function Home_page() {
         </section>
 
         {/*?VENTAJAS*/}
-        <section className="advantages">
+        <section className={styles.advantages}>
           <h2>VENTAJAS</h2>
-          <article className="advantages_container">
+          <article className={styles.advantages_container}>
             {advantages.map((advantage, index) => (
-              <article className="advantage_item" key={index}>
+              <article className={styles.advantage_item} key={index}>
                 <img
                   src={`/images/landing_page/advantage_${index + 1}.png`}
                   alt={`Advantage ${index + 1}`}
-                  className="icon"
+                  className={styles.icon}
                   width="250"
                 />
-                <div className="advantage_text">
+                <div className={styles.advantage_text}>
                   <h3>{advantage.title}</h3>
                   <p>{advantage.description}</p>
                 </div>
@@ -201,23 +199,23 @@ export default function Home_page() {
         </section>
 
         {/*?OPINIONES*/}
-        <section className="opinions">
+        <section className={styles.opinions}>
           <h2>OPINIONES DE NUESTROS CLIENTES</h2>
-          <article className="opinions_container">
+          <article className={styles.opinions_container}>
             {opinions.map(({ text, img, name, role }, index) => (
               <div
                 key={index}
-                className={`bubble_text ${index === 1 ? "central" : ""}`}
+                className={`${styles.bubble_text} ${index === 1 && styles.central}`}
               >
                 <p>{text}</p>
-                <article className="prof_opinion">
+                <article className={styles.prof_opinion}>
                   <img
-                    className="profile_img"
+                    className={styles.profile_img}
                     src={img}
                     alt={`Imagen de ${role}`}
                     width="250"
                   />
-                  <div className="info_opinion">
+                  <div className={styles.info_opinion}>
                     <h3>{name}</h3>
                     <p>{role}</p>
                   </div>
@@ -228,11 +226,12 @@ export default function Home_page() {
         </section>
 
         {/*FAQs*/}
-        <section className="freq_questions">
+        <section className={styles.freq_questions}>
           <h2>PREGUNTAS FRECUENTES</h2>
           {faqData.map((item, index) => (
             <Question
               key={index}
+              styles={styles}
               pregunta={item.pregunta}
               respuesta={item.respuesta}
             />
@@ -242,9 +241,9 @@ export default function Home_page() {
       </main>
 
       {/*Pie de pagina*/}
-      <footer>
+      <footer className={styles.footer}>
         {/*Logo*/}
-        <figure id="logo_footer">
+        <figure className={styles.logo_footer}>
           <img
             src="images/logos/logo_blanco.png"
             alt="Logo Bearfrens"
@@ -253,16 +252,12 @@ export default function Home_page() {
           <figcaption>Bearfrens</figcaption>
         </figure>
         {/*Información de contacto*/}
-        <div className="contact-info">
-          <div id="text-info">
-            <p>
-              Email: <strong>pabloramblado@correo.ugr.es</strong>
-            </p>
-            <p>
-              Teléfono: <strong>+34 666-666-666</strong>
-            </p>
+        <div className={styles.contact_info}>
+          <div className={styles.text_info}>
+            <p>Email: <strong>pabloramblado@correo.ugr.es</strong></p>
+            <p>Teléfono: <strong>+34 666-666-666</strong></p>
           </div>
-          <div className="social-media">
+          <div className={styles.social_media}>
             <img
               src="./images/logos/instagram_logo.png"
               alt="instagram_logo"
@@ -282,7 +277,7 @@ export default function Home_page() {
           </div>
         </div>
         {/*Políticias de privacidad*/}
-        <div className="privacy-policy">
+        <div className={styles.privacy_policy}>
           <a href="/politicas-de-privacidad">Políticas de Privacidad</a>
         </div>
       </footer>
