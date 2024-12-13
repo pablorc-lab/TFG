@@ -11,6 +11,7 @@
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: relative; /* Importante para centrar el primer article */
 }
 
@@ -21,6 +22,7 @@
 }
 
 .header_logo {
+  user-select: none;
   width:max-content;
   text-align: center;
   display: flex;
@@ -53,15 +55,36 @@
   position: relative;
 }
 
-.search_nav {
-  width: 100%;
-}
+.search_nav { width: 100%;}
 
 .search_nav ul{
+  user-select: none;
+  margin-top: 10px;
+  margin-bottom: 20px;
+
+  font-size: 25px;
+  color: #737373;
   padding: 0;
   list-style: none;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+.search_nav li{
+  cursor: pointer;
+  padding: 0 10px;
+
+}
+.search_nav ul li:nth-child(2){
+  color: #0a7273;
+  font-weight: 700;
+}
+
+.search_nav li:not(:nth-child(2)):hover {
+  color: white;
+  border-radius: 15px;
+  outline: 10px solid #816b61;
+  box-shadow: 0 0 0 10px #816b61;
+  background-color: #816b61;
 }
 
 
@@ -76,7 +99,7 @@
   display: flex;
   align-items: center;
   background-color: white;
-  border: 2px solid #009080;
+  border: 2px solid #0a7273;
   border-radius: 60px;
   transition: box-shadow 0.1s ease-in-out;
 }
@@ -122,3 +145,56 @@
   color: white;
   font-weight: 500;
 }
+
+
+/*? PARTE DEL USUARIO*/
+.header_user_section{
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+}
+.header_prof_user {
+  cursor: pointer;
+  user-select: none;
+  background-color: white;
+  border: 2px solid #545454;
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  padding: 4px 15px;
+  gap: 5px;
+  transition: background-color 0.1s ease-in-out;
+}
+/* Hace que las imágenes se vean blancas */
+.header_prof_user:hover img { filter: brightness(0) invert(1); }
+.header_prof_user:hover { 
+  background-color: #009080;
+  border-color: #009080;
+}
+.header_prof_user img:nth-child(1){ width: 35px;}
+.header_prof_user img:nth-child(2){ width: 45px;}
+
+
+.user_search_form {
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 2px solid #545454;
+  border-radius: 15px;
+}
+.user_search_form:focus-within { border-color: #009080;}
+.user_search_form img {width: 35px;}
+
+.user_search {
+  width: 110px;
+  caret-color: #009080; 
+  font-family: "Nunito";  
+  border: none;
+  font-size: 20px;
+  font-weight: 500;
+}
+.user_search::placeholder{ color: #a6a6a6;}
+.user_search:focus { outline: none;}
+

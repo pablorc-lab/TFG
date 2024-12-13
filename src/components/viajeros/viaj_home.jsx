@@ -11,7 +11,7 @@ export default function Viajeros_Home() {
           <h2>Viajeros</h2>
         </div>
 
-        <article className={styles.search_container}>
+        <section className={styles.search_container}>
           <nav className={styles.search_nav}>
             <ul>
               <li>Inicio</li>
@@ -31,10 +31,20 @@ export default function Viajeros_Home() {
               <span>Filtros</span>
             </div>
           </div>
-        </article>
+        </section>
         
-        <article>
-        </article>
+
+        <section className={styles.header_user_section}>
+          <div className={styles.header_prof_user}>
+            <img src="images/logos/icono_user.webp" width="40"/>
+            <img src="images/logos/logo_user_vacio.webp" width="50"/>
+          </div>
+          
+          <form className={styles.user_search_form}>
+            <img src="images/logos/search_user.webp" width="40"/>
+            <input type="text" className={styles.user_search} name="encontrar user" placeholder="@username"/>
+          </form>
+        </section>
         {/*
           <section className="header_menu">
           <nav id="header_nav">
