@@ -7,9 +7,34 @@ export default function Viajeros_Home() {
       <header className={styles.header}>
         <div className={styles.header_logo}>
           <img src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150"/>
-          <h1>Bearfren</h1>
+          <h1>Bearfrens</h1>
           <h2>Viajeros</h2>
         </div>
+
+        <article className={styles.search_container}>
+          <nav className={styles.search_nav}>
+            <ul>
+              <li>Inicio</li>
+              <li>Alojamientos</li>
+              <li>Comunidades</li>
+            </ul>
+          </nav>
+
+          <div className={styles.search_form_container}>
+            <form className={styles.search_form}>
+              <img src="images/viajeros/lupa.webp" width="50"/>
+              <input type="text" className={styles.searcher} name="buscador"  placeholder="Destino"/>
+            </form>
+
+            <div className={styles.filters}>
+              <img src="images/viajeros/filtros.webp" width="50"/>
+              <span>Filtros</span>
+            </div>
+          </div>
+        </article>
+        
+        <article>
+        </article>
         {/*
           <section className="header_menu">
           <nav id="header_nav">

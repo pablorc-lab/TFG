@@ -88,7 +88,7 @@
 .user_button img { width: 3em;}
 .user_button:hover{
   transition:  0.3s;
-  background-color: rgba(0, 154, 137, 0.9);
+  filter: brightness(1.15);
 }
 
 /**MENU DESPLEGABLE*/
@@ -273,15 +273,14 @@
 
 .btn_alojamientos:hover{
   transition: 0.2s;
-  background-color: #23898a;
+  filter: brightness(1.15);
   box-shadow: 0 0 13px #23898a;
 }
 
 .btn_inquilinos:hover {
   transition: 0.2s;
-  background-color: #5f4a40;
+  filter: brightness(1.2);
   box-shadow: 0 0 13px #5f4a40;
-
 }
 
 

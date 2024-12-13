@@ -3,16 +3,21 @@
 /*? ===================*/
 
 .header{
-  width: (100%-50px) ;
-  padding: 20px 25px;
+  font-family: "Nunito";
+  width: (100%-100px) ;
+  padding: 20px 50px;
   background-color: #e9e3d5;
+  box-shadow: 0 0 5px rgba(0,0,0,0.4);
 
+  display: flex;
+  justify-content: space-between;
+  position: relative; /* Importante para centrar el primer article */
 }
 
+/*? LOGO*/
 .header_logo img {
   width: 60px;
   height: auto;
-  
 }
 
 .header_logo {
@@ -25,9 +30,95 @@
 }
 
 .header_logo h1{
-  font-size: 22px;
+  color: #009080;
+  font-weight: 800;
+  margin: 0;
+  font-size: 25px;
+  line-height: 22px;
 }
 
 .header_logo h2{
-  font-size: 10px;
+  color: #3c302a;
+  font-family: "Chewy";
+  margin: 0px;
+  font-size: 17px;
+}
+
+
+/*? BUSCADOR MENU*/
+.search_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.search_nav {
+  width: 100%;
+}
+
+.search_nav ul{
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+/*? BUSCADOR FORM*/
+.search_form_container {
+  gap: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.search_form {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 2px solid #009080;
+  border-radius: 60px;
+  transition: box-shadow 0.1s ease-in-out;
+}
+/*Aplica estilos al contenedor cuando cualquier elemento hijo dentro de él tiene el foco.*/
+.search_form:focus-within {
+  box-shadow: 0 0 5px rgba(0, 144, 128, 0.5); 
+}
+.search_form img{
+  padding: 0 2px 0 10px;
+  width: 40px;
+}
+.searcher {
+  padding-right: 20px;
+  width: 480px;
+  caret-color: #009080; /* Cambia el color del cursor (caret) */
+  font-family: "Nunito";
+  height: 60px;
+  border: none;
+  border-top-right-radius: 60px;
+  border-bottom-right-radius: 60px;
+  line-height: 50px; 
+  font-size: 28px;
+  outline: none; /* Elimina el borde de enfoque al hacer clic */
+}
+.searcher::placeholder{ color: #a6a6a6;}
+.searcher:focus { outline: none;}
+
+.filters {
+  user-select: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  background-color: #0a7273;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.filters:hover{ box-shadow: 0 0 7px gray;}
+.filters img {width: 30px;}
+.filters span{
+  letter-spacing: 1px;
+  font-size: 23px;
+  color: white;
+  font-weight: 500;
 }
