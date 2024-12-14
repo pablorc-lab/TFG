@@ -1,7 +1,6 @@
 /*? ==================
 /*?      HEADER
 /*? ===================*/
-
 .header{
   font-family: "Nunito";
   width: (100%-100px) ;
@@ -9,6 +8,7 @@
   background-color: #e9e3d5;
   box-shadow: 0 0 5px rgba(0,0,0,0.4);
 
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,10 +49,12 @@
 
 /*? BUSCADOR MENU*/
 .search_container {
+  position: absolute;
+  left: 50%;
+  transform:translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
 }
 
 .search_nav { width: 100%;}
@@ -112,6 +114,7 @@
   width: 40px;
 }
 .searcher {
+  background-color: transparent;
   padding-right: 20px;
   width: 480px;
   caret-color: #009080; /* Cambia el color del cursor (caret) */
@@ -124,7 +127,7 @@
   font-size: 28px;
   outline: none; /* Elimina el borde de enfoque al hacer clic */
 }
-.searcher::placeholder{ color: #a6a6a6;}
+.searcher::placeholder{ color: rgb(177, 177, 177);}
 .searcher:focus { outline: none;}
 
 .filters {
@@ -189,12 +192,54 @@
 
 .user_search {
   width: 110px;
+  color:#545454;
   caret-color: #009080; 
   font-family: "Nunito";  
   border: none;
   font-size: 20px;
   font-weight: 500;
 }
-.user_search::placeholder{ color: #a6a6a6;}
+.user_search::placeholder{ color: rgb(177, 177, 177);}
 .user_search:focus { outline: none;}
 
+
+
+
+/*? =============
+/*?   RESPONSIVE
+/*? =============*/
+/**============================
+/**      TABLET
+/**============================*/
+@media (min-width: 770px) and (max-width: 1299px) {
+  .header {
+    display: grid;
+    grid-template-rows: auto auto; /* Dos filas: una para el logo y otra para el contenedor de búsqueda */
+    grid-template-columns: 1fr; /* Una sola columna que ocupa todo el espacio */
+    padding-bottom: 200px;
+  }
+
+  .header_logo {
+    grid-row: 1; /* Primer fila */
+  }
+
+  .header_user_section {
+    grid-row: 1;
+  }
+
+  
+  .search_container {
+    grid-row: 2; /* Segunda fila */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrado horizontal */
+    justify-content: center; /* Centrado vertical */
+  }
+}
+
+
+/**============================
+/**      ORDENADOR
+/**============================*/
+@media (min-width: 1300px){
+}
