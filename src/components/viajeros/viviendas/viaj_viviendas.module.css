@@ -5,7 +5,7 @@
   user-select: none;
   font-family: "Nunito";
   width: (100%-100px) ;
-  padding: 20px 50px;
+  padding: 25px 50px;
   background-color: #e9e3d5;
   box-shadow: 0 0 5px rgba(0,0,0,0.4);
 
@@ -84,9 +84,9 @@
 
 .search_nav li:not(:nth-child(2)):hover {
   border-radius: 15px;
-  outline: 10px solid #e4d1ca;
-  box-shadow: 0 0 0 10px #e4d1ca;
-  background-color: #e4d1ca;
+  outline: 10px solid #f2f2f2;
+  box-shadow: 0 0 0 10px #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 

@@ -93,13 +93,11 @@ export default function Home_page() {
               <ul>
                 {!isNavVisible && (
                   <>
-                    <li className={styles.title_menu_header}>Navegar</li>
                     <li><span>Alojamientos</span></li>
                     <li><span>Inquilinos</span></li>
-                    <li><span>Guía</span></li>
+                    <li className={styles.guia_menu_header}><span>Guía</span></li>
                   </>
                 )}
-                <li className={styles.title_menu_header}>Acceder</li>
                 <li><span>Iniciar sesión</span></li>
                 <li className={styles.li_registrate}><span>Registrarse</span></li>
                 <li><span>Soporte</span></li>
