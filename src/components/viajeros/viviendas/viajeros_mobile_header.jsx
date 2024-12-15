@@ -6,27 +6,27 @@ export default function Viajeros_header_mobile({ activeSection, setActiveSection
       {/*Cabecera*/}
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
-          <div onClick={() => setActiveSection('alojamientos')}>
+          <div className={activeSection === 'alojamientos' && styles_mobile.active_section} onClick={() => setActiveSection('alojamientos')} >
             <img 
-              src={`images/viajeros/house_header${activeSection === 'alojamientos' ? '_active' : ''}.webp`} 
+              src={`images/viajeros/house_header.webp`} 
               width="50" 
               alt='icono casa' 
             />
-            <span className={activeSection === 'alojamientos' ? styles_mobile.active_section : ''}>Alojamientos</span>
+            <span>Alojamientos</span>
           </div>
 
-          <div onClick={() => setActiveSection('comunidades')}>
+          <div  className={activeSection === 'comunidades' && styles_mobile.active_section} onClick={() => setActiveSection('comunidades')}>
             <img 
-            src={`images/viajeros/comunidades_header${activeSection === 'comunidades' ? '_active' : ''}.webp`} 
+            src={`images/viajeros/comunidades_header.webp`} 
             width="50" 
             alt='icono comunidades' 
             />
-            <span className={activeSection === 'comunidades' ? styles_mobile.active_section : ''}>Comunidades</span>
+            <span>Comunidades</span>
           </div>
 
           <img 
-            className={styles_mobile.user_icon} 
-            src={`images/viajeros/user_header${activeSection === 'perfil' ? '_active' : ''}.webp`} 
+            className={`${styles_mobile.user_icon} ${activeSection === 'perfil' && styles_mobile.active_section}`}
+            src={`images/viajeros/user_header.webp`} 
             width="55"
             alt='icono user' 
             onClick={() => setActiveSection('perfil')}
