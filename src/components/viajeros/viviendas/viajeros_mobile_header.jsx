@@ -1,6 +1,17 @@
+import { useState} from 'react';
 import styles_mobile from "./viaj_viviendas_mobile.module.css"
 
 export default function Viajeros_header_mobile({ activeSection, setActiveSection }) {
+  const [username, setUsername] = useState("");
+
+  const handleOnChange_searchUser = (e) => {
+    if (e.target.value === '' || e.target.value[0] !== '@') {
+      setUsername('@');
+    }
+    else
+      setUsername(e.target.value);
+  };
+
   return (
     <>
       {/*Cabecera*/}
@@ -34,21 +45,33 @@ export default function Viajeros_header_mobile({ activeSection, setActiveSection
         </nav>
       </header>
 
-      {/*Buscador*/}
-      <article className={styles_mobile.search_form_container}>
-        <form className={styles_mobile.search_form}>
-          <div>
-            <img src="images/viajeros/lupa_mobile.webp" width="50" alt='icono lupa' />
-            <input type="text" className={styles_mobile.searcher} name="buscador" placeholder="Destino" />
-          </div>
-          <div>
-            <img src="images/logos/search_user_active.webp" width="50" alt='icono usuario lupa' />
-            <input type="text" className={styles_mobile.searcher} name="buscador" placeholder="@username" />
-          </div>
-        </form>
+      {/*Buscador siempre que estemos en alojamientos*/}
+      {activeSection === 'alojamientos' && (
+        <article className={styles_mobile.search_form_container}>
+          <form className={styles_mobile.search_form}>
+            <div>
+              <img src="images/viajeros/lupa_mobile.webp" width="50" alt='icono lupa' />
+              <input type="text" className={styles_mobile.searcher} name="buscador" placeholder="Destino" />
+            </div>
+            <div>
+              <img src="images/logos/search_user_active.webp" width="50" alt='icono usuario lupa' />
+              <input 
+                type="text" 
+                className={styles_mobile.searcher} 
+                name="buscador" 
+                placeholder="@username" 
+                value={username}
+                onFocus={() => {username === '' && setUsername('@');}}
+                onBlur={() => setUsername("")}
+                onChange={handleOnChange_searchUser}
+              />
+            </div>
+          </form>
 
-        <img className={styles_mobile.filters} src="images/viajeros/filtros.webp" width="50" alt='icono filtros' />
-      </article>
+          <img className={styles_mobile.filters} src="images/viajeros/filtros.webp" width="50" alt='icono filtros' />
+        </article>
+      )}
+     
     </>
   )
 }
