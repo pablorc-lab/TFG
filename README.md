@@ -18,7 +18,11 @@ El sistema está optimizado para facilitar la creación de perfiles y la gestió
 
 ## Instrucciones para poder visualizar el  proyecto
 
-Este proyecto está diseñado para ser solo ejecutado localmente. 
+> [!NOTE]
+> 
+> Antes de ejecutar el proyecto, es necesario asegurarse de tener **Node.js** instalado, disponible en https://nodejs.org/es
+>
+> Una vez instalado podemos ejecutar en nuestra terminal `node -vp` para verificar que se ha instalado correctamente
 
 ### **Paso 1: Clonar el repositorio en nuestra máquina local**
 ```bash
