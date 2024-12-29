@@ -16,7 +16,7 @@ El sistema está optimizado para facilitar la creación de perfiles y la gestió
 
 --- 
 
-## Instrucciones para poder visualizar el  proyecto
+## 🛠️ Instrucciones para poder visualizar el  proyecto
 
 > [!NOTE]
 > 
