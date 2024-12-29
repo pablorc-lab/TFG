@@ -3,8 +3,8 @@
 [![My Skills](https://skillicons.dev/icons?i=react,js,html,css,java,spring)](https://skillicons.dev)
 
 
+![estado](https://img.shields.io/badge/Estado-En%20desarrollo-darkred)
 > [!WARNING]
-> ![estado](https://img.shields.io/badge/Estado-En%20desarrollo-darkred)
 > 
 > *Este proyecto es parte de mi TFG y aún está en desarrollo. Por lo que faltan algunas funcionalidades por añadir/completar.*
 >
