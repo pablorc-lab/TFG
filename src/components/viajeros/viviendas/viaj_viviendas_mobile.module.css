@@ -50,6 +50,7 @@
 /*?      BUSCADOR
 /*? ===================*/
 .search_form_container {
+  user-select: none;
   background-color: #e9e3d5;
   box-shadow: 0 0 5px rgba(0,0,0,0.3);
 
@@ -70,7 +71,10 @@
   border-radius: 60px;
   background-color: white;
 }
-.search_form img {width: 35px;}
+.search_form img {
+  width: 35px;
+  aspect-ratio: 1 / 1;
+}
 .search_form div:nth-of-type(2) img{ padding-left: 10px;}
 .search_form:focus-within {box-shadow: 0 0 5px rgba(0, 144, 128, 0.5);}
 
@@ -96,7 +100,42 @@
 .filters {
   cursor: pointer;
   width: 30px;
+  aspect-ratio: 1 / 1;
   background-color: #0a7273;
   padding: 10px 15px;
   border-radius: 10px;
+}
+
+/*?==============================
+/*? Ciudades mostradas al buscar
+/*?==============================*/
+.filteredCities {
+  user-select: none;
+  font-family: "Nunito";
+  font-weight: 700;
+  border-radius: 10px;
+  position: absolute;
+  width: 250px;
+  left: 30px;
+  top: 80px;
+  background-color: white;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.4);
+  padding: 5px;
+}
+.filteredCities li {
+  font-size: 16px;
+  cursor: pointer;
+  list-style: none;
+  padding: 15px;
+  border-radius: 10px;
+}
+.filteredCities li:hover { background-color: rgb(233, 233, 233);}
+
+.filteredList {
+  display: grid;
+  gap: 5px;
+}
+.filteredList span:nth-child(2){
+  color: gray;
+  font-weight: 500;
 }
