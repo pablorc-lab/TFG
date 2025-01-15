@@ -16,6 +16,7 @@
 .header_logo  {
   width: 60px;
   height: auto;
+  aspect-ratio: 1 / 1;
 }
 .header_logo {
   font-family: "Coco Gothic";
@@ -83,6 +84,7 @@
 .user_button img:nth-child(2) {
   transition: transform 0.25s ease-in-out; 
   transform: rotate(180deg); /* Posición inicial */
+  aspect-ratio: 1 / 1;
 }
 .header_user.open .user_button img:nth-child(2) {transform: rotate(360deg);}
 
@@ -188,6 +190,7 @@
   width: 200px;
   height: auto;
   margin: 20px auto;
+  aspect-ratio: 1 / 1;
 }
 
 .logo_main figcaption {
@@ -342,9 +345,9 @@
   object-fit: cover;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+  aspect-ratio: 1 / 1;
+  user-select: none;
 }
-
-
 
 /*? PERFIL, NOMBRE Y GUSTOS*/
 .personal_info {
@@ -363,6 +366,8 @@
   border-radius: 50%;
   object-fit: cover;
   aspect-ratio: 1 / 1;
+  user-select: none;
+
 }
 
 .anf_name {
@@ -382,6 +387,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  user-select: none;
 }
 
 .anf_score p {
@@ -402,6 +408,8 @@
 }
 .anf_likes img {
   height: auto;
+  aspect-ratio: 1 / 1;
+  user-select: none;
 }
 
 /*? UBICACION Y DESCRIPCIÓN*/
@@ -410,6 +418,7 @@
   align-items: end;
   font-style: normal;
   line-height: 1;
+  user-select: none;
 }
 
 .description {
@@ -432,10 +441,12 @@
 .text_column_viaj {
   flex: 1;
   text-align: end;
+  user-select: none;
 }
 
 .score_viajero {
   justify-content: end;
+  user-select: none;
 }
 
 .score_viajero p {
@@ -451,12 +462,14 @@
 .age {
   color: #262626;
   margin: 0;
+  user-select: none;
 }
 
 /*? GUSTOS*/
 .viaj_likes {
   display: flex;
   justify-content: space-around;
+  user-select: none;
 }
 
 /*? CONECTAR */

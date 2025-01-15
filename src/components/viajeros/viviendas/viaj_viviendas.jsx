@@ -44,12 +44,12 @@ export default function Viajeros_Viviendas({ defaultActiveSection = "alojamiento
     )
   );
 
-  // Cambio al escribir en el input "Destino"
+  // Cambio al escribir en el input "Destino" y filtrar las búsquedas
   const handleInputChange = (e) => {
     const city = e.target.value;
     setLocation(city);
 
-    if(city.length > 0){
+    if(city.length > 1){
       const removeAccents = (str) => {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       };
@@ -58,9 +58,9 @@ export default function Viajeros_Viviendas({ defaultActiveSection = "alojamiento
       const input_city = city.split(',').map(part => part.trim().toLowerCase());
       const regex = new RegExp(`^${input_city[0]}`, 'i'); // Empezar por lo escrito, ignorando mayusculas (i)
 
+      // Encontrar matches
       const matches = Ciudades.cities.filter(ciudad => {
         const cityMatch = regex.test(removeAccents(ciudad.name.toLowerCase()));
-        
         if(input_city[1]){
           const provincia = removeAccents(provinceMap[ciudad.id_state].name.toLowerCase());
           return cityMatch && provincia.startsWith(input_city[1]);
@@ -69,6 +69,7 @@ export default function Viajeros_Viviendas({ defaultActiveSection = "alojamiento
       }).slice(0,5);
       setFilteredCities(matches);
     }
+
     else{
       setFilteredCities([]);
     }
