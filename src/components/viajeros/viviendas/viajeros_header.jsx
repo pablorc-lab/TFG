@@ -1,7 +1,7 @@
 import { useState} from 'react';
-import styles from "./viaj_viviendas.module.css"
+import styles from "./viaj_viviendas_header.module.css"
 
-export default function Viajeros_header(){
+export default function Viajeros_header({children, handleInputChange, setLocationFocus, location, parentStyles}){
   const [username, setUsername] = useState("");
 
   const handleOnChange_searchUser = (e) => {
@@ -32,7 +32,17 @@ export default function Viajeros_header(){
         <article className={styles.search_form_container}>
           <form className={styles.search_form}>
             <img src="images/viajeros/lupa.webp" width="50" alt='icono lupa' />
-            <input type="text" className={styles.searcher} name="buscador" placeholder="Destino" />
+            <input 
+                type="text" 
+                className={styles.searcher} 
+                name="buscador" 
+                placeholder="Destino" 
+                value={location}
+                onChange={handleInputChange}
+                onFocus={() => setLocationFocus(true)}
+                onBlur={() => {setTimeout(() => setLocationFocus(false), 200);}}
+              />
+            {children}
           </form>
 
           <div className={styles.filters}>

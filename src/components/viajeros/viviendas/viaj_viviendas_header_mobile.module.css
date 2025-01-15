@@ -105,37 +105,3 @@
   padding: 10px 15px;
   border-radius: 10px;
 }
-
-/*?==============================
-/*? Ciudades mostradas al buscar
-/*?==============================*/
-.filteredCities {
-  user-select: none;
-  font-family: "Nunito";
-  font-weight: 700;
-  border-radius: 10px;
-  position: absolute;
-  width: 250px;
-  left: 30px;
-  top: 80px;
-  background-color: white;
-  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.4);
-  padding: 5px;
-}
-.filteredCities li {
-  font-size: 16px;
-  cursor: pointer;
-  list-style: none;
-  padding: 15px;
-  border-radius: 10px;
-}
-.filteredCities li:hover { background-color: rgb(233, 233, 233);}
-
-.filteredList {
-  display: grid;
-  gap: 5px;
-}
-.filteredList span:nth-child(2){
-  color: gray;
-  font-weight: 500;
-}

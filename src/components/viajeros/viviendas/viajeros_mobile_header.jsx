@@ -1,14 +1,10 @@
 import { useState} from 'react';
-import styles_mobile from "./viaj_viviendas_mobile.module.css"
-import Ciudades from "../../../data/countries/cities.json"
-import Pronvicias from "../../../data/countries/states.json"
-import Paises from "../../../data/countries/countries.json"
+import styles_mobile from "./viaj_viviendas_header_mobile.module.css"
 
-export default function Viajeros_header_mobile({ activeSection, setActiveSection }) {
+
+export default function Viajeros_header_mobile({ children, activeSection, setActiveSection, parentStyles, handleInputChange, setLocationFocus, location }) {
   const [username, setUsername] = useState("");
-  const [location, setLocation] = useState('');
-  const [locationFocus, setLocationFocus] = useState(false);
-  const [filteredCities, setFilteredCities] = useState([]);
+  
 
   // Cada vez que se reenderiza el componente, se crean los arrays de los JSON
   const handleOnChange_searchUser = (e) => {
@@ -24,33 +20,7 @@ export default function Viajeros_header_mobile({ activeSection, setActiveSection
     return activeSection === nameSection && styles_mobile.active_section;
   }
   
-  // Cambio al escribir en el input "Destino"
-  const handleInputChange = (e) => {
-    const city = e.target.value;
-    setLocation(city);
 
-    if(city.length > 0){
-      const matches = Ciudades.cities
-      .filter(ciudad => ciudad.name.toLowerCase().includes(city.toLowerCase()))
-      .slice(0,3);
-      setFilteredCities(matches);
-    }
-    else{
-      setFilteredCities([]);
-    }
-  }
-
-  // Almacenar las provincias para mejorar su eficiencia al buscar
-  const provinceMap = {};
-  Pronvicias.states.forEach(state => {
-    provinceMap[state.id] = state;
-  });
-
-  // Almacenar los paises para mejorar su eficiencia al buscar
-  const countryMap = {};
-  Paises.countries.forEach(country => {
-    countryMap[country.id] = country;
-  });
 
 
   return (
@@ -101,22 +71,9 @@ export default function Viajeros_header_mobile({ activeSection, setActiveSection
                 value={location}
                 onChange={handleInputChange}
                 onFocus={() => setLocationFocus(true)}
-                onBlur={() => setLocationFocus(false)}
+                onBlur={() => {setTimeout(() => setLocationFocus(false), 200);}}
               />
-              {filteredCities.length > 0 && locationFocus && (
-                <ul className={styles_mobile.filteredCities} >
-                  {filteredCities.map(({id, name, id_state}) => {
-                    const provincia = provinceMap[id_state]; // O(1)
-                    const pais = countryMap[provincia.id_country]; // O(1)                  
-                    return (
-                      <li key={id} className={styles_mobile.filteredList} onClick={() => setLocation(name)}> 
-                        <span>{name}</span>
-                        <span>{provincia.name}, {pais.name }</span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
+              {children}
             </div>
 
             {/*BUSCAR USUARIO*/}
