@@ -50,15 +50,19 @@ export default function Viajeros_Viviendas({ defaultActiveSection = "alojamiento
     setLocation(city);
 
     if(city.length > 0){
+      const removeAccents = (str) => {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      };
+
       // Dividir la entrada por la coma
       const input_city = city.split(',').map(part => part.trim().toLowerCase());
       const regex = new RegExp(`^${input_city[0]}`, 'i'); // Empezar por lo escrito, ignorando mayusculas (i)
 
       const matches = Ciudades.cities.filter(ciudad => {
-        const cityMatch = regex.test(ciudad.name);
+        const cityMatch = regex.test(removeAccents(ciudad.name.toLowerCase()));
         
         if(input_city[1]){
-          const provincia = provinceMap[ciudad.id_state].name.toLowerCase();
+          const provincia = removeAccents(provinceMap[ciudad.id_state].name.toLowerCase());
           return cityMatch && provincia.startsWith(input_city[1]);
         }
         return cityMatch;
