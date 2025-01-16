@@ -1,5 +1,5 @@
 import { useState} from 'react';
-import styles from "./viaj_viviendas_header.module.css"
+import styles from "./viajeros_header.module.css"
 
 export default function Viajeros_header({children, handleInputChange, setLocationFocus, location}){
   const [username, setUsername] = useState("");

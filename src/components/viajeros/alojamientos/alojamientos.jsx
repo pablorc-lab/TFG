@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Viajeros_header from './viajeros_header';
-import Viajeros_header_mobile from './viajeros_mobile_header';
+import Viajeros_mobile_header from "./viajeros_mobile_header"
 import Anf_Profiles_Gallery from './anf_profiles_gallery';
 
-import styles from "./viaj_viviendas.module.css"
+import styles from "./alojamientos.module.css"
 import Ciudades from "../../../data/countries/cities.json"
 import Pronvicias from "../../../data/countries/states.json"
 import Paises from "../../../data/countries/countries.json"
 
 
-export default function Viajeros_Viviendas({ defaultActiveSection = "alojamientos" }) {
+export default function Viajeros_Alojamientos({ defaultActiveSection = "alojamientos" }) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const [activeSection, setActiveSection] = useState(defaultActiveSection);
 
@@ -99,7 +99,7 @@ export default function Viajeros_Viviendas({ defaultActiveSection = "alojamiento
           setLocationFocus={setLocationFocus}
           location={location}
         />
-        : <Viajeros_header_mobile
+        : <Viajeros_mobile_header
           children={children}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
