@@ -3,7 +3,7 @@ import Viajeros_header from './viajeros_header';
 import Viajeros_header_mobile from './viajeros_mobile_header';
 import Anf_Profiles_Gallery from './anf_profiles_gallery';
 
-import parentStyles from "./viaj_viviendas.module.css"
+import styles from "./viaj_viviendas.module.css"
 import Ciudades from "../../../data/countries/cities.json"
 import Pronvicias from "../../../data/countries/states.json"
 import Paises from "../../../data/countries/countries.json"
@@ -32,12 +32,12 @@ export default function Viajeros_Viviendas({ defaultActiveSection = "alojamiento
   // Lista de paises filtradas al buscar, que se pasará a las cabeceras
   const children = (
     filteredCities.length > 0 && locationFocus && (
-      <ul className={parentStyles.filteredCities}>
+      <ul className={styles.filteredCities}>
         {filteredCities.map(({ id, name, id_state }) => {
           const provincia = provinceMap[id_state]; // O(1)
           const pais = countryMap[provincia.id_country]; // O(1)
           return (
-            <li key={id} className={parentStyles.filteredList} onClick={() => setLocation(`${name},${provincia.name}`)}> 
+            <li key={id} className={styles.filteredList} onClick={() => setLocation(`${name},${provincia.name}`)}> 
               <span>{name}</span>
               <span>{provincia.name}, {pais.name}</span>
             </li>
@@ -98,19 +98,16 @@ export default function Viajeros_Viviendas({ defaultActiveSection = "alojamiento
           handleInputChange={handleInputChange}
           setLocationFocus={setLocationFocus}
           location={location}
-          parentStyles={parentStyles}
         />
         : <Viajeros_header_mobile
           children={children}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
-          parentStyles={parentStyles}
           handleInputChange={handleInputChange}
           setLocationFocus={setLocationFocus}
           location={location}
         />
       }
-
       {/* PERFILES DE VIAJEROS */}
       <Anf_Profiles_Gallery />
     </>

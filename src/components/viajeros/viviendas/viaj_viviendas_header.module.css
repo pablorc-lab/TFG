@@ -2,6 +2,7 @@
 /*?      HEADER
 /*? ===================*/
 .header{
+  z-index: 1;
   user-select: none;
   font-family: "Nunito";
   width: (100%-100px) ;

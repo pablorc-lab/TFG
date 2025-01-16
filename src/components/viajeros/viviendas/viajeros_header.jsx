@@ -1,7 +1,7 @@
 import { useState} from 'react';
 import styles from "./viaj_viviendas_header.module.css"
 
-export default function Viajeros_header({children, handleInputChange, setLocationFocus, location, parentStyles}){
+export default function Viajeros_header({children, handleInputChange, setLocationFocus, location}){
   const [username, setUsername] = useState("");
 
   const handleOnChange_searchUser = (e) => {

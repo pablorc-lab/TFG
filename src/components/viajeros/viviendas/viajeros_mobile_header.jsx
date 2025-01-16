@@ -2,7 +2,7 @@ import { useState} from 'react';
 import styles_mobile from "./viaj_viviendas_header_mobile.module.css"
 
 
-export default function Viajeros_header_mobile({ children, activeSection, setActiveSection, parentStyles, handleInputChange, setLocationFocus, location }) {
+export default function Viajeros_header_mobile({ children, activeSection, setActiveSection, handleInputChange, setLocationFocus, location }) {
   const [username, setUsername] = useState("");
   
 

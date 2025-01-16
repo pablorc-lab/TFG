@@ -3,7 +3,6 @@
 /*?===========================*/
 /*? SECCIONES GENERALES*/
 .general_prof {
-  flex: 1; 
   position: relative; /* Contenedor padre */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
   font-family: "Nunito";
@@ -11,7 +10,6 @@
   border-radius: 15px;
   margin: 0 auto;
   transition: box-shadow 0.1s ease-in-out;
-  display: flexbox;
   cursor:default;
   max-width: 384px;
 }
@@ -66,11 +64,12 @@
 
 .anf_personal_info {
   position: absolute;
-  transform: translateY(-56px);
+  transform: translate(-10px, -56px);
   width: calc(100% - 20px);
 }
 .anf_info {padding: 0px 22px;}
 .profile_img {
+  padding: 8px;
   background-color: white;
   height: auto;
   border-radius: 50%;
@@ -87,7 +86,7 @@
   overflow: hidden;  
   border-bottom: 1px solid #d0dbd9;
   margin: 0 20px;
-  margin-bottom: 15px;
+  margin-bottom: 23px;
 }
 .anf_name h3, .text_column_viaj h3 {
   font-weight: 700;
