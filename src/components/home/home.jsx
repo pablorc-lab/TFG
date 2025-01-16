@@ -134,9 +134,9 @@ export default function Home_page() {
               Perfil_img="/images/landing_page/persona_1.webp"
               Nombre="Pablo"
               Gustos_imgs={[
-                "/images/usuarios/Gustos/baseball.png",
-                "/images/usuarios/Gustos/pesca.png",
-                "/images/usuarios/Gustos/poker.png",
+                "/images/usuarios/Gustos/baseball.svg",
+                "/images/usuarios/Gustos/pesca.svg",
+                "/images/usuarios/Gustos/poker.svg",
               ]}
               Valoracion={4.91}
               Ubicacion="Barcelona"
@@ -159,9 +159,9 @@ export default function Home_page() {
               Profesion="Mécanico"
               Descripcion="Soy un hombre apasionado por conocer nuevas personas y sitios desconocidos"
               Gustos_imgs={[
-                "/images/usuarios/Gustos/pesca.png",
-                "/images/usuarios/Gustos/social.png",
-                "/images/usuarios/Gustos/baseball.png",
+                "/images/usuarios/Gustos/pesca.svg",
+                "/images/usuarios/Gustos/social.svg",
+                "/images/usuarios/Gustos/baseball.svg",
               ]}
             />
           </article>

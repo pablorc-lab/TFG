@@ -1,0 +1,212 @@
+/*?=============================
+/*?       GENERAL CARDS
+/*?===========================*/
+/*? SECCIONES GENERALES*/
+.general_prof {
+  flex: 1; 
+  position: relative; /* Contenedor padre */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
+  font-family: "Nunito";
+  background-color: white;
+  border-radius: 15px;
+  margin: 0 auto;
+  transition: box-shadow 0.1s ease-in-out;
+  display: flexbox;
+  cursor:default;
+  max-width: 384px;
+}
+
+.general_prof:hover{
+  box-shadow: 0 0 10px 3px rgb(114, 114, 114);
+}
+
+.btn_conectar {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Nunito";
+  font-weight: 800;
+  background-color: white;
+  color: #009080;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  border-radius: 6.5px;
+  border: 1.6px solid #009080;
+  font-size: 17.6px;
+  padding: 12px 20px;
+  margin-bottom: 14.4px;
+}
+
+.btn_conectar:hover{
+  background-color: #009080;
+  color: white;
+}
+
+
+/*?=============================
+/*?        ANFITRION
+/*?===========================*/
+.house {
+  width: 100%;
+  height: 184px;
+  object-fit: cover;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  aspect-ratio: 1 / 1;
+  user-select: none;
+}
+
+/*? PERFIL, NOMBRE Y GUSTOS*/
+.personal_info {
+  align-items: end;
+  display: flex;
+  padding: 0;
+}
+
+.anf_personal_info {
+  position: absolute;
+  transform: translateY(-56px);
+  width: calc(100% - 20px);
+}
+.anf_info {padding: 0px 22px;}
+.profile_img {
+  background-color: white;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  user-select: none;
+  width: 120px;
+}
+
+.anf_name {
+  flex-grow: 1;
+  text-align: center;
+  white-space: nowrap;       
+  overflow: hidden;  
+  border-bottom: 1px solid #d0dbd9;
+  margin: 0 20px;
+  margin-bottom: 15px;
+}
+.anf_name h3, .text_column_viaj h3 {
+  font-weight: 700;
+  margin: 0;
+  font-size: 28px;
+}
+
+
+/*? Puntuación y gustos*/
+.score {
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  user-select: none;
+}
+.score img, .score_viajero img { width: 30.4px;}
+
+.anf_score p {
+  color: #009080;
+  margin: 0;
+  font-size: 28.8px;
+}
+
+.anf_rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px 8px 10.4px 8px;
+  padding-top: 80px;
+  gap: 9.6%;
+}
+
+.anf_likes {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+.anf_likes img {
+  width: 32px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  user-select: none;
+}
+
+/*? UBICACION Y DESCRIPCIÓN*/
+.address {
+  display: flex;
+  align-items: end;
+  font-style: normal;
+  line-height: 1;
+  user-select: none;
+  margin-top: 16px;
+  font-size: 19.2px;
+  gap: 6.4px;
+}
+.address img { width: 17.6px;}
+
+.description {
+  text-align: justify;
+  color: #737373;
+  font-size: 19.2px;
+  margin-top: 9.6px;
+  margin-bottom: 14.4px;
+}
+
+/*?=============================
+/*?        VIAJEROS
+/*?===========================*/
+/*?FOTO E INFO*/
+.text_column_viaj p {
+  margin: 0;
+  font-family: "Nunito";
+  color: #262626;
+  font-weight: 400;
+  font-size: 32px;
+}
+
+.text_column_viaj {
+  flex: 1;
+  text-align: end;
+  user-select: none;
+  margin: 8px 4px 8px 40px;
+}
+
+.score_viajero {
+  justify-content: end;
+  user-select: none;
+}
+
+.score_viajero p {
+  font-style: italic;
+  font-family: "Nunito";
+  line-height: 0;
+  font-size: 32px;
+}
+
+/*? EDAD Y DESCRIPCIÓN*/
+.age_descript_viaj { font-family: "Nunito";}
+.age {
+  color: #262626;
+  margin: 0;
+  user-select: none;
+  margin-top: 12px;
+  font-size: 24px;
+}
+
+/*? GUSTOS*/
+.viaj_likes {
+  display: flex;
+  justify-content: space-around;
+  user-select: none;
+  margin: 32px 40.8px;
+}
+.viaj_likes img { width: 48px;}
+
+/*? CONECTAR */
+.btn_viaj {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 9.6px;
+}

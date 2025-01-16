@@ -18,7 +18,7 @@ export default function Anf_card({styles, Casa_img, Perfil_img, Nombre="-", Gust
         <div className={styles.anf_rating}>
           <div className={`${styles.score} ${styles.anf_score}`}>
             <p>{Valoracion}</p>
-            <img src="/images/usuarios/estrella.png" alt="Logo estrella" />
+            <img src="/images/usuarios/estrella_verde.webp" alt="Logo estrella" />
           </div>
           <div className={styles.anf_likes}>
             {Gustos_imgs.map((gusto, index) => (
@@ -29,7 +29,7 @@ export default function Anf_card({styles, Casa_img, Perfil_img, Nombre="-", Gust
 
         {/* Dirección */}
         <address className={styles.address}>
-          <img src="/images/usuarios/ubicacion.png" alt="Logo ubicación" width={50} />
+          <img src="/images/usuarios/ubicacion.svg" alt="Logo ubicación" width={50} />
           <span>{`${Ubicacion} (${Precio}\u20ac  / noche)`}</span>
         </address>
 

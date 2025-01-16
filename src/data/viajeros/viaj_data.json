@@ -1,0 +1,72 @@
+[
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura y los viajes improvisados"
+  },
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura y los viajes improvisados"
+  },
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura y los viajes improvisados"
+  },
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura y los viajes improvisados"
+  },
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura y los viajes improvisados"
+  }
+]

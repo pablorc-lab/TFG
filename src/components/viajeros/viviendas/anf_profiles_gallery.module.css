@@ -1,0 +1,132 @@
+/*?==============================
+/*? PERFILES DE LOS VIAJEROS
+/*?==============================*/
+.card_users {
+  padding: 20px 50px;
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+
+/*? =============
+/*?   RESPONSIVE
+/*? =============*/
+.general_prof {
+  max-width: 384px;
+}
+
+.btn_conectar {
+  border-radius: 6.4px;
+  border: 1.6px solid #009080;
+  font-size: 17.6px;
+  padding: 12px 20px;
+  margin-bottom: 14.4px;
+}
+
+.button_container h2 {
+  font-size: 36px;
+}
+
+.anf_info {
+  padding: 0px 20px;
+}
+
+.house {
+  height: 184px;
+}
+
+.profile_img {
+  width: 120px;
+}
+
+.anf_personal_info {
+  transform: translateY(-56px);
+  width: calc(100% - 20px);
+}
+
+.anf_name {
+  border-bottom: 0.8px solid #d0dbd9;
+  margin: 0 16px;
+  margin-bottom: 14.4px;
+}
+
+.anf_name h3,
+.text_column_viaj h3 {
+  font-size: 28px;
+}
+
+.anf_rating {
+  margin: 0px 8px 10.4px 8px;
+  padding-top: 80px;
+  gap: 9.6%;
+}
+
+.anf_likes img {
+  width: 32px;
+}
+
+.address img {
+  width: 17.6px;
+}
+
+.address {
+  margin-top: 16px;
+  font-size: 19.2px;
+  gap: 6.4px;
+}
+
+.description {
+  font-size: 19.2px;
+  margin-top: 9.6px;
+  margin-bottom: 14.4px;
+}
+
+.score img,
+.score_viajero img {
+  width: 30.4px;
+}
+
+.anf_score p {
+  font-size: 28.8px;
+}
+
+.viaj_prof {
+  padding: 16px 24px;
+}
+
+.viaj_img {
+  width: 130.4px;
+  height: 130.4px;
+}
+
+.text_column_viaj p,
+.score_viajero p {
+  font-size: 32px;
+}
+
+.text_column_viaj {
+  margin: 8px 4px 8px 40px;
+}
+
+.age {
+  margin-top: 12px;
+  font-size: 24px;
+}
+
+.viaj_likes {
+  margin: 32px 40.8px;
+}
+
+.viaj_likes img {
+  width: 48px;
+}
+
+.btn_viaj {
+  margin-bottom: 9.6px;
+}
+
+.advantages_container {
+  margin: 0 12vw;
+}
