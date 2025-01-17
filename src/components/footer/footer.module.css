@@ -1,0 +1,104 @@
+.footer {
+  background-color: #0a7273;
+  padding: 1.6vw 0px;
+  font-family: "Nunito";
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 5px 1px rgb(184, 180, 178);
+}
+
+/*? Logo*/
+.logo_footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  margin-left: 3vw;
+}
+
+.logo_footer img {width: 70px; height: auto;}
+.logo_footer figcaption {
+  margin-left: 15px;
+  font-family: "Coco Gothic";
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: #e9e3d5;
+  font-size: 25px;
+}
+
+/*? Informacion de contacto*/
+.contact_info {font-size: 1vw; text-align: center;}
+.text_info {
+  display: inline-flex;
+  gap: 2vw;
+  color: white;
+}
+.text_info p { font-weight: 500;}
+
+.social_media img {
+  width: 30px;
+  cursor: pointer;
+}
+.social_media {
+  display: flex;
+  justify-content: center;
+  gap: 2vw;
+}
+
+/*? Politicias de privacidad*/
+.privacy_policy a {
+  color: white;
+  font-size: 1.4vw;
+  margin-right: 3vw;
+  text-decoration: none;
+}
+
+.privacy_policy a:hover{
+  text-decoration: underline;
+}
+
+@media (max-width: 950px) {
+  /** FOOTER */
+  .footer {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+  }
+  .logo_footer {margin-bottom: 30px;}
+  .logo_footer img { width: 50px; }
+  .logo_footer figcaption { font-size: 20px; }
+  .social_media {
+    border-bottom: 1px solid rgba(245, 245, 220, 0.664); 
+    padding-bottom: 13px;
+  }
+  .social_media {padding: 10px 0 20px 0;}
+  .social_media img { width: 30px; height: 30px; }
+  .text_info {
+    width: 90vw;
+    border-top: 1px solid rgba(245, 245, 220, 0.664);
+    padding-top: 10px;
+    display: grid; 
+    gap: 0;
+  }
+  .text_info p { font-size: 15px; margin: 10px 0;}
+  .privacy_policy {  text-align: center; margin-top: 30px;}
+  .privacy_policy a { font-size: 20px; }
+}
+
+@media (min-width: 770px) and (max-width: 899px) {
+  .text_info p { font-size: 12px; }
+  .privacy_policy a { font-size: 14px; }
+}
+
+@media (min-width: 900px) {
+  .text_info p { font-size: 15px; }
+  .privacy_policy a { font-size: 17px; }
+}
+
+@media (min-width: 1500px) {
+  .text_info p { font-size: 18px; }
+  .privacy_policy a { font-size: 20px; }
+}

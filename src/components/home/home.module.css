@@ -163,7 +163,6 @@
 /*?===========================*/
 .main_container {
   user-select: none;
-
   padding: 0 50px;
   padding-bottom: 100px;
   padding-top: 200px;  
@@ -220,7 +219,6 @@
 }
 .anf_card { background-color: #c6e2ce;}
 .inq_card {background-color: #e9e3d5;}
-
 
 .button_container {
   margin: 0;
@@ -713,70 +711,6 @@
 }
 
 
-/*?=============================
-/*?        FOOTER
-/*?===========================*/
-.footer {
-  background-color: #0a7273;
-  padding: 1.6vw 0px;
-  font-family: "Nunito";
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 0 5px 1px rgb(184, 180, 178);
-}
-
-/*? Logo*/
-.logo_footer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  margin-left: 3vw;
-}
-
-.logo_footer img {width: 5vw; height: auto;}
-.logo_footer figcaption {
-  margin-left: 0.7vw;
-  font-family: "Coco Gothic";
-  letter-spacing: 1px;
-  font-weight: bold;
-  color: #e9e3d5;
-  font-size: 2vw;
-}
-
-/*? Informacion de contacto*/
-.contact_info {font-size: 1vw; text-align: center;}
-.text_info {
-  display: inline-flex;
-  gap: 2vw;
-  color: white;
-}
-.text_info p { font-weight: 500;}
-
-.social_media img {
-  width: 2.1vw;
-  cursor: pointer;
-}
-.social_media {
-  display: flex;
-  justify-content: center;
-  gap: 2vw;
-}
-
-/*? Politicias de privacidad*/
-.privacy_policy a {
-  color: white;
-  font-size: 1.4vw;
-  margin-right: 3vw;
-  text-decoration: none;
-}
-
-.privacy_policy a:hover{
-  text-decoration: underline;
-}
-
 
 
 /* Responsive */
@@ -876,21 +810,6 @@
     gap: 20px;
   }
   .question_item { max-width: 510px; }
-
-  /** FOOTER */
-  .footer {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    padding: 40px 0;
-  }
-  .logo_footer img { width: 50px; }
-  .logo_footer figcaption { font-size: 20px; }
-  .social_media img { width: 20px; height: 20px; }
-  .text_info p { font-size: 13px; }
-  .privacy_policy { text-align: center; }
-  .privacy_policy a { font-size: 20px; }
 }
 
 @media (min-width: 770px) {
@@ -930,9 +849,6 @@
   .question_item h3 { font-size: 19px; }
   .question_item { max-width: 650px; }
   .question_content p { font-size: 16px; }
-
-  .text_info p { font-size: 1.4vw; }
-  .privacy_policy a { font-size: 1.5vw; }
 }
 
 @media (min-width: 900px) {

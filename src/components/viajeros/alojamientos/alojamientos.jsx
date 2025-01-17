@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Viajeros_header from './viajeros_header';
 import Viajeros_mobile_header from "./viajeros_mobile_header"
 import Anf_Profiles_Gallery from './anf_profiles_gallery';
+import Footer from '../../footer/footer';
 
 import styles from "./alojamientos.module.css"
 import Ciudades from "../../../data/countries/cities.json"
@@ -108,8 +109,11 @@ export default function Viajeros_Alojamientos({ defaultActiveSection = "alojamie
           location={location}
         />
       }
-      {/* PERFILES DE VIAJEROS */}
-      <Anf_Profiles_Gallery />
+      {/* PERFILES DE VIAJEROS  <Anf_Profiles_Gallery />*/}
+      
+
+      {/*Pie de pagina*/}
+      <Footer/>
     </>
   )
 }
