@@ -231,7 +231,8 @@
 .button_container h2 {
   text-align: center;
   font-family: "Chewy";
-  font-size: 40px;
+  font-size: 45px;
+  margin-top: 0;
 }
 
 .anf_card h2 {color: #0a7273;}
@@ -306,6 +307,7 @@
  
   display: flexbox;
   cursor:default;
+  width: 380px;
 }
 
 .general_prof:hover{
@@ -318,10 +320,16 @@
   transform: translateX(-50%);
   font-family: "Nunito";
   font-weight: 800;
+  font-size: 20px;
   background-color: white;
   color: #009080;
   cursor: pointer;
   transition: background-color 0.2s;
+
+  border-radius: 6px;
+  border: 2px solid #009080;
+  padding: 13px 20px;
+  margin-bottom: 10px;
 }
 
 .btn_conectar:hover{
@@ -351,6 +359,8 @@
 
 .anf_personal_info {
   position: absolute;
+  transform: translateY(-50px);
+  width: calc(100% - 25px);
 }
 
 .profile_img {
@@ -768,187 +778,106 @@
 }
 
 
-/*? =============
-/*?   RESPONSIVE
-/*? =============*/
-@media (max-width:1500px){
-  /*?* CARDS general */
-  .button_container h2 {
-    font-size: 45px;
-    margin-top: 0;
-  }
 
-  .anf_personal_info { 
-    transform: translateY(-50px);
-    width: calc(100% - 25px); 
-  }
-  /*?* CARDS general */
-  .general_prof {width: 380px;} 
-  .btn_conectar {
-    border-radius: 6px;
-    border: 2px solid #009080;
-    font-size: 20px; 
-    padding: 13px 20px;
-    margin-bottom: 10px;
-  }
-
-  .button_container {
-    gap: 0;
-  }
-
-  /*?* CARD (ANFITRIÓN) */
+/* Responsive */
+@media (max-width: 1500px) {
+  /** VIAJERO */
+  .house { height: 160px; }
+  .profile_img { width: 110px; padding: 5px; margin-left: 10px; }
+  .anf_name { margin: 0 20px 10px; border-bottom: 1px solid #d0dbd9; }
+  .anf_name h3, .text_column_viaj h3 { font-weight: 700; font-size: 30px; margin: 0; }
   .anf_info { padding: 0px 22px; }
-  .house {height: 160px;} 
-  .profile_img {
-    margin-left: 10px;
-    padding: 5px;
-    width: 110px; 
-  }
-
-  .anf_name {
-    border-bottom: 1px solid #d0dbd9;
-    margin: 0 20px;
-    margin-bottom: 10px;
-  }
-  .anf_name h3, .text_column_viaj h3 {
-    font-weight: 700;
-    font-size: 30px;
-    margin: 0;
-  }
-
-  .anf_rating {
-    margin: 0px 11.5px 15px 11.5px; 
-    padding-top: 80px;
-    gap: 15%;
-  }
-  .anf_likes img { width: 30px; } 
-
-  .address img { width: 18px; } 
-  .address {
-    margin-top: 15px;
-    font-size: 20px; 
-    gap: 6px;
-  }
-  .description {
-    font-size: 19px;
-    margin-top: 8px;
-    margin-bottom: 12px;
-  }
-  .score img, .score_viajero img {width: 30px;} 
-  .anf_score p {font-size: 28px;} 
-
-    
-  /*?* CARD (VIAJEROS)*/
-  .viaj_prof { padding: 10px 20px;} 
-  .viaj_img {
-    width: 110px; 
-    height: 110px;
-  }
-  .text_column_viaj p, .score_viajero p { font-size: 28px;} 
-  .text_column_viaj { margin: 5px 5px 5px 30px;} 
-  .age {
-    margin-top: 8px;
-    font-size: 20px; 
-  }
-
-  .viaj_likes { margin: 20px 30px 20px 30px; } 
-  .viaj_likes img { width: 40px; } 
-  .btn_viaj { margin-bottom: 8px; } 
+  .anf_rating { margin: 0 11.5px 15px; padding-top: 80px; gap: 15%; }
+  .anf_likes img, .score img, .score_viajero img { width: 30px; }
+  .address img { width: 18px; }
+  .address { margin-top: 15px; font-size: 20px; gap: 6px; }
+  .description { font-size: 19px; margin: 8px 0 12px; }
+  .anf_score p { font-size: 28px; }
+  .viaj_prof { padding: 10px 20px; }
+  .viaj_img { width: 110px; height: 110px; }
+  .text_column_viaj p, .score_viajero p { font-size: 28px; }
+  .text_column_viaj { margin: 5px 5px 5px 30px; }
+  .age { margin-top: 8px; font-size: 20px; }
+  .viaj_likes { margin: 20px 30px; }
+  .viaj_likes img { width: 40px; }
+  .btn_viaj { margin-bottom: 8px; }
 }
 
-/**============================
-/**      MOVILES
-/**============================*/
-@media (max-width:899px){
+@media (max-width: 899px) {
+  /** PERFILES */
   .card_section {
     padding: 100px 38px;
     display: grid;
-    grid-template-rows: auto auto; /* Define al menos dos filas explícitas */
+    grid-template-rows: auto auto;
     gap: 0;
   }
-  .inq_card .button_container { grid-row: 1;}
-  .inq_card.card_container { grid-row: 2;}
+  .inq_card .button_container { grid-row: 1; }
+  .inq_card.card_container { grid-row: 2; }
 
-  /*?* OPINIONES*/
+  /** OPINIONES */
   .opinions_container {
     display: grid;
     margin: 0 7vw;
     gap: 9vw;
   }
-  .bubble_text {padding: 3vw;}
-  .bubble_text p {font-size: 2.4vw;}
-  .prof_opinion img{width: 11vw; height: 11vw;}
-  .info_opinion h3, .info_opinion p{ font-size: 3vw;}
+  .bubble_text { padding: 3vw; }
+  .bubble_text p { font-size: 2.4vw; }
+  .prof_opinion img { width: 11vw; height: 11vw; }
+  .info_opinion h3, .info_opinion p { font-size: 3vw; }
 
-  /**FAQ*/
-  .freq_questions button{
+  /** FAQ */
+  .freq_questions button {
     font-size: 20px;
     padding: 20px 25px;
   }
 }
 
 @media (max-width: 769px) {
-  /*?* CABECERA */
+  /** HEADER */
   .header {
     width: calc(100% - 60px);
     padding: 20px 30px;
     justify-content: space-between;
   }
-  .header_menu {
-    width: 100%;
-    justify-content: end;
-  }
-  .header_nav {display: none;}
-  
-  /*?* BOTONES*/
-  .btn_alojamientos img, .btn_inquilinos img{
+  .header_menu { width: 100%; justify-content: end; }
+  .header_nav { display: none; }
+
+  /** PERFILES*/
+  .btn_alojamientos img, .btn_inquilinos img {
     width: 40px;
     height: auto;
   }
-
   .btn_alojamientos, .btn_inquilinos {
     padding: 15px;
     font-size: 30px;
     width: 270px;
   }
 
-  /*?* LOGO INICIAL*/
-  .logo_main img {width: 170px;}
-  .logo_main figcaption {
-    font-size: 65px;
-  }
-  .main_descrpt, .button_container h2 {
-    font-size: 40px;
-  }
+  .logo_main img { width: 170px; }
+  .logo_main figcaption { font-size: 65px; }
+  .main_descrpt { font-size: 40px; }
+  .button_container { margin-bottom: 10%; }
 
-  .button_container h2 {margin: 0 0 10px 0;}
-  .button_container {
-    margin-bottom: 10%;
-  }
-  
-
-  /*?* VENTAJAS */
+  /** VENTAJAS */
   .advantages h2, .opinions h2, .freq_questions h2 {
     font-size: 40px;
     margin-bottom: 40px;
   }
-  .advantage_text h3 {font-size: 15px;}
-  .advantage_text p {font-size: 14px;}
-  .advantage_item img { 
+  .advantage_text h3 { font-size: 15px; }
+  .advantage_text p { font-size: 14px; }
+  .advantage_item img {
     width: 40px;
-    padding: 0px 10px;
+    padding: 0 10px;
   }
   .advantages_container {
-    grid-template-columns: 400px; 
+    grid-template-columns: 400px;
     justify-content: center;
     align-items: center;
     gap: 20px;
   }
+  .question_item { max-width: 510px; }
 
-  /**FAQ*/
-  .question_item {max-width: 510px;}
-
-  /*?*FOOTER*/  
+  /** FOOTER */
   .footer {
     display: grid;
     justify-content: center;
@@ -956,37 +885,26 @@
     gap: 40px;
     padding: 40px 0;
   }
-
-  .logo_footer img{ width: 50px;}
-  .logo_footer figcaption{ font-size: 20px;}
-
-  .social_media img{
-    width: 20px;
-    height: 20px;
-  }
-  .text_info p { font-size: 13px;}
-
-  .privacy_policy {text-align: center;}
-  .privacy_policy a{ font-size: 20px; }
+  .logo_footer img { width: 50px; }
+  .logo_footer figcaption { font-size: 20px; }
+  .social_media img { width: 20px; height: 20px; }
+  .text_info p { font-size: 13px; }
+  .privacy_policy { text-align: center; }
+  .privacy_policy a { font-size: 20px; }
 }
 
-/**============================
-/**      TABLET
-/**============================*/
-@media (min-width:770px){
-  /*?* BOTONES */
+@media (min-width: 770px) {
+  /** PERFILES */
   .button_container {
     border-radius: 15px;
     margin-bottom: 10%;
   }
-
-  .btn_alojamientos img, .btn_inquilinos img{
+  .btn_alojamientos img, .btn_inquilinos img {
     width: 40px;
     height: auto;
   }
   .btn_alojamientos, .btn_inquilinos {
     width: 300px;
-  
     font-size: 35px;
     padding: 17px;
     margin-bottom: 5px;
@@ -995,153 +913,94 @@
 }
 
 @media (min-width: 770px) and (max-width: 899px) {
-  /*?* LOGO INICIAL */
-  .logo_main img {
-    width: 180px;
-  }
+  /** MAIN */
+  .logo_main img { width: 180px; }
+  .advantages h2, .opinions h2, .freq_questions h2 { font-size: 45px; margin-bottom: 40px; }
+  .advantages_container { margin: 0 5vw; }
+  .advantage_text h3 { font-size: 1.7vw; }
+  .advantage_text p { font-size: 1.5vw; }
 
-  /*?* VENTAJAS */
-  .advantages h2, .opinions h2, .freq_questions h2 {
-    font-size: 45px;
-    margin-bottom: 40px;
-  }
-  .advantages_container {margin: 0 5vw;}
-  .advantage_text h3 {font-size: 1.7vw;}
-  .advantage_text p {font-size: 1.5vw;}
+  /** OPNIONES */
+  .bubble_text { margin: 0 9vw; }
+  .bubble_text p { font-size: 18px; }
+  .prof_opinion img { width: 90px; height: 90px; }
+  .info_opinion h3, .info_opinion p { font-size: 20px; }
+  
+  /** FAQ */
+  .question_item h3 { font-size: 19px; }
+  .question_item { max-width: 650px; }
+  .question_content p { font-size: 16px; }
 
-  /*?* OPINIONES*/
-  .bubble_text {margin: 0 9vw;}
-  .bubble_text p {font-size: 18px;}
-  .prof_opinion img{width: 90px; height: 90px;}
-  .info_opinion h3, .info_opinion p{ font-size: 20px;}
-
-  /**FAQ*/
-  .question_item h3 {font-size: 19px;}
-  .question_item {max-width: 650px;}
-  .question_content p{font-size: 16px;}
-
-  /*?*FOOTER*/
-  .text_info p { font-size: 1.4vw;}
-  .privacy_policy a{ font-size: 1.5vw; }
+  .text_info p { font-size: 1.4vw; }
+  .privacy_policy a { font-size: 1.5vw; }
 }
-
-
-
-/**============================
-/**      ORDENADOR
-/**============================*/
 
 @media (min-width: 900px) {
+  /** PERFILES Y VENTAJAS */
+  .button_container { margin-bottom: 0; }
+  .advantages h2, .opinions h2, .freq_questions h2 { font-size: 45px; margin-bottom: 40px; }
+  .advantages_container { margin: 0 6vw; }
+  .advantage_text h3 { font-size: 21px; }
+  .advantage_text p { font-size: 19px; }
+  .central { position: relative; transform: translateY(-3.5vw); }
 
-  /** CARDS*/
-  .button_container { margin-bottom: 0;}
-
-  .anf_personal_info { 
-    transform: translateY(-50px);
-    width: calc(100% - 25px); 
-  }
-  
-  /** VENTAJAS*/
-  .advantages h2, .opinions h2, .freq_questions h2 {
-    font-size: 45px;
-    margin-bottom: 40px;
-  }
-  .advantages_container { margin: 0 6vw;}
-  .advantage_text h3 {font-size: 21px;}
-  .advantage_text p {font-size: 19px;}
-  .central {
-    position: relative;
-    transform: translateY(-3.5vw);
-  }
-
-  /**FAQs*/
-  .question_item h3 {font-size: 21px;}
-  .question_item {max-width: 710px;}
-  .question_content p{font-size: 18px;}
-
-  .freq_questions button{
-    font-size: 22px;
-    padding: 20px 25px;
-  }
+  /** FAQ */
+  .question_item h3 { font-size: 21px; }
+  .question_item { max-width: 710px; }
+  .question_content p { font-size: 18px; }
+  .freq_questions button { font-size: 22px; padding: 20px 25px; }
 }
+
 @media (max-width: 1110px) {
-  .advantage_text h3 {font-size: 16px;}
-  .advantage_text p {font-size: 15px;}
+  /** PERFILES */
+  .advantage_text h3 { font-size: 16px; }
+  .advantage_text p { font-size: 15px; }
 }
-@media (min-width:1500px){
-  /*?* CARDS general */
-  .general_prof { max-width: 480px;}
+
+@media (min-width: 1500px) {
+  /** PERFILES */
+  .general_prof { width: 480px; }
   .btn_conectar {
     border-radius: 8px;
-    border: 2px solid #009080;
     font-size: 22px;
     padding: 15px 25px;
     margin-bottom: 18px;
   }
 
-  /*?* CARD (ANFITRIÓN) */
-  .button_container h2 {
-    font-size: 45px;
-  }
-  .anf_info { padding: 0px 25px; }
   .house { height: 230px; }
   .profile_img { width: 150px; }
 
-  .anf_personal_info { 
+  .anf_personal_info {
     transform: translateY(-70px);
-    width: calc(100% - 25px); 
+    width: calc(100% - 25px);
   }
-  .anf_name {
-    border-bottom: 1px solid #d0dbd9;
-    margin: 0 20px;
-    margin-bottom: 18px;
-  }
+  .anf_info { padding: 0px 25px; }
+
+  .anf_name { margin: 0 20px 18px; border-bottom: 1px solid #d0dbd9; }
   .anf_name h3, .text_column_viaj h3 { font-size: 35px; }
 
-  .anf_rating {
-    margin: 0px 10px 13px 10px; 
-    padding-top: 100px;
-    gap: 12%;
-  }
+  .anf_rating { margin: 0 10px 13px; padding-top: 100px; gap: 12%; }
   .anf_likes img { width: 40px; }
-
   .address img { width: 22px; }
-  .address {
-    margin-top: 20px;
-    font-size: 24px;
-    gap: 8px;
-  }
-  .description {
-    font-size: 24px;
-    margin-top: 12px;
-    margin-bottom: 18px;
-  }
+  .address { margin-top: 20px; font-size: 24px; gap: 8px; }
+  .description { font-size: 24px; margin: 12px 0 18px; }
   .score img, .score_viajero img { width: 38px; }
   .anf_score p { font-size: 36px; }
 
-  /*?* CARD (VIAJEROS)*/
-  .viaj_prof { padding: 20px 30px;}
-  .viaj_img {
-    width: 163px;
-    height: 163px;
-  }
-  .text_column_viaj p, .score_viajero p { font-size: 40px;}
-  .text_column_viaj { margin: 10px 5px 10px 50px;}
-  .age {
-    margin-top: 15px;
-    font-size: 30px;
-  }
-
-  .viaj_likes { margin : 40px 51px 40px 51px; }
+  .viaj_prof { padding: 20px 30px; }
+  .viaj_img { width: 163px; height: 163px; }
+  .text_column_viaj p, .score_viajero p { font-size: 40px; }
+  .text_column_viaj { margin: 10px 5px 10px 50px; }
+  .age { margin-top: 15px; font-size: 30px; }
+  .viaj_likes { margin: 40px 51px; }
   .viaj_likes img { width: 60px; }
   .btn_viaj { margin-bottom: 12px; }
 
-  .advantages_container {margin: 0 15vw;}
+  /** VENTAJAS */
+  .advantages_container { margin: 0 15vw; }
 
-   /**FAQs*/
-   .question_item h3 {font-size: 23px;}
-   .question_item {max-width: 810px;}
-   .question_content p{font-size: 20px;}
+  /** FAQ */
+  .question_item h3 { font-size: 23px; }
+  .question_item { max-width: 810px; }
+  .question_content p { font-size: 20px; }
 }
-
-

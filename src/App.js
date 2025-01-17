@@ -5,7 +5,7 @@ import Viajeros_Alojamientos from './components/viajeros/alojamientos/alojamient
 export default function App() {
   return (
     <>
-    <Viajeros_Alojamientos/>
+    <Home_page/>
     </>
   );
 }
