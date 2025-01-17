@@ -414,10 +414,7 @@
   user-select: none;
 }
 
-.description {
-  text-align: justify;
-  color: #737373;
-}
+.description { color: #737373;}
 
 
 /*?=============================
@@ -525,7 +522,6 @@
 }
 
 .advantage_text p {
-  text-align: justify;
   color: #a6a6a6;
   margin: 0;
   font-size: 1.2vw;
@@ -1034,6 +1030,7 @@
 /**============================
 /**      ORDENADOR
 /**============================*/
+
 @media (min-width: 900px) {
 
   /** CARDS*/
@@ -1050,8 +1047,8 @@
     margin-bottom: 40px;
   }
   .advantages_container { margin: 0 6vw;}
-  .advantage_text h3 {font-size: 18.5px;}
-  .advantage_text p {font-size: 17px;}
+  .advantage_text h3 {font-size: 21px;}
+  .advantage_text p {font-size: 19px;}
   .central {
     position: relative;
     transform: translateY(-3.5vw);
@@ -1067,7 +1064,10 @@
     padding: 20px 25px;
   }
 }
-
+@media (max-width: 1110px) {
+  .advantage_text h3 {font-size: 16px;}
+  .advantage_text p {font-size: 15px;}
+}
 @media (min-width:1500px){
   /*?* CARDS general */
   .general_prof { max-width: 480px;}

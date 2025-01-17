@@ -10,7 +10,7 @@ const advantages = [
   { title: "Comunidad de Viajeros Activos", description: "Conecta con anfitriones apasionados y crea experiencias auténticas.",},
   { title: "Diversidad de Alojamientos", description: "Amplia variedad de estancias que se adaptan a diferentes estilos.", },
   { title: "Estancias Personalizadas", description: "Alojamientos diseñados a la medida de tus preferencias y estilo de vida.", },
-  { title: "Conexiones Basadas en Intereses", description: "Encuentra anfitriones que compartan tus pasatiempos y estilo de vida.", },
+  { title: "Conexiones por intereses.", description: "Encuentra anfitriones que compartan tu estilo de vida.", },
   { title: "Fácil Proceso de Reserva", description: "Reserva de manera sencilla y rápida con solo unos clics.", },
   { title: "Impacto Global", description: "Plataforma presente en varios destinos, conectando a viajeros.", },
 ];
