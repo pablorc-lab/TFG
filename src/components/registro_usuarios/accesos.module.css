@@ -1,0 +1,115 @@
+.acceso_section {
+  height: 100vh;
+  background-image: url("../../../public/images/registro/Bears_fondo.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  user-select: none;
+}
+
+/*? CABECERA */
+.acceso_header {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  background-color: #009080;
+}
+.acceso_header figure {
+  display: flex;
+  align-items: center;
+}
+.acceso_header img {width: 60px; height: auto;}
+.acceso_header figcaption {
+  margin-left: 15px;
+  font-family: "Coco Gothic";
+  font-size: 30px;
+  font-weight: bold;
+  color: #e9e3d5;
+}
+
+/*? ====================
+/*?   Inicio de sesión 
+/*? ====================*/
+.acceso_container {
+  font-family: "Nunito";
+  position: absolute;
+  top: 23%;
+  right: 13%;
+  background-color: rgba(255, 255, 255, 0.945);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgb(0,0,0,0.8);
+}
+
+.acceso_container form {
+  padding: 25px 30px 45px 30px;
+  display: grid;
+  gap: 30px;
+}
+
+.acceso_container h1 {
+  font-weight: 700;
+  font-size: 40px;
+  text-align: center;
+  margin: 0;
+  margin-top: 20px;
+}
+
+/*? Input */
+.acceso_container div { display: grid;}
+.acceso_container div label {
+  padding-left: 5px;
+  padding-bottom: 3px;
+  font-size: 23px;
+  color: #737373;
+}
+.acceso_container div input {
+  font-family: "Nunito";
+  border: 2px solid #c2c2c2;
+  border-radius: 8px;
+  height: 40px;
+  width: 450px;
+  transition: border-color 0.1s ease-in-out;
+  padding: 3px 15px;
+  font-size: 23px;
+}
+.acceso_container div input:focus, .acceso_container div input:active {
+  outline: none;
+  box-shadow: none;
+  border-color: #009080;
+}
+.acceso_container div:focus-within label { color: #009080;}
+.acceso_container form div a {
+  padding-left: 5px;
+  padding-top: 3px;
+  color: black;
+  font-size: 17px;
+}
+
+/*? Submit */
+.submit_input {
+  cursor: pointer;
+  font-family: "Nunito";
+  background-color: #009080;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 28px;
+  border-radius: 10px;
+  transition: background-color 0.1s ease-in-out;
+}
+.submit_input:hover {background-color: #00907fd5;}
+
+/*? Registrarse enlace */
+.acceso_enlace_registro {
+  display: grid;
+  padding: 27px;
+  padding-right: 0;
+  gap: 5px;
+  border-top: 2px solid lightgray;
+  width: calc(100% - 27px);
+}
+.acceso_enlace_registro h2 { margin: 0; font-size: 25px;}
+.acceso_enlace_registro a { 
+  color: #1386fd; 
+  font-size: 20px;
+}
