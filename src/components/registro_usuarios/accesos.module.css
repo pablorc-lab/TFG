@@ -37,6 +37,7 @@
   background-color: rgba(255, 255, 255, 0.945);
   border-radius: 10px;
   box-shadow: 0 0 10px rgb(0,0,0,0.8);
+  width: 544px;
 }
 
 .acceso_container form {
@@ -58,7 +59,7 @@
 .acceso_container div label {
   padding-left: 5px;
   padding-bottom: 3px;
-  font-size: 23px;
+  font-size: 20px;
   color: #737373;
 }
 .acceso_container div input {
@@ -112,4 +113,23 @@
 .acceso_enlace_registro a { 
   color: #1386fd; 
   font-size: 20px;
+}
+
+@media (max-width: 1200px) {
+  .acceso_container {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 600px) {
+  .acceso_container { width: 440px;}
+  .acceso_container h1 { font-size: 35px;}
+
+  /*? Input */
+  .acceso_container div label { font-size: 19px; }
+  .acceso_container div input {
+    width: calc(100% - 25px - 15px); /* 100% - padding form - padding input*/
+    font-size: 21px;
+  }
 }
