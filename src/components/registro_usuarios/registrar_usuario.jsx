@@ -1,14 +1,27 @@
 import { useState } from "react"
 import styles from "./accesos.module.css"
+import { validateEmail } from "./validations";
 
 export default function Registrar_usuario(){
   const [firstStep, setFirstStep] = useState(true);
 
+  const [email, setEmail] = useState("");
+  const [errorEmail, setErrorEmail] = useState(false);
+
+  const [password, setPassword] = useState("");
+  const [repeatedPassword, setRepeatedPassword] = useState("");
+  const [errorShortPassword, SetErrorShortPassword] = useState(false);
+  const [errorSamePassword, SetErrorSamePassword] = useState(false);
+
   // Acción que se realizará en el primer paso para terminar de crear la cuenta
   // Comprobar correo y contraseñas
-  const handleFirstStepClick = (event) => {
-    event.preventDefault();
-    setFirstStep(false);
+  const handleFirstStepClick = (e) => {
+    if(hayErroresFirstStep()){
+      e.preventDefault();
+    }
+    else{
+      setFirstStep(false);
+    }
   }
 
   // Accionar que se realiza en el último paso, al crear finalmente la cuenta
@@ -17,6 +30,11 @@ export default function Registrar_usuario(){
     setFirstStep(false);
   }
 
+  const hayErroresFirstStep = () => {
+    const validEmail = errorEmail || email.length < 1;
+    return validEmail;
+  }
+  /*Funciones para verificar los campos*/
   return (
     <section className={styles.acceso_section}>
       <header className={styles.acceso_header}>
@@ -29,22 +47,58 @@ export default function Registrar_usuario(){
       <article className={styles.acceso_container}>
         <h1>Registrarse</h1>
 
-        <form action="pagina.jar" className={!firstStep && styles.form_registro}>
+        <form action="pagina.jar" className={!firstStep && styles.form_registro} style={{ gap: errorEmail && '20px'}} noValidate>
           {firstStep ? (
             <>
               <div>
-                <label for="email">Correo electrónico</label>
-                <input type="email" id="email" name="email" spellCheck="false" />
+                <label for="email" style={{ color: errorEmail && 'red'}}>Correo electrónico</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  spellCheck="false" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => (email.length > 0) && setErrorEmail(!validateEmail(email))}         
+                  no
+                  style={{ borderColor: errorEmail && 'red'}}
+                />
+                {errorEmail && <p className={styles.error_msg}>El email no es correcto</p>}
               </div>
               <div>
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" />
+                <label for="password" style={{ color: errorShortPassword && 'red'}}>Contraseña</label>
+                <input 
+                  type="password" 
+                  id="password" 
+                  name="password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onBlur={() => (password.length > 1) && SetErrorShortPassword(password.length < 8)}         
+                  style={{ borderColor: errorShortPassword && 'red'}}
+                />
+                {errorShortPassword && <p className={styles.error_msg}>La contraseña debe tener mínimo 8 carácteres</p>}
+
               </div>
               <div>
                 <label for="confirmPassword">Repetir contraseña</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" />
+                <input 
+                  type="password" 
+                  id="confirmPassword" 
+                  name="confirmPassword" 
+                  value={repeatedPassword}
+                  onChange={(e) => setRepeatedPassword(e.target.value)}
+                  onBlur={() => SetErrorSamePassword(repeatedPassword !== password)}         
+                  style={{ borderColor: errorSamePassword && 'red'}}
+                />
+                {errorSamePassword && <p className={styles.error_msg}>Las contraseñas no coinciden</p>}
               </div>
-              <input className={styles.submit_input} type="submit" value="Siguiente paso" onClick={handleFirstStepClick}/>
+              <input 
+                className={styles.submit_input} 
+                type="submit" 
+                value="Siguiente paso" 
+                onClick={handleFirstStepClick}
+                style={{cursor: hayErroresFirstStep() ? 'not-allowed' : 'default', filter: hayErroresFirstStep() ? 'brightness(0.8)' : 'none'}}
+              />
             </>
           ) : (
             <>
@@ -66,7 +120,12 @@ export default function Registrar_usuario(){
                 <label for="edad">Edad</label>
                 <input type="date" id="edad" name="edad"/>
               </div>
-              <input className={styles.submit_input} type="submit" value="Crear cuenta" onClick={handleSubmit}/>
+              <input 
+                className={styles.submit_input} 
+                type="submit" 
+                value="Crear cuenta" 
+                onClick={(handleSubmit)}
+              />
             </>
           )}
         </form>

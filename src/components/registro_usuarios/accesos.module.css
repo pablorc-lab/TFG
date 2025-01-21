@@ -48,8 +48,6 @@
 }
 
 /*? Registro (segundo paso)*/
-.form_registro {
-}
 .form_registro .name_input {
   display: flex;
   align-items: center;
@@ -67,6 +65,12 @@
   margin-top: 20px;
 }
 
+/* Mensaje error input*/
+.error_msg {
+  color: red;
+  font-size: 17px;
+  margin: 0;
+}
 /*? Input */
 .acceso_container div { display: grid;}
 .acceso_container div label {
