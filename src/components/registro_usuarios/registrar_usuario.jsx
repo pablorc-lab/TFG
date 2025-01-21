@@ -31,8 +31,9 @@ export default function Registrar_usuario(){
   }
 
   const hayErroresFirstStep = () => {
-    const validEmail = errorEmail || email.length < 1;
-    return validEmail;
+    const incorrectEmail = errorEmail || email.length < 1;
+    const incorrectPassword = errorSamePassword || errorShortPassword || password.length < 8;
+    return incorrectEmail || incorrectPassword;
   }
   /*Funciones para verificar los campos*/
   return (

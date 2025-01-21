@@ -7,3 +7,4 @@ export const validateEmail = (email) => {
 	var RegexEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
   return RegexEmail.test(email);
 }
+
