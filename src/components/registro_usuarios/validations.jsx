@@ -8,3 +8,22 @@ export const validateEmail = (email) => {
   return RegexEmail.test(email);
 }
 
+export const validateNames = (name) => {
+  const RegexName = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/;
+  return RegexName.test(name);
+}
+
+export const validateIdUser = (id) => {
+  const RegexID = /^[a-zA-Z0-9]+$/;
+  return RegexID.test(id);
+}
+
+export const validateAge = (date) => {
+  const today = new Date();
+  const inputDate = new Date(date);
+
+  // Verificar que la fecha ingresada no sea futura
+  return inputDate <= today;
+}
+
+

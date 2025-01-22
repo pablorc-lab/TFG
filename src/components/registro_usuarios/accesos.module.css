@@ -44,7 +44,7 @@
 .acceso_container form {
   padding: 25px 30px 45px 30px;
   display: grid;
-  gap: 30px;
+  gap: 20px;
 }
 
 /*? Registro (segundo paso)*/
@@ -55,6 +55,7 @@
 }
 .form_registro .name_input input{
   width: 190px;
+  display: grid;
 }
 
 .acceso_container h1 {
@@ -65,12 +66,15 @@
   margin-top: 20px;
 }
 
-/* Mensaje error input*/
+/*? Mensaje ERROR input*/
+.error_input label { color:red;}
+.error_input input {border-color: red;}
 .error_msg {
   color: red;
   font-size: 17px;
   margin: 0;
 }
+
 /*? Input */
 .acceso_container div { display: grid;}
 .acceso_container div label {
