@@ -66,24 +66,37 @@
   margin-top: 20px;
 }
 
+
 /*? Mensaje ERROR input*/
-.error_input label { color:red;}
-.error_input input {border-color: red;}
-.error_msg {
+.input_container.error_input label { color:red;}
+.input_container.error_input input {border-color: red;}
+.input_container.error_input p, .error_msg {  
   color: red;
   font-size: 17px;
   margin: 0;
 }
+.input_container.error_input input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: red;
+}
+.input_container.error_input:focus-within label,
+.input_container.error_input article:focus-within label { color: red;}
+
+.submit_input.error_submit_input {
+  filter: brightness(0.8);
+  cursor: not-allowed;
+}
 
 /*? Input */
-.acceso_container div { display: grid;}
-.acceso_container div label {
+.input_container { display: grid;}
+.input_container label {
   padding-left: 5px;
   padding-bottom: 3px;
   font-size: 20px;
   color: #737373;
 }
-.acceso_container div input {
+.input_container input {
   font-family: "Nunito";
   border: 2px solid #c2c2c2;
   border-radius: 8px;
@@ -93,14 +106,14 @@
   padding: 3px 15px;
   font-size: 23px;
 }
-.acceso_container div input::placeholder {color: rgb(165, 165, 165);}
-.acceso_container div input:focus {
+.input_container input::placeholder {color: rgb(165, 165, 165);}
+.input_container input:focus {
   outline: none;
   box-shadow: none;
   border-color: #009080;
 }
-.acceso_container div:focus-within label,
-.acceso_container div article:focus-within label { color: #009080;}
+.input_container:focus-within label,
+.input_container article:focus-within label { color: #009080;}
 
 .acceso_container form div a {
   padding-left: 5px;
@@ -151,9 +164,13 @@
   .acceso_container h1 { font-size: 35px;}
 
   /*? Input */
-  .acceso_container div label { font-size: 19px; }
-  .acceso_container div input {
+  .input_container label { font-size: 19px; }
+
+  .input_container input {
     width: calc(100% - 25px - 15px); /* 100% - padding form - padding input*/
     font-size: 21px;
+  }
+  .form_registro .name_input input{
+    width: 140px;
   }
 }

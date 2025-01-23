@@ -3,68 +3,85 @@ import styles from "./accesos.module.css"
 import { validateEmail, validateNames, validateIdUser, validateAge} from "./validations";
 
 export default function Registrar_usuario(){
-  const [firstStep, setFirstStep] = useState(false);
-
-  const [email, setEmail] = useState("");
-  const [errorEmail, setErrorEmail] = useState(false);
-
-  const [password, setPassword] = useState("");
+  const [firstStep, setFirstStep] = useState(true);
   const [repeatedPassword, setRepeatedPassword] = useState("");
-  const [errorShortPassword, setErrorShortPassword] = useState(false);
-  const [errorSamePassword, setErrorSamePassword] = useState(false);
+  // Objeto que almacena todos los errores
+  const [errorStates, setErrorStates] = useState({
+    email: false,
+    shortPassword: false,
+    samePassword: false,
+    name: false,
+    lastName: false,
+    userID: false,
+    age: false,
+  });
+  // Objeto que almacena cada valor
+  const [userValues, setUserValues] = useState({
+    email : "",
+    password : "",
+    name : "",
+    lastname : "",
+    userID : "",
+    age : ""
+  })
 
-  const [name, setName] = useState("");
-  const [errorName, setErrorName] = useState("");
+    // Esta función permite cambiar el estado de cada valor
+  function handleValuesChange(e, campo) {
+    if (!campo || !(campo in userValues)) {
+      throw new Error(`El campo '${campo}' introducido en 'handleValuesChange()' no es válido`);
+    }
+    const newValue = e.target.value.trim(); // Eliminar espacios 
+      setUserValues({
+        ...userValues,
+        [campo] : newValue,
+      });
+  }
+  
+  // Esta función permite cambiar el estado de error de una variable
+  function handleErrorChange(campoErroneo, estado){
+    if (!campoErroneo || !(campoErroneo in errorStates)) {
+      throw new Error(`El campo '${campoErroneo}' introducido en 'handleErrorChange()' no es válido`);
+    }
+    setErrorStates({
+      ...errorStates,
+      [campoErroneo] : estado
+    })
+  }
 
-  const [lastName, setLastName] = useState("");
-  const [errorLastName, setErrorLastName] = useState("");
-
-  const [userId, setUserId] = useState("");
-  const [errorUserId, setErrorUserId] = useState("");
-
-  const [age, setAge] = useState("");
-  const [errorAge, setErrorAge] = useState("");
-
- 
   // Acción que se realizará en el primer paso para terminar de crear la cuenta
   // Comprobar correo y contraseñas
-  const handleFirstStepClick = (e) => {
+  const handleSubmitFirstStep = (e) => {
     e.preventDefault();
+    
+    const first_step_errors = {
+      email: !validateEmail(userValues.email),
+      shortPassword: userValues.password.length < 8,
+      samePassword: userValues.password !== repeatedPassword,
+    };
 
-    if(hayErroresFirstStep()){
-      comprobarErrores();
-    }
-    else{
-      setFirstStep(false);
-    }
+    Object.values(first_step_errors).includes(true) 
+      ? setErrorStates({...errorStates, ...first_step_errors}) 
+      : setFirstStep(false); // Se pasa al siguiente paso
   }
+
 
   // Accionar que se realiza en el último paso, al crear finalmente la cuenta
   // Comprobar que nombre y apellidos solo tenga strings, y el id no tenga caracteres especiales, fecha con sentido
-  const handleSubmit = () => {
-    setFirstStep(false);
-  }
-
-  const comprobarErrores = () => {
-    setErrorEmail(!validateEmail(email));
-    setErrorShortPassword(password.length < 8);
-    setErrorSamePassword(password !== repeatedPassword);
-  };
-  
-  const hayErroresAlgunos = () => {
-    return (errorEmail || errorSamePassword || errorShortPassword || errorName || errorLastName || errorUserId || errorAge);
-  }
-
-  const hayErroresFirstStep = () => {
-    const incorrectEmail = !validateEmail(email) || email.length < 1;
-    const incorrectPassword = (repeatedPassword !== password) || errorShortPassword || password.length < 8;
-    return incorrectEmail || incorrectPassword;
-  }
-
-  const handleChangeName = (name, setValue) => {
-       // No permitir espacios
-    if(name[name.length-1] !== " ")
-      setValue(name);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const second_step_errors = {
+      name: !validateNames(userValues.name),
+      lastName: !validateNames(userValues.lastname),
+      userID: !validateIdUser(userValues.userID),
+      age: !validateAge(userValues.age),
+    };
+    
+    if(Object.values(second_step_errors).includes(true)){
+      
+      setErrorStates({ ...errorStates, ...second_step_errors});
+    }else{
+      console.log("Se han enviado los siguientes datos : ", userValues);
+    }
   }
 
   /*Funciones para verificar los campos*/
@@ -80,131 +97,116 @@ export default function Registrar_usuario(){
       <article className={styles.acceso_container}>
         <h1>Registrarse</h1>
 
-        <form action="pagina.jar" className={styles.form_registro} style={{gap: hayErroresAlgunos() && "15px"}} noValidate>
+        <form action="pagina.jar" className={styles.form_registro} style={{gap: Object.values(errorStates).includes(true) && "15px"}} noValidate>
           {firstStep ? (
             <>
-              <div>
-                <label for="email" style={{ color: errorEmail && 'red'}}>Correo electrónico</label>
+              <div className={`${styles.input_container} ${errorStates.email && styles.error_input}`}>
+                <label htmlFor="email">Correo electrónico</label>
                 <input 
                   type="email" 
                   id="email" 
                   name="email" 
                   spellCheck="false" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onBlur={() => setErrorEmail(!validateEmail(email))}
+                  value={userValues.email}
+                  onChange={(e) => handleValuesChange(e,"email")}
+                  onBlur={() => userValues.email && handleErrorChange("email",!validateEmail(userValues.email))}
                   noValidate
-                  style={{ borderColor: errorEmail && 'red'}}
                 />
-                {errorEmail && <p className={styles.error_msg}>El email no es correcto</p>}
+                {errorStates.email && <p>El email no es correcto</p>}
               </div>
-              <div>
-                <label for="password" style={{ color: errorShortPassword && 'red'}}>Contraseña</label>
+              <div className={`${styles.input_container} ${errorStates.shortPassword && styles.error_input}`}>
+                <label htmlFor="password">Contraseña</label>
                 <input 
                   type="password" 
                   id="password" 
                   name="password" 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onBlur={() => setErrorShortPassword(password.length < 8)}
-                  style={{ borderColor: errorShortPassword && 'red'}}
+                  value={userValues.password}
+                  onChange={(e) => handleValuesChange(e,"password")}
+                  onBlur={() => userValues.password && handleErrorChange("shortPassword",userValues.password.length < 8)}
                 />
-                {errorShortPassword && <p className={styles.error_msg}>La contraseña debe tener mínimo 8 carácteres</p>}
+                {errorStates.shortPassword && <p>La contraseña debe tener mínimo 8 carácteres</p>}
               </div>
-              <div>
-                <label for="confirmPassword" style={{ color: errorSamePassword && 'red'}}>Repetir contraseña</label>
+              <div className={`${styles.input_container} ${errorStates.samePassword && styles.error_input}`}>
+                <label htmlFor="confirmPassword">Repetir contraseña</label>
                 <input 
                   type="password" 
                   id="confirmPassword" 
                   name="confirmPassword" 
                   value={repeatedPassword}
                   onChange={(e) => setRepeatedPassword(e.target.value)}
-                  onBlur={() => setErrorSamePassword(password !== repeatedPassword)}
-                  style={{ borderColor: errorSamePassword && 'red'}}
+                  onBlur={() => errorStates.samePassword && handleErrorChange("samePassword", userValues.password !== repeatedPassword)}
                 />
-                {errorSamePassword && <p className={styles.error_msg}>Las contraseñas no coinciden</p>}
+                {errorStates.samePassword && <p>Las contraseñas no coinciden</p>}
               </div>
               <input 
-                className={styles.submit_input} 
+                className={`${styles.submit_input} ${(errorStates.email || errorStates.shortPassword || errorStates.samePassword) && styles.error_submit_input}`}
                 type="submit" 
                 value="Siguiente paso" 
-                onClick={handleFirstStepClick}
-                style={{
-                  filter: (errorEmail || errorShortPassword || errorSamePassword) ? "brightness(0.8)" : "none",
-                  cursor: (errorEmail || errorShortPassword || errorSamePassword) ? "not-allowed" : "pointer"
-                }}               
+                onClick={handleSubmitFirstStep}            
               />
             </>
           ) : (
             <>
-              <article >
+              <article className={`${styles.input_container} ${(errorStates.name||errorStates.lastName) && styles.error_input}`}>
                 <div className={styles.name_input}>
                   <div>
-                    <label for="nombre" style={{ color: errorName && 'red'}}>Nombre</label>
+                    <label htmlFor="nombre">Nombre</label>
                     <input 
                       type="text" 
                       id="nombre" 
                       name="nombre" 
                       spellCheck="false"
-                      value={name}
-                      onChange={(e) => handleChangeName(e.target.value, setName)}
-                      onBlur={() => setErrorName(!validateNames(name))}
-                      style={{ borderColor: errorName && 'red'}}
+                      value={userValues.name}
+                      onChange={(e) => handleValuesChange(e,"name")}
+                      onBlur={() => userValues.name && handleErrorChange("name",!validateNames(userValues.name))}
                     />
                   </div>
                   <div>
-                    <label for="apellido" style={{ color: errorLastName && 'red'}}>Apellido</label>
+                    <label htmlFor="apellido">Apellido</label>
                     <input 
                       type="text" 
                       id="apellido" 
                       name="apellido" 
                       spellCheck="false"
-                      value={lastName}
-                      onChange={(e) => handleChangeName(e.target.value, setLastName)}
-                      onBlur={() => setErrorLastName(!validateNames(lastName))}
-                      style={{ borderColor: errorLastName && 'red'}}
+                      value={userValues.lastname}
+                      onChange={(e) => handleValuesChange(e,"lastname")}
+                      onBlur={() => userValues.lastname && handleErrorChange("lastName",!validateNames(userValues.lastname))}
                     />
                   </div> 
                 </div>
-                {(errorName||errorLastName) && <p className={styles.error_msg}>El nombre/apellido solo puede contener letras</p>}
+                {(errorStates.name||errorStates.lastName) && <p className={styles.error_msg}>El nombre/apellido solo puede contener letras</p>}
               </article>
-              <div >
-                <label for="id_user" style={{ color: errorUserId && 'red'}}>ID de usuario</label>
+              <div className={`${styles.input_container} ${errorStates.userID && styles.error_input}`}>
+                <label htmlFor="id_user">ID de usuario</label>
                 <input 
                   type="text" 
                   id="id_user" 
                   name="id_user" 
                   placeholder="Nombre privado para identificarte" 
                   spellCheck="false"
-                  value={userId}
-                  onChange={(e) => handleChangeName(e.target.value, setUserId)}
-                  onBlur={() => setErrorUserId(!validateIdUser(userId))}
-                  style={{ borderColor: errorUserId && 'red'}}
+                  value={userValues.userID}
+                  onChange={(e) => handleValuesChange(e,"userID")}
+                  onBlur={() => userValues.userID && handleErrorChange("userID",!validateIdUser(userValues.userID))}
                 />
-                {errorUserId && <p className={styles.error_msg}>El ID no puede contener carácteres especiales</p>}
+                {errorStates.userID && <p>El ID no puede contener carácteres especiales</p>}
               </div>
-              <div>
-                <label for="edad" style={{ color: errorAge && 'red'}}>Edad</label>
+              <div className={`${styles.input_container} ${errorStates.age && styles.error_input}`}>
+                <label htmlFor="edad">Edad</label>
                 <input 
                   type="date" 
                   id="edad" 
                   name="edad"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  onBlur={() => setErrorAge(!validateAge(age))}
-                  style={{ borderColor: errorAge && 'red'}}
+                  value={userValues.age}
+                  onChange={(e) => handleValuesChange(e,"age")}
+                  onBlur={() => handleErrorChange("age",!validateAge(userValues.age))}
                 />
-                {errorAge && <p className={styles.error_msg}>Edad no válida</p>}
+                {errorStates.age && <p>Edad no válida</p>}
               </div>
               <input 
-                className={styles.submit_input} 
+                className={`${styles.submit_input} ${(errorStates.name || errorStates.lastName || errorStates.userID || errorStates.age) && styles.error_submit_input}`}
                 type="submit" 
                 value="Crear cuenta" 
                 onClick={(handleSubmit)}
-                style={{
-                  filter: (errorName || errorLastName || errorUserId || errorAge) ? "brightness(0.8)" : "none",
-                  cursor: (errorName || errorLastName || errorUserId || errorAge) ? "not-allowed" : "pointer"
-                }}  
               />
             </>
           )}
