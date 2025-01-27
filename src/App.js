@@ -6,7 +6,7 @@ import Registrar_usuario from './components/registro_usuarios/registrar_usuario'
 export default function App() {
   return (
     <>
-    <Registrar_usuario/>
+    <Viajeros_Alojamientos/>
     </>
   );
 }

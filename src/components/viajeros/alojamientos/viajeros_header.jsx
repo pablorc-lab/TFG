@@ -1,7 +1,7 @@
 import { useState} from 'react';
 import styles from "./viajeros_header.module.css"
 
-export default function Viajeros_header({children, handleInputChange, setLocationFocus, location}){
+export default function Viajeros_header({filteredList, handleInputChange, setLocationFocus, location}){
   const [username, setUsername] = useState("");
 
   const handleOnChange_searchUser = (e) => {
@@ -37,12 +37,13 @@ export default function Viajeros_header({children, handleInputChange, setLocatio
                 className={styles.searcher} 
                 name="buscador" 
                 placeholder="Destino" 
+                spellCheck="false"
                 value={location}
                 onChange={handleInputChange}
                 onFocus={() => setLocationFocus(true)}
                 onBlur={() => {setTimeout(() => setLocationFocus(false), 200);}}
               />
-            {children}
+            {filteredList}
           </form>
 
           <div className={styles.filters}>
@@ -67,6 +68,7 @@ export default function Viajeros_header({children, handleInputChange, setLocatio
             className={styles.user_search} 
             name="encontrar user" 
             placeholder="@username" 
+            spellCheck="false"
             value={username}
             onFocus={() => {username === '' && setUsername('@');}}
             onBlur={() => setUsername("")}

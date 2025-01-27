@@ -2,7 +2,7 @@ import { useState} from 'react';
 import styles_mobile from "./viajeros_mobile_header.module.css"
 
 
-export default function Viajeros_mobile_header({ children, activeSection, setActiveSection, handleInputChange, setLocationFocus, location }) {
+export default function Viajeros_mobile_header({ filteredList, activeSection, setActiveSection, handleInputChange, setLocationFocus, location }) {
   const [username, setUsername] = useState("");
   
 
@@ -20,9 +20,6 @@ export default function Viajeros_mobile_header({ children, activeSection, setAct
     return activeSection === nameSection && styles_mobile.active_section;
   }
   
-
-
-
   return (
     <>
       {/*Cabecera*/}
@@ -68,12 +65,13 @@ export default function Viajeros_mobile_header({ children, activeSection, setAct
                 className={styles_mobile.searcher} 
                 name="buscador" 
                 placeholder="Destino" 
+                spellCheck="false"
                 value={location}
                 onChange={handleInputChange}
                 onFocus={() => setLocationFocus(true)}
                 onBlur={() => {setTimeout(() => setLocationFocus(false), 200);}}
               />
-              {children}
+              {filteredList}
             </div>
 
             {/*BUSCAR USUARIO*/}
@@ -84,6 +82,7 @@ export default function Viajeros_mobile_header({ children, activeSection, setAct
                 className={styles_mobile.searcher} 
                 name="buscador" 
                 placeholder="@username" 
+                spellCheck="false"
                 value={username}
                 onFocus={() => {username === '' && setUsername('@');}}
                 onBlur={() => setUsername("")}

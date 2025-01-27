@@ -31,7 +31,7 @@ export default function Viajeros_Alojamientos({ defaultActiveSection = "alojamie
   });
   
   // Lista de paises filtradas al buscar, que se pasará a las cabeceras
-  const children = (
+  const filteredList = (
     filteredCities.length > 0 && locationFocus && (
       <ul className={styles.filteredCities}>
         {filteredCities.map(({ id, name, id_state }) => {
@@ -95,13 +95,13 @@ export default function Viajeros_Alojamientos({ defaultActiveSection = "alojamie
       {/* CABECERA */}
       {isLargeScreen
         ? <Viajeros_header
-          children={children}
+        filteredList={filteredList}
           handleInputChange={handleInputChange}
           setLocationFocus={setLocationFocus}
           location={location}
         />
-        : <Viajeros_mobile_header
-          children={children}
+        : <Viajeros_mobile_header 
+        filteredList={filteredList}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           handleInputChange={handleInputChange}
