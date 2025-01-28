@@ -86,6 +86,8 @@
   align-items: center;
 }
 .searcher {
+  color: rgb(46, 46, 46);
+
   font-family: "Nunito";
   padding-right: 10px;
   caret-color: #009080; /* Cambia el color del cursor (caret) */

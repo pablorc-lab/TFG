@@ -169,19 +169,20 @@
   cursor: pointer;
   user-select: none;
   background-color: white;
-  border: 2px solid #545454;
+  border: 2px solid #757575;
   border-radius: 60px;
   display: flex;
   align-items: center;
   padding: 4px 15px;
   gap: 5px;
-  transition: background-color 0.1s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
 }
 /* Hace que las imágenes se vean blancas */
 .header_prof_user:hover img { filter: brightness(0) invert(1); }
 .header_prof_user:hover { 
   background-color: #0a7273;
   border-color: #0a7273;
+  box-shadow: 0 0 9px rgba(0,0,0,0.4);
 }
 .header_prof_user img:nth-child(1){ width: 35px;}
 .header_prof_user img:nth-child(2){ width: 45px;}
@@ -193,15 +194,28 @@
   display: flex;
   align-items: center;
   background-color: white;
-  border: 2px solid #545454;
+  border: 2px solid #757575;
   border-radius: 15px;
 }
+.user_search_form span{
+  margin-left: 3px;
+  font-size: 25px;
+  color: #858585;
+}
 .user_search_form:focus-within { border-color: #009080;}
-.user_search_form img {width: 35px;}
+.user_search_form:focus-within img { border-color: #007063;}
+.user_search_form:focus-within span{ color: #272727;}
+
+.user_search_form img {
+  filter: brightness(1.5);
+  width: 35px;
+  padding-right: 2px;
+  border-right: 2px solid rgb(107, 107, 107);
+}
 
 .user_search {
   width: 110px;
-  color:#545454;
+  color:#272727;
   caret-color: #009080; 
   font-family: "Nunito";  
   border: none;
@@ -210,8 +224,6 @@
 }
 .user_search::placeholder{ color: rgb(177, 177, 177);}
 .user_search:focus { outline: none;}
-
-
 
 
 /*? =============

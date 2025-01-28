@@ -1,10 +1,9 @@
 import { useState} from 'react';
-import styles_mobile from "./viajeros_mobile_header.module.css"
+import styles_mobile from "./ViajerosMobileHeader.module.css"
 
 
 export default function Viajeros_mobile_header({ filteredList, activeSection, setActiveSection, handleInputChange, setLocationFocus, location }) {
   const [username, setUsername] = useState("");
-  
 
   // Cada vez que se reenderiza el componente, se crean los arrays de los JSON
   const handleOnChange_searchUser = (e) => {
@@ -83,6 +82,7 @@ export default function Viajeros_mobile_header({ filteredList, activeSection, se
                 name="buscador" 
                 placeholder="@username" 
                 spellCheck="false"
+                maxLength={10}
                 value={username}
                 onFocus={() => {username === '' && setUsername('@');}}
                 onBlur={() => setUsername("")}

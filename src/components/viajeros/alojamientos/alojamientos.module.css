@@ -2,6 +2,7 @@
 /*? Ciudades mostradas al buscar
 /*?==============================*/
 .filteredCities {
+  z-index: 999;
   user-select: none;
   font-family: "Nunito";
   font-weight: 700;

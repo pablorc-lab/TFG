@@ -1,17 +1,10 @@
 import { useState} from 'react';
-import styles from "./viajeros_header.module.css"
+import styles from "./ViajerosHeader.module.css"
 
 export default function Viajeros_header({filteredList, handleInputChange, setLocationFocus, location}){
   const [username, setUsername] = useState("");
 
-  const handleOnChange_searchUser = (e) => {
-    if (e.target.value === '' || e.target.value[0] !== '@') {
-      setUsername('@');
-    } 
-    else 
-      setUsername(e.target.value);
-  };
-
+ 
   return(
     <header className={styles.header}>
       <div className={styles.header_logo}>
@@ -47,7 +40,7 @@ export default function Viajeros_header({filteredList, handleInputChange, setLoc
           </form>
 
           <div className={styles.filters}>
-            <img src="images/viajeros/filtros.webp" width="50" />
+            <img src="images/viajeros/filtros.webp" width="50" alt="icono filtro"/>
             <span>Filtros</span>
           </div>
         </article>
@@ -57,22 +50,23 @@ export default function Viajeros_header({filteredList, handleInputChange, setLoc
 
       <section className={styles.header_user_section}>
         <div className={styles.header_prof_user}>
-          <img src="images/logos/icono_user.webp" width="35" />
-          <img src="images/logos/logo_user_vacio.webp" width="40" />
+          <img src="images/logos/icono_user.webp" width="35" alt="icono user"/>
+          <img src="images/logos/logo_user_vacio.webp" width="40" alt="logo user vacio"/>
         </div>
 
         <form className={styles.user_search_form}>
-          <img src="images/logos/search_user.webp" width="40" />
+          <img src="images/logos/search_user.webp" width="40" alt="search user logo"/>
+          <span>@</span>
           <input 
             type="text" 
             className={styles.user_search} 
             name="encontrar user" 
-            placeholder="@username" 
+            placeholder="username" 
             spellCheck="false"
             value={username}
-            onFocus={() => {username === '' && setUsername('@');}}
             onBlur={() => setUsername("")}
-            onChange={handleOnChange_searchUser}
+            maxLength={10}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </form>
       </section>

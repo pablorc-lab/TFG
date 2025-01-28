@@ -1,7 +1,7 @@
 import Anf_card from '../../users_cards/anf_card';
 import anf_card_styles from "../../users_cards/anf_card.module.css"
-import styles from "./anf_profiles_gallery.module.css" 
-import Anf_data from "./../../../data/viajeros/viaj_data.json"
+import styles from "./AnfProfilesGallery.module.css"
+import Anf_data from "../../../data/viajeros/viaj_data.json"
 
 export default function Anf_Profiles_Gallery(){
   return (
