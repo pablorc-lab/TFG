@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import Anf_card from "../users_cards/anf_card";
+import AnfCard from "../users_cards/anf_card";
 import Inq_card from "../users_cards/inq_card";
 import Footer from "../footer/footer";
 import Question from "./questions";
@@ -79,15 +79,15 @@ export default function Home_page() {
         <img className={styles.header_logo} src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
         <section className={styles.header_menu}>
           <nav className={styles.header_nav}>
-            <a>Alojamientos</a>
-            <a>Inquilinos</a>
-            <a>Guía</a>
+            <a href="/">Alojamientos</a>
+            <a href="/">Inquilinos</a>
+            <a href="/">Guía</a>
           </nav>
 
           <article className={`${styles.header_user} ${isMenuOpen && styles.open}`}>
             <div className={styles.user_button} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
               <img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50" />
-              <img className={styles.client_acces} src="images/landing_page/menu_user.png"/>
+              <img className={styles.client_acces} src="images/landing_page/menu_user.png" alt="logo menu user"/>
             </div>
 
             <div className={styles.dropdown_menu} ref={menu_user_Ref}>
@@ -129,7 +129,7 @@ export default function Home_page() {
           </article>
           
           <article className={styles.card_container}>
-            <Anf_card
+            <AnfCard
               styles={styles}
               Casa_img="/images/landing_page/casa_1.webp"
               Perfil_img="/images/landing_page/persona_1.webp"

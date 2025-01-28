@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Viajeros_header from './ViajerosHeader';
-import Viajeros_mobile_header from "./ViajerosMobileHeader"
-import Anf_Profiles_Gallery from './AnfProfilesGallery';
+import ViajerosHeader from './ViajerosHeader';
+import ViajerosMobilesHeader from "./ViajerosMobileHeader"
+import AnfProfilesGallery from './AnfProfilesGallery';
 import Footer from '../../footer/footer';
 
 import styles from "./alojamientos.module.css"
@@ -94,13 +94,13 @@ export default function Viajeros_Alojamientos({ defaultActiveSection = "alojamie
     <>
       {/* CABECERA */}
       {isLargeScreen
-        ? <Viajeros_header
+        ? <ViajerosHeader
         filteredList={filteredList}
           handleInputChange={handleInputChange}
           setLocationFocus={setLocationFocus}
           location={location}
         />
-        : <Viajeros_mobile_header 
+        : <ViajerosMobilesHeader 
         filteredList={filteredList}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
@@ -110,7 +110,7 @@ export default function Viajeros_Alojamientos({ defaultActiveSection = "alojamie
         />
       }
       {/* PERFILES DE VIAJEROS  */}
-      <Anf_Profiles_Gallery />
+      <AnfProfilesGallery />
       {/*Pie de pagina*/}
       <Footer/>
     </>

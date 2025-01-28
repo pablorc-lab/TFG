@@ -89,7 +89,7 @@ export default function Registrar_usuario(){
     <section className={styles.acceso_section}>
       <header className={styles.acceso_header}>
         <figure>
-          <img src="images/logos/logo_blanco.png"/>
+          <img src="images/logos/logo_blanco.png" alt="logo blanco"/>
           <figcaption>Bearfrens</figcaption>
         </figure>
       </header>
