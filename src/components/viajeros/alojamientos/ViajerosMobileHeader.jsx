@@ -26,25 +26,23 @@ export default function Viajeros_mobile_header({ filteredList, activeSection, se
         <nav className={styles_mobile.search_nav}>
           <div className={getClassName('alojamientos')} onClick={() => setActiveSection('alojamientos')} >
             <img 
-              src={`images/viajeros/house_header.webp`} 
+              src={`/images/viajeros/house_header.webp`} 
               width="50" 
               alt='icono casa' 
             />
             <span>Alojamientos</span>
           </div>
-
           <div className={getClassName('comunidades')} onClick={() => setActiveSection('comunidades')}>
             <img 
-              src={`images/viajeros/comunidades_header.webp`} 
+              src={`/images/viajeros/comunidades_header.webp`} 
               width="50" 
               alt='icono comunidades' 
             />
             <span>Comunidades</span>
           </div>
-
           <img 
             className={getClassName('perfil')}
-            src={`images/viajeros/user_header.webp`} 
+            src={`/images/viajeros/user_header.webp`} 
             width="55"
             alt='icono user' 
             onClick={() => setActiveSection('perfil')}
@@ -58,7 +56,7 @@ export default function Viajeros_mobile_header({ filteredList, activeSection, se
           <form className={styles_mobile.search_form}>
             {/*BUSCAR DESTINO*/}
             <div > 
-              <img src="images/viajeros/lupa_mobile.webp" width="50" alt='icono lupa' />
+              <img src="/images/viajeros/lupa_mobile.webp" width="50" alt='icono lupa' />
               <input 
                 type="text" 
                 className={styles_mobile.searcher} 
@@ -75,7 +73,7 @@ export default function Viajeros_mobile_header({ filteredList, activeSection, se
 
             {/*BUSCAR USUARIO*/}
             <div>
-              <img src="images/logos/search_user_active.webp" width="50" alt='icono usuario lupa' />
+              <img src="/images/logos/search_user_active.webp" width="50" alt='icono usuario lupa' />
               <input 
                 type="text" 
                 className={styles_mobile.searcher} 
@@ -91,7 +89,7 @@ export default function Viajeros_mobile_header({ filteredList, activeSection, se
             </div>
           </form>
 
-          <img className={styles_mobile.filters} src="images/viajeros/filtros.webp" width="50" alt='icono filtros' />
+          <img className={styles_mobile.filters} src="/images/viajeros/filtros.webp" width="50" alt='icono filtros' />
         </article>
       )}
      

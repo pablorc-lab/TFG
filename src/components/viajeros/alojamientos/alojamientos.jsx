@@ -9,7 +9,6 @@ import Ciudades from "../../../data/countries/cities.json"
 import Pronvicias from "../../../data/countries/states.json"
 import Paises from "../../../data/countries/countries.json"
 
-
 export default function Viajeros_Alojamientos({ defaultActiveSection = "alojamientos" }) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const [activeSection, setActiveSection] = useState(defaultActiveSection);

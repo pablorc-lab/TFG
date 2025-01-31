@@ -45,12 +45,14 @@
 /** Texto central */
 .header_nav {
   display: block;
-  color: #3c302a;
   font-size: 25px;
   font-weight: 600;  
 }
 
-.header_nav a {margin-left: 35px;}
+.header_nav a {
+  margin-left: 35px;
+  color: #3c302a;
+}
 .header_nav a:hover {
   transition: 0.1s;
   color: #009080;

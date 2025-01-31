@@ -8,23 +8,21 @@ export default function Viajeros_header({filteredList, handleInputChange, setLoc
   return(
     <header className={styles.header}>
       <div className={styles.header_logo}>
-        <img src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
+        <img src="/images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
         <h1>Bearfrens</h1>
         <h2>Viajeros</h2>
       </div>
 
       <section className={styles.search_container}>
         <nav className={styles.search_nav}>
-          <ul>
-            <li>Inicio</li>
-            <li>Alojamientos</li>
-            <li>Comunidades</li>
-          </ul>
+          <a href='/inicio'>Inicio</a>
+          <a>Alojamientos</a>
+          <a>Comunidades</a>
         </nav>
 
         <article className={styles.search_form_container}>
           <form className={styles.search_form}>
-            <img src="images/viajeros/lupa.webp" width="50" alt='icono lupa' />
+            <img src="/images/viajeros/lupa.webp" width="50" alt='icono lupa' />
             <input 
                 type="text" 
                 className={styles.searcher} 
@@ -40,7 +38,7 @@ export default function Viajeros_header({filteredList, handleInputChange, setLoc
           </form>
 
           <div className={styles.filters}>
-            <img src="images/viajeros/filtros.webp" width="50" alt="icono filtro"/>
+            <img src="/images/viajeros/filtros.webp" width="50" alt="icono filtro"/>
             <span>Filtros</span>
           </div>
         </article>
@@ -50,12 +48,12 @@ export default function Viajeros_header({filteredList, handleInputChange, setLoc
 
       <section className={styles.header_user_section}>
         <div className={styles.header_prof_user}>
-          <img src="images/logos/icono_user.webp" width="35" alt="icono user"/>
-          <img src="images/logos/logo_user_vacio.webp" width="40" alt="logo user vacio"/>
+          <img src="/images/logos/icono_user.webp" width="35" alt="icono user"/>
+          <img src="/images/logos/logo_user_vacio.webp" width="40" alt="logo user vacio"/>
         </div>
 
         <form className={styles.user_search_form}>
-          <img src="images/logos/search_user.webp" width="40" alt="search user logo"/>
+          <img src="/images/logos/search_user.webp" width="40" alt="search user logo"/>
           <span>@</span>
           <input 
             type="text" 

@@ -1,5 +1,5 @@
-import AnfCard from '../../users_cards/anf_card';
-import anf_card_styles from "../../users_cards/anf_card.module.css"
+import AnfCard from '../../users_cards/AnfCard';
+import anf_card_styles from "../../users_cards/AnfCard.module.css"
 import styles from "./AnfProfilesGallery.module.css"
 import Anf_data from "../../../data/viajeros/viaj_data.json"
 

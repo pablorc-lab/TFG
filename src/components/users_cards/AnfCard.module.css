@@ -166,7 +166,7 @@
   margin-bottom: 7.68px;
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 810px), (min-width: 1200px) {
   .general_prof { 
     border-radius: 14px; 
     max-width: 400px; 

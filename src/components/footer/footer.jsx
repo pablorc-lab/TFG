@@ -6,7 +6,7 @@ export default function Footer() {
       <footer className={styles.footer}>
         {/*Logo*/}
         <figure className={styles.logo_footer}>
-          <img src="images/logos/logo_blanco.png" alt="Logo Bearfrens" width="150"/>
+          <img src="/images/logos/logo_blanco.png" alt="Logo Bearfrens" width="150"/>
           <figcaption>Bearfrens</figcaption>
         </figure>
         {/*Información de contacto*/}
@@ -16,10 +16,10 @@ export default function Footer() {
             <p>Teléfono: <strong>+34 666-666-666</strong></p>
           </div>
           <div className={styles.social_media}>
-            <img src="./images/logos/instagram_logo.png" alt="instagram_logo" width="50"/>
-            <img src="./images/logos/x_logo.png" alt="x_logo" width="50"/>
-            <img src="./images/logos/youtube_logo.png" alt="youtube_logo" width="50"/>
-            <img src="./images/logos/facebook_logo.png" alt="facebook_logo" width="50"/>
+            <img src="/images/logos/instagram_logo.png" alt="instagram_logo" width="50"/>
+            <img src="/images/logos/x_logo.png" alt="x_logo" width="50"/>
+            <img src="/images/logos/youtube_logo.png" alt="youtube_logo" width="50"/>
+            <img src="/images/logos/facebook_logo.png" alt="facebook_logo" width="50"/>
           </div>
         </div>
         {/*Políticias de privacidad*/}

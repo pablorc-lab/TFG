@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-import AnfCard from "../users_cards/anf_card";
-import Inq_card from "../users_cards/inq_card";
+import AnfCard from "../users_cards/AnfCard";
+import InqCard from "../users_cards/InqCard";
 import Footer from "../footer/footer";
 import Question from "./questions";
 import faqData from "./questions_data";
@@ -150,7 +150,7 @@ export default function Home_page() {
         {/*?SECCION DE LOS VIAJEROS*/}
         <section className={`${styles.card_section} ${styles.inq_card}`}>
           <article className={styles.card_container}>
-            <Inq_card
+            <InqCard
               styles={styles}
               Perfil_img="images/landing_page/persona_3.webp"
               Nombre="Juanma"
