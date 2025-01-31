@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
-import AnfCard from "../users_cards/AnfCard";
-import InqCard from "../users_cards/InqCard";
-import Footer from "../footer/footer";
-import Question from "./questions";
-import faqData from "./questions_data";
+import AnfCard from "../../components/users_cards/AnfCard";
+import InqCard from "../../components/users_cards/InqCard";
+import Footer from "../../components/footer/footer";
+import Question from "../../components/home/questions";
+import faqData from "../../components/home/questions_data";
 import styles from "./home.module.css"
 
 // Datos de las ventajas
@@ -35,7 +35,7 @@ const opinions = [
   },
 ];
 
-export default function Home_page() {
+export default function Home() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isNavVisible, setNavVisible] = useState(true);
   const menu_user_Ref = useRef(null);

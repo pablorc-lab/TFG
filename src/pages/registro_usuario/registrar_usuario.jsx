@@ -1,6 +1,6 @@
 import { useState } from "react"
 import styles from "./accesos.module.css"
-import { validateEmail, validateNames, validateIdUser, validateAge} from "./validations";
+import { validateEmail, validateNames, validateIdUser, validateAge} from "../../components/registro_usuarios/validations";
 
 export default function Registrar_usuario(){
   const [firstStep, setFirstStep] = useState(true);

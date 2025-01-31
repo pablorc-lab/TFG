@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ViajerosHeader from './ViajerosHeader';
-import ViajerosMobilesHeader from "./ViajerosMobileHeader"
-import AnfProfilesGallery from './AnfProfilesGallery';
-import Footer from '../../footer/footer';
+import ViajerosHeader from '../../../components/viajeros/alojamientos/ViajerosHeader';
+import ViajerosMobilesHeader from "../../../components/viajeros/alojamientos/ViajerosMobileHeader"
+import AnfProfilesGallery from '../../../components/viajeros/alojamientos/AnfProfilesGallery';
+import Footer from '../../../components/footer/footer';
 
 import styles from "./alojamientos.module.css"
 import Ciudades from "../../../data/countries/cities.json"
