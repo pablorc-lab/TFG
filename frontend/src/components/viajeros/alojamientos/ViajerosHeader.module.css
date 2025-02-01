@@ -7,7 +7,7 @@
   font-family: "Nunito";
   width: (100%-100px) ;
   padding: 25px 50px;
-  background-color: #e9e3d5;
+  background-color: #ebd9c3;
   box-shadow: 0 0 5px rgba(0,0,0,0.4);
 
   position: relative;
@@ -74,7 +74,6 @@
   padding: 0 10px;
   text-decoration: none;
 }
-
 .search_nav a:nth-child(2) {
   color: #0a7273;
   font-weight: 700;
@@ -85,7 +84,6 @@
   box-shadow: 0 0 0 10px #f2f2f2;
   background-color: #f2f2f2;
 }
-
 
 
 /*? BUSCADOR FORM*/
@@ -179,7 +177,6 @@
 .header_prof_user:hover { 
   background-color: #0a7273;
   border-color: #0a7273;
-  box-shadow: 0 0 9px rgba(0,0,0,0.4);
 }
 .header_prof_user img:nth-child(1){ width: 35px;}
 .header_prof_user img:nth-child(2){ width: 45px;}
@@ -199,8 +196,8 @@
   font-size: 25px;
   color: #858585;
 }
-.user_search_form:focus-within { border-color: #009080;}
-.user_search_form:focus-within img { border-color: #007063;}
+.user_search_form:focus-within { border-color: #0a7273;}
+.user_search_form:focus-within img { border-color: #053435;}
 .user_search_form:focus-within span{ color: #272727;}
 
 .user_search_form img {
@@ -213,7 +210,7 @@
 .user_search {
   width: 110px;
   color:#272727;
-  caret-color: #009080; 
+  caret-color: #0a7273; 
   font-family: "Nunito";  
   border: none;
   font-size: 20px;

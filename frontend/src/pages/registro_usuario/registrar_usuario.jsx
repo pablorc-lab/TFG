@@ -98,7 +98,8 @@ export default function Registrar_usuario(){
         <h1>Registrarse</h1>
 
         <form action="pagina.jar" className={styles.form_registro} style={{gap: Object.values(errorStates).includes(true) && "15px"}} noValidate>
-          {firstStep ? (
+          {firstStep ? 
+          (
             <>
               <div className={`${styles.input_container} ${errorStates.email && styles.error_input}`}>
                 <label htmlFor="email">Correo electrónico</label>
@@ -145,7 +146,9 @@ export default function Registrar_usuario(){
                 onClick={handleSubmitFirstStep}            
               />
             </>
-          ) : (
+          ) 
+          : 
+          (
             <>
               <article className={`${styles.input_container} ${(errorStates.name||errorStates.lastName) && styles.error_input}`}>
                 <div className={styles.name_input}>

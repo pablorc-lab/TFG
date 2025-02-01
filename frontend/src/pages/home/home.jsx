@@ -54,7 +54,7 @@ export default function Home() {
 
   useEffect(() => {
     // Cambia el título solo al montar el componente
-    document.title = "Beafrens";
+    document.title = "Inicio | Beafrens";
 
     // Escuchar clics en todo el documento
     document.addEventListener("mousedown", handleClickOutside_Menu);
@@ -79,7 +79,7 @@ export default function Home() {
         <img className={styles.header_logo} src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
         <section className={styles.header_menu}>
           <nav className={styles.header_nav}>
-            <a href="/">Alojamientos</a>
+            <a href="/viajeros/alojamientos">Alojamientos</a>
             <a href="/">Inquilinos</a>
             <a href="/">Guía</a>
           </nav>
@@ -94,14 +94,14 @@ export default function Home() {
               <ul>
                 {!isNavVisible && (
                   <>
-                    <li><span>Alojamientos</span></li>
-                    <li><span>Inquilinos</span></li>
-                    <li className={styles.guia_menu_header}><span>Guía</span></li>
+                    <li><a href="/viajeros/alojamientos"><span>Alojamientos</span></a></li>
+                    <li><a href="/"><span>Inquilinos</span></a></li>
+                    <li className={styles.guia_menu_header}><a href="/"><span>Guía</span></a></li>
                   </>
                 )}
-                <li><span>Iniciar sesión</span></li>
-                <li className={styles.li_registrate}><span>Registrarse</span></li>
-                <li><span>Soporte</span></li>
+                <li><a href="/iniciar-sesion"><span>Iniciar sesión</span></a></li>
+                <li className={styles.li_registrate}><a href="/registro"><span>Registrarse</span></a></li>
+                <li><a href="/"><span>Soporte</span></a></li>
               </ul>
             </div>
           </article>

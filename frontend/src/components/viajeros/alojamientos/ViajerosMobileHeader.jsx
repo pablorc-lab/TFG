@@ -2,7 +2,7 @@ import { useState} from 'react';
 import styles_mobile from "./ViajerosMobileHeader.module.css"
 
 
-export default function Viajeros_mobile_header({ filteredList, activeSection, setActiveSection, handleInputChange, setLocationFocus, location }) {
+export default function ViajerosMobileHeader({ filteredList, activeSection, setActiveSection, handleInputChange, setLocationFocus, location }) {
   const [username, setUsername] = useState("");
 
   // Cada vez que se reenderiza el componente, se crean los arrays de los JSON

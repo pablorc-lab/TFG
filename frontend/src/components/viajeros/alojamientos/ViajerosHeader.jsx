@@ -1,7 +1,7 @@
 import { useState} from 'react';
 import styles from "./ViajerosHeader.module.css"
 
-export default function Viajeros_header({filteredList, handleInputChange, setLocationFocus, location}){
+export default function ViajerosHeader({filteredList, handleInputChange, setLocationFocus, location}){
   const [username, setUsername] = useState("");
 
  
@@ -16,8 +16,8 @@ export default function Viajeros_header({filteredList, handleInputChange, setLoc
       <section className={styles.search_container}>
         <nav className={styles.search_nav}>
           <a href='/inicio'>Inicio</a>
-          <a>Alojamientos</a>
-          <a>Comunidades</a>
+          <a href="/viajeros/alojamientos">Alojamientos</a>
+          <a href="/">Comunidades</a>
         </nav>
 
         <article className={styles.search_form_container}>
