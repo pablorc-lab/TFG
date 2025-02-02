@@ -4,10 +4,12 @@ export default function Iniciar_sesion(){
   return (
     <section className={styles.acceso_section}>
       <header className={styles.acceso_header}>
-        <figure>
-          <img src="images/logos/logo_blanco.png" alt="Logo bearfrens"/>
-          <figcaption>Bearfrens</figcaption>
-        </figure>
+        <a href="/inicio">
+          <figure>
+            <img src="/images/logos/logo_blanco.png" alt="logo blanco" />
+            <figcaption>Bearfrens</figcaption>
+          </figure>
+        </a>
       </header>
 
       <article className={styles.acceso_container}>

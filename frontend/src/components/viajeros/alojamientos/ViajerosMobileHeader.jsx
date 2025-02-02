@@ -80,7 +80,6 @@ export default function ViajerosMobileHeader({ filteredList, activeSection, setA
                 name="buscador" 
                 placeholder="@username" 
                 spellCheck="false"
-                maxLength={10}
                 value={username}
                 onFocus={() => {username === '' && setUsername('@');}}
                 onBlur={() => setUsername("")}

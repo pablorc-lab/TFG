@@ -4,7 +4,6 @@ import styles from "./ViajerosHeader.module.css"
 export default function ViajerosHeader({filteredList, handleInputChange, setLocationFocus, location}){
   const [username, setUsername] = useState("");
 
- 
   return(
     <header className={styles.header}>
       <div className={styles.header_logo}>
@@ -63,7 +62,6 @@ export default function ViajerosHeader({filteredList, handleInputChange, setLoca
             spellCheck="false"
             value={username}
             onBlur={() => setUsername("")}
-            maxLength={10}
             onChange={(e) => setUsername(e.target.value)}
           />
         </form>

@@ -16,6 +16,7 @@
   top: 0;
   background-color: #009080;
 }
+.acceso_header a {text-decoration: none;}
 .acceso_header figure {
   display: flex;
   align-items: center;
@@ -59,6 +60,7 @@
   width: 190px;
   display: grid;
 }
+.form_registro h2 {margin: 0;}
 
 .acceso_container h1 {
   font-weight: 700;
@@ -68,7 +70,50 @@
   margin-top: 20px;
 }
 
+/*? Registro Ultimo paso tipo de cuenta*/
+.input_tipo_cuenta {
+  cursor: pointer;
+  border: 2px solid rgb(182, 182, 182);
+  border-radius: 3px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.1s ease-in-out;
+}
+.input_tipo_cuenta:hover { 
+  background-color: white;
+}
 
+.input_tipo_cuenta img { 
+  flex-shrink: 0;
+  width: 50px;
+  aspect-ratio: 1 / 1;
+  filter:grayscale(1) brightness(1.5);
+}
+
+.input_tipo_cuenta h3 { 
+  color: rgb(177, 177, 177);
+  margin: 0px;
+  font-size: 22px;
+}
+.input_tipo_cuenta p{
+  font-size: 18px;
+  margin: 0px;
+  color: rgb(201, 201, 201);
+}
+
+.input_tipo_cuenta.active {
+  background-color: #00907f28;
+  border: 2px solid #009080;
+  filter: none;
+}
+.input_tipo_cuenta.active img{filter: none;}
+.input_tipo_cuenta.active h3 {color: black;}
+.input_tipo_cuenta.active p {color: rgb(124, 124, 124);}
+.input_tipo_cuenta.active p strong {
+  color: rgb(83, 83, 83);
+}
 /*? Mensaje ERROR input*/
 .input_container.error_input label { color:red;}
 .input_container.error_input input {border-color: red;}
@@ -77,6 +122,12 @@
   color: red;
   font-size: 17px;
   margin: 0;
+}
+.lastStepError {
+  font-size: 22px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: rgba(255, 0, 0, 0.295);
 }
 .input_container.error_input input:focus {
   outline: none;
@@ -176,4 +227,10 @@
   .form_registro .name_input input{
     width: 140px;
   }
+
+  /*? Ultimo paso*/
+  .input_tipo_cuenta img { width: 45px;}
+  .input_tipo_cuenta h3 { font-size: 20px;  }
+  .input_tipo_cuenta p{ font-size: 17px;}
+
 }
