@@ -255,7 +255,11 @@ export default function Registrar_usuario(){
 
       <article className={styles.acceso_container}>
         <h1>Registrarse</h1>
-
+        <div className={styles.progress_bar}>
+          <progress max="100" value={actualStep >= 0 && 100}/>
+          <progress max="100" value={actualStep >= 1 && 100}/>
+          <progress max="100" value={actualStep >= 2 && 100}/>
+        </div>
         <form action="pagina.jar" className={styles.form_registro} style={{gap: Object.values(errorStates).slice(0,-1).includes(true) && "15px"}} noValidate>
           {actualStep === 0 && FirstStepRegister}
           {actualStep === 1 && SecondStepRegister}

@@ -30,6 +30,31 @@
   color: #e9e3d5;
 }
 
+/*? Barra de progreso*/
+.progress_bar{
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.progress_bar progress {
+  width: 145px; 
+  height: 8px; 
+  appearance: none; 
+}
+.progress_bar progress::-webkit-progress-bar {
+  background-color: #dddddd; 
+  border-radius: 5px;
+}
+.progress_bar progress::-webkit-progress-value {
+  background-color: #009080; 
+  border-radius: 5px;
+}
+.progress_bar progress::-moz-progress-bar {
+  background-color: #009080; 
+  border-radius: 5px;
+}
 /*? ====================
 /*?   Inicio de sesión 
 /*? ====================*/
@@ -216,6 +241,10 @@
 @media (max-width: 600px) {
   .acceso_container { width: 440px;}
   .acceso_container h1 { font-size: 35px;}
+
+  .progress_bar progress {
+    width: 110px;
+  }
 
   /*? Input */
   .input_container label { font-size: 19px; }
