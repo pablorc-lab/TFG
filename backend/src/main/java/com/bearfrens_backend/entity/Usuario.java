@@ -1,13 +1,10 @@
 package com.bearfrens_backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
-// @Entity : Indica que esta clase es una entidad JPA y se mapeará a una tabla en       la base de datos.
-@Entity
+//  @MappedSuperclass : indica que NO se creará una tabla usuario. Ya que cada tipo de usuario tiene una tabla distinta
+@MappedSuperclass
 public abstract class Usuario {
   /*
     - @Id : Clase primaria de la entidad
@@ -17,10 +14,10 @@ public abstract class Usuario {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
+  // @Column: Mapea el campo a la columna correspondiente de la tabla de la base de datos
   @Column(name = "privateID")
   private String privateID;
 
-  // @Column: Mapea el campo a la columna correspondiente de la tabla de la base de datos
   @Column(name = "email")
   private String email;
 
@@ -35,6 +32,9 @@ public abstract class Usuario {
 
   @Column(name = "edad")
   private int edad;
+
+  // Constructor vacío necesario para JPA
+  public Usuario() {}
 
   // Constructor con cifrado de contraseña
   public Usuario(String privateID, String nombre, String apellido, int edad, String email, String password) {

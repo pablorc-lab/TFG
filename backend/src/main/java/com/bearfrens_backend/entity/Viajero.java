@@ -1,16 +1,28 @@
 package com.bearfrens_backend.entity;
 
-public class Viajero extends Usuario{
-  public final String rol_user = "viajero";
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
 
+// @Entity : Indica que esta clase es una entidad JPA y se mapeará a una tabla en la base de datos.
+// @NoArgsConstructor : permite que JPA cree instancias de las entidades utilizando un constructor vacío, requerido para realizar la deserialización y la persistencia de objetos en la base de datos.
+@Entity
+@NoArgsConstructor  // Necesario para JPA
+@Table(name="viajeros")
+public class Viajero extends Usuario{
+  private int viajes_realizados = 0;
+
+  // Constructor
   public Viajero(String privateID, String nombre, String apellido, int edad, String email, String password) {
     super(privateID, nombre, apellido, edad, email, password);
   }
 
-  public String getRol_user() {return rol_user;}
+  // GETTERS and SETTERS
+  public int getViajes_realizados() {return viajes_realizados;}
+  public void setViajes_realizados() {this.viajes_realizados += 1;} // Se incrementa la cantidad de viajes realizados
 
   @Override
   public String toString() {
-    return super.toString() + " rol_user=" + rol_user + '\'' + ",\n}";
+    return super.toString() + " viajes realizados=" + viajes_realizados + '\'' + ",\n}";
   }
 }
