@@ -43,8 +43,7 @@ public abstract class Usuario {
     this.apellido = apellido;
     this.edad = edad;
     this.email = email;
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    this.password = encoder.encode(password); // Cifra la contraseña
+    setPassword(password); // Ciframos la contraseña
   }
   
   // GETTERS and SETTERS

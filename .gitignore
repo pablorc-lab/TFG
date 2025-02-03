@@ -36,34 +36,29 @@
 HELP.md
 
 # Ignorar directorios de compilación y build
-/target/
-!/src/main/**/target/
-!/src/test/**/target/
-/build/
-!/src/main/**/build/
-!/src/test/**/build/
+/backend/target/
+/backend/src/main/**/target/
+/backend/src/test/**/target/
+/backend/build/
+/backend/src/main/**/build/
+/backend/src/test/**/build/
+
 
 ### STS (Spring Tool Suite) ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+backend/.apt_generated
+backend/.classpath
+backend/.factorypath
+backend/.project
+backend/.settings
+backend/.springBeans
+backend/.sts4-cache
 
 ### IntelliJ IDEA ###
-.idea/
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+backend/.idea/
+backend/*.iws
+backend/*.iml
+backend/*.ipr
 
 ### VS Code ###
 .vscode/
+/backend/target

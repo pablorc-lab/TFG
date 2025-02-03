@@ -10,9 +10,7 @@ import static java.lang.System.*;
 public class BearfrensBackendApplication {
 
 	public static void main(String[] args) {
-		//SpringApplication.run(BearfrensBackendApplication.class, args);
-			Viajero viajero1 = new Viajero("idpablolab", "pablo", "ramblado", 72, "pablo@correo.es.example", "contraseniasincinfrar");
-		System.out.println(viajero1.toString());
+		SpringApplication.run(BearfrensBackendApplication.class, args);
 	}
 
 }
