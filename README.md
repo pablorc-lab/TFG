@@ -16,7 +16,7 @@ El sistema está optimizado para facilitar la creación de perfiles y la gestió
 
 --- 
 
-## 🛠️ Instrucciones para poder visualizar el  proyecto
+## 🛠️ Instrucciones para poder visualizar el proyecto
 
 > [!NOTE]
 > 
@@ -30,13 +30,17 @@ git clone https://github.com/{usuario}/{tu_repositorio}.git
 cd tu_repositorio
 ```
 
-### **Paso 2: Instalar las dependencias necesarias**
+### **Paso 2: (Opcional) Instalar Vite si no está configurado**
+```bash
+npm install @vitejs/plugin-react --save-dev
+```
+
+### **Paso 3: Instalar las dependencias necesarias**
 ```bash
 npm install
 ```
 
-### **Paso 3: Iniciar en nuestro servidor local**
+### **Paso 4: Iniciar en nuestro servidor local**
 ```bash
-npm start
+npm run dev
 ```
-
