@@ -9,21 +9,21 @@ body {
 
 @font-face {
   font-family: 'Coco Gothic';
-  src: url('../public/fonts/Coco-Gothic-Regular-trial.woff2') format('woff2');
+  src: url('/fonts/Coco-Gothic-Regular-trial.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Nunito';
-  src: url('../public/fonts/Nunito-VariableFont_wght.woff2') format('woff2');
+  src: url('/fonts/Nunito-VariableFont_wght.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Chewy';
-  src: url('../public/fonts/Chewy-Regular.woff2') format('woff2');
+  src: url('/fonts/Chewy-Regular.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
 }

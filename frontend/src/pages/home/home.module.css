@@ -161,7 +161,7 @@
   padding: 0 50px;
   padding-bottom: 100px;
   padding-top: 200px;  
-  background-image: url("../../../public/images/landing_page/header_back.webp");
+  background-image: url("/images/landing_page/header_back.webp");
   background-position: center;
   background-size: cover;
   display: grid;

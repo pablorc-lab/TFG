@@ -1,6 +1,6 @@
 .acceso_section {
   height: 100vh;
-  background-image: url("../../../public/images/registro/Bears_fondo.jpg");
+  background-image: url("/images/registro/Bears_fondo.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
