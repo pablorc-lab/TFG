@@ -4,6 +4,7 @@ import Home from './pages/home/home';
 import ViajerosAlojamientos from './pages/viajeros/alojamientos/alojamientos';
 import RegistrarUsuario from './pages/registro_usuario/registrar_usuario';
 import IniciarSesion from './pages/registro_usuario/iniciar_sesion';
+import Faq from './pages/faq/faq';
 
 export default function App() {
   return (
@@ -11,7 +12,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/inicio" />}/>
         <Route exact path="/inicio" element={<Home/>}/>
-        
+        <Route exact path="/inicio/faq" element={<Faq/>}/>
+
         <Route path="/viajeros" element={<Navigate to="/viajeros/alojamientos" />} />
         <Route exact path="/viajeros/alojamientos" element={<ViajerosAlojamientos/>}/>
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import HeaderHome from "../../components/home/headerHome";
 import AnfCard from "../../components/users_cards/AnfCard";
 import InqCard from "../../components/users_cards/InqCard";
 import Footer from "../../components/footer/footer";
@@ -18,17 +18,20 @@ const advantages = [
 
 // Datos de las opiniones
 const opinions = [
-  { text: "Esta plataforma cambió por completo la forma en que viajo. No solo encontré alojamientos increíbles, sino que pude conectar con anfitriones que comparten mis intereses en fotografía y senderismo. Es una experiencia mucho más personal que otras webs.",
+  { 
+    text: "Esta plataforma cambió por completo la forma en que viajo. No solo encontré alojamientos increíbles, sino que pude conectar con anfitriones que comparten mis intereses en fotografía y senderismo. Es una experiencia mucho más personal que otras webs.",
     img: "images/landing_page/persona_4.webp",
     name: "Alejandra Domínguez",
     role: "Viajero"
 	},
-  {text: "Recibir viajeros a través de esta aplicación ha sido una gran experiencia. Me encanta que los viajeros con los que conecto tienen intereses en común conmigo, lo que ha hecho que las estancias sean mucho más amenas y agradables. He conocido a personas increíbles aqui.",
+  {
+    text: "Recibir viajeros a través de esta aplicación ha sido una gran experiencia. Me encanta que los viajeros con los que conecto tienen intereses en común conmigo, lo que ha hecho que las estancias sean mucho más amenas y agradables. He conocido a personas increíbles aqui.",
     img: "images/landing_page/persona_1.webp",
     name: "Henry Cavill",
     role: "Anfitrión",
   },
-  {text: "He probado otras plataformas, pero esta destaca por la conexión con los anfitriones. Encontré a alguien que ama los deportes tanto como yo, lo cual hizo que mi estancia fuera mucho más divertida. Además, las valoraciones son muy precisas, lo que me dio mucha confianza al elegir vivienda.",
+  {
+    text: "He probado otras plataformas, pero esta destaca por la conexión con los anfitriones. Encontré a alguien que ama los deportes tanto como yo, lo cual hizo que mi estancia fuera mucho más divertida. Además, las valoraciones son muy precisas, lo que me dio mucha confianza al elegir vivienda.",
     img: "images/landing_page/persona_3.webp",
     name: "Jose Miguel Sosa",
     role: "Viajero",
@@ -36,77 +39,11 @@ const opinions = [
 ];
 
 export default function Home() {
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const [isNavVisible, setNavVisible] = useState(true);
-  const menu_user_Ref = useRef(null);
-  const userRef = useRef(null);
-
-  // Manejar el clic fuera del menú y fuera del botón de usuario
-  const handleClickOutside_Menu = (event) => {
-    if (menu_user_Ref.current && !menu_user_Ref.current.contains(event.target) && !userRef.current.contains(event.target))
-      setMenuOpen(false); // Cierra el menú
-  };
-
-  // Establecer navVisible a true si el ancho de la ventana es menor o igual a 769px
-  const checkNavVisibility = () => {
-    setNavVisible(window.innerWidth > 769);
-  };
-
-  useEffect(() => {
-    // Cambia el título solo al montar el componente
-    document.title = "Inicio | Beafrens";
-
-    // Escuchar clics en todo el documento
-    document.addEventListener("mousedown", handleClickOutside_Menu);
-   
-    checkNavVisibility();
-    window.addEventListener("resize", checkNavVisibility); // Cada vez que cambie el tamaño de la ventana se evalua
-
-    // Función de limpieza (esto se ejecutará cuando el componente se desmonta o antes de que se ejecute de nuevo el efecto).
-    // Asegura que se elimine el evento cuando el componente ya no esté en la página.
-    return () => {
-      //Eliminar los evento cuando el componente se desmonta.
-      // Evita que el manejador de eventos siga activo cuando el componente ya no esté visible.
-      document.removeEventListener("mousedown", handleClickOutside_Menu);
-      window.removeEventListener("resize", checkNavVisibility);
-    };
-  }, []);
 
 	return (
     <>
       {/*Cabecera*/}
-      <header className={styles.header}>
-        <img className={styles.header_logo} src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
-        <section className={styles.header_menu}>
-          <nav className={styles.header_nav}>
-            <a href="/viajeros/alojamientos">Alojamientos</a>
-            <a href="/">Inquilinos</a>
-            <a href="/">Guía</a>
-          </nav>
-
-          <article className={`${styles.header_user} ${isMenuOpen && styles.open}`}>
-            <div className={styles.user_button} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
-              <img src="images/logos/logo_usuario_blanco.png" alt="Logo usuario" width="50" />
-              <img className={styles.client_acces} src="images/landing_page/menu_user.png" alt="logo menu user"/>
-            </div>
-
-            <div className={styles.dropdown_menu} ref={menu_user_Ref}>
-              <ul>
-                {!isNavVisible && (
-                  <>
-                    <li><a href="/viajeros/alojamientos"><span>Alojamientos</span></a></li>
-                    <li><a href="/"><span>Inquilinos</span></a></li>
-                    <li className={styles.guia_menu_header}><a href="/"><span>Guía</span></a></li>
-                  </>
-                )}
-                <li><a href="/iniciar-sesion"><span>Iniciar sesión</span></a></li>
-                <li className={styles.li_registrate}><a href="/registro"><span>Registrarse</span></a></li>
-                <li><a href="/"><span>Soporte</span></a></li>
-              </ul>
-            </div>
-          </article>
-        </section>
-      </header>
+      <HeaderHome isHome={true}/>
 
       <main>
         {/*?LOGO INICIAL*/}
