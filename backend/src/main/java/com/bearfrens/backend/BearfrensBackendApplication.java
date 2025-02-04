@@ -1,10 +1,7 @@
-package com.bearfrens_backend;
+package com.bearfrens.backend;
 
-import com.bearfrens_backend.entity.Viajero;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import static java.lang.System.*;
 
 @SpringBootApplication
 public class BearfrensBackendApplication {

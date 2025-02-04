@@ -1,9 +1,14 @@
-package com.bearfrens_backend.entity;
+package com.bearfrens.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 //  @MappedSuperclass : indica que NO se creará una tabla usuario. Ya que cada tipo de usuario tiene una tabla distinta
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class Usuario {
   /*
@@ -33,34 +38,24 @@ public abstract class Usuario {
   @Column(name = "edad")
   private int edad;
 
+  @Column(name = "profileImage")
+  private String profileImage;
+
   // Constructor vacío necesario para JPA
   public Usuario() {}
 
   // Constructor con cifrado de contraseña
-  public Usuario(String privateID, String nombre, String apellido, int edad, String email, String password) {
+  public Usuario(String privateID, String nombre, String apellido, int edad, String email, String password, String profileImage) {
     this.privateID = privateID;
     this.nombre = nombre;
     this.apellido = apellido;
     this.edad = edad;
     this.email = email;
     setPassword(password); // Ciframos la contraseña
+    this.profileImage = profileImage;
   }
   
   // GETTERS and SETTERS
-  public long getId() { return id; }
-  public void setId(long id) { this.id = id; }
-  public String getPrivateID() {return privateID; }
-  public void setPrivateID(String privateID) { this.privateID = privateID; }
-  public String getEmail() { return email; }
-  public void setEmail(String email) { this.email = email; }
-  public String getNombre() { return nombre; }
-  public void setNombre(String nombre) { this.nombre = nombre; }
-  public String getApellido() { return apellido; }
-  public void setApellido(String apellido) { this.apellido = apellido; }
-  public int getEdad() {return edad;}
-  public void setEdad(int edad) { this.edad = edad;}
-  public String getPassword() { return password; }
-
   // Cifrar la nueva contraseña
   public void setPassword(String newPassword) {
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -70,11 +65,12 @@ public abstract class Usuario {
   @Override
   public String toString() {
     return "Usuario{" + "\n" +
-        " id=" + id + ",\n" +
-        " email='" + email + '\'' + ",\n" +
-        " password='" + password + '\'' + ",\n" +
-        " nombre='" + nombre + '\'' + ",\n" +
-        " apellido='" + apellido + '\'' + ",\n";
+        " ID=" + id + ",\n" +
+        " Email='" + email + '\'' + ",\n" +
+        " Password='" + password + '\'' + ",\n" +
+        " Nombre='" + nombre + '\'' + ",\n" +
+        " Apellido='" + apellido + '\'' + ",\n" +
+        " Imagen de perfil='" + profileImage + '\'' + ",\n";
   }
 }
 

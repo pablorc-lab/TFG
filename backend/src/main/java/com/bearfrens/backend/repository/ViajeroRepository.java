@@ -1,6 +1,6 @@
-package com.bearfrens_backend.repository;
+package com.bearfrens.backend.repository;
 
-import com.bearfrens_backend.entity.Viajero;
+import com.bearfrens.backend.entity.Viajero;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

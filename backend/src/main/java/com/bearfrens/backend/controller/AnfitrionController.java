@@ -1,15 +1,13 @@
-package com.bearfrens_backend.controller;
+package com.bearfrens.backend.controller;
 
-import com.bearfrens_backend.entity.Anfitrion;
-import com.bearfrens_backend.exception.ResourceNotFoundException;
-import com.bearfrens_backend.repository.AnfitrionRepository;
-import org.aspectj.weaver.ast.And;
+import com.bearfrens.backend.entity.Anfitrion;
+import com.bearfrens.backend.exception.ResourceNotFoundException;
+import com.bearfrens.backend.repository.AnfitrionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,20 +21,13 @@ public class AnfitrionController {
   @Autowired
   private AnfitrionRepository anfitrionRepository;
 
-  @GetMapping("/")
+  @GetMapping("")
   public List<Anfitrion> listarAnfitrions() {
     return anfitrionRepository.findAll();
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Anfitrion> obtenerAnfitrion(@PathVariable Long id) {
-    Anfitrion anfitrion = anfitrionRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("El anfitrion con ese ID no existe : " + id));
-    return ResponseEntity.ok(anfitrion);
-  }
-
   // POST :  crear un nuevo recurso
-  @PostMapping("/")
+  @PostMapping("")
   // @RequestBody : convierte el cuerpo de la solicitud HTTP (JSON) en un objeto Java (Anfitrion) para ser procesado en el metodo.
   public Anfitrion crearAnfitrion(@RequestBody Anfitrion anfitrion){
     return anfitrionRepository.save(anfitrion);
@@ -44,7 +35,7 @@ public class AnfitrionController {
 
   @GetMapping("/{id}")
   // @PathVariable : extrae el valor del parámetro id de la URL de la solicitud HTTP.
-  public ResponseEntity<Anfitrion> listarAnfitrionPorId(@PathVariable Long id){
+  public ResponseEntity<Anfitrion> obtenerAnfitrionPorId(@PathVariable Long id){
     // findById() que busca un registro por la clave primaria (en este caso, id), que es la columna marcada como clave primaria en la base de datos.
     return ResponseEntity.ok(anfitrionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("El anfitrion con ese ID no existe : " + id)));
   }
@@ -55,12 +46,18 @@ public class AnfitrionController {
     Anfitrion anfitrion = anfitrionRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("El anfitrion con ese ID no existe : " + id));
 
+    // Actualizar los valores de cada campo
+    anfitrion.setPrivateID(anfitrionRequest.getPrivateID());
+    anfitrion.setEmail(anfitrionRequest.getEmail());
+    anfitrion.setPassword(anfitrionRequest.getPassword());
     anfitrion.setNombre(anfitrionRequest.getNombre());
     anfitrion.setApellido(anfitrionRequest.getApellido());
-    anfitrion.setEmail(anfitrionRequest.getEmail());
+    anfitrion.setEdad(anfitrionRequest.getEdad());
+    anfitrion.setProfileImage(anfitrionRequest.getProfileImage());
 
-    Anfitrion clienteActualizdo = anfitrionRepository.save(anfitrion);
-    return ResponseEntity.ok(clienteActualizdo);
+    // Guardar el anfitrión actualizado
+    Anfitrion anfitrionActualizado = anfitrionRepository.save(anfitrion);
+    return ResponseEntity.ok(anfitrionActualizado);
   }
 
   @DeleteMapping("/{id}")

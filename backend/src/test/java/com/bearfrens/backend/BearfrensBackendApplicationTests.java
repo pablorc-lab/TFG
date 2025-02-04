@@ -1,4 +1,4 @@
-package com.bearfrens_backend;
+package com.bearfrens.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

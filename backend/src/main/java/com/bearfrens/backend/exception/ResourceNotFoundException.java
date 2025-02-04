@@ -1,4 +1,4 @@
-package com.bearfrens_backend.exception;
+package com.bearfrens.backend.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

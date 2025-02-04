@@ -1,4 +1,4 @@
-package com.bearfrens_backend.entity;
+package com.bearfrens.backend.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -7,14 +7,17 @@ import lombok.NoArgsConstructor;
 // @Entity : Indica que esta clase es una entidad JPA y se mapeará a una tabla en la base de datos.
 // @NoArgsConstructor : permite que JPA cree instancias de las entidades utilizando un constructor vacío, requerido para realizar la deserialización y la persistencia de objetos en la base de datos.
 @Entity
-@NoArgsConstructor  // Necesario para JPA
 @Table(name="viajeros")
 public class Viajero extends Usuario{
   private int viajes_realizados = 0;
 
-  // Constructor
-  public Viajero(String privateID, String nombre, String apellido, int edad, String email, String password) {
-    super(privateID, nombre, apellido, edad, email, password);
+   // Constructor
+  public Viajero() {
+    super();
+  }
+
+  public Viajero(String privateID, String nombre, String apellido, int edad, String email, String password, String profileImage) {
+    super(privateID, nombre, apellido, edad, email, password, profileImage);
   }
 
   // GETTERS and SETTERS
