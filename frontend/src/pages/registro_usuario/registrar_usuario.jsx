@@ -1,6 +1,7 @@
 import { useState } from "react"
 import styles from "./accesos.module.css"
 import { validateEmail, validateNames, validateIdUser, validateAge} from "../../components/registro_usuarios/validations";
+import { Link } from "react-router-dom";
 
 export default function Registrar_usuario(){
   const [actualStep, setActualStep] = useState(0);
@@ -244,13 +245,13 @@ export default function Registrar_usuario(){
   /*Funciones para verificar los campos*/
   return (
     <section className={styles.acceso_section}>
-      <header className={styles.acceso_header}>
-        <a href="/inicio">
+      <header className={styles.acceso_header}> 
+        <Link to="/inicio">
           <figure>
             <img src="/images/logos/logo_blanco.png" alt="logo blanco" />
             <figcaption>Bearfrens</figcaption>
           </figure>
-        </a>
+        </Link>
       </header>
 
       <article className={styles.acceso_container}>

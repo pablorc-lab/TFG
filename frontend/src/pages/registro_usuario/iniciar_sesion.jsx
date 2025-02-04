@@ -1,15 +1,16 @@
 import styles from "./accesos.module.css"
+import { Link } from "react-router-dom";
 
 export default function Iniciar_sesion(){
   return (
     <section className={styles.acceso_section}>
       <header className={styles.acceso_header}>
-        <a href="/inicio">
+        <Link to="/inicio">
           <figure>
             <img src="/images/logos/logo_blanco.png" alt="logo blanco" />
             <figcaption>Bearfrens</figcaption>
           </figure>
-        </a>
+        </Link>
       </header>
 
       <article className={styles.acceso_container}>
@@ -23,15 +24,14 @@ export default function Iniciar_sesion(){
           <div className={styles.input_container}>
             <label for="password">Contraseña</label>
             <input type="password" id="password" name="password"/>
-            <a href="/">¿Contraseña olvidada?</a>
+            <Link to="/">¿Contraseña olvidada?</Link>
           </div>
           <input className={styles.submit_input} type="submit" value="Iniciar sesión"/>
         </form>
 
         <div className={styles.acceso_enlace_registro}>
           <h2>¿No tienes cuenta?</h2>
-          <a href="/registro">Registrarse ahora</a>
-        </div>
+          <Link to="/registro">Registrarse ahora</Link>        </div>
       </article>
     </section>
   )

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import styles from "./headerHome.module.css"
+import { Link } from "react-router-dom";
 
 export default function HeaderHome({ isHome = false }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -40,16 +41,16 @@ export default function HeaderHome({ isHome = false }) {
 
   return (
     <header className={`${styles.header} ${isHome && styles.isHome}`}>
-      <a href="/inicio" >
-        <img className={styles.header_logo} src="/images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" style={{ cursor: "pointer" }}/>
-      </a>
+      <Link to="/inicio">
+        <img className={styles.header_logo} src="/images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" style={{ cursor: "pointer" }} />
+      </Link>
 
       <section className={styles.header_menu}>
         <nav className={styles.header_nav}>
-          <a href="/inicio">Inicio</a>
-          <a href="/viajeros/alojamientos">Alojamientos</a>
-          <a href="/">Inquilinos</a>
-          <a href="/inicio/faq">FAQ</a>
+        <Link to="/inicio">Inicio</Link>
+        <Link to="/viajeros/alojamientos">Alojamientos</Link>
+        <Link to="/">Inquilinos</Link>
+        <Link to="/inicio/faq">FAQ</Link>
         </nav>
 
         <article className={`${styles.header_user} ${isMenuOpen && styles.open}`}>
@@ -62,14 +63,14 @@ export default function HeaderHome({ isHome = false }) {
             <ul>
               {!isNavVisible && (
                 <>
-                  <li><a href="/viajeros/alojamientos"><span>Alojamientos</span></a></li>
-                  <li><a href="/"><span>Inquilinos</span></a></li>
-                  <li className={styles.guia_menu_header}><a href="/inicio/faq"><span>FAQ</span></a></li>
+                  <li><Link to="/viajeros/alojamientos"><span>Alojamientos</span></Link></li>
+                  <li><Link to="/"><span>Inquilinos</span></Link></li>
+                  <li className={styles.guia_menu_header}><Link to="/inicio/faq"><span>FAQ</span></Link></li>
                 </>
               )}
-              <li><a href="/iniciar-sesion"><span>Iniciar sesión</span></a></li>
-              <li className={styles.li_registrate}><a href="/registro"><span>Registrarse</span></a></li>
-              <li><a href="/"><span>Soporte</span></a></li>
+              <li><Link to="/iniciar-sesion"><span>Iniciar sesión</span></Link></li>
+              <li className={styles.li_registrate}><Link to="/registro"><span>Registrarse</span></Link></li>
+              <li><Link to="/"><span>Soporte</span></Link></li>
             </ul>
           </div>
         </article>

@@ -1,4 +1,5 @@
 import styles from "./footer.module.css"
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -24,7 +25,7 @@ export default function Footer() {
         </div>
         {/*Políticias de privacidad*/}
         <div className={styles.privacy_policy}>
-          <a href="/politicas-privacidad">Políticas de Privacidad</a>
+          <Link to="/inicio/politicas-privacidad">Políticas de Privacidad</Link>
         </div>
       </footer>
     </>
