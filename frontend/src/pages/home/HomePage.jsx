@@ -4,7 +4,7 @@ import InqCard from "../../components/users_cards/InqCard";
 import Footer from "../../components/footer/footer";
 import Question from "../../components/home/questions";
 import faqData from "../../components/home/questions_data";
-import styles from "./home.module.css"
+import styles from "./HomePage.module.css"
 
 // Datos de las ventajas
 const advantages = [
@@ -38,7 +38,7 @@ const opinions = [
   },
 ];
 
-export default function Home() {
+export default function HomePage() {
 
 	return (
     <>

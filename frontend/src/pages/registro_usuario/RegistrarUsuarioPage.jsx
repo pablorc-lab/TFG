@@ -3,7 +3,7 @@ import styles from "./accesos.module.css"
 import { validateEmail, validateNames, validateIdUser, validateAge} from "../../components/registro_usuarios/validations";
 import { Link } from "react-router-dom";
 
-export default function Registrar_usuario(){
+export default function RegistrarUsuarioPage(){
   const [actualStep, setActualStep] = useState(0);
   const [repeatedPassword, setRepeatedPassword] = useState("");
 

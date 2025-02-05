@@ -1,7 +1,7 @@
 import styles from "./accesos.module.css"
 import { Link } from "react-router-dom";
 
-export default function Iniciar_sesion(){
+export default function InicioSesionPage(){
   return (
     <section className={styles.acceso_section}>
       <header className={styles.acceso_header}>

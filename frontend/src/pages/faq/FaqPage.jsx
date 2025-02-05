@@ -1,6 +1,6 @@
 import HeaderHome from "../../components/home/headerHome";
 
-export default function Faq(){
+export default function FaqPage(){
     return (
         <>
             <HeaderHome/>

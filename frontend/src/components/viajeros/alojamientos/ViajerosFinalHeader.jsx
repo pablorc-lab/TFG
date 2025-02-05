@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import styles from "../../../pages/viajeros/alojamientos/alojamientos.module.css"
+import styles from "./AlojamientosPage.module.css"
 import Ciudades from "../../../data/countries/cities.json"
 import Pronvicias from "../../../data/countries/states.json"
 import Paises from "../../../data/countries/countries.json"

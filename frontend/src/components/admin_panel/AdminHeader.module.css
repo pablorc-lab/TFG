@@ -1,0 +1,21 @@
+.header {
+  padding: 30px 20px;
+  background-color: rgb(32, 32, 32);
+  font-family: "Nunito";
+}
+
+.header nav {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 50px;
+}
+
+.header nav a{
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 20px;
+  color:white;
+  
+}
+.header nav a:hover { color: rgb(88, 188, 255);}
