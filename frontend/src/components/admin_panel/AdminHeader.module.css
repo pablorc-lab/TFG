@@ -1,5 +1,5 @@
 .header {
-  padding: 30px 20px;
+  padding: 22px;
   background-color: rgb(32, 32, 32);
   font-family: "Nunito";
 }
@@ -15,7 +15,18 @@
   text-decoration: none;
   cursor: pointer;
   font-size: 20px;
-  color:white;
-  
+  color:gray;
+  padding: 4px;
+  font-weight: 600;
+  letter-spacing: 2px;
 }
-.header nav a:hover { color: rgb(88, 188, 255);}
+.header nav a:hover:not(.active){ 
+  color: rgb(32, 32, 32);
+  background-color: rgb(112, 112, 112);
+  outline: 10px solid rgb(112, 112, 112);
+  outline-offset: -1px; 
+  border-radius: 25px;
+}
+.header nav .active { 
+  color: white;
+}

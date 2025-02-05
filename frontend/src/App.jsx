@@ -25,7 +25,8 @@ export default function App() {
         <Route path="/iniciar-sesion" element={<InicioSesionPage />} />
 
         {/* Rutas para PANEL ADMIN con rutas anidadas */}
-        <Route path="/admin-panel" element={<ListUsuariosPage />}/>
+        <Route path="/admin-panel" element={<Navigate to="/admin-panel/anfitrion"/>}/>
+        <Route path="/admin-panel/:userType" element={<ListUsuariosPage />} />
 
       </Routes>
     </BrowserRouter>

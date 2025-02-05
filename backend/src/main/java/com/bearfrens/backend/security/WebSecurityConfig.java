@@ -12,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -19,14 +22,44 @@ public class WebSecurityConfig {
 
   // @Bean : Indica que un metodo devuelve un objeto que debe ser gestionado y utilizado como un componente dentro del contexto de Spring.
   // Definimos que solo ciertos usuarios tengan acceso a ciertas rutas de la api
+  /*
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    // Solo permite acceso a usuarios con el rol "ADMIN"
-    http.authorizeHttpRequests(request -> request.requestMatchers("/api/**").hasRole("ADMIN"))
-        .httpBasic(Customizer.withDefaults())
-        .csrf(csrf -> csrf.disable());
+    http.cors(cors -> cors.configurationSource(request -> {
+      CorsConfiguration config = new CorsConfiguration();
+      config.setAllowedOrigins(List.of("http://localhost:3000")); // Permitir frontend local
+      config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+      config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+      config.setAllowCredentials(true);
+      return config;
+     }))
+      .authorizeHttpRequests(request -> request.requestMatchers("/api/anfitriones/**").hasRole("ADMIN")) // Solo Admins acceden
+      .csrf(csrf -> csrf.disable()) // Desactiva CSRF si usas JWT
+      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin sesiones
+      .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+     return http.build();
+    }
+    */
+
+  // Versión SIN Seguridad (SOLO PARA DESARROLLO)
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.cors(cors -> cors.configurationSource(request -> {
+          CorsConfiguration config = new CorsConfiguration();
+          config.setAllowedOrigins(List.of("http://localhost:3000")); // Permitir frontend local
+          config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+          config.setAllowedHeaders(List.of("*")); // Permitir todos los headers temporalmente
+          config.setAllowCredentials(true);
+          return config;
+        }))
+        .authorizeHttpRequests(request -> request.anyRequest().permitAll()) // Permitir todas las solicitudes
+        .csrf(csrf -> csrf.disable()) // Desactivar CSRF solo en desarrollo
+        .httpBasic(Customizer.withDefaults()); // Permitir autenticación básica pero sin exigirla
+
     return http.build();
   }
+
 
   // Creamos un usuario en memoria con nombre, password y rol
   @Bean

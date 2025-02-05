@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 // Permitir que nuestra aplicación deje que react desde es enlace acceda a los datos
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/anfitriones")
 public class AnfitrionController {

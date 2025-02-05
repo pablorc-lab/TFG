@@ -2,14 +2,17 @@ import styles from "./AdminHeader.module.css"
 import { Link} from "react-router-dom"
 
 
-export default function AdminHeader(){
+export default function AdminHeader({userType}){
   return (
     <>
      <header className={styles.header}>
         <nav>
-          <Link to="/admin-panel/anfitriones">Usuarios</Link>
-          <Link to="/admin-panel/anfitriones">Anfitriones</Link>
-          <Link to="/admin-panel/anfitriones">Viajeros</Link>
+          <Link to="/admin-panel/anfitrion" className={`${userType==="anfitrion" && styles.active}`}>
+            Anfitriones
+          </Link>
+          <Link to="/admin-panel/viajero" className={`${userType==="viajero" && styles.active}`}>
+            Viajeros
+          </Link>
         </nav>
       </header>
     </>
