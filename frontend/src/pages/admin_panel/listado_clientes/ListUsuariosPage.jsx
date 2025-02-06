@@ -2,18 +2,23 @@ import { useEffect, useState } from 'react'
 import styles from "./ListUsuariosPage.module.css"
 import AdminHeader from '../../../components/admin_panel/AdminHeader';
 import { Link, useParams } from 'react-router-dom';
-// Importar ambos estaticamente para ser soportado por VITE
-import AnfitrionService from "../../../services/AnfitrionService";
-import ViajeroService from "../../../services/ViajeroService";
 
 export default function ListUsuariosPage() {
   const { userType } = useParams();
   const [service, setService] = useState(null);
   const [usuarios, setUsuarios] = useState([]);
 
-  // Cargar servicio actual requerido
+  // Cargar el servicio actual requerido
   useEffect(() => {
-    setService(userType === "anfitrion" ? AnfitrionService : ViajeroService);
+    const loadService = async () => {
+      setService(
+        userType === "anfitrion" 
+        ? (await import("../../../services/AnfitrionService")).default
+        :(await import("../../../services/ViajeroService")).default
+      );
+    };
+
+    loadService();  
   }, [userType])
 
   // Listar usuarios al renderizar el componente si hay un servicio

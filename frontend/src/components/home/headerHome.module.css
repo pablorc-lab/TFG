@@ -2,7 +2,7 @@
 /*?      HEADER
 /*? ===================*/
 .header {
-	background-image: url("/public/images/landing_page/header_back.webp");
+	background-image: url("/images/landing_page/header_back.webp");
 	background-repeat: no-repeat;
 	background-size: cover;
 	user-select: none;
