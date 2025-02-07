@@ -1,9 +1,9 @@
 import { useState } from "react"
 import styles from "./accesos.module.css"
-import { validateEmail, validateNames, validateIdUser, validateAge} from "../../components/registro_usuarios/validations";
+import { validateEmail, validateNames, validateIdUser, validateAge } from "../../components/registro_usuarios/validations";
 import { Link } from "react-router-dom";
 
-export default function RegistrarUsuarioPage(){
+export default function RegistrarUsuarioPage() {
   const [actualStep, setActualStep] = useState(0);
   const [repeatedPassword, setRepeatedPassword] = useState("");
 
@@ -16,17 +16,17 @@ export default function RegistrarUsuarioPage(){
     lastName: false,
     userID: false,
     age: false,
-    userType : false,
+    userType: false,
   });
   // Objeto que almacena cada valor
   const [userValues, setUserValues] = useState({
-    email : "",
-    password : "",
-    name : "",
-    lastname : "",
-    userID : "",
-    age : "",
-    userType : "",
+    email: "",
+    password: "",
+    name: "",
+    lastname: "",
+    userID: "",
+    age: "",
+    userType: "",
   })
 
   // Esta función permite cambiar el estado de cada valor
@@ -36,20 +36,20 @@ export default function RegistrarUsuarioPage(){
     }
 
     const newValue = e.target.value.trim(); // Eliminar espacios 
-      setUserValues({
-        ...userValues,
-        [campo] : newValue,
-      });
+    setUserValues({
+      ...userValues,
+      [campo]: newValue,
+    });
   }
-  
+
   // Esta función permite cambiar el estado de ERROR de una variable
-  function handleErrorChange(campoErroneo, estado){
+  function handleErrorChange(campoErroneo, estado) {
     if (!campoErroneo || !(campoErroneo in errorStates)) {
       throw new Error(`El campo '${campoErroneo}' introducido en 'handleErrorChange()' no es válido`);
     }
     setErrorStates({
       ...errorStates,
-      [campoErroneo] : estado
+      [campoErroneo]: estado
     })
   }
 
@@ -57,8 +57,8 @@ export default function RegistrarUsuarioPage(){
   // Comprobar correo y contraseñas
   const handleSubmitFirstStep = (e) => {
     e.preventDefault();
-    
-    const validate_step_errors = actualStep === 0 
+
+    const validate_step_errors = actualStep === 0
       ? {
         email: !validateEmail(userValues.email),
         shortPassword: userValues.password.length < 8,
@@ -70,9 +70,9 @@ export default function RegistrarUsuarioPage(){
         age: !validateAge(userValues.age),
       };
 
-    Object.values(validate_step_errors).includes(true) 
-      ? setErrorStates({...errorStates, ...validate_step_errors}) 
-      : setActualStep(actualStep+1); // Se pasa al siguiente paso
+    Object.values(validate_step_errors).includes(true)
+      ? setErrorStates({ ...errorStates, ...validate_step_errors })
+      : setActualStep(actualStep + 1); // Se pasa al siguiente paso
   }
 
 
@@ -84,13 +84,13 @@ export default function RegistrarUsuarioPage(){
     // Actualizar el campo si está vacio
     const validate_user_type = userValues.userType === "";
 
-    if(validate_user_type){
+    if (validate_user_type) {
       handleErrorChange("userType", userValues.userType === "");
-    } else{
+    } else {
       console.log("Se han enviado los siguientes datos : ", userValues);
     }
   }
-  
+
   // Formulario del primer paso del registro
   const FirstStepRegister = (
     <>
@@ -209,24 +209,24 @@ export default function RegistrarUsuarioPage(){
   );
 
   const handleLastStepClick = (userTypeValue) => {
-    handleValuesChange({ target:{value : userTypeValue}}, "userType");
+    handleValuesChange({ target: { value: userTypeValue } }, "userType");
     handleErrorChange("userType", false);
   };
 
   // Formulario del último paso del registro
   const LastStepRegister = (
     <>
-      <h2 style={{fontWeight:"normal"}}>¿Qué tipo de cuenta buscas?</h2>
+      <h2 style={{ fontWeight: "normal" }}>¿Qué tipo de cuenta buscas?</h2>
       {errorStates.userType && <p className={`${styles.error_msg} ${styles.lastStepError}`}>Seleccione un tipo de cuenta</p>}
-      <article className={`${styles.input_tipo_cuenta} ${userValues.userType==="viajero" && styles.active}`} onClick={() =>handleLastStepClick("viajero")}>
-        <img src="/images/registro/user_type_viajero.svg" alt="Tipo viajero"/>
+      <article className={`${styles.input_tipo_cuenta} ${userValues.userType === "viajero" && styles.active}`} onClick={() => handleLastStepClick("viajero")}>
+        <img src="/images/registro/user_type_viajero.svg" alt="Tipo viajero" />
         <div>
           <h3>VIAJERO</h3>
           <p> <strong>Busca alojamiento</strong> en casas de anfitriones afines y <strong>conéctate con personas</strong> que compartan tus gustos. </p>
         </div>
       </article>
-      <article className={`${styles.input_tipo_cuenta} ${userValues.userType==="anfitrion" && styles.active}`} onClick={() =>handleLastStepClick("anfitrion")}>
-        <img src="/images/registro/user_type_anfitrion.svg" alt="Tipo viajero"/>
+      <article className={`${styles.input_tipo_cuenta} ${userValues.userType === "anfitrion" && styles.active}`} onClick={() => handleLastStepClick("anfitrion")}>
+        <img src="/images/registro/user_type_anfitrion.svg" alt="Tipo viajero" />
         <div>
           <h3>ANFITRIÓN</h3>
           <p> <strong>Alquila tu espacio </strong>a viajeros afines y <strong>elige a quién hospedar</strong> para crear experiencias únicas y personalizadas.</p>
@@ -243,29 +243,32 @@ export default function RegistrarUsuarioPage(){
 
   /*Funciones para verificar los campos*/
   return (
-    <section className={styles.acceso_section}>
-      <header className={styles.acceso_header}> 
-        <Link to="/inicio">
-          <figure>
-            <img src="/images/logos/logo_blanco.png" alt="logo blanco" />
-            <figcaption>Bearfrens</figcaption>
-          </figure>
-        </Link>
-      </header>
+    <>
+      <title>Registrar usuario | Bearfrens</title>
+      <section className={styles.acceso_section}>
+        <header className={styles.acceso_header}>
+          <Link to="/inicio">
+            <figure>
+              <img src="/images/logos/logo_blanco.png" alt="logo blanco" />
+              <figcaption>Bearfrens</figcaption>
+            </figure>
+          </Link>
+        </header>
 
-      <article className={styles.acceso_container}>
-        <h1>Registrarse</h1>
-        <div className={styles.progress_bar}>
-          <progress max="100" value={actualStep >= 0 && 100}/>
-          <progress max="100" value={actualStep >= 1 && 100}/>
-          <progress max="100" value={actualStep >= 2 && 100}/>
-        </div>
-        <form action="pagina.jar" className={styles.form_registro} style={{gap: Object.values(errorStates).slice(0,-1).includes(true) && "15px"}} noValidate>
-          {actualStep === 0 && FirstStepRegister}
-          {actualStep === 1 && SecondStepRegister}
-          {actualStep === 2 && LastStepRegister}
-        </form>
-      </article>
-    </section>
+        <article className={styles.acceso_container}>
+          <h1>Registrarse</h1>
+          <div className={styles.progress_bar}>
+            <progress max="100" value={actualStep >= 0 && 100} />
+            <progress max="100" value={actualStep >= 1 && 100} />
+            <progress max="100" value={actualStep >= 2 && 100} />
+          </div>
+          <form action="pagina.jar" className={styles.form_registro} style={{ gap: Object.values(errorStates).slice(0, -1).includes(true) && "15px" }} noValidate>
+            {actualStep === 0 && FirstStepRegister}
+            {actualStep === 1 && SecondStepRegister}
+            {actualStep === 2 && LastStepRegister}
+          </form>
+        </article>
+      </section>
+    </>
   )
 }

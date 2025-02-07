@@ -43,6 +43,7 @@ export default function HomePage() {
 
   return (
     <>
+      <title>Inicio | Beafrens</title>
       {/*Cabecera*/}
       <HeaderHome isHome={true} />
 

@@ -18,7 +18,6 @@ const DropDownMenu = ({userRef, setMenuOpen, menuLinks}) => {
   };
 
   useEffect(() => {
-    document.title = "Inicio | Beafrens";     // Cambia el título solo al montar el componente
     document.addEventListener("mousedown", handleClickOutside_Menu);     // Escuchar clics en todo el documento
 
     checkNavVisibility();
