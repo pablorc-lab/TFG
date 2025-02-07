@@ -66,6 +66,7 @@
   display: grid;
   gap: 15px;
 }
+.button_container a {text-decoration: none;}
 .button_container h2 {
   text-align: center;
   font-family: "Chewy";
@@ -99,7 +100,6 @@
   display: block;
   width: 20vw;
   cursor: pointer;
-  transition: transform 0.4s;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   margin-bottom: 5px;
 
@@ -107,21 +107,16 @@
   align-items: center;
   justify-content: center;
   gap: 2vw;
-  transition: 0.2s;
+  transition: filter 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
-
-.btn_alojamientos p, .btn_inquilinos p {
-  margin: 0;
-}
+.btn_alojamientos p, .btn_inquilinos p {margin: 0;}
 
 .btn_alojamientos:hover{
-  transition: 0.2s;
   filter: brightness(1.15);
   box-shadow: 0 0 13px #23898a;
 }
 
 .btn_inquilinos:hover {
-  transition: 0.2s;
   filter: brightness(1.2);
   box-shadow: 0 0 13px #5f4a40;
 }
@@ -221,12 +216,16 @@
   align-items: center;
   gap: 5px;
   user-select: none;
+  background-color: #dfdb1838;
+  border-radius: 30px;
+  padding: 3px 10px;
 }
-
-.anf_score p {
-  color: black;
+.score p {
+  color: rgb(58, 58, 58);
+  font-family: "Nunito";
   margin: 0;
 }
+
 
 .anf_rating {
   display: flex;
@@ -267,22 +266,19 @@
   color: #262626;
   font-weight: 400;
 }
-
 .text_column_viaj {
+  display: grid;
+  justify-content: end;
   flex: 1;
   text-align: end;
   user-select: none;
 }
 
 .score_viajero {
-  justify-content: end;
   user-select: none;
-}
-
-.score_viajero p {
-  font-style: italic;
-  font-family: "Nunito";
-  line-height: 0;
+  display: flex;
+  justify-self: end;
+  width: max-content;
 }
 
 /*? EDAD Y DESCRIPCIÓN*/
@@ -554,14 +550,15 @@
   .anf_name h3, .text_column_viaj h3 { font-weight: 700; font-size: 30px; margin: 0; }
   .anf_info { padding: 0px 22px; }
   .anf_rating { margin: 0 11.5px 15px; padding-top: 80px; gap: 15%; }
-  .anf_likes img, .score img, .score_viajero img { width: 30px; }
+  .anf_likes img, .score img { width: 30px; margin-bottom: 5px;}
   .address img { width: 18px; }
   .address { margin-top: 15px; font-size: 20px; gap: 6px; }
   .description { font-size: 19px; margin: 8px 0 12px; }
   .anf_score p { font-size: 28px; }
   .viaj_prof { padding: 10px 20px; }
   .viaj_img { width: 110px; height: 110px; }
-  .text_column_viaj p, .score_viajero p { font-size: 28px; }
+  .text_column_viaj h3 {font-size: 32px;}
+  .text_column_viaj p, .score_viajero p { font-size: 24px; }
   .text_column_viaj { margin: 5px 5px 5px 30px; }
   .age { margin-top: 8px; font-size: 20px; }
   .viaj_likes { margin: 20px 30px; }
@@ -723,12 +720,14 @@
   .address img { width: 22px; }
   .address { margin-top: 20px; font-size: 24px; gap: 8px; }
   .description { font-size: 24px; margin: 12px 0 18px; }
-  .score img, .score_viajero img { width: 38px; }
+  .score img { width: 35px; margin-bottom: 5px;}
   .anf_score p { font-size: 36px; }
 
   .viaj_prof { padding: 20px 30px; }
   .viaj_img { width: 163px; height: 163px; }
-  .text_column_viaj p, .score_viajero p { font-size: 40px; }
+  .text_column_viaj h3 {font-size: 40px;}
+  .text_column_viaj p, .score_viajero p { font-size: 32px; }
+
   .text_column_viaj { margin: 10px 5px 10px 50px; }
   .age { margin-top: 15px; font-size: 30px; }
   .viaj_likes { margin: 40px 51px; }

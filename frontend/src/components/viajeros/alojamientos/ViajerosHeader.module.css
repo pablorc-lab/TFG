@@ -7,7 +7,7 @@
   font-family: "Nunito";
   width: (100%-100px) ;
   padding: 25px 50px;
-  background-color: #ebd9c3;
+  background-color: #d6c2ac;
   box-shadow: 0 0 5px rgba(0,0,0,0.4);
 
   position: relative;
@@ -170,13 +170,14 @@
   align-items: center;
   padding: 4px 15px;
   gap: 5px;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.1s ease-in-out;
 }
 /* Hace que las imágenes se vean blancas */
 .header_prof_user:hover img { filter: brightness(0) invert(1); }
 .header_prof_user:hover { 
   background-color: #0a7273;
   border-color: #0a7273;
+  box-shadow: 0 0 5px black;
 }
 .header_prof_user img:nth-child(1){ width: 35px;}
 .header_prof_user img:nth-child(2){ width: 45px;}

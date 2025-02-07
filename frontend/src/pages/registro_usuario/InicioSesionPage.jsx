@@ -17,21 +17,22 @@ export default function InicioSesionPage(){
         <h1>Inicio de sesión</h1>
 
         <form action="pagina.jar" >
-          <div className={styles.input_container}>
-            <label for="email">Correo electrónico</label>
+          <fieldset className={styles.input_container}>  
+            <label htmlFor="email">Correo electrónico</label>
             <input type="email" id="email" name="email" spellCheck="false"/>
-          </div>
-          <div className={styles.input_container}>
-            <label for="password">Contraseña</label>
+          </fieldset>
+          <fieldset className={styles.input_container}>
+            <label htmlFor="password">Contraseña</label>
             <input type="password" id="password" name="password"/>
             <Link to="/">¿Contraseña olvidada?</Link>
-          </div>
+          </fieldset>
           <input className={styles.submit_input} type="submit" value="Iniciar sesión"/>
         </form>
 
         <div className={styles.acceso_enlace_registro}>
           <h2>¿No tienes cuenta?</h2>
-          <Link to="/registro">Registrarse ahora</Link>        </div>
+          <Link to="/registro">Registrarse ahora</Link>        
+        </div>
       </article>
     </section>
   )

@@ -94,7 +94,7 @@ export default function RegistrarUsuarioPage(){
   // Formulario del primer paso del registro
   const FirstStepRegister = (
     <>
-      <div className={`${styles.input_container} ${errorStates.email && styles.error_input}`}>
+      <fieldset className={`${styles.input_container} ${errorStates.email && styles.error_input}`}>
         <label htmlFor="email">Correo electrónico</label>
         <input
           type="email"
@@ -107,8 +107,8 @@ export default function RegistrarUsuarioPage(){
           noValidate
         />
         {errorStates.email && <p>El email no es correcto</p>}
-      </div>
-      <div className={`${styles.input_container} ${errorStates.shortPassword && styles.error_input}`}>
+      </fieldset>
+      <fieldset className={`${styles.input_container} ${errorStates.shortPassword && styles.error_input}`}>
         <label htmlFor="password">Contraseña</label>
         <input
           type="password"
@@ -119,8 +119,8 @@ export default function RegistrarUsuarioPage(){
           onBlur={() => userValues.password && handleErrorChange("shortPassword", userValues.password.length < 8)}
         />
         {errorStates.shortPassword && <p>La contraseña debe tener mínimo 8 carácteres</p>}
-      </div>
-      <div className={`${styles.input_container} ${errorStates.samePassword && styles.error_input}`}>
+      </fieldset>
+      <fieldset className={`${styles.input_container} ${errorStates.samePassword && styles.error_input}`}>
         <label htmlFor="confirmPassword">Repetir contraseña</label>
         <input
           type="password"
@@ -131,7 +131,7 @@ export default function RegistrarUsuarioPage(){
           onBlur={() => errorStates.samePassword && handleErrorChange("samePassword", userValues.password !== repeatedPassword)}
         />
         {errorStates.samePassword && <p>Las contraseñas no coinciden</p>}
-      </div>
+      </fieldset>
       <input
         className={`${styles.submit_input} ${(errorStates.email || errorStates.shortPassword || errorStates.samePassword) && styles.error_submit_input}`}
         type="submit"
@@ -146,7 +146,7 @@ export default function RegistrarUsuarioPage(){
     <>
       <article className={`${styles.input_container} ${(errorStates.name || errorStates.lastName) && styles.error_input}`}>
         <div className={styles.name_input}>
-          <div>
+          <fieldset>
             <label htmlFor="nombre">Nombre</label>
             <input
               type="text"
@@ -157,8 +157,8 @@ export default function RegistrarUsuarioPage(){
               onChange={(e) => handleValuesChange(e, "name")}
               onBlur={() => userValues.name && handleErrorChange("name", !validateNames(userValues.name))}
             />
-          </div>
-          <div>
+          </fieldset>
+          <fieldset>
             <label htmlFor="apellido">Apellido</label>
             <input
               type="text"
@@ -169,11 +169,11 @@ export default function RegistrarUsuarioPage(){
               onChange={(e) => handleValuesChange(e, "lastname")}
               onBlur={() => userValues.lastname && handleErrorChange("lastName", !validateNames(userValues.lastname))}
             />
-          </div>
+          </fieldset>
         </div>
         {(errorStates.name || errorStates.lastName) && <p className={styles.error_msg}>El nombre/apellido solo puede contener letras</p>}
       </article>
-      <div className={`${styles.input_container} ${errorStates.userID && styles.error_input}`}>
+      <fieldset className={`${styles.input_container} ${errorStates.userID && styles.error_input}`}>
         <label htmlFor="id_user">ID de usuario</label>
         <input
           type="text"
@@ -186,8 +186,8 @@ export default function RegistrarUsuarioPage(){
           onBlur={() => userValues.userID && handleErrorChange("userID", !validateIdUser(userValues.userID))}
         />
         {errorStates.userID && <p>El ID no puede contener carácteres especiales</p>}
-      </div>
-      <div className={`${styles.input_container} ${errorStates.age && styles.error_input}`}>
+      </fieldset>
+      <fieldset className={`${styles.input_container} ${errorStates.age && styles.error_input}`}>
         <label htmlFor="edad">Edad</label>
         <input
           type="date"
@@ -198,7 +198,7 @@ export default function RegistrarUsuarioPage(){
           onBlur={() => handleErrorChange("age", !validateAge(userValues.age))}
         />
         {errorStates.age && <p>Edad no válida</p>}
-      </div>
+      </fieldset>
       <input
         className={`${styles.submit_input} ${(errorStates.name || errorStates.lastName || errorStates.userID || errorStates.age) && styles.error_submit_input}`}
         type="submit"
@@ -216,23 +216,22 @@ export default function RegistrarUsuarioPage(){
   // Formulario del último paso del registro
   const LastStepRegister = (
     <>
-      <h2 style={{fontWeight:"normal"}}>¿Qué tipo de cuenta quieres tener?</h2>
+      <h2 style={{fontWeight:"normal"}}>¿Qué tipo de cuenta buscas?</h2>
       {errorStates.userType && <p className={`${styles.error_msg} ${styles.lastStepError}`}>Seleccione un tipo de cuenta</p>}
-      <div className={`${styles.input_tipo_cuenta} ${userValues.userType==="viajero" && styles.active}`} onClick={() =>handleLastStepClick("viajero")} 
-      >
+      <article className={`${styles.input_tipo_cuenta} ${userValues.userType==="viajero" && styles.active}`} onClick={() =>handleLastStepClick("viajero")}>
         <img src="/images/registro/user_type_viajero.svg" alt="Tipo viajero"/>
         <div>
           <h3>VIAJERO</h3>
           <p> <strong>Busca alojamiento</strong> en casas de anfitriones afines y <strong>conéctate con personas</strong> que compartan tus gustos. </p>
         </div>
-      </div>
-      <div className={`${styles.input_tipo_cuenta} ${userValues.userType==="anfitrion" && styles.active}`} onClick={() =>handleLastStepClick("anfitrion")}>
+      </article>
+      <article className={`${styles.input_tipo_cuenta} ${userValues.userType==="anfitrion" && styles.active}`} onClick={() =>handleLastStepClick("anfitrion")}>
         <img src="/images/registro/user_type_anfitrion.svg" alt="Tipo viajero"/>
         <div>
           <h3>ANFITRIÓN</h3>
           <p> <strong>Alquila tu espacio </strong>a viajeros afines y <strong>elige a quién hospedar</strong> para crear experiencias únicas y personalizadas.</p>
         </div>
-      </div>
+      </article>
       <input
         className={`${styles.submit_input} ${errorStates.userType && styles.error_submit_input}`}
         type="submit"

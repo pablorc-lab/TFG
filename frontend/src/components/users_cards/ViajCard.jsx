@@ -6,11 +6,11 @@ export default function Inq_card({ styles, Perfil_img, Nombre="-", Valoracion="/
         <img className={`${styles.profile_img} ${styles.viaj_img}`} src={Perfil_img} alt="Imagen viajero" width={250} />
         <div className={styles.text_column_viaj}>
           <h3>{Nombre}</h3>
+          <p>{Num_viajes} viajes</p>
           <div className={`${styles.score} ${styles.score_viajero}`}>
             <p>{Valoracion}</p>
-            <img src="/images/usuarios/estrella.png" alt="Logo estrella" />
+            <img src="/images/usuarios/estrella.webp" alt="Logo estrella" />
           </div>
-          <p>{Num_viajes} viajes</p>
         </div>
       </div>
 

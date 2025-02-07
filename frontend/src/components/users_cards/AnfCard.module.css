@@ -9,7 +9,7 @@
   cursor: default;
   max-width: 320px;
 }
-.general_prof:hover { box-shadow: 0 0 8px 2.4px #727272; }
+.general_prof:hover { box-shadow: 0 0 8px rgb(66, 66, 66); }
 
 .btn_conectar {
   position: relative;
@@ -22,7 +22,7 @@
   cursor: pointer;
   transition: background-color 0.2s;
   border-radius: 5.2px;
-  border: 1.28px solid #009080;
+  border: 2px solid #009080;
   font-size: 14.08px;
   padding: 9.6px 16px;
   margin-bottom: 11.52px;
@@ -77,10 +77,17 @@
   align-items: center;
   gap: 4px;
   user-select: none;
+  padding: 3px 10px;
+  background-color: #dfdb1838;
+  border-radius: 30px;
 }
-.score img, .score_viajero img { width: 24.32px; }
+.score img, .score_viajero img { width: 25px; margin-bottom: 3px;}
 
-.anf_score p { color: #009080; margin: 0; font-size: 23.04px; }
+.anf_score p { 
+  color: rgb(63, 63, 63);
+  margin: 0;
+  font-size: 23.04px; 
+}
 
 .anf_rating {
   display: flex;
@@ -97,7 +104,7 @@
   justify-content: space-between;
 }
 .anf_likes img {
-  width: 25.6px;
+  width: 30px;
   height: auto;
   aspect-ratio: 1 / 1;
   user-select: none;
@@ -174,7 +181,6 @@
 
   .btn_conectar { 
     border-radius: 6px; 
-    border: 1.5px solid #009080; 
     font-size: 18px; 
     padding: 12px 20px; 
     margin-bottom: 14px; 
@@ -188,7 +194,7 @@
   .profile_img { width: 110px; }
   .anf_name { margin: 0 20px 20px; }
   .anf_name h3, .text_column_viaj h3 { font-size: 28px; }
-  .score img, .score_viajero img { width: 32px; }
+  .score img, .score_viajero img { width: 30px; margin-bottom: 3px;}
   .anf_score p { font-size: 28px; }
   
   .anf_rating {
@@ -196,7 +202,7 @@
     padding-top: 80px;
     gap: 40px;
   }  
-  .anf_likes img { width: 30px; }
+  .anf_likes img { width: 35px; }
   .address {
     margin-top: 20px;
     font-size: 20px;

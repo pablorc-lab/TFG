@@ -1,14 +1,15 @@
 import HeaderHome from "../../components/home/headerHome";
 import AnfCard from "../../components/users_cards/AnfCard";
-import InqCard from "../../components/users_cards/InqCard";
+import InqCard from "../../components/users_cards/ViajCard";
 import Footer from "../../components/footer/footer";
 import Question from "../../components/home/questions";
 import faqData from "../../components/home/questions_data";
 import styles from "./HomePage.module.css"
+import { Link } from "react-router-dom";
 
 // Datos de las ventajas
 const advantages = [
-  { title: "Comunidad de Viajeros Activos", description: "Conecta con anfitriones apasionados y crea experiencias auténticas.",},
+  { title: "Comunidad de Viajeros Activos", description: "Conecta con anfitriones apasionados y crea experiencias auténticas.", },
   { title: "Diversidad de Alojamientos", description: "Amplia variedad de estancias que se adaptan a diferentes estilos.", },
   { title: "Estancias Personalizadas", description: "Alojamientos diseñados a la medida de tus preferencias y estilo de vida.", },
   { title: "Conexiones por intereses.", description: "Encuentra anfitriones que compartan tu estilo de vida.", },
@@ -18,12 +19,12 @@ const advantages = [
 
 // Datos de las opiniones
 const opinions = [
-  { 
+  {
     text: "Esta plataforma cambió por completo la forma en que viajo. No solo encontré alojamientos increíbles, sino que pude conectar con anfitriones que comparten mis intereses en fotografía y senderismo. Es una experiencia mucho más personal que otras webs.",
     img: "images/landing_page/persona_4.webp",
     name: "Alejandra Domínguez",
     role: "Viajero"
-	},
+  },
   {
     text: "Recibir viajeros a través de esta aplicación ha sido una gran experiencia. Me encanta que los viajeros con los que conecto tienen intereses en común conmigo, lo que ha hecho que las estancias sean mucho más amenas y agradables. He conocido a personas increíbles aqui.",
     img: "images/landing_page/persona_1.webp",
@@ -40,31 +41,31 @@ const opinions = [
 
 export default function HomePage() {
 
-	return (
+  return (
     <>
       {/*Cabecera*/}
-      <HeaderHome isHome={true}/>
+      <HeaderHome isHome={true} />
 
       <main>
         {/*?LOGO INICIAL*/}
         <section className={styles.main_container}>
           <figure className={styles.logo_main}>
-            <img src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150"/>
+            <img src="images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
             <figcaption>Bearfrens</figcaption>
           </figure>
-        	<p className={styles.main_descrpt}>Donde viajeros y anfitriones se encuentran</p>
+          <p className={styles.main_descrpt}>Donde viajeros y anfitriones se encuentran</p>
         </section>
 
         {/*?SECCION DE LOS ANFITRIONES*/}
         <section className={`${styles.card_section} ${styles.anf_card}`}>
           <article className={styles.button_container}>
             <h2>Encuentra el alojamiento perfecto</h2>
-            <div className={styles.btn_alojamientos}>
+            <Link to="/viajeros/alojamientos" className={styles.btn_alojamientos} onClick={() => window.scrollTo(0, 0)}>
               <img src="images/logos/anfitrion.png" alt="Icono casa" />
-              <p>Hospedajes</p>
-            </div>
+              <p>Alojamientos</p>
+            </Link>
           </article>
-          
+
           <article className={styles.card_container}>
             <AnfCard
               styles={styles}
@@ -83,7 +84,7 @@ export default function HomePage() {
             />
           </article>
         </section>
-        
+
         {/*?SECCION DE LOS VIAJEROS*/}
         <section className={`${styles.card_section} ${styles.inq_card}`}>
           <article className={styles.card_container}>
@@ -106,10 +107,10 @@ export default function HomePage() {
 
           <article className={styles.button_container}>
             <h2>Conecta con personas mundialmente</h2>
-            <div className={styles.btn_inquilinos}>
-                <img src="images/logos/inquilino.png" alt="Icono inquilino" />
-                <p>Inquilinos</p>
-            </div>
+            <Link to="/" className={styles.btn_inquilinos} onClick={() => window.scrollTo(0, 0)}>
+              <img src="images/logos/inquilino.png" alt="Icono inquilino" />
+              <p>Inquilinos</p>
+            </Link>
           </article>
         </section>
 
@@ -177,7 +178,7 @@ export default function HomePage() {
       </main>
 
       {/*Pie de pagina*/}
-      <Footer/>
+      <Footer />
     </>
   );
 }

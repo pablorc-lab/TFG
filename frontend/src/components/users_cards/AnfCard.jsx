@@ -18,9 +18,10 @@ export default function Anf_card({styles, Casa_img, Perfil_img, Nombre="-", Gust
         <div className={styles.anf_rating}>
           <div className={`${styles.score} ${styles.anf_score}`}>
             <p>{Valoracion}</p>
-            <img src="/images/usuarios/estrella_verde.webp" alt="Logo estrella" />
+            <img src="/images/usuarios/estrella.webp" alt="Logo estrella" />
           </div>
           <div className={styles.anf_likes}>
+            {/* Mapeamos las imágenes de gustos */}
             {Gustos_imgs.map((gusto, index) => (
               <img key={index} src={gusto} alt={`Logo gusto ${index + 1}`} width={100} />
             ))}

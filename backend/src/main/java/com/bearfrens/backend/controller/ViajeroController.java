@@ -1,6 +1,5 @@
 package com.bearfrens.backend.controller;
 
-import com.bearfrens.backend.entity.Anfitrion;
 import com.bearfrens.backend.entity.Viajero;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.repository.ViajeroRepository;
