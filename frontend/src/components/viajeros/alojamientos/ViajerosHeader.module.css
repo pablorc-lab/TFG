@@ -7,7 +7,7 @@
   font-family: "Nunito";
   width: (100%-100px) ;
   padding: 25px 50px;
-  background-color: #d6c2ac;
+  background-color: #eddbc8;
   box-shadow: 0 0 5px rgba(0,0,0,0.4);
 
   position: relative;
@@ -73,18 +73,18 @@
   cursor: pointer;
   padding: 0 10px;
   text-decoration: none;
+  margin-bottom: 4px;
+  transition: border-bottom 0.1s ease-in-out;
 }
 .search_nav a:nth-child(2) {
   color: #0a7273;
   font-weight: 700;
 }
 .search_nav a:not(:nth-child(2)):hover {
-  border-radius: 15px;
-  outline: 10px solid #f2f2f2;
-  box-shadow: 0 0 0 10px #f2f2f2;
-  background-color: #f2f2f2;
+  margin-bottom: 0px;
+  color: #0a7273;
+  border-bottom: 4px solid #0a7273;
 }
-
 
 /*? BUSCADOR FORM*/
 .search_form_container {

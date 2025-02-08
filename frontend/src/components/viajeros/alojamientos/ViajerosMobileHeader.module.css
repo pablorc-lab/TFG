@@ -6,7 +6,7 @@
   user-select: none;
   width: 100%;
   font-family: "Nunito";
-  background-color: #ebd9c3;
+  background-color: #eddbc8;
   box-shadow: 0 0 5px rgba(0,0,0,0.3);
   position: fixed;
   bottom: 0;
@@ -52,7 +52,7 @@
 /*? ===================*/
 .search_form_container {
   user-select: none;
-  background-color: #ebd9c3;
+  background-color: #eddbc8;
   box-shadow: 0 0 5px rgba(0,0,0,0.3);
 
   display: flex;

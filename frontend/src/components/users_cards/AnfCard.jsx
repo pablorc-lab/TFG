@@ -17,8 +17,8 @@ export default function Anf_card({styles, Casa_img, Perfil_img, Nombre="-", Gust
         {/* Gustos */}
         <div className={styles.anf_rating}>
           <div className={`${styles.score} ${styles.anf_score}`}>
-            <p>{Valoracion}</p>
             <img src="/images/usuarios/estrella.webp" alt="Logo estrella" />
+            <p>{Valoracion}</p>
           </div>
           <div className={styles.anf_likes}>
             {/* Mapeamos las imágenes de gustos */}

@@ -9,7 +9,7 @@
   cursor: default;
   max-width: 320px;
 }
-.general_prof:hover { box-shadow: 0 0 8px rgb(66, 66, 66); }
+.general_prof:hover { box-shadow: 0 0 10px rgb(66, 66, 66); }
 
 .btn_conectar {
   position: relative;
@@ -76,17 +76,16 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  user-select: none;
   padding: 3px 10px;
   background-color: #dfdb1838;
   border-radius: 30px;
 }
-.score img, .score_viajero img { width: 25px; margin-bottom: 3px;}
+.score img, .score_viajero img { width: 22px; margin-bottom: 3px;}
 
 .anf_score p { 
   color: rgb(63, 63, 63);
   margin: 0;
-  font-size: 23.04px; 
+  font-size: 22px; 
 }
 
 .anf_rating {
@@ -115,7 +114,6 @@
   align-items: end;
   font-style: normal;
   line-height: 1;
-  user-select: none;
   margin-top: 12.8px;
   font-size: 15.36px;
   gap: 5.12px;
@@ -148,14 +146,13 @@
   font-style: italic;
   font-family: "Nunito";
   line-height: 0;
-  font-size: 25.6px;
+  font-size: 22px;
 }
 
 .age_descript_viaj { font-family: "Nunito"; }
 .age {
   color: #262626;
   margin: 9.6px 0 0;
-  user-select: none;
   font-size: 19.2px;
 }
 
@@ -194,8 +191,8 @@
   .profile_img { width: 110px; }
   .anf_name { margin: 0 20px 20px; }
   .anf_name h3, .text_column_viaj h3 { font-size: 28px; }
-  .score img, .score_viajero img { width: 30px; margin-bottom: 3px;}
-  .anf_score p { font-size: 28px; }
+  .score img, .score_viajero img { width: 25px; margin-bottom: 3px;}
+  .anf_score p { font-size: 26px; }
   
   .anf_rating {
     margin: 0 8px 10px;
@@ -215,7 +212,7 @@
   }  
   .text_column_viaj p { font-size: 30px; }
   .text_column_viaj { margin: 8px 4px 8px 40px; }
-  .score_viajero p { font-size: 32px; }
+  .score_viajero p { font-size: 26px; }
   .age {
     font-size: 22px;
     margin: 14px 0 0;
