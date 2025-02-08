@@ -3,17 +3,19 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 // Se mantiene con un import normal porque es la primera vista y se carga inmediatamente,
-import HomePage from "./pages/home/homePage";
+import HomePage from './pages/inicio/home/HomePage';
+import ScrollToTop from './components/utilities/ScrollToTop';
 
 const AlojamientosPage = lazy(() => import("./pages/viajeros/alojamientos/AlojamientosPage"));
 const RegistrarUsuarioPage = lazy(() => import("./pages/registro_usuario/RegistrarUsuarioPage"));
 const InicioSesionPage = lazy(() => import("./pages/registro_usuario/InicioSesionPage"));
-const FaqPage = lazy(() => import("./pages/faq/FaqPage"));
+const FaqPage = lazy(() => import("./pages/inicio/faq/FaqPage"));
 const ListUsuariosPage = lazy(() => import("./pages/admin_panel/listado_clientes/ListUsuariosPage"));
 
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop/>
       <Suspense fallback={<h1 style={{textAlign:"center"}}>Cargando...</h1>}>
         <Routes>
           {/* Rutas para INICIO*/}

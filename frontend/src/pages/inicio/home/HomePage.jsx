@@ -1,10 +1,11 @@
-import HeaderHome from "../../components/home/headerHome";
-import AnfCard from "../../components/users_cards/AnfCard";
-import InqCard from "../../components/users_cards/ViajCard";
-import Footer from "../../components/footer/footer";
-import Question from "../../components/home/questions";
-import faqData from "../../components/home/questions_data";
+import HeaderHome from "../../../components/home/headerHome";
+import AnfCard from "../../../components/users_cards/AnfCard";
+import InqCard from "../../../components/users_cards/ViajCard";
+import Footer from "../../../components/footer/footer";
+import Question from "../../../components/home/questions";
+import faqData from "../../../data/faq/questions_data";
 import styles from "./HomePage.module.css"
+import stylesFAQ from "../faq/FaqPage.module.css"
 import { Link } from "react-router-dom";
 
 // Datos de las ventajas
@@ -61,7 +62,7 @@ export default function HomePage() {
         <section className={`${styles.card_section} ${styles.anf_card}`}>
           <article className={styles.button_container}>
             <h2>Encuentra el alojamiento perfecto</h2>
-            <Link to="/viajeros/alojamientos" className={styles.btn_alojamientos} onClick={() => window.scrollTo(0, 0)}>
+            <Link to="/viajeros/alojamientos" className={styles.btn_alojamientos}>
               <img src="images/logos/anfitrion.png" alt="Icono casa" />
               <p>Alojamientos</p>
             </Link>
@@ -108,7 +109,7 @@ export default function HomePage() {
 
           <article className={styles.button_container}>
             <h2>Conecta con personas mundialmente</h2>
-            <Link to="/" className={styles.btn_inquilinos} onClick={() => window.scrollTo(0, 0)}>
+            <Link to="/" className={styles.btn_inquilinos}>
               <img src="images/logos/inquilino.png" alt="Icono inquilino" />
               <p>Inquilinos</p>
             </Link>
@@ -164,17 +165,19 @@ export default function HomePage() {
         </section>
 
         {/*FAQs*/}
-        <section className={styles.freq_questions}>
-          <h2>PREGUNTAS FRECUENTES</h2>
-          {faqData.map((item, index) => (
+        <section className={stylesFAQ.freq_questions}>
+          <h1 className={stylesFAQ.home_freq_question}>PREGUNTAS FRECUENTES</h1>
+          {faqData.conexion.map((item, index) => (
             <Question
               key={index}
-              styles={styles}
+              styles={stylesFAQ}
               pregunta={item.pregunta}
               respuesta={item.respuesta}
             />
           ))}
-          <button>Mas preguntas en nuestra Guía</button>
+          <Link to="/inicio/faq">
+            <button>Mas preguntas en nuestra Guía</button>
+          </Link>
         </section>
       </main>
 

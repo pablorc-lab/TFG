@@ -1,4 +1,4 @@
-import React, { useState, useRef, Suspense } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./headerHome.module.css"
 import DropDownMenu from "../../components/dropdown_menu/DropDownMenu"
 import { Link } from "react-router-dom";
