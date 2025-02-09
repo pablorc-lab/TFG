@@ -163,7 +163,6 @@
   color: white;
 }
 
-
 /*?=============================
 /*?        ANFITRION
 /*?===========================*/
@@ -456,7 +455,7 @@
   .anf_name { margin: 0 20px 10px; border-bottom: 1px solid #d0dbd9; }
   .anf_name h3, .text_column_viaj h3 { font-weight: 700; font-size: 30px; margin: 0; }
   .anf_info { padding: 0px 22px; }
-  .anf_rating { margin: 0 11.5px 15px; padding-top: 80px; gap: 15%; }
+  .anf_rating { margin-bottom: 15px; padding-top: 80px; gap: 15%; }
   .anf_likes img, .score img { width: 30px; margin-bottom: 5px;}
   .address img { width: 18px; }
   .address { margin-top: 15px; font-size: 20px; gap: 6px; }
@@ -604,7 +603,7 @@
   .anf_name { margin: 0 20px 18px; border-bottom: 1px solid #d0dbd9; }
   .anf_name h3, .text_column_viaj h3 { font-size: 35px; }
 
-  .anf_rating { margin: 0 10px 13px; padding-top: 100px; gap: 12%; }
+  .anf_rating { margin-bottom: 13px; padding-top: 100px; gap: 12%; }
   .anf_likes img { width: 40px; }
   .address img { width: 22px; }
   .address { margin-top: 20px; font-size: 24px; gap: 8px; }

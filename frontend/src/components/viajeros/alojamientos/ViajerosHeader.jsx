@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import DropDownMenu from '../../dropdown_menu/DropDownMenu';
 
 export default function ViajerosHeader({filteredList, handleInputChange, setLocationFocus, location}){
-  const [username, setUsername] = useState("");
   const [isMenuOpen, setMenuOpen] = useState(false);
   const userRef = useRef(null);
 

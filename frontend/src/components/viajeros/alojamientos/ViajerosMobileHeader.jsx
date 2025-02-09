@@ -16,7 +16,7 @@ export default function ViajerosMobileHeader({ filteredList, activeSection, setA
 
   // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
-    return activeSection === nameSection && styles_mobile.active_section;
+    return activeSection === nameSection ? styles_mobile.active_section : undefined;
   }
   
   return (
