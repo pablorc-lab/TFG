@@ -6,15 +6,14 @@
   user-select: none;
   font-family: "Nunito";
   width: (100%-100px) ;
-  padding: 25px 50px;
+  padding: 25px 50px 60px 50px;
   background-color: #eddbc8;
   box-shadow: 0 0 5px rgba(0,0,0,0.4);
 
   position: relative;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  position: relative; /* Importante para centrar el primer article */
+  align-items: start;
 }
 
 /*? LOGO*/
@@ -153,34 +152,51 @@
 
 
 /*? PARTE DEL USUARIO*/
-.header_user_section{
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  gap: 10px;
-}
+.header_user_section { position: relative;}
+
 .header_prof_user {
-  height: 45px;
   cursor: pointer;
   user-select: none;
-  background-color: white;
-  border: 2px solid #757575;
+  background-color: #0a7273;
+  border: 2px solid #0a7273;
   border-radius: 60px;
   display: flex;
   align-items: center;
   padding: 4px 15px;
-  gap: 5px;
-  transition: background-color 0.1s ease-in-out;
+  gap: 10px; 
 }
-/* Hace que las imágenes se vean blancas */
-.header_prof_user:hover img { filter: brightness(0) invert(1); }
+.header_prof_user article {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header_prof_user article div{
+  background-color: white;
+  height: 2px;
+  width: 35px;
+  transition: all .5s;
+  transform-origin: left;
+  border-radius: 5px;
+}
+
+.header_prof_user.open article div:first-child{
+  transform: rotate(45deg);
+}
+.header_prof_user.open article div:nth-child(2){
+  opacity: 0;
+}
+.header_prof_user.open article div:last-child{
+  transform: rotate(-45deg);
+}
+
 .header_prof_user:hover { 
-  background-color: #0a7273;
-  border-color: #0a7273;
-  box-shadow: 0 0 5px black;
+  filter: brightness(0.9);
 }
-.header_prof_user img:nth-child(1){ width: 35px;}
-.header_prof_user img:nth-child(2){ width: 45px;}
+.header_prof_user img { 
+  filter: brightness(0) invert(1);
+  width: 45px;
+}
 
 
 .user_search_form {
@@ -232,30 +248,28 @@
     display: grid;
     grid-template-rows: auto auto; /* Dos filas: una para el logo y otra para el contenedor de búsqueda */
     grid-template-columns: 1fr; /* Una sola columna que ocupa todo el espacio */
-    padding-bottom: 200px;
+    padding-bottom: 185px;
   }
 
-  .header_logo {
-    grid-row: 1; /* Primer fila */
+  .header_logo { 
+    grid-row: 1; /* Primera fila */
+    flex-direction: row;
+    text-align: start;
+    gap: 15px;
   }
 
   .header_user_section {
     grid-row: 1;
+    flex-direction: row;
+    align-items: center;
   }
-
   
   .search_container {
+    margin-top: 30px;
     grid-row: 2; /* Segunda fila */
     display: flex;
     flex-direction: column;
     align-items: center; /* Centrado horizontal */
     justify-content: center; /* Centrado vertical */
   }
-}
-
-
-/**============================
-/**      ORDENADOR
-/**============================*/
-@media (min-width: 1300px){
 }

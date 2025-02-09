@@ -1,16 +1,30 @@
-import { useState} from 'react';
+import { useRef, useState} from 'react';
 import styles from "./ViajerosHeader.module.css"
 import { Link } from "react-router-dom";
+import DropDownMenu from '../../dropdown_menu/DropDownMenu';
 
 export default function ViajerosHeader({filteredList, handleInputChange, setLocationFocus, location}){
   const [username, setUsername] = useState("");
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const userRef = useRef(null);
 
+  const menuLinks = [
+    { path: "/viajeros/alojamientos", label: "Alojamientos", hiddenWhenNavVisible: true },
+    { path: "/", label: "Inquilinos", hiddenWhenNavVisible: true },
+    { path: "/inicio/faq", label: "FAQ", hiddenWhenNavVisible: true },
+    { path: "/iniciar-sesion", label: "Iniciar sesión" },
+    { path: "/registro", label: "Registrarse" },
+    { path: "/", label: "Soporte" }
+  ];
+  
   return(
     <header className={styles.header}>
       <div className={styles.header_logo}>
         <img src="/images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
-        <h1>Bearfrens</h1>
-        <h2>Viajeros</h2>
+        <div>
+          <h1>Bearfrens</h1>
+          <h2>Viajeros</h2>
+        </div>
       </div>
 
       <section className={styles.search_container}>
@@ -27,7 +41,7 @@ export default function ViajerosHeader({filteredList, handleInputChange, setLoca
                 type="text" 
                 className={styles.searcher} 
                 name="buscador" 
-                placeholder="Destino" 
+                placeholder="Destino o @usuario" 
                 spellCheck="false"
                 value={location}
                 onChange={handleInputChange}
@@ -46,26 +60,24 @@ export default function ViajerosHeader({filteredList, handleInputChange, setLoca
       </section>
 
 
-      <section className={styles.header_user_section}>
-        <div className={styles.header_prof_user}>
-          <img src="/images/logos/icono_user.webp" width="35" alt="icono user"/>
-          <img src="/images/logos/logo_user_vacio.webp" width="40" alt="logo user vacio"/>
-        </div>
-
-        <form className={styles.user_search_form}>
-          <img src="/images/logos/search_user.webp" width="40" alt="search user logo"/>
-          <span>@</span>
-          <input 
-            type="text" 
-            className={styles.user_search} 
-            name="encontrar user" 
-            placeholder="username" 
-            spellCheck="false"
-            value={username}
-            onBlur={() => setUsername("")}
-            onChange={(e) => setUsername(e.target.value)}
+      <section className={`${styles.header_user_section}`}>
+        <button className={`${styles.header_prof_user}  ${isMenuOpen && styles.open}`} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
+          
+          <img src="/images/logos/logo_usuario_blanco.png" width="40" alt="logo user vacio"/>
+          <article>
+            <div></div>
+            <div></div>
+            <div></div>
+          </article>
+        </button>
+        {isMenuOpen && (
+          <DropDownMenu
+            userRef={userRef}
+            setMenuOpen={setMenuOpen}
+            menuLinks={menuLinks}
           />
-        </form>
+        )}
+        
       </section>
     </header>
   )
