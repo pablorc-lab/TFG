@@ -29,3 +29,10 @@
   width: 20px;
   margin-bottom: 3px;
 }
+
+
+@media (min-width: 781px) {
+  .user_score.mi_cuenta h3 { font-size: 27px;}
+  .user_score.mi_cuenta img { width: 25px;}
+  .user_score.mi_cuenta p { font-size: 19px;}
+}

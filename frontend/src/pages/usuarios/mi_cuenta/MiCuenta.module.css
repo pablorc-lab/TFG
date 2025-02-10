@@ -2,6 +2,7 @@
   padding-bottom: 100px;
   margin: 0;
 }
+
 /*? ===================
 /*? CONTAINER USUARIO*/
 /*? ===================*/
@@ -15,6 +16,7 @@
   width: 400px;
   margin: 30px auto;
 }
+
 .user_container h2, .user_container h3, .user_container h4, .user_container p, .user_nav h2 {margin: 0;}
 
 /*? USUARIO E INFORMACIÓN GENERAL*/
@@ -72,7 +74,7 @@
 /*? UBICACIÓN*/
 .user_bubble {
   position: relative;
-  background-color: #a6a6a65b; 
+  background-color: #a6a6a63f; 
   padding: 15px;
   border-radius: 3px;
   text-align: center;
@@ -88,7 +90,7 @@
   transform: translateX(-50%);
   border-width: 0 15px 15px 15px;
   border-style: solid;
-  border-color: transparent transparent #a6a6a65b transparent;
+  border-color: transparent transparent #a6a6a63f transparent;
 }
 .user_bubble p {
   color: rgb(104, 104, 104);
@@ -120,23 +122,63 @@
 }
 .user_nav_ul h2 { 
   font-weight: normal;
-  transition: transform .15s ease-in-out;
+  transition: transform .1s ease-in-out;
 }
-.user_nav_ul li:hover h2 { 
+.user_nav_ul li:hover:not(.active) h2 { transform: translateX(10px);}
+.user_nav_ul .active h2 { 
   font-weight: 700;
   color: #0a7273;
-  transform: translateX(10px);
 }
+
 .user_nav_ul li img{
   filter: grayscale();
   width: 40px;
   aspect-ratio: 1 / 1;
 }
-
-.user_nav_ul li:hover img {
-  filter: none;
-}
-.user_nav_ul li:hover {
+.user_nav_ul .active img{ filter: none;}
+.user_nav_ul .active {
   background-color: rgba(10, 113, 115, 0.12);
   border-color: #0a7273;
 }
+.user_nav_ul li:hover:not(.active) {
+  border-radius: 5px;
+  background-color: rgba(235, 235, 235, 0.692);
+}
+
+@media (min-width: 1100px) and (max-width:1299px){
+  .user_container, .user_nav {margin: 0;}
+
+  .main_containers{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 50px 0 70px 0;
+  }
+
+}
+@media (min-width: 780px) and (max-width: 1299px){
+  .main{
+    padding: 0 60px;
+  }
+}
+
+@media (min-width: 1300px){
+  .main_containers{
+    display: grid;
+    align-items: center;
+    gap: 30px;
+    margin: 30px 0;
+  }
+  .user_container, .user_nav {margin: 0;}
+  
+  .main {
+    width: fit-content;
+    padding: 0 50px ;
+    align-items: start;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 0 auto;
+  }
+}
+

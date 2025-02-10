@@ -1,0 +1,57 @@
+
+.comentarios_container h2, .comentarios_container p {margin: 0;}
+.comentarios_container {
+  display: grid;
+  gap: 10px;
+  font-family: "Nunito";
+}
+
+/*? IMAGEN DE PERFIL Y NOMBRE*/
+.profile_img {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  gap: 20px;
+}
+.profile_img img{
+  width: 50px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/*? ESTRELLAS*/
+.valoracion {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.valoracion p{
+  line-height: 0;
+  color: #737373 ;
+  font-size: 15px;
+}
+.valoracion div{
+  display: flex;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+.valoracion img {
+  aspect-ratio: 1 / 1;
+  width: 20px;
+}
+
+/*? COMENTARIO*/
+.comentario { font-size: 18px;}
+
+@media (min-width: 1300px){
+  .profile_img { font-size: 20px;}
+  .profile_img img{ width: 70px;}
+
+  /*?Estrellas*/
+  .valoracion img { width: 25px;}
+  .valoracion p{font-size: 18px;}
+
+  /*? COMENTARIO*/
+  .comentario { font-size: 19px;}
+}
