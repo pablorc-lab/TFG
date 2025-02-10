@@ -26,7 +26,7 @@ export default function InicioSesionPage() {
             <fieldset className={styles.input_container}>
               <label htmlFor="password">Contraseña</label>
               <input type="password" id="password" name="password" />
-              <Link to="/">¿Contraseña olvidada?</Link>
+              <Link style={{textAlign:"right"}} to="/">¿Contraseña olvidada?</Link>
             </fieldset>
             <input className={styles.submit_input} type="submit" value="Iniciar sesión" />
           </form>

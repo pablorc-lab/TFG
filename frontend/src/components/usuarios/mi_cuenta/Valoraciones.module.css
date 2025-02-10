@@ -1,0 +1,78 @@
+/*? CONTAINER*/
+.valoraciones_container {
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0,0,0,.3);
+  border-radius: 5px;
+  font-family: "Nunito";
+  padding: 15px 30px;
+  width: 400px;
+  margin: 30px auto;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.valoraciones_container h2, .valoraciones_container p {margin: 0;}
+
+/*? INFORMACIÓN GENERAL DE LA PUNTUACIÓN*/
+.valoraciones_info {
+  display: grid;
+ gap: 15px;
+}
+
+.valoraciones_container p {
+  color: rgb(71, 71, 71);
+  font-size: 18px;
+}
+
+/*? ESTADISTICAS GENERALES DE LA PUNTUACIÓN*/
+
+.valoraciones_statistics div{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.valoraciones_statistics span {
+  user-select: none;
+  position: absolute;
+  background-color: #0a7273;
+  border-radius: 5px;
+  color: white;
+  padding: 8px 12px;
+  right: calc(100% + 20px); 
+  top: 50%;
+  width: fit-content;
+  transform: translateY(-50%);
+  z-index: 99;
+  white-space: nowrap;
+}
+.valoraciones_statistics span::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -25px; 
+  transform: translateY(-50%);
+  border-width: 8px 14px; 
+  border-style: solid;
+  border-color: transparent transparent transparent #0a7273;
+}
+
+.valoraciones_statistics progress {
+  width: 100px; 
+  height: 13px; 
+  appearance: none;
+}
+.valoraciones_statistics progress::-webkit-progress-bar {
+  background-color: #dbdbdb; 
+  border-radius: 10px;
+}
+.valoraciones_statistics progress::-webkit-progress-value {
+  background-color: #ffbd59; 
+  border-radius: 10px;
+}
+.valoraciones_statistics progress::-moz-progress-bar {
+  background-color: #ffbd59; 
+  border-radius: 10px;
+}

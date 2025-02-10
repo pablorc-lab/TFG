@@ -1,14 +1,17 @@
+.main {
+  padding-bottom: 100px;
+  margin: 0;
+}
 /*? ===================
 /*? CONTAINER USUARIO*/
 /*? ===================*/
 .user_container, .user_nav {
   position: relative;
-  margin: 20px;
   background-color: white;
   box-shadow: 0 0 5px rgba(0,0,0,.3);
   border-radius: 5px;
   font-family: "Nunito";
-  padding: 15px 30px;
+  padding: 30px;
   width: 400px;
   margin: 30px auto;
 }
@@ -47,39 +50,11 @@
   max-width: 150px;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;}
+  text-overflow: ellipsis;
+}
 .user_profile p {
   color: #737373;
   font-size: 20px;
-}
-
-/*? PUNTUACIÓN*/
-.user_score {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.user_score div {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background-color: #dfdb1838;
-  border-radius: 30px;
-  padding: 3px 10px;
-  height: max-content;
-}
-.user_score h3 {
-  color: rgb(58, 58, 58);
-  font-weight: normal;
-  font-size: 23px;
-}
-.user_score p {
-  font-size: 18px;
-}
-.user_score img {
-  aspect-ratio: 1 / 1;
-  width: 20px;
-  margin-bottom: 3px;
 }
 
 /*? GUSTOS*/
@@ -128,6 +103,7 @@
   display: grid;
   gap: 15px;
   padding: 0;
+  margin: 0;
 }
 .user_nav_ul li {
   font-family: "Nunito";
@@ -140,6 +116,7 @@
   align-items: center;
   gap: 15px;
   border-left: 10px solid transparent;
+  color: rgb(94, 94, 94)
 }
 .user_nav_ul h2 { 
   font-weight: normal;
