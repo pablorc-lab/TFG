@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import styles from "./AlojamientosPage.module.css"
+import styles from "../alojamientos/AlojamientosPage.module.css"
 import Ciudades from "../../../data/countries/cities.json"
 import Pronvicias from "../../../data/countries/states.json"
 import Paises from "../../../data/countries/countries.json"
@@ -8,13 +8,17 @@ import React from 'react';
 import ViajerosHeader from './ViajerosHeader';
 import ViajerosMobileHeader from './ViajerosMobileHeader';
 
-export default function ViajerosFinalHeader({ defaultActiveSection }) {
+export default function ViajerosFinalHeader({ defaultActiveSection = "alojamientos"}) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const [activeSection, setActiveSection] = useState(defaultActiveSection);
   const [locationFocus, setLocationFocus] = useState(false);
   const [filteredCities, setFilteredCities] = useState([]);
   const [location, setLocation] = useState('');
 
+  useEffect(() => {
+    setActiveSection("alojamientos");
+  }, []);
+  
   // Almacenar las provincias para mejorar su eficiencia al buscar
   const provinceMap = {};
   Pronvicias.states.forEach(state => {
@@ -76,7 +80,7 @@ export default function ViajerosFinalHeader({ defaultActiveSection }) {
         return cityMatch;
       }).slice(0, 5);
       setFilteredCities(matches);
-    } 
+    }
     else {
       setFilteredCities([]);
     }
@@ -86,19 +90,21 @@ export default function ViajerosFinalHeader({ defaultActiveSection }) {
     <>
       {isLargeScreen
         ? <ViajerosHeader
-            filteredList={filteredList}
-            handleInputChange={handleInputChange}
-            setLocationFocus={setLocationFocus}
-            location={location}
-          />
+          filteredList={filteredList}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          handleInputChange={handleInputChange}
+          setLocationFocus={setLocationFocus}
+          location={location}
+        />
         : <ViajerosMobileHeader
-            filteredList={filteredList}
-            activeSection={activeSection}
-            setActiveSection={setActiveSection}
-            handleInputChange={handleInputChange}
-            setLocationFocus={setLocationFocus}
-            location={location}
-          />
+          filteredList={filteredList}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          handleInputChange={handleInputChange}
+          setLocationFocus={setLocationFocus}
+          location={location}
+        />
       }
     </>
   );

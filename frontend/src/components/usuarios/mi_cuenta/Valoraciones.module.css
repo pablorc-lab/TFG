@@ -2,12 +2,12 @@
 .comentarios_container {
   display: grid;
   background-color: white;
-  box-shadow: 0 0 5px rgba(0,0,0,.3);
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
   border-radius: 5px;
   font-family: "Nunito";
   padding: 10px 30px;
   width: 400px;
-  margin: 30px auto;
+  margin: 20px auto;
 }
 .valoraciones_container {
   display: flex;

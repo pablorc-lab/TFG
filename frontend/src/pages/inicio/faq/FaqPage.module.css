@@ -25,7 +25,7 @@
 }
 
 .question_title:hover {
-  background-color: #e7e7e7;
+  filter: brightness(0.9);
 }
 .question_title {
   cursor: pointer;
@@ -64,13 +64,14 @@
 .question_content {
   max-height: 0;
   overflow: hidden;
-  transition:  0.4s;
+  transition:  0.3s;
   padding: 0 20px;
 }
 
 .question_content.open {
   transition: max-height 1s ;
   max-height: 500px; 
+  background-color: rgba(255, 255, 255, 0.589);
 }
 
 .freq_questions a {text-decoration: none;}

@@ -26,7 +26,7 @@ export default function App() {
 
           {/* Rutas para VIAJEROS*/}
           <Route path="/viajeros" element={<Navigate to="/viajeros/alojamientos" />} />
-          <Route path="/viajeros/alojamientos" element={<AlojamientosPage />} />
+          <Route path="/viajeros/alojamientos" element={<AlojamientosPage/>} />
           <Route path="/viajeros/mi-cuenta" element={<MiCuenta />} />
 
           {/* Rutas para REGISTRO o ACCESO*/}

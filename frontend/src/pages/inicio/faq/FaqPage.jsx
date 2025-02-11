@@ -10,7 +10,7 @@ export default function FaqPage() {
     <>
       <title>FAQ | Beafrens</title>
       <HeaderHome />
-      <section className={styles.freq_questions} style={{padding:"70px 7%", backgroundColor:"rgb(255, 250, 245)"}}>
+      <section className={styles.freq_questions} style={{padding:"70px 7%", backgroundColor:"rgb(235, 235, 235)"}}>
         <h1>PREGUNTAS FRECUENTES</h1>
 
         {Object.entries(faqData).map(([categoria, preguntas]) => (

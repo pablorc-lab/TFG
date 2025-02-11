@@ -1,6 +1,7 @@
 
 /**MENU DESPLEGABLE*/
 .dropdown_menu {
+	z-index: 999;
 	padding: 6px 0;
 	user-select: none;
 	position: absolute;
@@ -58,3 +59,6 @@
 	transform: translateX(10px);
 	font-weight: 700;
 }
+
+/* Si no hay ninguno oculto arreglar el margen entre bordes*/
+.no_hidden li:nth-last-child(2) span{ margin-bottom: 3.5px;}

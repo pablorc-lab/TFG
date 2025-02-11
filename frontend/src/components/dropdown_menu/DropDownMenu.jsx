@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const DropDownMenu = ({userRef, setMenuOpen, menuLinks}) => {
   const [isNavVisible, setNavVisible] = useState(true);
   const menu_user_Ref = useRef(null);
+  const hasHiddenLinks = menuLinks.some(link => link.hiddenWhenNavVisible);
 
   // Manejar el clic fuera del menú y fuera del botón de usuario
   const handleClickOutside_Menu = (event) => {
@@ -36,7 +37,7 @@ const DropDownMenu = ({userRef, setMenuOpen, menuLinks}) => {
 
   return (
     <div className={styles.dropdown_menu} ref={menu_user_Ref}>
-    <ul>
+    <ul className={!hasHiddenLinks ? styles.no_hidden : undefined}>
       {menuLinks.map((link, index) => {
         if(link.hiddenWhenNavVisible) {
           return !isNavVisible && (
@@ -56,17 +57,6 @@ const DropDownMenu = ({userRef, setMenuOpen, menuLinks}) => {
           </li>
         );
       })}
-      {/*
-        {!isNavVisible && (
-          <>
-            <li><Link to="/viajeros/alojamientos"><span>Alojamientos</span></Link></li>
-            <li><Link to="/"><span>Inquilinos</span></Link></li>
-            <li className={styles.first_row}><Link to="/inicio/faq"><span>FAQ</span></Link></li>
-          </>
-        )}
-        <li><Link to="/iniciar-sesion"><span>Iniciar sesión</span></Link></li>
-        <li className={styles.last_row}><Link to="/registro"><span>Registrarse</span></Link></li>
-        <li><Link to="/"><span>Soporte</span></Link></li>*/}
       </ul>
     </div>
   );

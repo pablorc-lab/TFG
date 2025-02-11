@@ -24,7 +24,7 @@ export default function ViajerosMobileHeader({ filteredList, activeSection, setA
       {/*Cabecera*/}
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
-          <div className={getClassName('alojamientos')} onClick={() => setActiveSection('alojamientos')} >
+          <div className={getClassName('alojamientos')} onClick={() => setActiveSection('alojamientos')}>
             <img 
               src={`/images/viajeros/house_header.webp`} 
               width="50" 

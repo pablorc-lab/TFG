@@ -3,24 +3,108 @@
   margin: 0;
 }
 
+.main_containers{
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+/*?===============
+/*?     HEADER
+/*?===============?*/
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Nunito";
+  width: (100%-100px) ;
+  padding: 20px 40px;
+  background-color: #eddbc8;
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.4);
+}
+/*? LOGO*/
+.header .header_logo {
+  width: 60px;
+  height: auto;
+}
+
+.header nav a{
+  filter: brightness(0.8);
+  font-weight: 500;
+  font-size: 25px;
+  color: #737373;
+  cursor: pointer;
+  margin: 0 15px;
+  padding: 0 5px;
+  text-decoration: none;
+  transition: border-bottom 0.1s ease-in-out;
+}
+
+.header a:hover {
+  color: #0a7273;
+  filter: none;
+  margin-bottom: 0px;
+  border-bottom: 4px solid #0a7273;
+}
+
+/*? Menú responsive
+
+/*? PARTE DEL USUARIO*/
+.header_user_section { position: relative;}
+
+.header_prof_user {
+  cursor: pointer;
+  user-select: none;
+  background-color: #0a7273;
+  border: 2px solid #0a7273;
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  padding: 4px 15px;
+  gap: 10px; 
+}
+.header_prof_user article {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header_prof_user article div{
+  background-color: white;
+  height: 2px;
+  width: 35px;
+  transition: all .4s;
+  transform-origin: left;
+  border-radius: 5px;
+}
+
+.header_prof_user.open article div:first-child { transform: rotate(45deg); }
+.header_prof_user.open article div:nth-child(2) { opacity: 0; }
+.header_prof_user.open article div:last-child { transform: rotate(-45deg); }
+.header_prof_user:hover { filter: brightness(0.9); }
+.header_prof_user img { 
+  filter: brightness(0) invert(1);
+  width: 45px;
+}
+
 /*? ===================
 /*? CONTAINER USUARIO*/
 /*? ===================*/
 .user_container, .user_nav {
   position: relative;
   background-color: white;
-  box-shadow: 0 0 5px rgba(0,0,0,.3);
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
   border-radius: 5px;
   font-family: "Nunito";
   padding: 30px;
   width: 400px;
-  margin: 30px auto;
+  margin: 20px auto;
 }
 
 .user_container h2, .user_container h3, .user_container h4, .user_container p, .user_nav h2 {margin: 0;}
 
 /*? USUARIO E INFORMACIÓN GENERAL*/
 .user_profile {
+  grid-row: 1;
   display: flex;
   align-items: center;
   gap: 30px;
@@ -101,8 +185,9 @@
 /*? ===================
 /*?  MENÚ DE NAVEGACIÓN
 /*? ===================*/
+.user_nav {grid-row: 2;}
 .user_nav_ul{
-  display: grid;
+  grid-row: 2;
   gap: 15px;
   padding: 0;
   margin: 0;
@@ -170,7 +255,7 @@
     margin: 30px 0;
   }
   .user_container, .user_nav {margin: 0;}
-  
+  .user_nav {grid-row: 1;}
   .main {
     width: fit-content;
     padding: 0 50px ;
