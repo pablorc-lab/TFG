@@ -17,8 +17,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop/>
-      <Suspense fallback={<h1 style={{textAlign:"center"}}>Cargando...</h1>}>
-        <Routes>
+      <Suspense fallback={<img src="https://www.consultapagos.gob.do/images/espere.gif" alt="Cargando..." style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />}>
+      <Routes>
           {/* Rutas para INICIO*/}
           <Route path="/" element={<Navigate to="/inicio" />} />
           <Route path="/inicio" element={<HomePage />} />

@@ -1,15 +1,15 @@
 import { useState } from "react";
-import ScoreMiCuenta from "./Score";
-import styles from "./Valoraciones.module.css"
+import ScoreMiCuenta from "../Score";
+import styles from "./Opiniones.module.css"
 import Comentarios from "./Comentarios";
 
-const ValoracionesMiCuenta = () => {
+const OpinionesMiCuenta = () => {
 
   const estadisticas_valoraciones = [90, 67, 23, 1, 7];
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
-    <div className={styles.comentarios_container}>
+    <>
       <section className={styles.valoraciones_container}>
         <article className={styles.valoraciones_info}>
           <div>
@@ -35,8 +35,8 @@ const ValoracionesMiCuenta = () => {
         <Comentarios />
         <Comentarios />
       </section>
-    </div>
+    </>
   );
 }
 
-export default ValoracionesMiCuenta;
+export default OpinionesMiCuenta;

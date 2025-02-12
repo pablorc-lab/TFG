@@ -1,11 +1,23 @@
 .main {
-  padding-bottom: 100px;
+  padding-bottom: 20px;
   margin: 0;
 }
 
 .main_containers{
   display: grid;
   grid-template-rows: auto auto;
+}
+
+.user_component {
+  display: grid;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
+  border-radius: 5px;
+  font-family: "Nunito";
+  padding: 10px 30px;
+  margin: 20px auto;
+  min-width: 400px;
+  width: 80vw;
 }
 
 /*?===============
@@ -99,7 +111,7 @@
   width: 400px;
   margin: 20px auto;
 }
-
+.user_container {margin-top: 40px}
 .user_container h2, .user_container h3, .user_container h4, .user_container p, .user_nav h2 {margin: 0;}
 
 /*? USUARIO E INFORMACIÓN GENERAL*/
@@ -242,28 +254,43 @@
 
 }
 @media (min-width: 780px) and (max-width: 1299px){
-  .main{
+  .main{ 
     padding: 0 60px;
+    padding-bottom: 20px;
+  }
+  .user_component { 
+    padding: 0 40px;
+    width: clamp(0px, calc(100% - 80px), 700px);
   }
 }
 
 @media (min-width: 1300px){
+  .main {
+    padding: 0 50px ;
+    align-items: start;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
   .main_containers{
     display: grid;
     align-items: center;
     gap: 30px;
     margin: 30px 0;
   }
+
+  .user_component { 
+    padding: 0 40px;
+    width: clamp(0px, 100%, 700px);
+    margin: 30px 0;
+  }
+
   .user_container, .user_nav {margin: 0;}
   .user_nav {grid-row: 1;}
-  .main {
-    width: fit-content;
-    padding: 0 50px ;
-    align-items: start;
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin: 0 auto;
-  }
+ 
 }
 

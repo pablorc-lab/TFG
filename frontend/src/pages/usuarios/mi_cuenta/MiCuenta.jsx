@@ -3,7 +3,8 @@ import styles from "./MiCuenta.module.css"
 import ScoreMiCuenta from "../../../components/usuarios/mi_cuenta/Score";
 import { Link } from "react-router-dom";
 import DropDownMenu from "../../../components/dropdown_menu/DropDownMenu";
-const ValoracionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/Valoraciones"));
+const ValoracionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/opiniones/Opiniones"));
+const ViviendaMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/vivienda/Vivienda"));
 
 export default function MiCuenta() {
   const [activeMenu, setActiveMenu] = useState(0);
@@ -109,7 +110,9 @@ export default function MiCuenta() {
 
         {/* Componente de los menús*/}
         <Suspense fallback={null}>
-          <ValoracionesMiCuenta />
+          <div className={styles.user_component}>
+            <ViviendaMiCuenta />
+          </div>
         </Suspense>
       </main>
     </>

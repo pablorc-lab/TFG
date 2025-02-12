@@ -1,14 +1,4 @@
 /*? CONTAINER*/
-.comentarios_container {
-  display: grid;
-  background-color: white;
-  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
-  border-radius: 5px;
-  font-family: "Nunito";
-  padding: 10px 30px;
-  width: 400px;
-  margin: 20px auto;
-}
 .valoraciones_container {
   display: flex;
   justify-content: space-between;
@@ -89,31 +79,7 @@
   width: fit-content;
 }
 
-@media (max-width: 780px) {
-  .comentarios_container { 
-    min-width: 400px;
-    width: 80vw;
-  }
-}
-
-@media (min-width: 781px) and (max-width: 1299px){
-  .comentarios_container { 
-    padding: 0 40px;
-    width: clamp(0px, calc(100% - 80px), 700px);
-  }
-
-}
-
-@media (min-width: 1300px) {
-  .comentarios_container { 
-    padding: 0 40px;
-    width: clamp(0px, 100%, 700px);
-    margin: 30px 0;
-  }
-}
-
 @media (min-width: 781px) and (max-width: 1299px), (min-width: 1300px) {
-  
  .valoraciones_container { padding: 35px 0;}
  .valoraciones_info h2 {font-size: 33px;}
  .valoraciones_statistics p { font-size: 21px;}

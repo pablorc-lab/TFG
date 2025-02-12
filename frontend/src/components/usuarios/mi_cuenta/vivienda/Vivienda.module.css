@@ -1,0 +1,65 @@
+/*? TITULO DE LA VIVIENDA*/
+.vivienda_title h1, .vivienda_title button p {margin: 0;}
+.vivienda_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.vivienda_title h1{
+  color: #0a7273;
+  font-size: 27px;
+}
+
+.vivienda_title button {
+  cursor: pointer;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  font-family: "Nunito";
+  border: none;
+  background-color: #0a7273;
+  border-radius: 5px;
+  padding: 8px 15px;
+}
+.vivienda_title button:hover{filter: brightness(0.85);}
+.vivienda_title button img {
+  width: 25px;
+  aspect-ratio: 1 / 1;
+}
+.vivienda_title button p {
+  color: white;
+  font-size: 20px;
+}
+
+
+/*? Responsive*/
+@media (min-width: 780px){
+  .vivienda_title h1{ font-size: 35px;}
+  
+
+}
+@media (min-width: 780px) and (max-width: 1299px){
+  .vivienda_title { margin-top: 30px;}
+
+  .vivienda_title button {
+    gap: 15px;
+    padding: 9px 20px;
+  }
+  .vivienda_title button img { width: 26px;}
+  .vivienda_title button p { font-size: 24px;}
+}
+
+@media (min-width: 1300px){
+  .user_component { 
+    width: clamp(0px, 100%, 700px);
+  }
+
+  .vivienda_title button {
+    gap: 20px;
+    padding: 10px 20px;
+  }
+  .vivienda_title button img { width: 30px;}
+  .vivienda_title button p { font-size: 27px;}
+}
