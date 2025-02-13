@@ -1,5 +1,5 @@
 /*? TITULO DE LA VIVIENDA*/
-.vivienda_title h1, .vivienda_title button p {margin: 0;}
+.vivienda_title h1, .vivienda_title button p, .vivienda_data p, .vivienda_info h2, .vivienda_info p {margin: 0;}
 .vivienda_title {
   display: flex;
   align-items: center;
@@ -33,33 +33,106 @@
   font-size: 20px;
 }
 
+/*? DATA DE LA VIVIENDA*/
+.vivienda_data {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+.vivienda_data img{
+  width: 25px;
+  aspect-ratio: 1 / 1;
+}
+.vivienda_data p {
+  font-size: 24px;
+  color: #0a7273;
+}
+
+.vivienda_data:nth-last-of-type(1) {
+  border-top: 2px solid lightgray;
+  padding-top: 15px;
+}
+
+
+/*? Imágenes de la vivienda*/
+.vivienda_images {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.vivienda_images img {
+  cursor: pointer;
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: 3px;
+}
+.vivienda_images img:hover {
+  filter: brightness(0.8);
+
+}
+
+/*? Info de cada lista ul*/
+.vivienda_info {
+  display: grid;
+  grid-template-columns: repeat(2, auto); /* Dos columnas automáticas */
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+  padding: 0 5px;
+  margin-bottom: 30px;
+}
+.vivienda_info li{
+  width: 190px;
+  list-style: none;
+}
+.vivienda_info li h2 {
+  font-size: 22px;
+  font-weight: normal;
+  color: rgb(124, 124, 124);
+}
+.vivienda_info li p {
+  font-weight: 600;
+  font-size: 24px;
+}
 
 /*? Responsive*/
 @media (min-width: 780px){
-  .vivienda_title h1{ font-size: 35px;}
+  .vivienda_title h1{ font-size: 32px;}
   
-
-}
-@media (min-width: 780px) and (max-width: 1299px){
-  .vivienda_title { margin-top: 30px;}
-
   .vivienda_title button {
     gap: 15px;
-    padding: 9px 20px;
+    padding: 7px 20px;
   }
-  .vivienda_title button img { width: 26px;}
+  .vivienda_title button img { width: 24px;}
   .vivienda_title button p { font-size: 24px;}
+
+  .vivienda_data img{ width: 28px;}
+  .vivienda_data p { font-size: 26px;}
+
+  /*? Imágenes de la vivienda*/
+  .vivienda_images {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
+  }
+  .vivienda_images img { aspect-ratio: 5 / 3;}
+
+  /*? Datos de la vivienda*/
+  .vivienda_info li h2 {
+    font-size: 24px;
+  }
+  .vivienda_info li p {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 780px) and (max-width: 1299px){
+  .vivienda_title { margin-top: 30px;}
 }
 
 @media (min-width: 1300px){
   .user_component { 
     width: clamp(0px, 100%, 700px);
   }
-
-  .vivienda_title button {
-    gap: 20px;
-    padding: 10px 20px;
-  }
-  .vivienda_title button img { width: 30px;}
-  .vivienda_title button p { font-size: 27px;}
 }

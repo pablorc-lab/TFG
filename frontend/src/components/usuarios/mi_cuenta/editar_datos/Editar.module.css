@@ -1,0 +1,104 @@
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.modal {
+  border: none;
+  border-radius: 3px;
+  padding: 20px 30px;
+  background: white;
+  width: 380px;
+}
+
+.modal input:focus {
+  border: 2px solid #0a7273;
+  outline: none;
+}
+.modal input::-webkit-outer-spin-button,
+.modal input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.modal input[type="number"] { -moz-appearance: textfield; appearance: textfield;}
+
+.modal h2, .modal_articles h3, .input_detalles p  {margin: 0;}
+.modal h2 {
+  text-align: center;
+  color: #0a7273;
+  margin-bottom: 10px;
+}
+
+/*? SECCIONES DE EDICIÓN*/
+.modal_articles{
+  padding: 20px 0;
+}
+.modal_articles:nth-last-of-type(1), .modal_articles:nth-last-of-type(2) {
+  border-top: 2px solid lightgray;
+}
+
+.modal_articles h3 { font-size: 22px;}
+
+/*? INPUT CONTAINER*/
+.input_container {
+  display: grid;
+  gap: 10px;
+}
+
+/*? INPUT*/
+.input_detalles {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+.input_detalles p {
+  width: 180px;
+  font-size: 22px;
+  color: #545454;
+}
+
+.input_detalles input {
+  font-family: "Nunito";
+  font-weight: 600;
+  padding: 5px;
+  border: 2px solid #0a7273;
+  border-radius: 10px;
+  font-size: 17px;
+  width: 50px;
+  height: 25px;
+  text-align: center;
+}
+.input_text input{
+  width: 150px;
+}
+
+/*? Botones de la edición*/
+.modal_buttons {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 30px;
+}
+.modal_buttons button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  border: 2px solid;
+  width: 150px;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px;
+}
+.modal_buttons button:hover {filter: brightness(0.8);}
+.modal_buttons button:nth-child(1) {
+  background-color: transparent;
+  border-color: red;
+  color: red;
+}
+.modal_buttons button:nth-child(1):hover{ background-color: rgba(255, 0, 0, 0.137);}
+.modal_buttons button:nth-child(2) {
+  border-color: #0a7273;
+  color: white;
+}
+
