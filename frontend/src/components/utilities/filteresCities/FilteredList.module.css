@@ -1,6 +1,3 @@
-/*?==============================
-/*? Ciudades mostradas al buscar
-/*?==============================*/
 .filteredCities {
   z-index: 999;
   user-select: none;
@@ -14,7 +11,13 @@
   background-color: white;
   box-shadow: 0 0px 5px rgba(0, 0, 0, 0.4);
   padding: 5px;  
+  animation: aparecer 0.25s forwards;
 }
+@keyframes aparecer {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
 .filteredCities li {
   font-size: 16px;
   cursor: pointer;
@@ -28,8 +31,19 @@
   display: grid;
   gap: 5px;
 }
+
+.filteredList span:nth-child(1){ font-size: 20px;}
+
+
 .filteredList span:nth-child(2){
   color: gray;
   font-weight: 500;
+  font-size: 19px;
 }
 
+
+@media (min-width: 770px) {
+  .filteredCities { width: 450px;}
+  .filteredList span:nth-child(1){ font-size: 23px;}
+  .filteredList span:nth-child(2){ font-size: 22px;}
+}

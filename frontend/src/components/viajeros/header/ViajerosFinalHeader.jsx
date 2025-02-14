@@ -1,54 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-import styles from "../alojamientos/AlojamientosPage.module.css"
-import Ciudades from "../../../data/countries/cities.json"
-import Pronvicias from "../../../data/countries/states.json"
-import Paises from "../../../data/countries/countries.json"
 import React from 'react';
 import ViajerosHeader from './ViajerosHeader';
 import ViajerosMobileHeader from './ViajerosMobileHeader';
 
-export default function ViajerosFinalHeader({ defaultActiveSection = "alojamientos"}) {
+export default function ViajerosFinalHeader() {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
-  const [activeSection, setActiveSection] = useState(defaultActiveSection);
-  const [locationFocus, setLocationFocus] = useState(false);
-  const [filteredCities, setFilteredCities] = useState([]);
-  const [location, setLocation] = useState('');
+  const inputRef = useRef(null);
+  const filteredListRef = useRef(null);
+
+  const [headerStates, setHeaderStates] = useState({
+    activeSection: "alojamientos",
+    locationFocus: false,
+    location: ""
+  })
+  // Actualizar objeto de estado
+  const updateHeaderStates = (newState) => setHeaderStates(prev => ({...prev, ...newState })); 
 
   useEffect(() => {
-    setActiveSection("alojamientos");
+    updateHeaderStates({activeSection : "alojamientos"});
+
+    // Controlar click fuera del input para cerrar el menú de listas filtradas
+    const handleClickOutside = (event) => {
+      if ( (!inputRef.current || !inputRef.current.contains(event.target)) && (!filteredListRef.current || !filteredListRef.current.contains(event.target))){
+        updateHeaderStates({locationFocus : false});
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   
-  // Almacenar las provincias para mejorar su eficiencia al buscar
-  const provinceMap = {};
-  Pronvicias.states.forEach(state => {
-    provinceMap[state.id] = state;
-  });
-
-  // Almacenar los paises para mejorar su eficiencia al buscar
-  const countryMap = {};
-  Paises.countries.forEach(country => {
-    countryMap[country.id] = country;
-  });
-
-  // Lista de paises filtradas al buscar, que se pasará a las cabeceras
-  const filteredList = (
-    filteredCities.length > 0 && locationFocus && (
-      <ul className={styles.filteredCities}>
-        {filteredCities.map(({ id, name, id_state }) => {
-          const provincia = provinceMap[id_state]; // O(1)
-          const pais = countryMap[provincia.id_country]; // O(1)
-          return (
-            <li key={id} className={styles.filteredList} onClick={() => setLocation(`${name},${provincia.name}`)}>
-              <span>{name}</span>
-              <span>{provincia.name}, {pais.name}</span>
-            </li>
-          );
-        })}
-      </ul>
-    )
-  );
-
   useEffect(() => {
     const handleResize = () => setIsLargeScreen(window.innerWidth >= 770);
     handleResize();
@@ -57,54 +39,11 @@ export default function ViajerosFinalHeader({ defaultActiveSection = "alojamient
     return () => { window.removeEventListener('resize', handleResize); };
   }, [isLargeScreen]);
 
-  // Cambio al escribir en el input "Destino" y filtrar las búsquedas
-  const handleInputChange = (e) => {
-    const city = e.target.value;
-    setLocation(city);
-
-    if (city.length > 1) {
-      const removeAccents = (str) => {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      };
-      // Dividir la entrada por la coma
-      const input_city = city.split(',').map(part => part.trim().toLowerCase());
-      const regex = new RegExp(`^${input_city[0]}`, 'i'); // Empezar por lo escrito, ignorando mayusculas (i)
-
-      // Encontrar matches
-      const matches = Ciudades.cities.filter(ciudad => {
-        const cityMatch = regex.test(removeAccents(ciudad.name.toLowerCase()));
-        if (input_city[1]) {
-          const provincia = removeAccents(provinceMap[ciudad.id_state].name.toLowerCase());
-          return cityMatch && provincia.startsWith(input_city[1]);
-        }
-        return cityMatch;
-      }).slice(0, 5);
-      setFilteredCities(matches);
-    }
-    else {
-      setFilteredCities([]);
-    }
-  }
-
   return (
     <>
       {isLargeScreen
-        ? <ViajerosHeader
-          filteredList={filteredList}
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-          handleInputChange={handleInputChange}
-          setLocationFocus={setLocationFocus}
-          location={location}
-        />
-        : <ViajerosMobileHeader
-          filteredList={filteredList}
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-          handleInputChange={handleInputChange}
-          setLocationFocus={setLocationFocus}
-          location={location}
-        />
+        ? <ViajerosHeader inputRef={inputRef} filteredListRef={filteredListRef} headerStates={headerStates} updateHeaderStates={updateHeaderStates}/>
+        : <ViajerosMobileHeader inputRef={inputRef} filteredListRef={filteredListRef} headerStates={headerStates} updateHeaderStates={updateHeaderStates}/>
       }
     </>
   );

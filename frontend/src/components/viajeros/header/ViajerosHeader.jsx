@@ -2,8 +2,9 @@ import { useRef, useState } from 'react';
 import styles from "./ViajerosHeader.module.css"
 import { Link } from "react-router-dom";
 import DropDownMenu from '../../dropdown_menu/DropDownMenu';
+import FilteredList from '../../utilities/filteresCities/FilteredList';
 
-export default function ViajerosHeader({ filteredList, activeSection, setActiveSection, handleInputChange, setLocationFocus, location }) {
+export default function ViajerosHeader({ inputRef, filteredListRef, headerStates, updateHeaderStates}) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const userRef = useRef(null);
 
@@ -15,7 +16,7 @@ export default function ViajerosHeader({ filteredList, activeSection, setActiveS
 
   // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
-    return activeSection === nameSection ? styles.active_section : undefined;
+    return (headerStates.activeSection === nameSection) ? styles.active_section : undefined;
   }
 
   return (
@@ -31,26 +32,26 @@ export default function ViajerosHeader({ filteredList, activeSection, setActiveS
       <section className={styles.search_container}>
         <nav className={styles.search_nav}>
           <Link to="/inicio">Inicio</Link>
-          <Link to="/viajeros/alojamientos" className={getClassName('alojamientos')} onClick={() => setActiveSection('alojamientos')}> Alojamientos </Link>
-          <Link to="/viajeros/alojamientos" className={getClassName('comunidades')} onClick={() => setActiveSection('comunidades')}>Comunidades</Link>
+          <Link to="/viajeros/alojamientos" className={getClassName('alojamientos')} onClick={() => updateHeaderStates({activeSection : "alojamientos"})}> Alojamientos </Link>
+          <Link to="/viajeros/alojamientos" className={getClassName('comunidades')} onClick={() => updateHeaderStates({activeSection : "comunidades"})}>Comunidades</Link>
         </nav>
 
         {/* Barra de bússqueda para ALOJAMIENTOS*/}
-        <article className={`${styles.search_form_container} ${activeSection !== "alojamientos" ? styles.inactive_form : undefined}`}>
+        <article className={`${styles.search_form_container} ${headerStates.activeSection !== "alojamientos" ? styles.inactive_form : undefined}`}>
           <form className={styles.search_form}>
             <img src="/images/viajeros/lupa.webp" width="50" alt='icono lupa' />
             <input
+              ref={inputRef}
               type="text"
               className={styles.searcher}
               name="buscador"
               placeholder="Destino o @usuario"
               spellCheck="false"
-              value={location}
-              onChange={handleInputChange}
-              onFocus={() => setLocationFocus(true)}
-              onBlur={() => { setTimeout(() => setLocationFocus(false), 200); }}
+              value={headerStates.location}
+              onChange={(e) =>  updateHeaderStates({location : e.currentTarget.value})}
+              onFocus={() => updateHeaderStates({locationFocus : true})}
             />
-            {filteredList}
+            {headerStates.locationFocus && headerStates.location && <FilteredList filteredListRef={filteredListRef} listStates={headerStates} updateListStates={updateHeaderStates}/>}
           </form>
 
           <div className={styles.filters}>

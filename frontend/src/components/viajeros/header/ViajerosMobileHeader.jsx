@@ -1,8 +1,8 @@
 import { useState} from 'react';
 import styles_mobile from "./ViajerosMobileHeader.module.css"
+import FilteredList from '../../utilities/filteresCities/FilteredList';
 
-
-export default function ViajerosMobileHeader({ filteredList, activeSection, setActiveSection, handleInputChange, setLocationFocus, location }) {
+export default function ViajerosMobileHeader({inputRef, filteredListRef, headerStates, updateHeaderStates}) {
   const [username, setUsername] = useState("");
 
   // Cada vez que se reenderiza el componente, se crean los arrays de los JSON
@@ -16,7 +16,7 @@ export default function ViajerosMobileHeader({ filteredList, activeSection, setA
 
   // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
-    return activeSection === nameSection ? styles_mobile.active_section : undefined;
+    return (headerStates.activeSection === nameSection) ? styles_mobile.active_section : undefined;
   }
   
   return (
@@ -24,7 +24,7 @@ export default function ViajerosMobileHeader({ filteredList, activeSection, setA
       {/*Cabecera*/}
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
-          <div className={getClassName('alojamientos')} onClick={() => setActiveSection('alojamientos')}>
+          <div className={getClassName('alojamientos')}onClick={() => updateHeaderStates({activeSection : "alojamientos"})}>
             <img 
               src={`/images/viajeros/house_header.webp`} 
               width="50" 
@@ -32,7 +32,7 @@ export default function ViajerosMobileHeader({ filteredList, activeSection, setA
             />
             <span>Alojamientos</span>
           </div>
-          <div className={getClassName('comunidades')} onClick={() => setActiveSection('comunidades')}>
+          <div className={getClassName('comunidades')} onClick={() => updateHeaderStates({activeSection : "comunidades"})}>
             <img 
               src={`/images/viajeros/comunidades_header.webp`} 
               width="50" 
@@ -45,13 +45,13 @@ export default function ViajerosMobileHeader({ filteredList, activeSection, setA
             src={`/images/viajeros/user_header.webp`} 
             width="55"
             alt='icono user' 
-            onClick={() => setActiveSection('perfil')}
+            onClick={() => updateHeaderStates({activeSection : "perfil"})}
           />
         </nav>
       </header>
 
       {/*Buscador siempre que estemos en alojamientos*/}
-      {activeSection === 'alojamientos' && (
+      {headerStates.activeSection === 'alojamientos' && (
         <article className={styles_mobile.search_form_container}>
           <form className={styles_mobile.search_form}>
             {/*BUSCAR DESTINO*/}
@@ -63,12 +63,11 @@ export default function ViajerosMobileHeader({ filteredList, activeSection, setA
                 name="buscador" 
                 placeholder="Destino" 
                 spellCheck="false"
-                value={location}
-                onChange={handleInputChange}
-                onFocus={() => setLocationFocus(true)}
-                onBlur={() => {setTimeout(() => setLocationFocus(false), 200);}}
+                value={headerStates.location}
+                onChange={(e) =>  updateHeaderStates({location : e.currentTarget.value})}
+                onFocus={() => updateHeaderStates({locationFocus : true})}
               />
-              {filteredList}
+              {headerStates.locationFocus && headerStates.location && <FilteredList filteredListRef={filteredListRef} listStates={headerStates} updateListStates={updateHeaderStates}/>}
             </div>
 
             {/*BUSCAR USUARIO*/}
