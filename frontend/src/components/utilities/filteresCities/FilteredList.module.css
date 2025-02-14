@@ -1,3 +1,4 @@
+/*? Filtrado normal*/
 .filteredCities {
   z-index: 999;
   user-select: none;
@@ -13,6 +14,7 @@
   padding: 5px;  
   animation: aparecer 0.25s forwards;
 }
+
 @keyframes aparecer {
   0% {opacity: 0;}
   100% {opacity: 1;}
@@ -31,19 +33,36 @@
   display: grid;
   gap: 5px;
 }
-
 .filteredList span:nth-child(1){ font-size: 20px;}
-
-
 .filteredList span:nth-child(2){
   color: gray;
   font-weight: 500;
   font-size: 19px;
 }
 
+/*? Filtrado para el menú de editar mi cuenta*/
+.editarMenu {
+  top: auto !important; 
+  bottom: 40px;  
+  left: 5px;
+  width: calc(100% - 20px);
+  background-color: rgb(100, 100, 100);
+}
+.editarMenu li:hover { background-color: rgb(59, 59, 59);}
+.editarMenu .filteredList span:nth-child(1){ 
+  color: white;
+  font-size: 18px;
+}
+.editarMenu .filteredList span:nth-child(2){ 
+  font-size: 15px;
+  color: rgb(224, 224, 224);
+}
 
 @media (min-width: 770px) {
   .filteredCities { width: 450px;}
   .filteredList span:nth-child(1){ font-size: 23px;}
   .filteredList span:nth-child(2){ font-size: 22px;}
+
+  .editarMenu .filteredList span:nth-child(1){ font-size: 20px;}
+  .editarMenu .filteredList span:nth-child(2){ font-size: 18px;}
 }

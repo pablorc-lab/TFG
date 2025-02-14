@@ -1,14 +1,21 @@
+body:has(.modal[open]) {
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .modal::backdrop {
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
 }
+
 .modal {
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 20px 30px;
   background: white;
   width: 380px;
+  pointer-events: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .modal input:focus {
@@ -22,7 +29,7 @@
 }
 .modal input[type="number"] { -moz-appearance: textfield; appearance: textfield;}
 
-.modal h2, .modal_articles h3, .input_detalles p  {margin: 0;}
+.modal h2, .modal_articles h3, .input_div p  {margin: 0;}
 .modal h2 {
   text-align: center;
   color: #0a7273;
@@ -30,57 +37,77 @@
 }
 
 /*? SECCIONES DE EDICIÓN*/
-.modal_articles{
-  padding: 20px 0;
-}
+.modal_articles{ padding: 20px 0 30px 0;}
 .modal_articles:nth-last-of-type(1), .modal_articles:nth-last-of-type(2) {
   border-top: 2px solid lightgray;
 }
-
-.modal_articles h3 { font-size: 22px;}
+.modal_articles h3 { 
+  padding-bottom: 10px;
+  font-size: 22px;
+}
 
 /*? INPUT CONTAINER*/
 .input_container {
-  display: grid;
-  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 50px;
 }
 
 /*? INPUT*/
-.input_detalles {
-  display: flex;
+.input_div {
+  padding: 0 5px;
+  display: grid;
+  gap: 5px;
   align-items: center;
-  gap: 25px;
+  justify-content: space-evenly;
 }
-.input_detalles p {
-  width: 180px;
-  font-size: 22px;
-  color: #545454;
+.input_div p {
+  font-size: 20px;
+  color: #0a7273;
 }
 
-.input_detalles input {
+.input_container.input_ubicacion {
+  display: grid; 
+  justify-content: start;
+  align-items: start;
+  gap: 10px;
+  width: 100%;
+}
+.input_container.input_ubicacion .input_div { justify-content: start;}
+.input_ubicacion span { font-size: 22px;}
+
+.input_div input {
   font-family: "Nunito";
   font-weight: 600;
+  background-color: rgb(241, 241, 241);
   padding: 5px;
   border: 2px solid #0a7273;
   border-radius: 10px;
-  font-size: 17px;
-  width: 50px;
-  height: 25px;
+  font-size: 20px;
+  width: 110px;
+  height: 35px;
   text-align: center;
 }
-.input_text input{
-  width: 150px;
+.input_text {
+  position: relative;
+  margin-bottom: 10px;
+}
+.input_text input{ 
+  font-size: 20px;
+  width: 300px;
 }
 
 /*? Botones de la edición*/
 .modal_buttons {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: end;
   gap: 30px;
 }
 .modal_buttons button {
+  border-radius: 50px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -102,3 +129,27 @@
   color: white;
 }
 
+@media (min-width: 770px) {
+  /*? Titulo del modal*/
+  .modal {
+    width: 80vw;
+    max-width: 700px;
+  }
+  .modal h2 {font-size: 30px; margin: 20px 0;}
+
+  /*? Campos*/
+  .modal_articles h3 { font-size: 25px;}
+  .input_container.input_ubicacion {
+    display: flex;
+    gap: 50px;
+  }
+  .input_div p { font-size: 23px;}
+  .input_div input {
+    font-size: 25px;
+    font-weight: 400;
+  }
+
+  .modal_buttons button {
+    font-size: 20px;
+  }
+}

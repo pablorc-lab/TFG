@@ -58,6 +58,7 @@ export default function ViajerosMobileHeader({inputRef, filteredListRef, headerS
             <div > 
               <img src="/images/viajeros/lupa_mobile.webp" width="50" alt='icono lupa' />
               <input 
+                ref={inputRef}
                 type="text" 
                 className={styles_mobile.searcher} 
                 name="buscador" 
@@ -67,7 +68,13 @@ export default function ViajerosMobileHeader({inputRef, filteredListRef, headerS
                 onChange={(e) =>  updateHeaderStates({location : e.currentTarget.value})}
                 onFocus={() => updateHeaderStates({locationFocus : true})}
               />
-              {headerStates.locationFocus && headerStates.location && <FilteredList filteredListRef={filteredListRef} listStates={headerStates} updateListStates={updateHeaderStates}/>}
+              {headerStates.locationFocus && headerStates.location && 
+                <FilteredList 
+                  filteredListRef={filteredListRef} 
+                  listStates={headerStates} 
+                  updateListStates={updateHeaderStates}
+                />
+              }
             </div>
 
             {/*BUSCAR USUARIO*/}
