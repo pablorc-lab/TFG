@@ -9,6 +9,7 @@
 }
 
 .user_component {
+  position: relative;
   display: grid;
   background-color: white;
   box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);

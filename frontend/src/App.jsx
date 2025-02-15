@@ -17,7 +17,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop/>
-      <Suspense fallback={<img src="https://www.consultapagos.gob.do/images/espere.gif" alt="Cargando..." style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />}>
+      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{width:"350px", position: "absolute", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
       <Routes>
           {/* Rutas para INICIO*/}
           <Route path="/" element={<Navigate to="/inicio" />} />

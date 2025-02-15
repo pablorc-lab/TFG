@@ -8,6 +8,7 @@ body:has(.modal[open]) {
   backdrop-filter: blur(10px);
 }
 
+.modal:focus { outline: none;}
 .modal {
   border: none;
   border-radius: 5px;
@@ -16,8 +17,12 @@ body:has(.modal[open]) {
   width: 380px;
   pointer-events: auto;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  animation: aparecer 0.25s forwards;
 }
-
+@keyframes aparecer {
+  0% {opacity: 0; transform: translateY(-100px);}
+  100% {opacity: 1; transform: translateY(0px);}
+}
 .modal input:focus {
   border: 2px solid #0a7273;
   outline: none;
@@ -29,7 +34,7 @@ body:has(.modal[open]) {
 }
 .modal input[type="number"] { -moz-appearance: textfield; appearance: textfield;}
 
-.modal h2, .modal_articles h3, .input_div p  {margin: 0;}
+.modal h2, .modal_sections h3, .input_div p  {margin: 0;}
 .modal h2 {
   text-align: center;
   color: #0a7273;
@@ -37,11 +42,11 @@ body:has(.modal[open]) {
 }
 
 /*? SECCIONES DE EDICIÓN*/
-.modal_articles{ padding: 20px 0 30px 0;}
-.modal_articles:nth-last-of-type(1), .modal_articles:nth-last-of-type(2) {
+.modal_sections{ padding: 20px 0 30px 0;}
+.modal_sections:nth-last-of-type(1), .modal_sections:nth-last-of-type(2) {
   border-top: 2px solid lightgray;
 }
-.modal_articles h3 { 
+.modal_sections h3 { 
   padding-bottom: 10px;
   font-size: 22px;
 }
@@ -52,6 +57,77 @@ body:has(.modal[open]) {
   align-items: center;
   justify-content: start;
   gap: 50px;
+}
+
+/*? IMÁGENES DE LA VIVIENDA*/
+.modal_images {
+  user-select: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: row;
+  gap: 20px;
+}
+
+.house_images {position: relative;}
+.house_images img:nth-last-child(1){
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 35px;
+  padding: 3px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  background-color: #ff5757;
+}
+.house_images img:nth-last-child(1):hover {filter: brightness(0.7);}
+
+.modal_images img {
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: 3px;
+}
+
+.file_input_wrapper {position: relative;}
+.file_input_label {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border: 2px solid #0a7273;
+  border-radius: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file_input_label img { object-fit: contain;}
+.file_input_label:hover { background-color: #0a71732c; }
+/* Oculta el input de archivo */
+.file_input { display: none;}
+
+.add_image_tooltip::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 30px;
+  border-width: 0 10px 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent #646464 transparent;
+}
+
+.add_image_tooltip{
+  position: absolute;
+  top: 85px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  background-color: #646464;
+  color: rgb(235, 235, 235);
+  position: absolute;
+  font-size: 20px;
+  font-weight:300;
 }
 
 /*? INPUT*/
@@ -133,12 +209,17 @@ body:has(.modal[open]) {
   /*? Titulo del modal*/
   .modal {
     width: 80vw;
-    max-width: 700px;
+    max-width: 750px;
   }
   .modal h2 {font-size: 30px; margin: 20px 0;}
 
+  /*? Imágenes*/
+  .modal_images {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
   /*? Campos*/
-  .modal_articles h3 { font-size: 25px;}
+  .modal_sections h3 { font-size: 25px;}
   .input_container.input_ubicacion {
     display: flex;
     gap: 50px;

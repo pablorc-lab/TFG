@@ -5,6 +5,11 @@ import EditarMiCuenta from "../editar_datos/Editar";
 const ViviendaMiCuenta = () => {
   const [isOpen, setIsOpen] = useState(null);
 
+  const vivienda_imgs = [
+    "/images/landing_page/casa_1.webp",
+    "/images/landing_page/casa_2.webp"
+  ];
+
   return (
     <>
       <article className={styles.vivienda_title}>
@@ -24,8 +29,9 @@ const ViviendaMiCuenta = () => {
           <p>IMÁGENES</p>
         </div>
         <div className={styles.vivienda_images}>
-          <img src="\images\landing_page\casa_1.webp" alt="Imagen de casa" />
-          <img src="\images\landing_page\casa_2.webp" alt="Imagen de casa" />
+          {vivienda_imgs.map((path_img , index) => (
+            <img key={index} src={path_img} alt={`Imagen ${index}`}/>
+          ))}
         </div>
       </article>
 

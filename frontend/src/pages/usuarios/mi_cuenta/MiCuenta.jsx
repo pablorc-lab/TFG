@@ -34,8 +34,8 @@ export default function MiCuenta() {
   ];
 
   const menuLinks = [
-    { path: "/viajeros/alojamientos", label: "Alojamientos"},
-    { path: "/", label: "Comunidades"},
+    { path: "/viajeros/alojamientos", label: "Alojamientos" },
+    { path: "/", label: "Comunidades" },
     { path: "/inicio/faq", label: "FAQ" },
     { path: "/", label: "Soporte" }
   ];
@@ -51,8 +51,8 @@ export default function MiCuenta() {
             <Link to="/viajeros/alojamientos">Comunidades</Link>
             <Link to="/viajeros/alojamientos">Soporte</Link>
             <Link to="/inicio/faq">FAQ</Link>
-          </nav> 
-          ) : (
+          </nav>
+        ) : (
           <section className={styles.header_user_section}>
             <button className={`${styles.header_prof_user}  ${isMenuOpen && styles.open}`} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
               <img src="/images/logos/logo_usuario_blanco.png" width="40" alt="logo user vacio" />
@@ -62,7 +62,7 @@ export default function MiCuenta() {
                 <div></div>
               </article>
             </button>
-            {isMenuOpen && (<DropDownMenu userRef={userRef} setMenuOpen={setMenuOpen} menuLinks={menuLinks}/>)}
+            {isMenuOpen && (<DropDownMenu userRef={userRef} setMenuOpen={setMenuOpen} menuLinks={menuLinks} />)}
           </section>
         )}
       </header>
@@ -109,11 +109,15 @@ export default function MiCuenta() {
         </article>
 
         {/* Componente de los menús*/}
-        <Suspense fallback={null}>
-          <div className={styles.user_component}>
-            <ViviendaMiCuenta />
-          </div>
-        </Suspense>
+        <div className={styles.user_component}>
+          <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{  width:"200px", position: "relative", left: "50%", transform: "translateX(-50%)", padding : "50px" }} />}>
+            {activeMenu === 0  }
+            {activeMenu === 1}
+            {activeMenu === 2 && <ViviendaMiCuenta />}
+            {activeMenu === 3}
+            {activeMenu === 4 && <ValoracionesMiCuenta />}
+          </Suspense>
+        </div>
       </main>
     </>
   )

@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 0;
+  margin: 35px 0;
 }
 
 .vivienda_title h1{
@@ -68,10 +68,7 @@
   aspect-ratio: 2 / 1;
   border-radius: 3px;
 }
-.vivienda_images img:hover {
-  filter: brightness(0.8);
-
-}
+.vivienda_images img:hover {filter: brightness(0.8);}
 
 /*? Info de cada lista ul*/
 .vivienda_info {
@@ -116,7 +113,6 @@
     grid-template-columns: 1fr 1fr;
     grid-auto-flow: row;
   }
-  .vivienda_images img { aspect-ratio: 5 / 3;}
 
   /*? Datos de la vivienda*/
   .vivienda_info li h2 {
