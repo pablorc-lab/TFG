@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import DropDownMenu from "../../../components/dropdown_menu/DropDownMenu";
 const ValoracionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/opiniones/Opiniones"));
 const PerfilMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/perfil/Perfil"));
+const SeguridadMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/seguridad/Seguridad"));
 
 export default function MiCuenta() {
   const [activeMenu, setActiveMenu] = useState(0);
@@ -126,7 +127,7 @@ export default function MiCuenta() {
             {activeMenu === 0 }
             {activeMenu === 1 && <PerfilMiCuenta/>}
             {activeMenu === 2 && <PerfilMiCuenta mostrarCuenta={false}/>}
-            {activeMenu === 3}
+            {activeMenu === 3 && <SeguridadMiCuenta/>}
             {activeMenu === 4 && <ValoracionesMiCuenta />}
           </Suspense>
         </div>

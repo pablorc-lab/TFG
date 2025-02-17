@@ -1,0 +1,111 @@
+.seguridad_section {
+  background-color: white;
+  border-radius: 5px;
+  padding: 15px 20px;
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
+}
+.seguridad_section h1,  .seguridad_section p {margin: 0;}
+
+/*? Titulos*/
+.seguridad_section h1 {
+  color: #0a7273;
+  font-size: 27px;
+  padding: 15px 0;
+}
+
+/*? Formulario*/
+.seguridad_form {
+  display: grid;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+.seguridad_form div { 
+  display: grid;
+  gap: 5px;
+}
+.seguridad_form div p {
+  font-size: 20px;
+  color: #0a7273;
+}
+
+.seguridad_form div input{
+  font-family: "Nunito";
+  font-weight: 600;
+  background-color: rgb(241, 241, 241);
+  padding: 5px;
+  border: 2px solid #0a7273;
+  border-radius: 5px;
+  font-size: 23px;
+  width: 300px;
+  height: 30px;
+}
+.seguridad_form div input:focus {
+  outline: none;
+  box-shadow: 0 0 7px #0a71737c;
+}
+
+.seguridad_delete button, .seguridad_save {
+  font-family: "Nunito";
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 50px;
+  font-weight: 700;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.seguridad_save {
+  font-size: 23px;
+  width: max-content;
+  width: 65%;
+  max-width: 500px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0a7273;
+  border: 2px solid #0a7273;
+  color: white;
+  margin-bottom: 30px;
+}
+.seguridad_save:hover {filter: brightness(0.8);}
+/*? Eliminar cuenta*/
+.seguridad_delete {
+  display: flex;
+  justify-content: end;
+  border-top: 2px solid lightgray;
+  padding: 25px 0 10px 0;
+}
+
+.seguridad_delete button {
+  font-size: 18px;
+  width: max-content;
+  color: red;
+  border: none;
+  background-color: #ffc9c9;
+}
+
+.seguridad_delete button:hover {
+  color: white;
+  background-color: red;
+}
+
+@media (min-width: 600px){
+  .seguridad_section {padding: 15px 20px;}
+  .seguridad_section h1{ font-size: 30px;}
+
+  .seguridad_form {
+    display: flex;
+    align-items: center;
+  }
+
+  .seguridad_save {width: 270px;}
+  .seguridad_form div input {width: calc(100% - 20px);}
+}
+
+@media (min-width: 780px) and (max-width: 1299px){
+  .miCuenta_title { margin-top: 30px;}
+}
+
+@media (min-width: 1300px){
+  .seguridad_section { width: clamp(0px, 100%, 700px);}
+}

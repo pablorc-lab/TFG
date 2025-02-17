@@ -101,6 +101,7 @@
 }
 .miCuenta_contacto { grid-template-columns: 1fr;}
 .miCuenta_contacto p {width: 400px;}
+
 /*? Responsive*/
 @media (min-width: 600px){
   .miCuenta_title {padding: 15px 20px;}

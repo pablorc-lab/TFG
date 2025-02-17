@@ -170,12 +170,13 @@ body:has(.modal[open]) {
   background-color: rgb(241, 241, 241);
   padding: 5px;
   border: 2px solid #0a7273;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 20px;
   width: 110px;
   height: 35px;
   text-align: center;
 }
+.input_div input:focus {box-shadow: 0 0 8px #0a71737c;}
 .input_div input::placeholder {font-style: italic;}
 .input_MiCuenta .input_div input{width: 150px;}
 .input_MiCuenta_contacto div:nth-child(1) input { width: 340px;}
@@ -209,13 +210,17 @@ body:has(.modal[open]) {
   font-size: 16px;
   padding: 12px;
 }
-.modal_buttons button:hover {filter: brightness(0.8);}
+.modal_buttons button:nth-child(2):hover {filter: brightness(0.8);}
 .modal_buttons button:nth-child(1) {
   background-color: transparent;
-  border-color: red;
-  color: red;
+  border-color: #d12e2e;
+  color: #d12e2e;
 }
-.modal_buttons button:nth-child(1):hover{ background-color: rgba(255, 0, 0, 0.137);}
+.modal_buttons button:nth-child(1):hover{ 
+  filter: none;
+  color: white;
+  background-color: #d12e2e;
+}
 .modal_buttons button:nth-child(2) {
   border-color: #0a7273;
   color: white;
