@@ -10,6 +10,7 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
     "/images/landing_page/casa_2.webp"
   ];
 
+  // Contenido mostrado al acceder a "Vivienda"
   const contenidoVivienda = (
     <section className={styles.miCuenta_section}>
       <article>
@@ -64,6 +65,7 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
     </section>
   )
 
+  // Contenido mostrado al acceder a "Datos personales"
   const contenidoCuenta = (
     <section className={styles.miCuenta_section}>
       <article>
@@ -82,7 +84,7 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
           </li>
           <li>
             <h2>ID privado</h2>
-            <p>Pablo1992SH</p>
+            <p>PabloID123</p>
           </li>
           <li>
             <h2>Edad</h2>
@@ -90,7 +92,6 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
           </li>
         </ul>
       </article>
-
 
       <article>
         <div className={styles.miCuenta_data}>
@@ -110,6 +111,8 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
       </article>
     </section>
   )
+
+
   return (
     <>
       <article className={styles.miCuenta_title}>
@@ -120,7 +123,7 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
           <p>Editar</p>
         </button>
 
-        {isOpen && <EditarMiCuenta setIsOpen={setIsOpen} />}
+        {isOpen && <EditarMiCuenta setIsOpen={setIsOpen} mostrarCuenta={mostrarCuenta}/>}
       </article>
 
       {/* Mostrar datos de "mi cuenta" o "vivienda"*/}

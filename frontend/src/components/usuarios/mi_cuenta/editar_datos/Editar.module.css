@@ -58,7 +58,16 @@ body:has(.modal[open]) {
   justify-content: start;
   gap: 50px;
 }
-
+.input_MiCuenta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: start;
+  gap: 25px 15px;
+}
+.input_MiCuenta_contacto {
+  display: grid;
+  gap: 25px;
+}
 /*? IMÁGENES DE LA VIVIENDA*/
 .modal_images {
   user-select: none;
@@ -138,6 +147,8 @@ body:has(.modal[open]) {
   align-items: center;
   justify-content: space-evenly;
 }
+.input_container.input_MiCuenta .input_div, .input_MiCuenta_contacto .input_div { justify-content: start;}
+
 .input_div p {
   font-size: 20px;
   color: #0a7273;
@@ -165,6 +176,11 @@ body:has(.modal[open]) {
   height: 35px;
   text-align: center;
 }
+.input_div input::placeholder {font-style: italic;}
+.input_MiCuenta .input_div input{width: 150px;}
+.input_MiCuenta_contacto div:nth-child(1) input { width: 340px;}
+.input_MiCuenta_contacto div:nth-child(2) input { width: 150px;}
+
 .input_text {
   position: relative;
   margin-bottom: 10px;
@@ -230,7 +246,16 @@ body:has(.modal[open]) {
     font-weight: 400;
   }
 
-  .modal_buttons button {
-    font-size: 20px;
+  .modal_buttons button { font-size: 20px;}
+  .input_text input{ width: 350px;}
+
+  /*? Campo mi cuenta*/
+  .input_MiCuenta_contacto {
+    display: flex;
+    align-items: center;
+    gap: 30px;
   }
+  .input_MiCuenta .input_div input{width: 270px;}
+  .input_MiCuenta_contacto div:nth-child(1) input { width: 400px;}
+  .input_MiCuenta_contacto div:nth-child(2) input { width: 200px;}
 }
