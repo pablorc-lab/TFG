@@ -31,9 +31,6 @@ export default function EditarMiCuenta({ setIsOpen }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleDeleteImage = (index) => {
-    viviendasImages = viviendasImages.de
-  }
   return (
     <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
       <h2>EDITAR VIVIENDA</h2>

@@ -9,7 +9,7 @@ const OpinionesMiCuenta = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
-    <>
+    <main className={styles.valoraciones_main}>
       <section className={styles.valoraciones_container}>
         <article className={styles.valoraciones_info}>
           <div>
@@ -35,7 +35,7 @@ const OpinionesMiCuenta = () => {
         <Comentarios />
         <Comentarios />
       </section>
-    </>
+    </main>
   );
 }
 

@@ -4,7 +4,7 @@ import ScoreMiCuenta from "../../../components/usuarios/mi_cuenta/Score";
 import { Link } from "react-router-dom";
 import DropDownMenu from "../../../components/dropdown_menu/DropDownMenu";
 const ValoracionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/opiniones/Opiniones"));
-const ViviendaMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/vivienda/Vivienda"));
+const PerfilMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/perfil/Perfil"));
 
 export default function MiCuenta() {
   const [activeMenu, setActiveMenu] = useState(0);
@@ -26,11 +26,12 @@ export default function MiCuenta() {
   ];
 
   const userNavItems = [
-    { src: "/images/usuarios/account/profile.svg", alt: "Editar perfil", text: "Perfil público" },
-    { src: "/images/usuarios/account/edit.svg", alt: "Editar perfil", text: "Editar perfil" },
-    { src: "/images/usuarios/account/house.svg", alt: "Editar perfil", text: "Vivienda" },
-    { src: "/images/usuarios/account/security.svg", alt: "Editar perfil", text: "Seguridad" },
-    { src: "/images/usuarios/account/star.svg", alt: "Editar perfil", text: "Opiniones" }
+    { src: "/images/usuarios/account/profile.svg", alt: "Perfil público", text: "Perfil público" },
+    { src: "/images/usuarios/account/edit.svg", alt: "Datos personales", text: "Datos personales" },
+    { src: "/images/usuarios/account/house.svg", alt: "Vivienda", text: "Vivienda" },
+    { src: "/images/usuarios/account/security.svg", alt: "Seguridad", text: "Seguridad" },
+    { src: "/images/usuarios/account/star.svg", alt: "Opiniones", text: "Opiniones" },
+    { src: "/images/usuarios/account/history.svg", alt: "Historial de reservas", text: "Historial de reservas" }
   ];
 
   const menuLinks = [
@@ -40,6 +41,17 @@ export default function MiCuenta() {
     { path: "/", label: "Soporte" }
   ];
 
+  const styleSuspense = {
+    width: "100%", 
+    position: "relative",
+    left: "50%",
+    transform: "translateX(-50%)",
+    padding: "50px",
+    backgroundColor: "white", 
+    boxShadow: "0 0 5px rgba(65, 65, 65, 0.3)",
+  };
+
+  
   return (
     <>
       <title>Mi cuenta | Viajeros</title>
@@ -110,10 +122,10 @@ export default function MiCuenta() {
 
         {/* Componente de los menús*/}
         <div className={styles.user_component}>
-          <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{  width:"200px", position: "relative", left: "50%", transform: "translateX(-50%)", padding : "50px" }} />}>
-            {activeMenu === 0  }
-            {activeMenu === 1}
-            {activeMenu === 2 && <ViviendaMiCuenta />}
+          <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{  width:"200px", position: "relative", left: "50%", transform: "translateX(-50%)"}} /></div> }>
+            {activeMenu === 0 }
+            {activeMenu === 1 && <PerfilMiCuenta/>}
+            {activeMenu === 2 && <PerfilMiCuenta mostrarCuenta={false}/>}
             {activeMenu === 3}
             {activeMenu === 4 && <ValoracionesMiCuenta />}
           </Suspense>

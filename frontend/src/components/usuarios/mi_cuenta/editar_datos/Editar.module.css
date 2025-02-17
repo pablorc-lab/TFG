@@ -188,7 +188,7 @@ body:has(.modal[open]) {
   display: flex;
   justify-content: center;
   border: 2px solid;
-  width: 150px;
+  width: 170px;
   font-weight: 700;
   font-size: 16px;
   padding: 12px;
