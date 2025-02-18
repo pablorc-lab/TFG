@@ -24,7 +24,7 @@ export default function InicioSesionPage() {
           <form action="pagina.jar" >
             <fieldset className={styles.input_container}>
               <label htmlFor="email">Correo electrónico</label>
-              <input type="email" id="email" name="email" spellCheck="false" />
+              <input type="email" id="email" name="email" spellCheck="false" autoComplete="email"/>
             </fieldset>
             <fieldset className={styles.input_container}>
               <label htmlFor="password">Contraseña</label>

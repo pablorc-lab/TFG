@@ -15,6 +15,14 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
     "/images/landing_page/casa_2.webp",
     "/images/landing_page/casa_2.webp",
   ]);
+
+  const [showDeleteImage, setShowDeleteImage] = useState(null);
+  const [gustosImages, setGustosImages] = useState([
+    "/images/usuarios/Gustos/baseball.svg",
+    "/images/usuarios/Gustos/pesca.svg",
+    "/images/usuarios/Gustos/poker.svg",
+  ]);
+
   // Actualizar objeto de estado
   const updateEditarStates = (newState) => setEditarStates(prev => ({ ...prev, ...newState }));
 
@@ -33,7 +41,7 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
   const editarVivienda = (
     <>
       <section className={styles.modal_sections}>
-        <h3>IMÁGENES (máximo 4)</h3>
+        <h3>IMÁGENES <span>(máximo 4)</span></h3>
         <article className={styles.modal_images}>
           {viviendasImages.map((path_img, index) => (
             <div key={index} className={styles.house_images}>
@@ -41,7 +49,7 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
               <img
                 src="/images/usuarios/account/delete_img.svg"
                 alt="delete img"
-                onClick={() => setViviendasImages([...viviendasImages.slice(0, index), ...viviendasImages.slice(index + 1)])}
+                onClick={() => setViviendasImages(viviendasImages.filter((_, i) => i !== index))}
               />
             </div>
           ))}
@@ -49,8 +57,8 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
           {/* Mostrar el label solo si hay menos de 4 imágenes */}
           {viviendasImages.length < 4 && (
             <div className={styles.file_input_wrapper}>
-              <label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)}>
-                <input type="file" accept="image/*" className={styles.file_input} />
+              <label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)} >
+                <input type="file" accept="image/*" className={styles.file_input} name="archivo"/>
                 <img src="/images/usuarios/account/add_img.svg" alt="Editar vivienda" />
               </label>
               {addImageState && <p className={styles.add_image_tooltip}>Añadir imagen</p>}
@@ -61,14 +69,14 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
 
       <section className={styles.modal_sections}>
         <h3>DETALLES</h3>
-        <form className={styles.input_container}>
+        <form className={styles.input_container} >
           <div className={styles.input_div}>
             <p>Habitaciones</p>
-            <input type="number" placeholder="1 - 16" min="1" max="16" />
+            <input type="number" placeholder="1 - 16" min="1" max="16" name="habitaciones"/>
           </div>
           <div className={styles.input_div}>
             <p>Baños</p>
-            <input type="number" placeholder="1 - 8" min="1" max="8" />
+            <input type="number" placeholder="1 - 8" min="1" max="8" name="baños"/>
           </div>
         </form>
       </section>
@@ -81,6 +89,7 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
             <input
               ref={inputRef}
               type="text"
+              name="ubicacion"
               placeholder="Granada,Motril"
               spellCheck="false"
               value={editarStates.location}
@@ -98,7 +107,7 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
           </div>
           <div className={styles.input_div}>
             <p>Precio (&euro; / noche)</p>
-            <input type="number" placeholder="45" />
+            <input type="number" placeholder="45" name="precio"/>
             <span> </span>
           </div>
         </form>
@@ -108,43 +117,73 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
 
   const editarMiCuenta = (
     <>
-    <section className={styles.modal_sections}>
+      <section className={styles.modal_sections}>
         <h3>INFORMACIÓN</h3>
         <form className={`${styles.input_container} ${styles.input_MiCuenta}`}>
           <div className={styles.input_div}>
             <p>Nombre</p>
-            <input type="text" placeholder="Pablo" spellCheck="false"/>
+            <input type="text" placeholder="Pablo" spellCheck="false"  name="nombre"/>
           </div>
           <div className={styles.input_div}>
             <p>Apellido</p>
-            <input type="text" placeholder="Ramblado" spellCheck="false"/>
+            <input type="text" placeholder="Ramblado" spellCheck="false"  name="Apellido"/>
           </div>
           <div className={styles.input_div}>
             <p>ID privado</p>
-            <input type="text" placeholder="PabloID123" spellCheck="false"/>
+            <input type="text" placeholder="PabloID123" spellCheck="false"  name="ID privado"/>
           </div>
           <div className={styles.input_div}>
             <p>Edad</p>
-            <input type="date" placeholder="Ramblado" spellCheck="false"/>
+            <input type="date" placeholder="Ramblado" spellCheck="false"  name="Edad"/>
           </div>
         </form>
       </section>
 
       <section className={styles.modal_sections}>
         <h3>CONTACTO</h3>
-        <form className={`${styles.input_container} ${styles.input_MiCuenta_contacto}`}>
+        <form className={`${styles.input_container} ${styles.input_MiCuenta_contacto}`} >
           <div className={styles.input_div}>
             <p>Email</p>
-            <input type="email" placeholder="Pablo@example.com" spellCheck="false"/>
+            <input type="email" placeholder="Pablo@example.com" spellCheck="false" name="Email" autocomplete="email"/>
           </div>
           <div className={styles.input_div}>
             <p>Teléfono</p>
-            <input type="number" placeholder="666-777-999" spellCheck="false"/>
+            <input type="number" placeholder="666-777-999" spellCheck="false" name="Teléfono"/>
           </div>
         </form>
       </section>
+
+      <section className={styles.modal_sections}>
+        <h3>GUSTOS <span>(máximo 3)</span></h3>
+        <article className={`${styles.input_container} ${styles.input_MiCuenta_gustos}`}>
+          {gustosImages.map((src, index) => (
+            <div key={index} className={`${showDeleteImage === index ? styles.gusto_delete : undefined}`} onMouseEnter={() => setShowDeleteImage(index)} onMouseLeave={() => setShowDeleteImage(null)}>
+              <img src={src} alt={`Gusto ${index}`} />
+              {showDeleteImage === index &&
+                <img
+                  src="/images/usuarios/account/delete_img.svg"
+                  alt="Eliminar"
+                  className={styles.delete_icon}
+                  onClick={() => setGustosImages(gustosImages.filter((_, i) => i !== index))}
+                />}
+            </div>
+          ))}
+          {gustosImages.length < 3 && (
+            <div className={styles.add_gusto}>
+              <img 
+                src="/images/usuarios/account/add_img.svg" 
+                alt="Editar vivienda"
+                onMouseEnter={() => setAddImageState(true)} 
+                onMouseLeave={() => setAddImageState(false)} 
+              />
+              {addImageState && <p className={styles.add_gusto_tooltip}>Añadir gusto personal</p>}
+            </div>
+          )}
+        </article>
+      </section>
     </>
   )
+
   return (
     <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
       <h2>EDITAR {mostrarCuenta ? "CUENTA" : "VIVIENDA"} </h2>

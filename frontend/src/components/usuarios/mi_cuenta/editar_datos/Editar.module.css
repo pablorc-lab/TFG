@@ -50,6 +50,10 @@ body:has(.modal[open]) {
   padding-bottom: 10px;
   font-size: 22px;
 }
+.modal_sections span {
+  color: gray;
+  font-weight: normal;
+}
 
 /*? INPUT CONTAINER*/
 .input_container {
@@ -68,6 +72,7 @@ body:has(.modal[open]) {
   display: grid;
   gap: 25px;
 }
+
 /*? IMÁGENES DE LA VIVIENDA*/
 .modal_images {
   user-select: none;
@@ -126,7 +131,7 @@ body:has(.modal[open]) {
   border-color: transparent transparent #646464 transparent;
 }
 
-.add_image_tooltip{
+.add_image_tooltip, .add_gusto_tooltip{
   position: absolute;
   top: 85px;
   padding: 10px 15px;
@@ -137,6 +142,61 @@ body:has(.modal[open]) {
   position: absolute;
   font-size: 20px;
   font-weight:300;
+}
+
+/*? IMÁGENES DE LOS GUSTOS*/
+.input_MiCuenta_gustos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.input_MiCuenta_gustos div {
+  position: relative;
+  padding: 10px;
+  border-radius: 50px;
+}
+.input_MiCuenta_gustos img:nth-child(1){
+  width: 50px;
+  aspect-ratio: 1 / 1;
+}
+
+.gusto_delete {
+  background-color: #d12e2e1c;
+  outline: 2px solid #d12e2e;
+}
+
+.delete_icon {
+  position: absolute;
+  cursor: pointer;
+  width: 30px;
+  top: -10px;
+  right: -17px;
+  padding: 3px;
+  background-color: #d12e2e;
+  border-radius: 50px;
+}
+
+.input_MiCuenta_gustos div.add_gusto  { 
+  cursor: pointer;
+  padding: 0px;
+}
+
+.add_gusto img {
+  background-color: rgb(241, 241, 241);
+  border-radius: 10px;
+  padding: 10px;
+  border: 2px solid #0a7273;
+  object-fit: cover;
+}
+.add_gusto img:hover {
+  filter: brightness(0.95);
+  box-shadow: 0 0 10px #0a71737c;
+}
+.add_gusto_tooltip { 
+  margin: 0;
+  width: max-content;
+  top: -50px;
+  right: 0;
 }
 
 /*? INPUT*/
@@ -238,6 +298,9 @@ body:has(.modal[open]) {
   .modal_images {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
+  .input_MiCuenta_gustos { gap: 100px;}
+  .input_MiCuenta_gustos img:nth-child(1){ width: 65px;}
+  .delete_icon {width: 35px;}
 
   /*? Campos*/
   .modal_sections h3 { font-size: 25px;}

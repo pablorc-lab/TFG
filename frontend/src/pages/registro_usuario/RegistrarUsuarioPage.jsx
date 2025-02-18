@@ -102,6 +102,7 @@ export default function RegistrarUsuarioPage() {
           type="email"
           id="email"
           name="email"
+          autoComplete="email"
           spellCheck="false"
           value={userValues.email}
           onChange={(e) => handleValuesChange(e, "email")}
@@ -151,6 +152,7 @@ export default function RegistrarUsuarioPage() {
       <input
         className={`${styles.submit_input} ${(errorStates.email || errorStates.shortPassword || errorStates.samePassword) && styles.error_submit_input}`}
         type="submit"
+        name="submit"
         value="Siguiente paso"
         onClick={handleSubmitFirstStep}
       />

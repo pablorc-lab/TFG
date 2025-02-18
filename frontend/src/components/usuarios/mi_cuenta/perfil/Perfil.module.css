@@ -102,6 +102,17 @@
 .miCuenta_contacto { grid-template-columns: 1fr;}
 .miCuenta_contacto p {width: 400px;}
 
+/*? Imágenes de los gustos*/
+.miCuenta_gustos {
+  margin: 20px 0 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.miCuenta_gustos img{
+  width: 50px;
+  aspect-ratio: 1 / 1;
+}
 /*? Responsive*/
 @media (min-width: 600px){
   .miCuenta_title {padding: 15px 20px;}
@@ -117,6 +128,12 @@
   .miCuenta_data img{ width: 30px;}
   .miCuenta_data p { font-size: 25px;}
 
+  /*? Imágenes de los gustos*/
+  .miCuenta_gustos {
+    justify-content: center;
+    gap: 100px;
+  }
+  .miCuenta_gustos img{ width: 60px;}
   /*? Imágenes de la vivienda*/
   .vivienda_images {
     margin: 0 5px;
@@ -125,6 +142,7 @@
     grid-auto-flow: row;
   }
   .vivienda_images img {width: 100%;}
+
   /*? Datos de la vivienda*/
   .miCuenta_info li p { font-size: 24px;}
   .miCuenta_contacto p {width: 700px;}

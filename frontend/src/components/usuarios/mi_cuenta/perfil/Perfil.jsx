@@ -10,6 +10,12 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
     "/images/landing_page/casa_2.webp"
   ];
 
+  const gustosImages = [
+    "/images/usuarios/Gustos/baseball.svg",
+    "/images/usuarios/Gustos/pesca.svg",
+    "/images/usuarios/Gustos/poker.svg",
+  ];
+
   // Contenido mostrado al acceder a "Vivienda"
   const contenidoVivienda = (
     <section className={styles.miCuenta_section}>
@@ -108,6 +114,18 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
             <p>666777999</p>
           </li>
         </ul>
+      </article>
+
+      <article>
+        <div className={styles.miCuenta_data}>
+          <img src="/images/usuarios/account/gustos.svg" alt="Localización vivienda" />
+          <p>GUSTOS</p>
+        </div>
+        <div className={`${styles.miCuenta_info} ${styles.miCuenta_gustos}`}>
+          {gustosImages.map((path, index) => (
+            <img key={index} src={path} alt="Imagen gusto"/>
+          ))}
+        </div>
       </article>
     </section>
   )
