@@ -6,9 +6,7 @@
   background-repeat: no-repeat;
   user-select: none;
 }
-.acceso_section a:hover{
-  filter: brightness(1.3);
-}
+.acceso_section a:hover{ text-decoration: underline;}
 /*? CABECERA */
 .acceso_header {
   width: 100%;
@@ -29,6 +27,7 @@
   font-weight: bold;
   color: #e9e3d5;
 }
+
 
 /*? Barra de progreso*/
 .progress_bar{
@@ -184,12 +183,12 @@
   color: #737373;
 }
 .input_container input {
+  caret-color: #009080;
   font-family: "Nunito";
   border: 2px solid #c2c2c2;
   border-radius: 8px;
   height: 40px;
   width: 450px;
-  transition: border-color 0.1s ease-in-out;
   padding: 3px 15px;
   font-size: 23px;
 }
@@ -203,10 +202,31 @@
 .input_container article:focus-within label { color: #009080;}
 
 .acceso_container form fieldset a {
+  text-decoration: none;
+  width: max-content;
   padding-left: 5px;
   padding-top: 3px;
   color: #1386fd;
   font-size: 17px;
+}
+
+/*? Input contraseña*/
+.input_password {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: white;
+  border-radius: 8px;
+}
+.input_password:focus { border: 2px solid red;}
+.input_password img {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+}
+.input_password input{
+  width: calc(100% - 65px);
+  padding-right: 50px;
 }
 
 /*? Submit */
@@ -222,7 +242,7 @@
   border-radius: 10px;
   transition: background-color 0.1s ease-in-out;
 }
-.submit_input:hover {background-color: #00907fd5;}
+.submit_input:hover {filter: brightness(0.85);}
 
 /*? Registrarse enlace */
 .acceso_enlace_registro {
@@ -238,6 +258,7 @@
   color: #1386fd; 
   font-size: 20px;
 }
+.acceso_enlace_registro a:hover {filter: brightness(0.6);}
 
 @media (max-width: 1300px) {
   .acceso_container {

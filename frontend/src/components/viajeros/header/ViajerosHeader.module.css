@@ -80,6 +80,7 @@
   font-weight: 700;
 }
 .search_nav a:not(.active_section):hover {
+  color: #0a7273;
   margin-bottom: 0px;
   border-bottom: 4px solid #0a7273;
 }

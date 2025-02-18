@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 export default function RegistrarUsuarioPage() {
   const [actualStep, setActualStep] = useState(0);
   const [repeatedPassword, setRepeatedPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatedPassword, setShowRepeatedPassword] = useState(false);
 
   // Objeto que almacena todos los errores
   const [errorStates, setErrorStates] = useState({
@@ -110,26 +112,40 @@ export default function RegistrarUsuarioPage() {
       </fieldset>
       <fieldset className={`${styles.input_container} ${errorStates.shortPassword && styles.error_input}`}>
         <label htmlFor="password">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={userValues.password}
-          onChange={(e) => handleValuesChange(e, "password")}
-          onBlur={() => userValues.password && handleErrorChange("shortPassword", userValues.password.length < 8)}
-        />
+        <div className={styles.input_password}>
+          <img
+            src={`/images/registro/${showPassword ? "reveal" : "hide"}_password.svg`}
+            alt="Reveal password"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+          <input
+            type={showPassword ? "text" : "password"}
+            id="password"
+            name="password"
+            value={userValues.password}
+            onChange={(e) => handleValuesChange(e, "password")}
+            onBlur={() => userValues.password && handleErrorChange("shortPassword", userValues.password.length < 8)}
+          />
+        </div>
         {errorStates.shortPassword && <p>La contraseña debe tener mínimo 8 carácteres</p>}
       </fieldset>
       <fieldset className={`${styles.input_container} ${errorStates.samePassword && styles.error_input}`}>
         <label htmlFor="confirmPassword">Repetir contraseña</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          value={repeatedPassword}
-          onChange={(e) => setRepeatedPassword(e.target.value)}
-          onBlur={() => errorStates.samePassword && handleErrorChange("samePassword", userValues.password !== repeatedPassword)}
-        />
+        <div className={styles.input_password}>
+          <img
+            src={`/images/registro/${showRepeatedPassword ? "reveal" : "hide"}_password.svg`}
+            alt="Reveal password"
+            onClick={() => setShowRepeatedPassword(!showRepeatedPassword)}
+          />
+          <input
+            type={showRepeatedPassword ? "text" : "password"}
+            id="confirmPassword"
+            name="confirmPassword"
+            value={repeatedPassword}
+            onChange={(e) => setRepeatedPassword(e.target.value)}
+            onBlur={() => errorStates.samePassword && handleErrorChange("samePassword", userValues.password !== repeatedPassword)}
+          />
+        </div>
         {errorStates.samePassword && <p>Las contraseñas no coinciden</p>}
       </fieldset>
       <input

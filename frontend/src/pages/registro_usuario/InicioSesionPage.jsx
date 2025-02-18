@@ -1,7 +1,10 @@
+import { useState } from "react";
 import styles from "./accesos.module.css"
 import { Link } from "react-router-dom";
 
 export default function InicioSesionPage() {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <>
       <title>Iniciar sesión | Bearfrens</title>
@@ -25,7 +28,14 @@ export default function InicioSesionPage() {
             </fieldset>
             <fieldset className={styles.input_container}>
               <label htmlFor="password">Contraseña</label>
-              <input type="password" id="password" name="password" />
+              <div className={styles.input_password}>
+                <img 
+                  src={`/images/registro/${showPassword ? "reveal" : "hide"}_password.svg`} 
+                  alt="Reveal password" 
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+                <input type={showPassword ? "text" : "password"} id="password" name="password" />
+              </div>
               <Link style={{textAlign:"right"}} to="/">¿Contraseña olvidada?</Link>
             </fieldset>
             <input className={styles.submit_input} type="submit" value="Iniciar sesión" />
