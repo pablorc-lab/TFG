@@ -1,0 +1,114 @@
+.historial_main h2, .historial_main p, .historial_main h1 {margin: 0;}
+
+.historial_main {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
+  padding: 0 30px;
+}
+
+/*? RESUMEN GENERAL*/
+.summary {
+  display: grid;
+  padding: 30px 0;
+  gap: 20px;
+  border-bottom: 2px solid lightgray;
+}
+.summary h1 {
+  color: #0a7273;
+  font-size: 35px;
+}
+
+.summary_div {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 30px;
+}
+.summary_div h2 {
+  width: 186px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0a7273;
+}
+
+.summary_div p {
+  font-size: 24px;
+  color: rgb(97, 97, 97);
+}
+
+/*? USUARIOS RESERVAS*/
+.historial_user_section {
+  user-select: none;
+  display: grid;
+  margin: 20px 0;
+  gap: 20px;
+}
+.historial_user_article {
+  border-radius: 10px;
+  font-family: "Nunito";
+  padding: 10px;
+  background-color: rgba(238, 238, 238, 0.322);
+  border: 2px solid rgb(189, 189, 189);
+  transition: border 0.1s ease-in-out, background-color 0.1s ease-in-out;
+}
+.historial_user_article:hover {
+  border: 2px solid #0a7273;
+  background-color: #0a717318;
+
+}
+.historial_user_info {
+  display: flex;
+  align-items: center;  
+  justify-content: start;
+  gap: 20px;
+}
+
+.user_profile_img {
+  width: 50px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+/*? VALORACION*/
+.score {
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background-color: #f1f09b;
+  border-radius: 30px;
+}
+.score img {
+  width: 20px;
+  aspect-ratio: 1 / 1;
+}
+.score {
+  color: rgb(63, 63, 63);
+  font-size: 17px;
+}
+
+/*? DETALLES DE LA RESERVA*/
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin: 10px;
+  gap: 10px;
+}
+
+.details img {
+  width: 26px;
+  aspect-ratio: 1 / 1;
+}
+.details p { font-size: 18px;}
+.details span {
+  color: #737373;
+  font-size: 15px;
+}
+.details strong {
+  text-transform: uppercase;
+  font-weight: 800;
+}

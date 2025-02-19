@@ -1,0 +1,42 @@
+[
+  {
+    "imagen_perfil": "/images/landing_page/persona_3.webp",
+    "nombre": "Carlos Martínez",
+    "valoracion": 4.8,
+    "fecha": "15/02/24 - 18/02/24",
+    "precio_noche": 75,
+    "ubicacion": "Madrid, España",
+    "precio_total": 225,
+    "estado": "Completada"
+  },
+  {
+    "imagen_perfil": "/images/landing_page/persona_3.webp",
+    "nombre": "Laura Fernández",
+    "valoracion": 4.5,
+    "fecha": "28/02/24 - 29/02/24",
+    "precio_noche": 60,
+    "ubicacion": "Barcelona, España",
+    "precio_total": 180,
+    "estado": "En curso"
+  },
+  {
+    "imagen_perfil": "/images/landing_page/persona_4.webp",
+    "nombre": "David López",
+    "valoracion": 3.9,
+    "fecha": "10/02/24 - 13/02/24",
+    "precio_noche": 50,
+    "ubicacion": "Valencia, España",
+    "precio_total": 150,
+    "estado": "Por iniciar"
+  },
+  {
+    "imagen_perfil": "/images/landing_page/persona_4.webp",
+    "nombre": "Sofía Ramírez",
+    "valoracion": 4.2,
+    "fecha": "05/02/24 - 09/02/24",
+    "precio_noche": 90,
+    "ubicacion": "Sevilla, España",
+    "precio_total": 270,
+    "estado": "Cancelada"
+  }
+]

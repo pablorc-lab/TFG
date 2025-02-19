@@ -6,6 +6,7 @@ import DropDownMenu from "../../../components/dropdown_menu/DropDownMenu";
 const ValoracionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/opiniones/Opiniones"));
 const PerfilMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/perfil/Perfil"));
 const SeguridadMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/seguridad/Seguridad"));
+const HistorialReservasMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/historial_reservas/HistorialReservas"));
 
 export default function MiCuenta() {
   const [activeMenu, setActiveMenu] = useState(0);
@@ -27,7 +28,6 @@ export default function MiCuenta() {
   ];
 
   const userNavItems = [
-    { src: "/images/usuarios/account/profile.svg", alt: "Perfil público", text: "Perfil público" },
     { src: "/images/usuarios/account/edit.svg", alt: "Datos personales", text: "Datos personales" },
     { src: "/images/usuarios/account/house.svg", alt: "Vivienda", text: "Vivienda" },
     { src: "/images/usuarios/account/security.svg", alt: "Seguridad", text: "Seguridad" },
@@ -124,11 +124,11 @@ export default function MiCuenta() {
         {/* Componente de los menús*/}
         <div className={styles.user_component}>
           <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{  width:"200px", position: "relative", left: "50%", transform: "translateX(-50%)"}} /></div> }>
-            {activeMenu === 0 }
-            {activeMenu === 1 && <PerfilMiCuenta/>}
-            {activeMenu === 2 && <PerfilMiCuenta mostrarCuenta={false}/>}
-            {activeMenu === 3 && <SeguridadMiCuenta/>}
-            {activeMenu === 4 && <ValoracionesMiCuenta />}
+            {activeMenu === 0 && <PerfilMiCuenta/>}
+            {activeMenu === 1 && <PerfilMiCuenta mostrarCuenta={false}/>}
+            {activeMenu === 2 && <SeguridadMiCuenta/>}
+            {activeMenu === 3 && <ValoracionesMiCuenta />}
+            {activeMenu === 4 && <HistorialReservasMiCuenta />}
           </Suspense>
         </div>
       </main>
