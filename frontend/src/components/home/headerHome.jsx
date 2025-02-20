@@ -26,7 +26,7 @@ export default function HeaderHome({ isHome = false }) {
         <nav className={styles.header_nav}>
           <Link to="/inicio">Inicio</Link>
           <Link to="/viajeros/alojamientos">Alojamientos</Link>
-          <Link to="/">Inquilinos</Link>
+          <Link to="/anfitriones/inquilinos">Inquilinos</Link>
           <Link to="/inicio/faq">FAQ</Link>
         </nav>
 

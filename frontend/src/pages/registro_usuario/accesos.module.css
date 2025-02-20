@@ -13,12 +13,15 @@
   position: absolute;
   top: 0;
   background-color: #009080;
+  cursor: default;
 }
-.acceso_header a {text-decoration: none;}
-.acceso_header figure {
+.acceso_header figure a{
   display: flex;
   align-items: center;
 }
+.acceso_header:hover a {color: #e9e3d5;}
+.acceso_header a {text-decoration: none;}
+.acceso_header figcaption:hover {text-decoration: underline; }
 .acceso_header img {width: 60px; height: auto;}
 .acceso_header figcaption {
   margin-left: 15px;
@@ -27,7 +30,6 @@
   font-weight: bold;
   color: #e9e3d5;
 }
-
 
 /*? Barra de progreso*/
 .progress_bar{

@@ -265,12 +265,12 @@ export default function RegistrarUsuarioPage() {
       <title>Registrar usuario | Bearfrens</title>
       <section className={styles.acceso_section}>
         <header className={styles.acceso_header}>
-          <Link to="/inicio">
-            <figure>
+          <figure>
+            <Link to="/inicio">
               <img src="/images/logos/logo_blanco.png" alt="logo blanco" />
               <figcaption>Bearfrens</figcaption>
-            </figure>
-          </Link>
+            </Link>
+          </figure>
         </header>
 
         <article className={styles.acceso_container}>

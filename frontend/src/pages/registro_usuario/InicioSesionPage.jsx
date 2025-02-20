@@ -10,12 +10,12 @@ export default function InicioSesionPage() {
       <title>Iniciar sesión | Bearfrens</title>
       <section className={styles.acceso_section}>
         <header className={styles.acceso_header}>
-          <Link to="/inicio">
-            <figure>
+          <figure>
+            <Link to="/inicio">
               <img src="/images/logos/logo_blanco.png" alt="logo blanco" />
               <figcaption>Bearfrens</figcaption>
-            </figure>
-          </Link>
+            </Link>
+          </figure>
         </header>
 
         <article className={styles.acceso_container}>
@@ -24,19 +24,19 @@ export default function InicioSesionPage() {
           <form action="pagina.jar" >
             <fieldset className={styles.input_container}>
               <label htmlFor="email">Correo electrónico</label>
-              <input type="email" id="email" name="email" spellCheck="false" autoComplete="email"/>
+              <input type="email" id="email" name="email" spellCheck="false" autoComplete="email" />
             </fieldset>
             <fieldset className={styles.input_container}>
               <label htmlFor="password">Contraseña</label>
               <div className={styles.input_password}>
-                <img 
-                  src={`/images/registro/${showPassword ? "reveal" : "hide"}_password.svg`} 
-                  alt="Reveal password" 
+                <img
+                  src={`/images/registro/${showPassword ? "reveal" : "hide"}_password.svg`}
+                  alt="Reveal password"
                   onClick={() => setShowPassword(!showPassword)}
                 />
                 <input type={showPassword ? "text" : "password"} id="password" name="password" />
               </div>
-              <Link style={{textAlign:"right"}} to="/">¿Contraseña olvidada?</Link>
+              <Link style={{ textAlign: "right" }} to="/">¿Contraseña olvidada?</Link>
             </fieldset>
             <input className={styles.submit_input} type="submit" value="Iniciar sesión" />
           </form>

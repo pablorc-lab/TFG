@@ -12,6 +12,7 @@ const InicioSesionPage = lazy(() => import("./pages/registro_usuario/InicioSesio
 const FaqPage = lazy(() => import("./pages/inicio/faq/FaqPage"));
 const ListUsuariosPage = lazy(() => import("./pages/admin_panel/listado_clientes/ListUsuariosPage"));
 const MiCuenta = lazy(() => import("./pages/usuarios/mi_cuenta/MiCuenta"));
+const InquilinosPage = lazy(() => import('./pages/anfitriones/inquilinos/InquilinosPage'));
 
 export default function App() {
   return (
@@ -28,6 +29,11 @@ export default function App() {
           <Route path="/viajeros" element={<Navigate to="/viajeros/alojamientos" />} />
           <Route path="/viajeros/alojamientos" element={<AlojamientosPage/>} />
           <Route path="/viajeros/mi-cuenta" element={<MiCuenta />} />
+
+          {/* Rutas para ANFITRIONES*/}
+          <Route path="/anfitriones" element={<Navigate to="/anfitriones/inquilinos" />} />
+          <Route path="/anfitriones/inquilinos" element={<InquilinosPage/>} />
+          <Route path="/anfitriones/mi-cuenta" element={<MiCuenta />} />
 
           {/* Rutas para REGISTRO o ACCESO*/}
           <Route path="/registro" element={<RegistrarUsuarioPage />} />
