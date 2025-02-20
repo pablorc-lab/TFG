@@ -32,6 +32,7 @@ const HistorialReservasMiCuenta = () => {
       </section>
 
       <section className={styles.historial_user_section}>
+        <h3>ENERO 2024</h3>
         {ReservaData.map((user, index) => {
           const userInfo = [
             { img: "/images/usuarios/account/historial_fecha.svg", alt: "Fecha", value: user.fecha, extra: `(${user.precio_noche} € / noche)` },

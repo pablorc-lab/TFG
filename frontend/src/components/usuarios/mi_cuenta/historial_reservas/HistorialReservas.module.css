@@ -26,10 +26,9 @@
   gap: 30px;
 }
 .summary_div h2 {
-  width: 186px;
-  font-size: 24px;
+  width: 200px;
+  font-size: 25px;
   font-weight: 600;
-  color: #0a7273;
 }
 
 .summary_div p {
@@ -42,26 +41,33 @@
   user-select: none;
   display: grid;
   margin: 20px 0;
-  gap: 20px;
+  gap: 30px;
+}
+
+.historial_user_section h3{
+  margin: 0;
+  color: #0a7273;
+  text-align: center;
+  font-size: 30px;
 }
 .historial_user_article {
   border-radius: 10px;
   font-family: "Nunito";
-  padding: 10px;
+  padding: 15px;
   background-color: rgba(238, 238, 238, 0.322);
-  border: 2px solid rgb(189, 189, 189);
+  box-shadow:  0 0 7px rgba(0, 0, 0, 0.322);
   transition: border 0.1s ease-in-out, background-color 0.1s ease-in-out;
 }
 .historial_user_article:hover {
-  border: 2px solid #0a7273;
   background-color: #0a717318;
-
+  box-shadow:  0 0 7px #0a7273;
 }
 .historial_user_info {
   display: flex;
   align-items: center;  
   justify-content: start;
   gap: 20px;
+  margin-bottom: 15px;
 }
 
 .user_profile_img {
@@ -98,12 +104,16 @@
   margin: 10px;
   gap: 10px;
 }
-
+.details:nth-child(2) {margin-top: 0;}
+.details:nth-last-child(1) {margin-bottom: 0;}
 .details img {
   width: 26px;
   aspect-ratio: 1 / 1;
 }
-.details p { font-size: 18px;}
+.details p { 
+  font-size: 18px;
+  color:rgb(65, 65, 65);
+}
 .details span {
   color: #737373;
   font-size: 15px;
@@ -111,4 +121,38 @@
 .details strong {
   text-transform: uppercase;
   font-weight: 800;
+}
+
+@media (min-width: 600px) {
+  .historial_user_article {padding: 17px;}
+  .user_profile_img {width: 65px;}
+
+  .historial_user_info {margin-bottom: 17px;}
+  .historial_user_info h2 {font-size: 28px;}
+
+  .score img { width: 25px;}
+  .score { font-size: 22px;}
+
+  .details img { width: 32px;}
+  .details p { font-size: 20px; }
+  .details span { font-size: 18px;}
+}
+
+@media (min-width: 780px) {
+  .summary h1 {font-size: 38px;}
+  .summary_div h2 {
+    font-size: 27px;
+    width: 220px;
+  }
+  .summary_div p {font-size: 26px;}
+
+  /*? Reservas*/
+  .historial_user_section {gap: 35px;}
+  .historial_user_section h3 {font-size: 33px}
+}
+
+@media (min-width: 1400px) {
+  .details img { width: 35px;}
+  .details p { font-size: 23px; }
+  .details span { font-size: 20px;}
 }
