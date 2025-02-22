@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from "./DropDownMenu.module.css"
 import { Link } from "react-router-dom";
 
-const DropDownMenu = ({userRef, setMenuOpen, menuLinks}) => {
+const DropDownMenu = ({userRef, setMenuOpen, menuLinks, visibleWidth = 860}) => {
   const [isNavVisible, setNavVisible] = useState(true);
   const menu_user_Ref = useRef(null);
   const hasHiddenLinks = menuLinks.some(link => link.hiddenWhenNavVisible);
@@ -15,7 +15,7 @@ const DropDownMenu = ({userRef, setMenuOpen, menuLinks}) => {
 
   // Establecer navVisible a true si el ancho de la ventana es menor o igual a 860px
   const checkNavVisibility = () => {
-    setNavVisible(window.innerWidth > 860);
+    setNavVisible(window.innerWidth > visibleWidth);
   };
 
   useEffect(() => {

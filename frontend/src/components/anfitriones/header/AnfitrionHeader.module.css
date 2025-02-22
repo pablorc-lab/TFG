@@ -20,6 +20,7 @@
 .header_logo img {
   width: 60px;
   height: auto;
+  aspect-ratio: 1 / 1;
 }
 
 .header_logo {
@@ -51,7 +52,7 @@
 /*? BUSCADOR MENU*/
 .search_container {
   position: absolute;
-  left: calc(50%);
+  left: calc(50% + 33px);
   transform:translateX(-50%);
 }
 
@@ -66,7 +67,7 @@
 
 .search_nav a {
   text-align: center;
-  width: 173px;
+  width: max-content;
   color: #737373;
   cursor: pointer;
   padding: 0 10px;
@@ -86,84 +87,6 @@
   margin-bottom: 0px;
   border-bottom: 4px solid #0a7273;
 }
-
-/*? BUSCADOR FORM*/
-.search_form_container.inactive_form {
-  filter: brightness(1.2) grayscale(1);
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-.search_form_container.inactive_form .searcher, .search_form_container.inactive_form .filters {
-  cursor: not-allowed;
-  pointer-events:none; 
-}
-
-.search_form_container {
-  gap: 15px;
-  display: flex;
-  align-items: center;
-}
-
-.search_form {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border: 2px solid #0a7273;
-  border-radius: 60px;
-  transition: box-shadow 0.1s ease-in-out;
-}
-/*Aplica estilos al contenedor cuando cualquier elemento hijo dentro de él tiene el foco.*/
-.search_form_container:not(.inactive_form) .search_form:focus-within { box-shadow: 0 0 5px rgba(0, 144, 128, 0.5); }
-.search_form img{
-  padding: 0 2px 0 10px;
-  width: 40px;
-}
-.search_form ul {
-  min-width: 400px;
-  max-width: max-content;
-  top: 120px;
-  left: 10px;
-}
-.search_form ul li {font-size: 20px;}
-
-.searcher {
-  background-color: transparent;
-  padding-right: 20px;
-  width: 480px;
-  caret-color: #009080; /* Cambia el color del cursor (caret) */
-  font-family: "Nunito";
-  height: 60px;
-  border: none;
-  border-top-right-radius: 60px;
-  border-bottom-right-radius: 60px;
-  line-height: 50px; 
-  font-size: 28px;
-  outline: none; /* Elimina el borde de enfoque al hacer clic */
-}
-
-
-.search_form_container:not(.inactive_form) .searcher::placeholder{ color: rgb(177, 177, 177);}
-.search_form_container:not(.inactive_form) .searcher:focus { outline: none;}
-
-.filters {
-  user-select: none;
-  cursor: pointer;
-  padding: 10px 15px;
-  background-color: #0a7273;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-} 
-.search_form_container:not(.inactive_form) .filters:hover{ box-shadow: 0 0 7px gray;}
-.filters img {width: 30px;}
-.filters span{
-  letter-spacing: 1px;
-  font-size: 23px;
-  color: white;
-  font-weight: 500;
-}
-
 
 /*? PARTE DEL USUARIO*/
 .header_user_section { 
@@ -200,6 +123,7 @@
 .header_prof_user:hover { filter: brightness(0.9); }
 
 .header_prof_user img { 
+  aspect-ratio: 1 / 1;
   filter: brightness(0) invert(1);
   width: 45px;
 }
@@ -240,44 +164,3 @@
 }
 .user_search::placeholder{ color: rgb(177, 177, 177);}
 .user_search:focus { outline: none;}
-
-
-/*? =============
-/*?   RESPONSIVE
-/*? =============*/
-@media (max-width: 1400px) {
-  .search_container {
-    left: calc(50% + 33px);
-  }
-
-  .search_nav a{width: max-content;}
-
-
-}
-
-
-/*
-@media (min-width: 770px) and (max-width: 1299px) {
-  .header {
-    display: grid;
-    grid-template-rows: auto auto; 
-    grid-template-columns: 1fr; 
-    padding-bottom: 185px;
-  }
-
-
-  .header_user_section {
-    grid-row: 1;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .search_container {
-    margin-top: 30px;
-    grid-row: 2; 
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
-  }
-}*/

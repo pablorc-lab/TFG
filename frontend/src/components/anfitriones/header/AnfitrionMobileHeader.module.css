@@ -1,0 +1,47 @@
+/*? ==================
+/*?      HEADER
+/*? ===================*/
+.header {
+  height: 65px;
+  user-select: none;
+  width: 100%;
+  font-family: "Nunito";
+  background-color: #eddbc8;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  position:fixed;
+  bottom: 0;
+  padding: 15px 0;
+  z-index: 999;
+}
+
+.search_nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 65px;
+}
+
+.search_nav img {
+  aspect-ratio: 1 / 1; 
+  filter: grayscale(100%) brightness(170%); /* Escala de grises y ajuste de brillo */
+  cursor: pointer;
+}
+.search_nav div {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #979797;
+  font-size: 20px;
+  font-weight: 600;
+
+}
+.search_nav div img {aspect-ratio: 1 / 1; width: 35px;}
+.search_nav div:nth-of-type(2) img{width: 40px;}
+
+.active_section span{
+  color: #0a7273;
+}
+.active_section, .active_section img {
+  filter: none !important; /* Forzar la eliminación del filtro */
+}

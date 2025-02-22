@@ -25,12 +25,54 @@
     "Valoracion": 4.91,
     "Ubicacion": "Barcelona",
     "Precio": "300",
-    "Descripcion": "Amante de la aventura y los viajes improvisados"
+    "Descripcion": "Amante de la aventura y de los viajes que son improvisados"
   },
   {
     "Casa_img": "/images/landing_page/casa_1.webp",
     "Perfil_img": "/images/landing_page/persona_1.webp",
     "Nombre": "Pablo Ramblado",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura y los viajes al aire libre"
+  },
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo Ramblado",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura y los viajes mas ambiciosos"
+  },
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo Ramblado",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura "
+  },
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo Ramblado Ramblado",
     "Gustos_imgs": [
       "/images/usuarios/Gustos/baseball.svg",
       "/images/usuarios/Gustos/pesca.svg",
@@ -53,7 +95,7 @@
     "Valoracion": 4.91,
     "Ubicacion": "Barcelona",
     "Precio": "300",
-    "Descripcion": "Amante de la aventura y los viajes improvisados"
+    "Descripcion": "Amante de la aventura y de los viajes que son improvisados"
   },
   {
     "Casa_img": "/images/landing_page/casa_1.webp",
@@ -67,6 +109,34 @@
     "Valoracion": 4.91,
     "Ubicacion": "Barcelona",
     "Precio": "300",
-    "Descripcion": "Amante de la aventura y los viajes improvisados"
+    "Descripcion": "Amante de la aventura y los viajes al aire libre"
+  },
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo Ramblado",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura y los viajes mas ambiciosos"
+  },
+  {
+    "Casa_img": "/images/landing_page/casa_1.webp",
+    "Perfil_img": "/images/landing_page/persona_1.webp",
+    "Nombre": "Pablo Ramblado",
+    "Gustos_imgs": [
+      "/images/usuarios/Gustos/baseball.svg",
+      "/images/usuarios/Gustos/pesca.svg",
+      "/images/usuarios/Gustos/poker.svg"
+    ],
+    "Valoracion": 4.91,
+    "Ubicacion": "Barcelona",
+    "Precio": "300",
+    "Descripcion": "Amante de la aventura "
   }
 ]

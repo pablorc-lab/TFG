@@ -1,4 +1,5 @@
-import AnfitrionHeader from "../../../components/anfitriones/header/AnfitrionHeader"
+import AnfitrionFinalHeader from "../../../components/anfitriones/header/AnfitrionFinalHeader"
+import ViajProfilesGallery from "../../../components/anfitriones/inquilinos/ViajProfilesGallery"
 
 export default function InquilinosPage() {
   return (
@@ -6,8 +7,10 @@ export default function InquilinosPage() {
       <title>Inquilinos | Anfitriones</title>
 
       {/* CABECERA */}
-      <AnfitrionHeader />
+      <AnfitrionFinalHeader />
 
+      {/* PERFILES DE VIAJEROS  */}
+      <ViajProfilesGallery/>
     </>
   )
 }

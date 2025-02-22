@@ -1,16 +1,31 @@
 import { Link } from "react-router-dom";
 import styles from "./AnfitrionHeader.module.css"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import DropDownMenu from "../../dropdown_menu/DropDownMenu";
 
-export default function AnfitrionHeader({ headerStates, updateHeaderStates }) {
-  const [activeSection, setActiveSection] = useState("inquilinos");
+
+export default function AnfitrionHeader({ activeSection, setActiveSection, menuLinks }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [showHeaderNav, setShowHeaderNav] = useState(window.innerWidth > 1000);
   const userRef = useRef(null);
+
+  // Añadimos al menu de anfitriones los nuevos de navegación para escritorio
+  const anfMenuLinks = [
+    { path: "/inicio", label: "Inicio", hiddenWhenNavVisible: true },
+    { path: "/anfitriones/inquilinos", label: "Inquilinos", hiddenWhenNavVisible: true },
+    { path: "/inicio/", label: "Comunidades", hiddenWhenNavVisible: true },
+  ].concat(menuLinks);
 
   // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
     return (activeSection === nameSection) ? styles.active_section : undefined;
   }
+
+  useEffect(() => {
+    const handleResize = () => setShowHeaderNav(window.innerWidth > 1000);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [showHeaderNav]);
 
   return (
     <header className={styles.header}>
@@ -22,13 +37,15 @@ export default function AnfitrionHeader({ headerStates, updateHeaderStates }) {
         </div>
       </div>
 
-      <section className={styles.search_container}>
-        <nav className={styles.search_nav}>
-          <Link to="/inicio">Inicio</Link>
-          <Link to="/viajeros/alojamientos" className={getClassName('inquilinos')} onClick={() => updateHeaderStates({ activeSection: "alojamientos" })}> Inquilinos </Link>
-          <Link to="/viajeros/alojamientos" className={getClassName('comunidades')} onClick={() => updateHeaderStates({ activeSection: "comunidades" })}>Comunidades</Link>
-        </nav>
-      </section>
+      {showHeaderNav && (
+        <section className={styles.search_container}>
+          <nav className={styles.search_nav}>
+            <Link to="/inicio">Inicio</Link>
+            <Link to="/viajeros/alojamientos" className={getClassName('inquilinos')} onClick={() => setActiveSection("alojamientos")}> Inquilinos </Link>
+            <Link to="/viajeros/alojamientos" className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>Comunidades</Link>
+          </nav>
+        </section>
+      )}
 
       <section className={styles.header_user_section}>
         <button className={`${styles.header_prof_user}  ${isMenuOpen && styles.open}`} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
@@ -43,7 +60,8 @@ export default function AnfitrionHeader({ headerStates, updateHeaderStates }) {
           <DropDownMenu
             userRef={userRef}
             setMenuOpen={setMenuOpen}
-            menuLinks={menuLinks}
+            menuLinks={anfMenuLinks}
+            visibleWidth={1000}
           />
         )}
       </section>

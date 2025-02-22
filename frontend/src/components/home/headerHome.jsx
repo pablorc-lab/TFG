@@ -9,7 +9,7 @@ export default function HeaderHome({ isHome = false }) {
 
   const menuLinks = [
     { path: "/viajeros/alojamientos", label: "Alojamientos", hiddenWhenNavVisible: true },
-    { path: "/", label: "Inquilinos", hiddenWhenNavVisible: true },
+    { path: "/anfitriones/inquilinos", label: "Inquilinos", hiddenWhenNavVisible: true },
     { path: "/inicio/faq", label: "FAQ", hiddenWhenNavVisible: true },
     { path: "/iniciar-sesion", label: "Iniciar sesión" },
     { path: "/registro", label: "Registrarse" },
