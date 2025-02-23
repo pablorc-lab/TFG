@@ -13,9 +13,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /*
-  background-color: white;
-  */
   border-radius: 5px;
   font-family: "Nunito";
   margin: 20px auto;
@@ -38,6 +35,27 @@
   box-shadow: 0 0 5px rgba(65, 65, 65, 0.4);
 }
 /*? LOGO*/
+.header figure h1{
+  color: #009080;
+  font-weight: 800;
+  margin: 0;
+  font-size: 23px;
+  line-height: 22px;
+}
+
+.header figure h2{
+  color: #3c302a;
+  font-family: "Chewy";
+  margin: 0px;
+  font-size: 19px;
+}
+
+.header figure {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
 .header .header_logo {
   width: 60px;
   height: auto;
@@ -46,7 +64,7 @@
 .header nav a{
   filter: brightness(0.8);
   font-weight: 500;
-  font-size: 25px;
+  font-size: 21px;
   color: #737373;
   cursor: pointer;
   margin: 0 15px;
@@ -54,6 +72,7 @@
   text-decoration: none;
   transition: border-bottom 0.1s ease-in-out;
 }
+.header nav a:last-child {margin-right: 0;}
 
 .header a:hover {
   color: #0a7273;

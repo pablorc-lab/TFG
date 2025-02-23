@@ -107,7 +107,7 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
         <ul className={`${styles.miCuenta_info} ${styles.miCuenta_contacto}`}>
           <li>
             <h2>Email</h2>
-            <p>pablo@correo.example.es</p>
+            <p>pablo@correo.example.espablo@correo.example.es</p>
           </li>
           <li>
             <h2>Teléfono</h2>

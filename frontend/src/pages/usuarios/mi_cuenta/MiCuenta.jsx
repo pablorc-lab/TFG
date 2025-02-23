@@ -1,18 +1,16 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import styles from "./MiCuenta.module.css"
 import ScoreMiCuenta from "../../../components/usuarios/mi_cuenta/Score";
 import { Link } from "react-router-dom";
-import DropDownMenu from "../../../components/dropdown_menu/DropDownMenu";
 const ValoracionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/opiniones/Opiniones"));
 const PerfilMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/perfil/Perfil"));
 const SeguridadMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/seguridad/Seguridad"));
 const HistorialReservasMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/historial_reservas/HistorialReservas"));
+const ViajerosMobileHeader = lazy(() => import("../../../components/viajeros/header/ViajerosMobileHeader"));
 
-export default function MiCuenta() {
+export default function MiCuenta({activeSection = "perfil"}) {
   const [activeMenu, setActiveMenu] = useState(0);
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 780);
-  const userRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
 
   // Controlar cuando es pantalla pequeña
   useEffect(() => {
@@ -35,38 +33,44 @@ export default function MiCuenta() {
     { src: "/images/usuarios/account/history.svg", alt: "Historial de reservas", text: "Historial de reservas" }
   ];
 
-  const menuLinks = [
-    { path: "/viajeros/alojamientos", label: "Alojamientos" },
-    { path: "/", label: "Comunidades" },
-    { path: "/inicio/faq", label: "FAQ" },
-    { path: "/", label: "Soporte" }
-  ];
-
   const styleSuspense = {
-    width: "100%", 
+    width: "80%",
     position: "relative",
     left: "50%",
     transform: "translateX(-50%)",
     padding: "50px",
-    backgroundColor: "white", 
+    backgroundColor: "white",
     boxShadow: "0 0 5px rgba(65, 65, 65, 0.3)",
   };
 
-  
   return (
     <>
       <title>Mi cuenta | Viajeros</title>
       <header className={styles.header}>
-        <img className={styles.header_logo} src="/images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
-        {!isMobile ? (
-          <nav>
-            <Link to="/viajeros/alojamientos">Alojamientos</Link>
-            <Link to="/viajeros/alojamientos">Comunidades</Link>
-            <Link to="/viajeros/alojamientos">Soporte</Link>
-            <Link to="/inicio/faq">FAQ</Link>
-          </nav>
-        ) : (
-          <section className={styles.header_user_section}>
+        <figure>
+          <img className={styles.header_logo} src="/images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
+          <figcaption>
+            <h1>Bearfrens</h1>
+            <h2>Mi cuenta</h2>
+          </figcaption>
+        </figure>
+        <nav>
+          {!isMobile ? (
+            <>
+              <Link to="/viajeros/alojamientos">Alojamientos</Link>
+              <Link to="/viajeros/alojamientos">Comunidades</Link>
+              <Link to="/viajeros/alojamientos">Soporte</Link>
+              <Link to="/inicio/faq">FAQ</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/viajeros/alojamientos">Soporte</Link>
+              <Link to="/inicio/faq">FAQ</Link>
+            </>
+          )}
+        </nav>
+        {/*
+            <section className={styles.header_user_section}>
             <button className={`${styles.header_prof_user}  ${isMenuOpen && styles.open}`} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
               <img src="/images/logos/logo_usuario_blanco.png" width="40" alt="logo user vacio" />
               <article>
@@ -77,12 +81,12 @@ export default function MiCuenta() {
             </button>
             {isMenuOpen && (<DropDownMenu userRef={userRef} setMenuOpen={setMenuOpen} menuLinks={menuLinks} />)}
           </section>
-        )}
+            */}
       </header>
-
+      
+      {isMobile && <ViajerosMobileHeader activeSection={activeSection}/>}
       <main className={styles.main}>
         <article className={styles.main_containers}>
-
           {/* Menú de nav*/}
           <nav className={styles.user_nav}>
             <ul className={styles.user_nav_ul}>
@@ -123,10 +127,10 @@ export default function MiCuenta() {
 
         {/* Componente de los menús*/}
         <div className={styles.user_component}>
-          <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{  width:"200px", position: "relative", left: "50%", transform: "translateX(-50%)"}} /></div> }>
-            {activeMenu === 0 && <PerfilMiCuenta/>}
-            {activeMenu === 1 && <PerfilMiCuenta mostrarCuenta={false}/>}
-            {activeMenu === 2 && <SeguridadMiCuenta/>}
+          <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
+            {activeMenu === 0 && <PerfilMiCuenta />}
+            {activeMenu === 1 && <PerfilMiCuenta mostrarCuenta={false} />}
+            {activeMenu === 2 && <SeguridadMiCuenta />}
             {activeMenu === 3 && <ValoracionesMiCuenta />}
             {activeMenu === 4 && <HistorialReservasMiCuenta />}
           </Suspense>

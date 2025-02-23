@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import DropDownMenu from '../../dropdown_menu/DropDownMenu';
 import FilteredList from '../../utilities/filteresCities/FilteredList';
 
-export default function ViajerosHeader({ inputRef, filteredListRef, headerStates, updateHeaderStates}) {
+export default function ViajerosHeader({ inputRef, filteredListRef, headerStates, updateHeaderStates, activeSection}) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const userRef = useRef(null);
 
@@ -16,7 +16,7 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
 
   // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
-    return (headerStates.activeSection === nameSection) ? styles.active_section : undefined;
+    return (activeSection === nameSection) ? styles.active_section : undefined;
   }
 
   return (
@@ -32,12 +32,12 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
       <section className={styles.search_container}>
         <nav className={styles.search_nav}>
           <Link to="/inicio">Inicio</Link>
-          <Link to="/viajeros/alojamientos" className={getClassName('alojamientos')} onClick={() => updateHeaderStates({activeSection : "alojamientos"})}> Alojamientos </Link>
-          <Link to="/viajeros/alojamientos" className={getClassName('comunidades')} onClick={() => updateHeaderStates({activeSection : "comunidades"})}>Comunidades</Link>
+          <Link to="/viajeros/alojamientos" className={getClassName('alojamientos')}> Alojamientos </Link>
+          <Link to="/viajeros/alojamientos" className={getClassName('comunidades')}>Comunidades</Link>
         </nav>
 
         {/* Barra de bússqueda para ALOJAMIENTOS*/}
-        <article className={`${styles.search_form_container} ${headerStates.activeSection !== "alojamientos" ? styles.inactive_form : undefined}`}>
+        <article className={`${styles.search_form_container} ${activeSection !== "alojamientos" ? styles.inactive_form : undefined}`}>
           <form className={styles.search_form}>
             <img src="/images/viajeros/lupa.webp" width="50" alt='icono lupa' />
             <input
@@ -59,7 +59,6 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
             <span>Filtros</span>
           </div>
         </article>
-
       </section>
 
       <section className={styles.header_user_section}>
