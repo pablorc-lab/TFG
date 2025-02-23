@@ -12,3 +12,10 @@
 .card_users div {
   z-index: 0;
 }
+
+
+@media (max-width: 770px) {
+  .card_users {
+    padding-bottom: 150px;
+  }
+}

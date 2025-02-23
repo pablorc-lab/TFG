@@ -4,7 +4,7 @@ import AnfitrionMobileHeader from "./AnfitrionMobileHeader";
 
 export default function AnfitrionFinalHeader() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
-  const [activeSection, setActiveSection] = useState("alojamientos")
+  const [activeSection, setActiveSection] = useState("inquilinos")
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 770);
@@ -13,7 +13,7 @@ export default function AnfitrionFinalHeader() {
   }, [isMobile]);
 
   const menuLinks = [
-    { path: "/viajeros/mi-cuenta", label: <strong>Mi Cuenta</strong>},
+    { path: "/anfitriones/mi-cuenta", label: <strong>Mi Cuenta</strong>},
     { path: "/inicio/faq", label: "FAQ"},
     { path: "/", label: "Soporte" }
   ];

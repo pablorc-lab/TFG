@@ -28,12 +28,12 @@ export default function App() {
           {/* Rutas para VIAJEROS*/}
           <Route path="/viajeros" element={<Navigate to="/viajeros/alojamientos" />} />
           <Route path="/viajeros/alojamientos" element={<AlojamientosPage/>} />
-          <Route path="/viajeros/mi-cuenta" element={<MiCuenta />} />
+          <Route path="/viajeros/mi-cuenta" element={<MiCuenta/>} />
 
           {/* Rutas para ANFITRIONES*/}
           <Route path="/anfitriones" element={<Navigate to="/anfitriones/inquilinos" />} />
           <Route path="/anfitriones/inquilinos" element={<InquilinosPage/>} />
-          <Route path="/anfitriones/mi-cuenta" element={<MiCuenta />} />
+          <Route path="/anfitriones/mi-cuenta" element={<MiCuenta esViajero={false}/>} />
 
           {/* Rutas para REGISTRO o ACCESO*/}
           <Route path="/registro" element={<RegistrarUsuarioPage />} />

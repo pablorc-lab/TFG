@@ -199,11 +199,12 @@
 }
 
 @media (max-width: 815px), (min-width: 1200px) {
-  .general_prof { 
-    border-radius: 14px; 
-    width: 400px; 
+  .general_prof {  
+    border-radius: 14px;
+    width: 400px;
   }
 
+  .viaj_prof {  width: 360px;}
   .btn_conectar { 
     border-radius: 6px; 
     font-size: 18px; 
@@ -223,7 +224,7 @@
     max-width: calc(384px - 118px - 40px); /* Container - foto usuario - margin*/
   }
   .text_column_viaj h3{
-    max-width: calc(400px - 118px - 44px); /* Container - foto usuario - margin*/
+    max-width: calc(400px - 118px - 44px); /* Container - foto usuario - margin */
   }
 
   .score img, .score_viajero img { width: 25px; margin-bottom: 3px;}

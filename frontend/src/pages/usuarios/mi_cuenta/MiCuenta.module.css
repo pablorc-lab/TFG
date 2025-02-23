@@ -125,6 +125,7 @@
 /*? CONTAINER USUARIO*/
 /*? ===================*/
 .user_container, .user_nav {
+  user-select: none;
   position: relative;
   background-color: white;
   box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);

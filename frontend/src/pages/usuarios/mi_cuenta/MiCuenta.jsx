@@ -8,7 +8,7 @@ const SeguridadMiCuenta = lazy(() => import("../../../components/usuarios/mi_cue
 const HistorialReservasMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/historial_reservas/HistorialReservas"));
 const ViajerosMobileHeader = lazy(() => import("../../../components/viajeros/header/ViajerosMobileHeader"));
 
-export default function MiCuenta({activeSection = "perfil"}) {
+export default function MiCuenta({ activeSection = "perfil", esViajero = true }) {
   const [activeMenu, setActiveMenu] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
 
@@ -69,33 +69,24 @@ export default function MiCuenta({activeSection = "perfil"}) {
             </>
           )}
         </nav>
-        {/*
-            <section className={styles.header_user_section}>
-            <button className={`${styles.header_prof_user}  ${isMenuOpen && styles.open}`} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
-              <img src="/images/logos/logo_usuario_blanco.png" width="40" alt="logo user vacio" />
-              <article>
-                <div></div>
-                <div></div>
-                <div></div>
-              </article>
-            </button>
-            {isMenuOpen && (<DropDownMenu userRef={userRef} setMenuOpen={setMenuOpen} menuLinks={menuLinks} />)}
-          </section>
-            */}
       </header>
-      
-      {isMobile && <ViajerosMobileHeader activeSection={activeSection}/>}
+
+      {isMobile && <ViajerosMobileHeader activeSection={activeSection} />}
       <main className={styles.main}>
         <article className={styles.main_containers}>
           {/* Menú de nav*/}
           <nav className={styles.user_nav}>
             <ul className={styles.user_nav_ul}>
-              {userNavItems.map((item, index) => (
-                <li key={index} onClick={() => setActiveMenu(index)} className={activeMenu === index ? styles.active : undefined}>
-                  <img src={item.src} alt={item.text} />
-                  <h2>{item.text}</h2>
-                </li>
-              ))}
+              {userNavItems.map((item, index) => {
+                if (index == 1 && esViajero) return null;
+
+                return (
+                  <li key={index} onClick={() => setActiveMenu(index)} className={activeMenu === index ? styles.active : undefined}>
+                    <img src={item.src} alt={item.text} />
+                    <h2>{item.text}</h2>
+                  </li>
+                )
+              })}
             </ul>
           </nav>
 
@@ -129,7 +120,7 @@ export default function MiCuenta({activeSection = "perfil"}) {
         <div className={styles.user_component}>
           <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
             {activeMenu === 0 && <PerfilMiCuenta />}
-            {activeMenu === 1 && <PerfilMiCuenta mostrarCuenta={false} />}
+            {activeMenu === 1 && esViajero && <PerfilMiCuenta mostrarCuenta={false} />}
             {activeMenu === 2 && <SeguridadMiCuenta />}
             {activeMenu === 3 && <ValoracionesMiCuenta />}
             {activeMenu === 4 && <HistorialReservasMiCuenta />}
