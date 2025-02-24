@@ -10,6 +10,7 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
     locationFocus: false,
     location: ""
   })
+
   const [viviendasImages, setViviendasImages] = useState([
     "/images/landing_page/casa_1.webp",
     "/images/landing_page/casa_2.webp",
@@ -58,7 +59,7 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
           {viviendasImages.length < 4 && (
             <div className={styles.file_input_wrapper}>
               <label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)} >
-                <input type="file" accept="image/*" className={styles.file_input} name="archivo"/>
+                <input type="file" accept="image/*" className={styles.file_input} name="archivo" />
                 <img src="/images/usuarios/account/add_img.svg" alt="Editar vivienda" />
               </label>
               {addImageState && <p className={styles.add_image_tooltip}>Añadir imagen</p>}
@@ -69,14 +70,22 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
 
       <section className={styles.modal_sections}>
         <h3>DETALLES</h3>
-        <form className={styles.input_container} >
-          <div className={styles.input_div}>
-            <p>Habitaciones</p>
-            <input type="number" placeholder="1 - 16" min="1" max="16" name="habitaciones"/>
+        <form className={`${styles.input_container} ${styles.input_detalles}`}>
+          <div className={`${styles.input_div} ${styles.input_details}`}>
+            <p>Viajeros</p>
+            <input type="number" placeholder="1 - 4" min="1" max="4" name="habitaciones" />
           </div>
-          <div className={styles.input_div}>
+          <div className={`${styles.input_div} ${styles.input_details}`}>
+            <p>Habitaciones</p>
+            <input type="number" placeholder="1 - 4" min="1" max="4" name="baños" />
+          </div>
+          <div className={`${styles.input_div} ${styles.input_details}`}>
+            <p>Camas</p>
+            <input type="number" placeholder="1 - 4" min="1" max="4" name="habitaciones" />
+          </div>
+          <div className={`${styles.input_div} ${styles.input_details}`}>
             <p>Baños</p>
-            <input type="number" placeholder="1 - 8" min="1" max="8" name="baños"/>
+            <input type="number" placeholder="1 - 4" min="1" max="4" name="baños" />
           </div>
         </form>
       </section>
@@ -107,7 +116,7 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
           </div>
           <div className={styles.input_div}>
             <p>Precio (&euro; / noche)</p>
-            <input type="number" placeholder="45" name="precio"/>
+            <input type="number" placeholder="45" name="precio" />
             <span> </span>
           </div>
         </form>
@@ -122,19 +131,19 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
         <form className={`${styles.input_container} ${styles.input_MiCuenta}`}>
           <div className={styles.input_div}>
             <p>Nombre</p>
-            <input type="text" placeholder="Pablo" spellCheck="false"  name="nombre"/>
+            <input type="text" placeholder="Pablo" spellCheck="false" name="nombre" />
           </div>
           <div className={styles.input_div}>
             <p>Apellido</p>
-            <input type="text" placeholder="Ramblado" spellCheck="false"  name="Apellido"/>
+            <input type="text" placeholder="Ramblado" spellCheck="false" name="Apellido" />
           </div>
           <div className={styles.input_div}>
             <p>ID privado</p>
-            <input type="text" placeholder="PabloID123" spellCheck="false"  name="ID privado"/>
+            <input type="text" placeholder="PabloID123" spellCheck="false" name="ID privado" />
           </div>
           <div className={styles.input_div}>
             <p>Edad</p>
-            <input type="date" placeholder="Ramblado" spellCheck="false"  name="Edad"/>
+            <input type="date" placeholder="Ramblado" spellCheck="false" name="Edad" />
           </div>
         </form>
       </section>
@@ -144,42 +153,58 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
         <form className={`${styles.input_container} ${styles.input_MiCuenta_contacto}`} >
           <div className={styles.input_div}>
             <p>Email</p>
-            <input type="email" placeholder="Pablo@example.com" spellCheck="false" name="Email" autocomplete="email"/>
+            <input type="email" placeholder="Pablo@example.com" spellCheck="false" name="Email" autocomplete="email" />
           </div>
           <div className={styles.input_div}>
             <p>Teléfono</p>
-            <input type="number" placeholder="666-777-999" spellCheck="false" name="Teléfono"/>
+            <input type="number" placeholder="666-777-999" spellCheck="false" name="Teléfono" />
           </div>
         </form>
       </section>
 
       <section className={styles.modal_sections}>
-        <h3>GUSTOS <span>(máximo 3)</span></h3>
-        <article className={`${styles.input_container} ${styles.input_MiCuenta_gustos}`}>
-          {gustosImages.map((src, index) => (
-            <div key={index} className={`${showDeleteImage === index ? styles.gusto_delete : undefined}`} onMouseEnter={() => setShowDeleteImage(index)} onMouseLeave={() => setShowDeleteImage(null)}>
-              <img src={src} alt={`Gusto ${index}`} />
-              {showDeleteImage === index &&
-                <img
-                  src="/images/usuarios/account/delete_img.svg"
-                  alt="Eliminar"
-                  className={styles.delete_icon}
-                  onClick={() => setGustosImages(gustosImages.filter((_, i) => i !== index))}
-                />}
-            </div>
-          ))}
-          {gustosImages.length < 3 && (
-            <div className={styles.add_gusto}>
-              <img 
-                src="/images/usuarios/account/add_img.svg" 
-                alt="Editar vivienda"
-                onMouseEnter={() => setAddImageState(true)} 
-                onMouseLeave={() => setAddImageState(false)} 
-              />
-              {addImageState && <p className={styles.add_gusto_tooltip}>Añadir gusto personal</p>}
-            </div>
-          )}
-        </article>
+        <h3>INTERESES</h3>
+
+        <form className={`${styles.input_container} ${styles.input_MiCuenta_contacto}`} >
+          <div className={`${styles.input_div} ${styles.input_MiCuenta_biografia}`}>
+            <p>Biografía 0 / 100</p>
+            <textarea
+              placeholder="Me gusta los paisajes al aire libre"
+              spellCheck="false"
+              name="biografia"
+              rows="4"
+            ></textarea>
+          </div>
+
+          <div className={styles.input_div}>
+            <p>Gustos (máximo 3)</p>
+            <article className={`${styles.input_container} ${styles.input_MiCuenta_gustos}`}>
+              {gustosImages.map((src, index) => (
+                <div key={index} className={`${showDeleteImage === index ? styles.gusto_delete : undefined}`} onMouseEnter={() => setShowDeleteImage(index)} onMouseLeave={() => setShowDeleteImage(null)}>
+                  <img src={src} alt={`Gusto ${index}`} />
+                  {showDeleteImage === index &&
+                    <img
+                      src="/images/usuarios/account/delete_img.svg"
+                      alt="Eliminar"
+                      className={styles.delete_icon}
+                      onClick={() => setGustosImages(gustosImages.filter((_, i) => i !== index))}
+                    />}
+                </div>
+              ))}
+              {gustosImages.length < 3 && (
+                <div className={styles.add_gusto}>
+                  <img
+                    src="/images/usuarios/account/add_img.svg"
+                    alt="Editar vivienda"
+                    onMouseEnter={() => setAddImageState(true)}
+                    onMouseLeave={() => setAddImageState(false)}
+                  />
+                  {addImageState && <p className={styles.add_gusto_tooltip}>Añadir gusto personal</p>}
+                </div>
+              )}
+            </article>
+          </div>
+        </form>
       </section>
     </>
   )

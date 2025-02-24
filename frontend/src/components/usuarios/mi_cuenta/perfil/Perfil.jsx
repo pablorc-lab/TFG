@@ -38,7 +38,15 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
         </div>
         <ul className={styles.miCuenta_info}>
           <li>
+            <h2>Viajeros</h2>
+            <p>3</p>
+          </li>
+          <li>
             <h2>Habitaciones</h2>
+            <p>1</p>
+          </li>
+          <li>
+            <h2>Camas</h2>
             <p>2</p>
           </li>
           <li>
@@ -107,7 +115,7 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
         <ul className={`${styles.miCuenta_info} ${styles.miCuenta_contacto}`}>
           <li>
             <h2>Email</h2>
-            <p>pablo@correo.example.espablo@correo.example.es</p>
+            <p>pabloramblado@correo.example.es</p>
           </li>
           <li>
             <h2>Teléfono</h2>
@@ -119,13 +127,22 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
       <article>
         <div className={styles.miCuenta_data}>
           <img src="/images/usuarios/account/gustos.svg" alt="Localización vivienda" />
-          <p>GUSTOS</p>
+          <p>INTERESES</p>
         </div>
-        <div className={`${styles.miCuenta_info} ${styles.miCuenta_gustos}`}>
-          {gustosImages.map((path, index) => (
-            <img key={index} src={path} alt="Imagen gusto"/>
-          ))}
-        </div>
+        <ul className={`${styles.miCuenta_info} ${styles.miCuenta_biografia}`}>
+          <li>
+            <h2>Biografía</h2>
+            <p>Amante de la aventura y los viajes hacia lugares muy bonitos, ademas me gusto apasiona ir de pesca con mis hijos</p>
+          </li>
+          <li>
+            <h2>Gustos :</h2>
+            <div className={`${styles.miCuenta_info} ${styles.miCuenta_gustos}`}>
+              {gustosImages.map((path, index) => (
+                <img key={index} src={path} alt="Imagen gusto" />
+              ))}
+            </div>
+          </li>
+        </ul>
       </article>
     </section>
   )
@@ -141,7 +158,7 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
           <p>Editar</p>
         </button>
 
-        {isOpen && <EditarMiCuenta setIsOpen={setIsOpen} mostrarCuenta={mostrarCuenta}/>}
+        {isOpen && <EditarMiCuenta setIsOpen={setIsOpen} mostrarCuenta={mostrarCuenta} />}
       </article>
 
       {/* Mostrar datos de "mi cuenta" o "vivienda"*/}

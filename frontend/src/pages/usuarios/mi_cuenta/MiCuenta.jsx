@@ -120,7 +120,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
         <div className={styles.user_component}>
           <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
             {activeMenu === 0 && <PerfilMiCuenta />}
-            {activeMenu === 1 && esViajero && <PerfilMiCuenta mostrarCuenta={false} />}
+            {activeMenu === 1 && !esViajero && <PerfilMiCuenta mostrarCuenta={false} />}
             {activeMenu === 2 && <SeguridadMiCuenta />}
             {activeMenu === 3 && <ValoracionesMiCuenta />}
             {activeMenu === 4 && <HistorialReservasMiCuenta />}

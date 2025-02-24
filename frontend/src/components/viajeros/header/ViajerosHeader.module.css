@@ -194,7 +194,7 @@
 .header_prof_user.open article div:first-child { transform: rotate(45deg); }
 .header_prof_user.open article div:nth-child(2) { opacity: 0; }
 .header_prof_user.open article div:last-child { transform: rotate(-45deg); }
-.header_prof_user:hover { filter: brightness(0.9); }
+.header_prof_user:hover { filter: brightness(0.8); }
 
 .header_prof_user img { 
   filter: brightness(0) invert(1);

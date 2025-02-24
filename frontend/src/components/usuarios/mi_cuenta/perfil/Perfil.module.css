@@ -76,17 +76,16 @@
 /*? Info de cada lista ul*/
 .miCuenta_info {
   display: grid;
-  grid-template-columns: repeat(2, auto); /* Dos columnas automáticas */
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 20px;
   margin: 0;
   margin-top: 10px;
   padding: 0 5px;
-  overflow: hidden; 
 }
 .miCuenta_info li{
-  width: 190px;
   list-style: none;
+  overflow: hidden;
 }
 .miCuenta_info li h2 {
   font-size: 19px;
@@ -94,18 +93,26 @@
   color: rgb(124, 124, 124);
 }
 .miCuenta_info li p {
+  padding-left: 3px;
   font-weight: 400;
-  font-size: 22px;
+  font-size: 20px;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.miCuenta_contacto { grid-template-columns: 1fr;}
-.miCuenta_contacto p { width: fit-content;}
+.miCuenta_contacto, .miCuenta_biografia { grid-template-columns: 1fr;}
+.miCuenta_contacto p, .miCuenta_biografia p { width: fit-content;}
+
+/*? Biografía*/
+.miCuenta_biografia p {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
 
 /*? Imágenes de los gustos*/
 .miCuenta_gustos {
-  margin: 20px 0 5px 0;
+  margin: 10px 0;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -114,6 +121,7 @@
   width: 50px;
   aspect-ratio: 1 / 1;
 }
+
 /*? Responsive*/
 @media (min-width: 600px){
   .miCuenta_title {padding: 15px 20px;}
@@ -146,6 +154,8 @@
 
   /*? Datos de la vivienda*/
   .miCuenta_info li p { font-size: 24px;}
+
+  .miCuenta_info { width: 600px;}
 }
 
 @media (min-width: 780px) and (max-width: 1299px){
@@ -154,5 +164,5 @@
 
 @media (min-width: 1300px){
   .user_component { width: clamp(0px, 100%, 700px);}
-
+  .miCuenta_info li h2 { font-size: 20px;}
 }
