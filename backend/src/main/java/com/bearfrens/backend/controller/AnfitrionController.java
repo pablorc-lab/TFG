@@ -52,7 +52,7 @@ public class AnfitrionController {
     anfitrion.setPassword(anfitrionRequest.getPassword());
     anfitrion.setNombre(anfitrionRequest.getNombre());
     anfitrion.setApellido(anfitrionRequest.getApellido());
-    anfitrion.setEdad(anfitrionRequest.getEdad());
+    anfitrion.setFecha_nacimiento(anfitrionRequest.getFecha_nacimiento());
     anfitrion.setProfileImage(anfitrionRequest.getProfileImage());
 
     // Guardar el anfitrión actualizado

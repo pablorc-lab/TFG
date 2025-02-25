@@ -142,7 +142,7 @@ export default function EditarMiCuenta({ setIsOpen, mostrarCuenta = true }) {
             <input type="text" placeholder="PabloID123" spellCheck="false" name="ID privado" />
           </div>
           <div className={styles.input_div}>
-            <p>Edad</p>
+            <p>Fecha de nacimiento</p>
             <input type="date" placeholder="Ramblado" spellCheck="false" name="Edad" />
           </div>
         </form>

@@ -12,18 +12,17 @@ export default function ListUsuariosPage() {
   useEffect(() => {
     const loadService = async () => {
       setService(
-        userType === "anfitrion" 
-        ? (await import("../../../services/AnfitrionService")).default
-        :(await import("../../../services/ViajeroService")).default
+        userType === "anfitrion"
+          ? (await import("../../../services/AnfitrionService")).default
+          : (await import("../../../services/ViajeroService")).default
       );
     };
-
-    loadService();  
+    loadService();
   }, [userType])
 
   // Listar usuarios al renderizar el componente si hay un servicio
   useEffect(() => {
-    if (service) {
+    if(service){
       listarUsuarios();
     }
   }, [service])
@@ -31,7 +30,7 @@ export default function ListUsuariosPage() {
   const listarUsuarios = () => {
     service.getAll().then(response => {
       setUsuarios(response.data);
-      console.log(userType, response.data);
+      //console.log(userType, response.data);
     }).catch(error => { console.log(error); })
   }
 
@@ -45,12 +44,14 @@ export default function ListUsuariosPage() {
   }
 
   return (
-    <>
-      <AdminHeader userType={userType}/>
+    <> 
+      <title>{`Admin panel | Listar ${userType}`}</title>
+      <AdminHeader userType={userType} />
+
       <div className={styles.container}>
-        <h2>User type : <i>{userType}</i></h2>
-        <Link to="/add-usuario" className={styles.link_list}>
-          Agregar anfitrion
+        <h2>Usuario: <span>{userType}</span></h2>
+        <Link to={`/admin-panel/${userType}/crear`} className={styles.link_list}>
+          Agregar {userType}
         </Link>
         <table>
           <thead>
@@ -59,9 +60,9 @@ export default function ListUsuariosPage() {
               <th>PrivateID</th>
               <th>Nombre</th>
               <th>Apellido</th>
-              <th>Edad</th>
+              <th>Fecha</th>
               <th>Email</th>
-              <th>profileImage</th>
+              <th>Profile_Image</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -72,12 +73,12 @@ export default function ListUsuariosPage() {
                 <td>{usuario.privateID}</td>
                 <td>{usuario.nombre}</td>
                 <td>{usuario.apellido}</td>
-                <td>{usuario.edad}</td>
+                <td>{usuario.fecha_nacimiento}</td>
                 <td>{usuario.email}</td>
                 <td>{usuario.profileImage}</td>
                 <td >
                   <div className={styles.img_td}>
-                    <Link to={`/edit-usuario/${usuario.id}`}>
+                    <Link to={`/admin-panel/${userType}/editar/${usuario.id}`}>
                       <img src="/images/admin_panel/edit.svg" alt="Icono delete" />
                     </Link>
                     <img src="/images/admin_panel/delete.svg" alt="Icono delete" onClick={() => deleteCliente(usuario.id)} />

@@ -1,10 +1,12 @@
 package com.bearfrens.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.time.LocalDate;
 
 //  @MappedSuperclass : indica que NO se creará una tabla usuario. Ya que cada tipo de usuario tiene una tabla distinta
 @Getter
@@ -35,8 +37,8 @@ public abstract class Usuario {
   @Column(name = "apellido")
   private String apellido;
 
-  @Column(name = "edad")
-  private int edad;
+  @Column(name = "fecha_nacimiento")
+  private LocalDate fecha_nacimiento;
 
   @Column(name = "profileImage")
   private String profileImage;
@@ -45,11 +47,11 @@ public abstract class Usuario {
   public Usuario() {}
 
   // Constructor con cifrado de contraseña
-  public Usuario(String privateID, String nombre, String apellido, int edad, String email, String password, String profileImage) {
+  public Usuario(String privateID, String nombre, String apellido, LocalDate fecha_nacimiento, String email, String password, String profileImage) {
     this.privateID = privateID;
     this.nombre = nombre;
     this.apellido = apellido;
-    this.edad = edad;
+    this.fecha_nacimiento = fecha_nacimiento;
     this.email = email;
     setPassword(password); // Ciframos la contraseña
     this.profileImage = profileImage;
@@ -70,6 +72,7 @@ public abstract class Usuario {
         " Password='" + password + '\'' + ",\n" +
         " Nombre='" + nombre + '\'' + ",\n" +
         " Apellido='" + apellido + '\'' + ",\n" +
+        " Fecha de nacimiento='" + fecha_nacimiento + '\'' + ",\n" +
         " Imagen de perfil='" + profileImage + '\'' + ",\n";
   }
 }

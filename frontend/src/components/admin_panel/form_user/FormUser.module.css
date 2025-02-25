@@ -1,0 +1,100 @@
+.container {
+  font-family: "Nunito";
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.title { margin-bottom: 20px;}
+.title span {text-transform: uppercase;}
+
+.form_flex {
+  display: flex;
+  justify-content: space-between;
+
+}
+.form_flex input {width: 242px;}
+
+.form_Group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+.form_Group input {
+  font-size: 22px;
+  font-family: "Nunito";
+  border: 1px solid gray;
+  background-color: rgba(238, 238, 238, 0.644);
+}
+.form_Group input::placeholder {font-weight: 300; font-style: italic;}
+.form_Group input:focus{ outline: 2px solid #0a7273;}
+
+.form_Label {
+  display: block;
+  font-size: 17px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
+.form_Control {
+  width: calc(100% - 16px);
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.save {
+  cursor: pointer;
+  background-color: #0a7273;
+  padding: 12px 10px;
+  width: 150px;
+  border: none;
+  border-radius: 5px;
+  font-size: 25px;
+  color: white;
+  margin-right: 10px;
+}
+.save:hover { filter: brightness(0.8);}
+.danger:hover {
+  background-color: red;
+  color: white;
+}
+.danger {
+  margin-left: 10px;
+  cursor: pointer;
+  padding: 10px;
+  width: 150px;
+  border-radius: 5px;
+  font-size: 25px;
+  color: red;
+  border: 2px solid red;
+  background-color: white;
+} 
+
+.btn_Container{
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 30px;
+}
+
+@media (max-width:630px){
+  .container {
+    max-width: 450px;
+  }
+    
+  .form_flex {
+    flex-direction: column;
+    width: 100%;
+  }
+  .container input {width: calc(100% - 20px);}
+  
+}

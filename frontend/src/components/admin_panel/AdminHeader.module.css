@@ -2,6 +2,7 @@
   padding: 22px;
   background-color: rgb(32, 32, 32);
   font-family: "Nunito";
+  width: calc(100% - 44px);
 }
 
 .header nav {
@@ -23,7 +24,7 @@
 .header nav a:hover:not(.active){ 
   color: rgb(32, 32, 32);
   background-color: rgb(112, 112, 112);
-  outline: 10px solid rgb(112, 112, 112);
+  outline: 9px solid rgb(112, 112, 112);
   outline-offset: -1px; 
   border-radius: 25px;
 }

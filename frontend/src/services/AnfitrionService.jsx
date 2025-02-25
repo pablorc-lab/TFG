@@ -1,4 +1,3 @@
-import axios from "axios"
 import UsuarioService from "./UsuarioService";
 
 class AnfitrionService extends UsuarioService{ 

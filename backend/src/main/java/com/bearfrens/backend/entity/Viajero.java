@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 // @Entity : Indica que esta clase es una entidad JPA y se mapeará a una tabla en la base de datos.
 // @NoArgsConstructor : permite que JPA cree instancias de las entidades utilizando un constructor vacío, requerido para realizar la deserialización y la persistencia de objetos en la base de datos.
 @Entity
@@ -16,8 +18,8 @@ public class Viajero extends Usuario{
     super();
   }
 
-  public Viajero(String privateID, String nombre, String apellido, int edad, String email, String password, String profileImage) {
-    super(privateID, nombre, apellido, edad, email, password, profileImage);
+  public Viajero(String privateID, String nombre, String apellido, LocalDate fecha_nacimiento, String email, String password, String profileImage) {
+    super(privateID, nombre, apellido, fecha_nacimiento, email, password, profileImage);
   }
 
   // GETTERS and SETTERS

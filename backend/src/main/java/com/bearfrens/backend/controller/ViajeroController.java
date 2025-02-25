@@ -50,7 +50,7 @@ public class ViajeroController {
     viajero.setPassword(viajeroRequest.getPassword());
     viajero.setNombre(viajeroRequest.getNombre());
     viajero.setApellido(viajeroRequest.getApellido());
-    viajero.setEdad(viajeroRequest.getEdad());
+    viajero.setFecha_nacimiento(viajeroRequest.getFecha_nacimiento());
     viajero.setProfileImage(viajeroRequest.getProfileImage());
 
     // Guardar el viajero actualizado

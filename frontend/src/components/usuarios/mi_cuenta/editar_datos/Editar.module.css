@@ -271,7 +271,7 @@ body:has(.modal[open]) {
   text-align: center;
 }
 
-.input_div input:not(:placeholder-shown) { background-color: #0a71731f;}
+.input_div input:not(:placeholder-shown), .input_div textarea:not(:placeholder-shown)  { background-color: #0a71731f;}
 /*? BIOGRAFÍA*/
 
 .input_div textarea {
@@ -281,15 +281,15 @@ body:has(.modal[open]) {
   resize: vertical; 
   width: calc(100% - 35px);
 }
-.input_div textarea::placeholder{font-weight: 300;}
 
 .input_div input:focus, .input_div textarea:focus {box-shadow: 0 0 8px #0a71737c;}
-.input_div input::placeholder {
+.input_div input::placeholder ,.input_div textarea::placeholder{
   color: rgb(168, 168, 168);
-
   font-style: italic; 
   font-weight: 300;   
 }
+.input_div textarea::placeholder{font-weight: 400;}
+
 .input_MiCuenta .input_div input{width: 150px;}
 .input_MiCuenta_contacto div:nth-child(1) input { 
   padding: 5px 15px;

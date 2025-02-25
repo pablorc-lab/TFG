@@ -206,7 +206,7 @@ export default function RegistrarUsuarioPage() {
         {errorStates.userID && <p>El ID no puede contener carácteres especiales</p>}
       </fieldset>
       <fieldset className={`${styles.input_container} ${errorStates.age && styles.error_input}`}>
-        <label htmlFor="edad">Edad</label>
+        <label htmlFor="edad">Fecha de nacimiento</label>
         <input
           type="date"
           id="edad"
@@ -215,7 +215,7 @@ export default function RegistrarUsuarioPage() {
           onChange={(e) => handleValuesChange(e, "age")}
           onBlur={() => handleErrorChange("age", !validateAge(userValues.age))}
         />
-        {errorStates.age && <p>Edad no válida</p>}
+        {errorStates.age && <p>Fecha no válida</p>}
       </fieldset>
       <input
         className={`${styles.submit_input} ${(errorStates.name || errorStates.lastName || errorStates.userID || errorStates.age) && styles.error_submit_input}`}

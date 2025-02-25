@@ -101,8 +101,8 @@ const PerfilMiCuenta = ({ mostrarCuenta = true }) => {
             <p>PabloID123</p>
           </li>
           <li>
-            <h2>Edad</h2>
-            <p>23 años</p>
+            <h2>Fecha de nacimiento</h2>
+            <p>23-11-1998</p>
           </li>
         </ul>
       </article>
