@@ -71,6 +71,7 @@
   margin-right: 10px;
 }
 .save:hover { filter: brightness(0.8);}
+
 .danger:hover {
   background-color: red;
   color: white;

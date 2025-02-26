@@ -44,6 +44,7 @@ export default function FormUser({ }) {
           email: usuario.email,
           fecha_nacimiento: usuario.fecha_nacimiento,
           privateID: usuario.privateID,
+          profileImage : usuario.profileImage,
         }));
       }).catch(error => { console.log(error); })
     }
@@ -66,9 +67,8 @@ export default function FormUser({ }) {
       }
 
       // Al hacer navigate dejamos un pequeño timeout para que se agregue correctamente el user
-      setTimeout(() => {
-        navigate(`/admin-panel/${userType}`);
-      }, 100);
+      navigate(`/admin-panel/${userType}`);
+   
     }
   };
 

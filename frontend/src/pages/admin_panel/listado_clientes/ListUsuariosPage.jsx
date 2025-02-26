@@ -23,7 +23,7 @@ export default function ListUsuariosPage() {
 
   useEffect(() => {
     if (userService) {
-      listarUsuarios();
+      setTimeout(() => {listarUsuarios();}, 300);
     }
   }, [userService]);
 
@@ -49,12 +49,15 @@ export default function ListUsuariosPage() {
       <title>{`Admin panel | Listar ${userType}`}</title>
       <AdminHeader userType={userType} />
 
-      <div className={styles.container}>
+      <article className={styles.container}>
         <h2>Usuario: <span>{userType}</span></h2>
 
-        <Link to={`/admin-panel/${userType}/crear`} className={styles.link_list}>
-          Agregar {userType}
-        </Link>
+        <div className={styles.button_list}>
+          <Link to={`/admin-panel/${userType}/crear`} className={styles.link_list}>
+            Agregar {userType}
+          </Link>
+          <img src="/images/admin_panel/reload.svg" alt="Reload" onClick={() => listarUsuarios()} />
+        </div>
 
         <section className={styles.table_container}>
           <table>
@@ -93,8 +96,7 @@ export default function ListUsuariosPage() {
             </tbody>
           </table>
         </section>
-
-      </div>
+      </article>
     </>
   )
 }
