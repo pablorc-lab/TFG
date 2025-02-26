@@ -1,45 +1,46 @@
 import { useEffect, useState } from 'react'
 import styles from "./ListUsuariosPage.module.css"
 import AdminHeader from '../../../components/admin_panel/AdminHeader';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 export default function ListUsuariosPage() {
   const { userType } = useParams();
-  const [service, setService] = useState(null);
+  const [userService, setUserService] = useState(null);
   const [usuarios, setUsuarios] = useState([]);
 
   // Cargar el servicio actual requerido
   useEffect(() => {
     const loadService = async () => {
-      setService(
-        userType === "anfitrion"
-          ? (await import("../../../services/AnfitrionService")).default
-          : (await import("../../../services/ViajeroService")).default
-      );
+      const tempService = userType === "anfitrion"
+        ? (await import("../../../services/AnfitrionService")).default
+        : (await import("../../../services/ViajeroService")).default;
+
+      setUserService(tempService);
     };
     loadService();
   }, [userType])
 
-  // Listar usuarios al renderizar el componente si hay un servicio
+
   useEffect(() => {
-    if (service) {
+    if (userService) {
       listarUsuarios();
     }
-  }, [service])
+  }, [userService]);
+
 
   const listarUsuarios = () => {
-    service.getAll().then(response => {
-      setUsuarios(response.data);
-      //console.log(userType, response.data);
-    }).catch(error => { console.log(error); })
-  }
+    userService.getAll()
+      .then(response => setUsuarios(response.data))
+      .catch(error => console.log(error));
+  };
 
   const deleteCliente = (usuarioID) => {
     let confirmacion = window.confirm(`¿Eliminar usuario? con ID : ${usuarioID}`);
+
     if (confirmacion) {
-      service.delete(usuarioID).then((response) => {
-        listarUsuarios();
-      }).catch(error => { console.log(error); })
+      userService.delete(usuarioID)
+        .then(() => listarUsuarios())
+        .catch(error => console.log(error));
     }
   }
 
@@ -50,7 +51,7 @@ export default function ListUsuariosPage() {
 
       <div className={styles.container}>
         <h2>Usuario: <span>{userType}</span></h2>
-        
+
         <Link to={`/admin-panel/${userType}/crear`} className={styles.link_list}>
           Agregar {userType}
         </Link>

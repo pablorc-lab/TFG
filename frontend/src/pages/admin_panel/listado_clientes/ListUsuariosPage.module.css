@@ -40,12 +40,13 @@
   outline: 2px solid #129c63;
 }
 
+
 .container .link_list {
   font-size: 20px;
   width: max-content;
   font-weight:600;
   text-decoration: none;
-  color: beige;
+  color: white;
   background-color: #3767eb;
   border-radius: 5px;
   padding: 10px;
