@@ -86,7 +86,7 @@
   gap: 30px;
 }
 
-@media (max-width:630px){
+@media (max-width:650px){
   .container {
     max-width: 450px;
   }

@@ -22,7 +22,7 @@ export default function ListUsuariosPage() {
 
   // Listar usuarios al renderizar el componente si hay un servicio
   useEffect(() => {
-    if(service){
+    if (service) {
       listarUsuarios();
     }
   }, [service])
@@ -44,50 +44,55 @@ export default function ListUsuariosPage() {
   }
 
   return (
-    <> 
+    <>
       <title>{`Admin panel | Listar ${userType}`}</title>
       <AdminHeader userType={userType} />
 
       <div className={styles.container}>
         <h2>Usuario: <span>{userType}</span></h2>
+        
         <Link to={`/admin-panel/${userType}/crear`} className={styles.link_list}>
           Agregar {userType}
         </Link>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>PrivateID</th>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Fecha</th>
-              <th>Email</th>
-              <th>Profile_Image</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {usuarios.map(usuario => (
-              <tr key={usuario.id}>
-                <td>{usuario.id}</td>
-                <td>{usuario.privateID}</td>
-                <td>{usuario.nombre}</td>
-                <td>{usuario.apellido}</td>
-                <td>{usuario.fecha_nacimiento}</td>
-                <td>{usuario.email}</td>
-                <td>{usuario.profileImage}</td>
-                <td >
-                  <div className={styles.img_td}>
-                    <Link to={`/admin-panel/${userType}/editar/${usuario.id}`}>
-                      <img src="/images/admin_panel/edit.svg" alt="Icono delete" />
-                    </Link>
-                    <img src="/images/admin_panel/delete.svg" alt="Icono delete" onClick={() => deleteCliente(usuario.id)} />
-                  </div>
-                </td>
+
+        <section className={styles.table_container}>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>PrivateID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha</th>
+                <th>Email</th>
+                <th>Profile_Image</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {usuarios.map(usuario => (
+                <tr key={usuario.id}>
+                  <td>{usuario.id}</td>
+                  <td>{usuario.privateID}</td>
+                  <td>{usuario.nombre}</td>
+                  <td>{usuario.apellido}</td>
+                  <td>{usuario.fecha_nacimiento}</td>
+                  <td>{usuario.email}</td>
+                  <td>{usuario.profileImage}</td>
+                  <td >
+                    <div className={styles.img_td}>
+                      <Link to={`/admin-panel/${userType}/editar/${usuario.id}`}>
+                        <img src="/images/admin_panel/edit.svg" alt="Icono delete" />
+                      </Link>
+                      <img src="/images/admin_panel/delete.svg" alt="Icono delete" onClick={() => deleteCliente(usuario.id)} />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
       </div>
     </>
   )

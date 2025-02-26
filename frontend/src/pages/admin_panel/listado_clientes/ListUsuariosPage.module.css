@@ -1,4 +1,5 @@
 .container {
+  width: max-content;
   position: absolute;
   left: 50%;
   transform: translate(-50%);
@@ -7,6 +8,12 @@
 }
 .container h2 { text-align: center;}
 .container h2 span {text-transform: uppercase;}
+
+.table_container {
+  box-shadow: 0 0 5px rgba(128, 128, 128, 0.5);
+  max-width: 90vw;
+  overflow-x: auto;
+}
 
 .container table {
   width: 100% ;
@@ -22,9 +29,11 @@
 
 .container table, .container th, .container td { border: 1px solid #c2c2c2;}
 .container table thead tr, .container table tbody tr:nth-child(even) {background-color: rgb(243, 243, 243);}
-.container table td{ 
+
+.container table tr td{ 
   padding: 10px;
   font-size: 15px;
+  text-wrap: nowrap;
 }
 .container table tbody tr:nth-child(odd){ background-color: #e2e2e2;}
 .container table tbody tr:hover { 
@@ -73,4 +82,3 @@
   outline: 10px solid rgba(255, 114, 114, 0.39);
   background-color: rgba(255, 114, 114, 0.39);
 }
-
