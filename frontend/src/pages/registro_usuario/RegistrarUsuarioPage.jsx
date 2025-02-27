@@ -8,28 +8,46 @@ export default function RegistrarUsuarioPage() {
   const [repeatedPassword, setRepeatedPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatedPassword, setShowRepeatedPassword] = useState(false);
+  const [accountCreated, setAccountCreated] = useState(false);
 
   // Objeto que almacena todos los errores
   const [errorStates, setErrorStates] = useState({
     email: false,
+    email_existente: false,
     shortPassword: false,
     samePassword: false,
-    name: false,
-    lastName: false,
-    userID: false,
-    age: false,
+    nombre: false,
+    apellido: false,
+    fecha_nacimiento: false,
     userType: false,
   });
+
   // Objeto que almacena cada valor
   const [userValues, setUserValues] = useState({
     email: "",
     password: "",
-    name: "",
-    lastname: "",
-    userID: "",
-    age: "",
+    nombre: "",
+    apellido: "",
+    privateID: "",
+    fecha_nacimiento: "",
     userType: "",
   })
+
+  // Funcion para crear al usuario según su tipo
+  const createUser = async () => {
+    const UserService = userValues.userType === "anfitrion"
+      ? (await import("../../services/AnfitrionService")).default
+      : (await import("../../services/ViajeroService")).default;
+
+    const { userType, ...userData } = userValues;
+
+    UserService.create(userData)
+      .then(response => {
+        console.log("Usuario CREADO con éxito", response);
+        setAccountCreated(true);
+      })
+      .catch(error => { console.error("Error al CREAR el usuario", error); });
+  };
 
   // Esta función permite cambiar el estado de cada valor
   function handleValuesChange(e, campo) {
@@ -57,8 +75,9 @@ export default function RegistrarUsuarioPage() {
 
   // Acción que se realizará en el primer paso para terminar de crear la cuenta
   // Comprobar correo y contraseñas
-  const handleSubmitFirstStep = (e) => {
+  const handleSubmit_First_Second_Step = (e) => {
     e.preventDefault();
+
 
     const validate_step_errors = actualStep === 0
       ? {
@@ -66,10 +85,10 @@ export default function RegistrarUsuarioPage() {
         shortPassword: userValues.password.length < 8,
         samePassword: userValues.password !== repeatedPassword,
       } : {
-        name: !validateNames(userValues.name),
-        lastName: !validateNames(userValues.lastname),
-        userID: !validateIdUser(userValues.userID),
-        age: !validateAge(userValues.age),
+        nombre: !validateNames(userValues.nombre),
+        apellido: !validateNames(userValues.apellido),
+        privateID: !validateIdUser(userValues.privateID),
+        fecha_nacimiento: !validateAge(userValues.fecha_nacimiento),
       };
 
     Object.values(validate_step_errors).includes(true)
@@ -77,26 +96,10 @@ export default function RegistrarUsuarioPage() {
       : setActualStep(actualStep + 1); // Se pasa al siguiente paso
   }
 
-
-  // Accionar que se realiza en el último paso, al crear finalmente la cuenta
-  // Comprobar que nombre y apellidos solo tenga strings, y el id no tenga caracteres especiales, fecha con sentido
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Actualizar el campo si está vacio
-    const validate_user_type = userValues.userType === "";
-
-    if (validate_user_type) {
-      handleErrorChange("userType", userValues.userType === "");
-    } else {
-      console.log("Se han enviado los siguientes datos : ", userValues);
-    }
-  }
-
   // Formulario del primer paso del registro
   const FirstStepRegister = (
     <>
-      <fieldset className={`${styles.input_container} ${errorStates.email && styles.error_input}`}>
+      <fieldset className={`${styles.input_container} ${(errorStates.email || errorStates.email_existente) ? styles.error_input : undefined}`}>
         <label htmlFor="email">Correo electrónico</label>
         <input
           type="email"
@@ -110,6 +113,7 @@ export default function RegistrarUsuarioPage() {
           noValidate
         />
         {errorStates.email && <p>El email no es correcto</p>}
+        {errorStates.email_existente && <p>El email ya está en uso</p>}
       </fieldset>
       <fieldset className={`${styles.input_container} ${errorStates.shortPassword && styles.error_input}`}>
         <label htmlFor="password">Contraseña</label>
@@ -154,7 +158,7 @@ export default function RegistrarUsuarioPage() {
         type="submit"
         name="submit"
         value="Siguiente paso"
-        onClick={handleSubmitFirstStep}
+        onClick={handleSubmit_First_Second_Step}
       />
     </>
   );
@@ -162,7 +166,7 @@ export default function RegistrarUsuarioPage() {
   // Formulario del segundo paso del registro
   const SecondStepRegister = (
     <>
-      <article className={`${styles.input_container} ${(errorStates.name || errorStates.lastName) && styles.error_input}`}>
+      <article className={`${styles.input_container} ${(errorStates.nombre || errorStates.apellido) && styles.error_input}`}>
         <div className={styles.name_input}>
           <fieldset>
             <label htmlFor="nombre">Nombre</label>
@@ -171,9 +175,9 @@ export default function RegistrarUsuarioPage() {
               id="nombre"
               name="nombre"
               spellCheck="false"
-              value={userValues.name}
-              onChange={(e) => handleValuesChange(e, "name")}
-              onBlur={() => userValues.name && handleErrorChange("name", !validateNames(userValues.name))}
+              value={userValues.nombre}
+              onChange={(e) => handleValuesChange(e, "nombre")}
+              onBlur={() => userValues.nombre && handleErrorChange("nombre", !validateNames(userValues.nombre))}
             />
           </fieldset>
           <fieldset>
@@ -183,15 +187,15 @@ export default function RegistrarUsuarioPage() {
               id="apellido"
               name="apellido"
               spellCheck="false"
-              value={userValues.lastname}
-              onChange={(e) => handleValuesChange(e, "lastname")}
-              onBlur={() => userValues.lastname && handleErrorChange("lastName", !validateNames(userValues.lastname))}
+              value={userValues.apellido}
+              onChange={(e) => handleValuesChange(e, "apellido")}
+              onBlur={() => userValues.apellido && handleErrorChange("apellido", !validateNames(userValues.apellido))}
             />
           </fieldset>
         </div>
-        {(errorStates.name || errorStates.lastName) && <p className={styles.error_msg}>El nombre/apellido solo puede contener letras</p>}
+        {(errorStates.nombre || errorStates.apellido) && <p className={styles.error_msg}>El nombre/apellido solo puede contener letras</p>}
       </article>
-      <fieldset className={`${styles.input_container} ${errorStates.userID && styles.error_input}`}>
+      <fieldset className={`${styles.input_container} ${errorStates.privateID && styles.error_input}`}>
         <label htmlFor="id_user">ID de usuario</label>
         <input
           type="text"
@@ -199,29 +203,29 @@ export default function RegistrarUsuarioPage() {
           name="id_user"
           placeholder="Nombre privado para identificarte"
           spellCheck="false"
-          value={userValues.userID}
-          onChange={(e) => handleValuesChange(e, "userID")}
-          onBlur={() => userValues.userID && handleErrorChange("userID", !validateIdUser(userValues.userID))}
+          value={userValues.privateID}
+          onChange={(e) => handleValuesChange(e, "privateID")}
+          onBlur={() => userValues.privateID && handleErrorChange("privateID", !validateIdUser(userValues.privateID))}
         />
-        {errorStates.userID && <p>El ID no puede contener carácteres especiales</p>}
+        {errorStates.privateID && <p>El ID no puede contener carácteres especiales</p>}
       </fieldset>
-      <fieldset className={`${styles.input_container} ${errorStates.age && styles.error_input}`}>
+      <fieldset className={`${styles.input_container} ${errorStates.fecha_nacimiento && styles.error_input}`}>
         <label htmlFor="edad">Fecha de nacimiento</label>
         <input
           type="date"
           id="edad"
           name="edad"
-          value={userValues.age}
-          onChange={(e) => handleValuesChange(e, "age")}
-          onBlur={() => handleErrorChange("age", !validateAge(userValues.age))}
+          value={userValues.fecha_nacimiento}
+          onChange={(e) => handleValuesChange(e, "fecha_nacimiento")}
+          onBlur={() => handleErrorChange("fecha_nacimiento", !validateAge(userValues.fecha_nacimiento))}
         />
-        {errorStates.age && <p>Fecha no válida</p>}
+        {errorStates.fecha_nacimiento && <p>Fecha no válida</p>}
       </fieldset>
       <input
-        className={`${styles.submit_input} ${(errorStates.name || errorStates.lastName || errorStates.userID || errorStates.age) && styles.error_submit_input}`}
+        className={`${styles.submit_input} ${(errorStates.nombre || errorStates.apellido || errorStates.apellido || errorStates.fecha_nacimiento) && styles.error_submit_input}`}
         type="submit"
         value="Último paso"
-        onClick={handleSubmitFirstStep}
+        onClick={handleSubmit_First_Second_Step}
       />
     </>
   );
@@ -230,6 +234,16 @@ export default function RegistrarUsuarioPage() {
     handleValuesChange({ target: { value: userTypeValue } }, "userType");
     handleErrorChange("userType", false);
   };
+
+  // Accionar que se realiza en el último paso, al crear finalmente la cuenta
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Comprobar estado del tipo de user y creare el usuari
+    userValues.userType === "" 
+      ? handleErrorChange("userType", true) 
+      : createUser();
+  }
 
   // Formulario del último paso del registro
   const LastStepRegister = (
@@ -274,17 +288,29 @@ export default function RegistrarUsuarioPage() {
         </header>
 
         <article className={styles.acceso_container}>
-          <h1>Registrarse</h1>
-          <div className={styles.progress_bar}>
-            <progress max="100" value={actualStep >= 0 && 100} />
-            <progress max="100" value={actualStep >= 1 && 100} />
-            <progress max="100" value={actualStep >= 2 && 100} />
-          </div>
-          <form action="pagina.jar" className={styles.form_registro} style={{ gap: Object.values(errorStates).slice(0, -1).includes(true) && "15px" }} noValidate>
-            {actualStep === 0 && FirstStepRegister}
-            {actualStep === 1 && SecondStepRegister}
-            {actualStep === 2 && LastStepRegister}
-          </form>
+          {!accountCreated ? (
+            <>
+              <h1>Registrarse</h1>
+              <div className={styles.progress_bar}>
+                <progress max="100" value={actualStep >= 0 && 100} />
+                <progress max="100" value={actualStep >= 1 && 100} />
+                <progress max="100" value={actualStep >= 2 && 100} />
+              </div>
+              <form action="pagina.jar" className={styles.form_registro} style={{ gap: Object.values(errorStates).slice(0, -1).includes(true) && "15px" }} noValidate>
+                {actualStep === 0 && FirstStepRegister}
+                {actualStep === 1 && SecondStepRegister}
+                {actualStep === 2 && LastStepRegister}
+              </form>
+            </>
+          ) : (
+            <div className={styles.accountCreated}>
+              <h1>¡Cuenta creada con éxito!</h1>
+              <p>Bienvenido/a a nuestra comunidad</p>
+              <Link to="/iniciar-sesion" className={styles.submit_input}>
+                Iniciar sesión
+              </Link>
+            </div>
+          )}
         </article>
       </section>
     </>

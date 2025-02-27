@@ -62,8 +62,10 @@
 .acceso_container {
   font-family: "Nunito";
   position: absolute;
-  top: 23%;
-  right: 13%;
+  top: calc(50% + 53.61px); /*Centrar teniendo en cuenta el alto del header*/
+  right:0;
+  transform: translate(-50%, -50%);
+
   background-color: rgba(255, 255, 255, 0.945);
   border-radius: 10px;
   box-shadow: 0 0 10px rgb(0,0,0,0.8);
@@ -245,6 +247,7 @@
   font-size: 28px;
   border-radius: 10px;
   transition: background-color 0.1s ease-in-out;
+  text-decoration: none;
 }
 .submit_input:hover {filter: brightness(0.85);}
 
@@ -264,10 +267,31 @@
 }
 .acceso_enlace_registro a:hover {filter: brightness(0.6);}
 
-@media (max-width: 1300px) {
+/*? Mensaje de exito*/
+.accountCreated {
+  padding: 50px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.accountCreated h1 {margin-bottom: 20px;}
+.accountCreated p {
+  margin: 20px 0;
+  font-size: 25px;
+}
+
+.accountCreated a {
+  margin: 20px auto;
+  width: calc(100% - 30px);
+}
+.accountCreated a:hover {text-decoration: none;}
+
+@media (max-width: 1450px) {
   .acceso_container {
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -295,4 +319,10 @@
   .input_tipo_cuenta h3 { font-size: 20px;  }
   .input_tipo_cuenta p{ font-size: 17px;}
 
+  /*? Registro final*/
+  .accountCreated h1 {font-size: 32px;}
+.accountCreated p {
+  margin: 20px 0;
+  font-size: 22px;
+}
 }

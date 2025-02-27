@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styles from "./ListUsuariosPage.module.css"
 import AdminHeader from '../../../components/admin_panel/AdminHeader';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function ListUsuariosPage() {
   const { userType } = useParams();
@@ -31,7 +31,7 @@ export default function ListUsuariosPage() {
   const listarUsuarios = () => {
     userService.getAll()
       .then(response => setUsuarios(response.data))
-      .catch(error => console.log(error));
+      .catch(error => console.error("Error al listar los usuarios : ",error));
   };
 
   const deleteCliente = (usuarioID) => {
@@ -40,7 +40,7 @@ export default function ListUsuariosPage() {
     if (confirmacion) {
       userService.delete(usuarioID)
         .then(() => listarUsuarios())
-        .catch(error => console.log(error));
+        .catch(error => console.error(`Error al eliminar el usuario con ID ${usuarioID} : `,error));
     }
   }
 

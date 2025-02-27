@@ -44,9 +44,9 @@ export default function FormUser({ }) {
           email: usuario.email,
           fecha_nacimiento: usuario.fecha_nacimiento,
           privateID: usuario.privateID,
-          profileImage : usuario.profileImage,
+          profileImage: usuario.profileImage,
         }));
-      }).catch(error => { console.log(error); })
+      }).catch(error => { console.error("Error al obtener el usuario ", error); })
     }
   }, [userService, userID]);
 
@@ -58,17 +58,14 @@ export default function FormUser({ }) {
     }
     else {
       setErrorInput(false);
-      if (userID) { // Editar usuario
-        console.log("Usuario EDITADO correctamente", userData);
-        userService.update(userID, userData);
-      } else { // Crear usuario
-        console.log("Usuario CREADO correctamente", userData);
-        userService.create(userData);
-      }
+      const userAction = userID ? userService.update(userID, userData) : userService.create(userData);
 
-      // Al hacer navigate dejamos un pequeño timeout para que se agregue correctamente el user
-      navigate(`/admin-panel/${userType}`);
-   
+      userAction
+        .then(response => {
+          console.log(`Usuario ${userID ? "ACTUALIZADO" : "CREADO"} con éxito`, response);
+          navigate(`/admin-panel/${userType}`);
+        })
+        .catch(error => { console.error(`Error al ${userID ? "ACTUALIZAR" : "CREAR"} el usuario:`, error);});
     }
   };
 
@@ -87,9 +84,10 @@ export default function FormUser({ }) {
               {/* NOMBRE - APELLIDO*/}
               <article className={styles.form_flex}>
                 <div className={styles.form_Group}>
-                  <label className={styles.form_Label}>Nombre</label>
+                  <label htmlFor="nombre" className={styles.form_Label}>Nombre</label>
                   <input
                     type="text"
+                    id="nombre"
                     placeholder="Pablo"
                     name="nombre"
                     className={styles.form_Control}
@@ -98,9 +96,10 @@ export default function FormUser({ }) {
                   />
                 </div>
                 <div className={styles.form_Group}>
-                  <label className={styles.form_Label}>Apellido</label>
+                  <label htmlFor="apellido" className={styles.form_Label}>Apellido</label>
                   <input
                     type="text"
+                    id="apellido"
                     placeholder="Ramblado"
                     name="apellido"
                     className={styles.form_Control}
@@ -113,9 +112,10 @@ export default function FormUser({ }) {
               {/* EMAIL - PRIVATEID*/}
               <article className={styles.form_flex}>
                 <div className={styles.form_Group}>
-                  <label className={styles.form_Label}>Email</label>
+                  <label htmlFor="correo" className={styles.form_Label}>Email</label>
                   <input
                     type="email"
+                    id="correo"
                     spellCheck="false"
                     placeholder="pablo@example.com"
                     name="nombre"
@@ -125,9 +125,10 @@ export default function FormUser({ }) {
                   />
                 </div>
                 <div className={styles.form_Group}>
-                  <label className={styles.form_Label}>PrivateID</label>
+                  <label htmlFor="privateID" className={styles.form_Label}>PrivateID</label>
                   <input
                     type="text"
+                    id="privateID"
                     name="PrivateID"
                     value={userData.privateID}
                     className={styles.form_Control}
@@ -139,9 +140,10 @@ export default function FormUser({ }) {
               {/* PASSWORD - FECHA NACIMIENTO*/}
               <article className={styles.form_flex}>
                 <div className={styles.form_Group}>
-                  <label className={styles.form_Label}>Password</label>
+                  <label htmlFor="password" className={styles.form_Label}>Password</label>
                   <input
                     type="text"
+                    id="password"
                     name="password"
                     value={userData.password}
                     onChange={(e) => setUserData(prev => ({ ...prev, password: e.target.value }))}
@@ -150,9 +152,10 @@ export default function FormUser({ }) {
                   />
                 </div>
                 <div className={styles.form_Group}>
-                  <label className={styles.form_Label}>Fecha de nacimiento</label>
+                  <label htmlFor="fecha" className={styles.form_Label}>Fecha de nacimiento</label>
                   <input
                     type="date"
+                    id="fecha"
                     value={userData.fecha_nacimiento}
                     onChange={(e) => setUserData(prev => ({ ...prev, fecha_nacimiento: e.target.value }))}
                     name="fecha_nacimiento"
@@ -163,9 +166,10 @@ export default function FormUser({ }) {
 
               {/* PROFILE IMAGE*/}
               <div className={styles.form_Group}>
-                <label className={styles.form_Label}>Profile Image</label>
+                <label htmlFor="profileIMG" className={styles.form_Label}>Profile Image</label>
                 <input
                   type="text"
+                  id="profileIMG"
                   name="profileImage"
                   value={userData.profileImage}
                   onChange={(e) => setUserData(prev => ({ ...prev, profileImage: e.target.value }))}

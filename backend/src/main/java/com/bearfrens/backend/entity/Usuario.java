@@ -54,7 +54,7 @@ public abstract class Usuario {
     this.fecha_nacimiento = fecha_nacimiento;
     this.email = email;
     setPassword(password); // Ciframos la contraseña
-    this.profileImage = profileImage;
+    this.profileImage = (profileImage == null || profileImage.isEmpty()) ? null : profileImage;
   }
   
   // GETTERS and SETTERS
