@@ -45,20 +45,20 @@ npm install
 npm run dev
 ```
 
-### 5. Iniciar MySQL  
+### **Paso 5. Iniciar MySQL**
 ```bash
 net start MySQL84
 ```
 
-###  6. Configurar la base de datos
+### **Paso 6. Configurar la base de datos**
 Asegurar de que la base de datos está creada y configurada en `application.properties` dentro del proyecto Spring Boot.
 
-### 7. Compilar y ejecutar el backend
+### **Paso 7. Compilar y ejecutar el backend**
 ```bash
 mvn clean install
 java -jar target/BearfrensBackendApplication.jar
 ```
 
-### 8. Verificar la ejecución
+### **Paso 8. Verificar la ejecución**
 Finalmente el backend debería estar ejecutandose en `http://localhost:8080/` por defecto.
 
