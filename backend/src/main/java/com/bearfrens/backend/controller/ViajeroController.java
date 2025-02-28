@@ -15,7 +15,8 @@ import java.util.*;
 @RequestMapping("/api/viajeros")
 public class ViajeroController {
 
-  // @Autowired : se utiliza para inyectar automáticamente una instancia del ViajeroRepository en el controlador, lo que permite acceder a los métodos del repositorio sin tener que crear manualmente su objeto.
+  // @Autowired : se utiliza para inyectar automáticamente una instancia del ViajeroRepository en el controlador,
+  // lo que permite acceder a los métodos del repositorio sin tener que crear manualmente su objeto.
   @Autowired
   private ViajeroRepository viajeroRepository;
 

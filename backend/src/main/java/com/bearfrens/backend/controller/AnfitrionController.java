@@ -17,7 +17,8 @@ import java.util.Map;
 @RequestMapping("/api/anfitriones")
 public class AnfitrionController {
 
-  // @Autowired : se utiliza para inyectar automáticamente una instancia del AnfitrionRepository en el controlador, lo que permite acceder a los métodos del repositorio sin tener que crear manualmente su objeto.
+  // @Autowired : se utiliza para inyectar automáticamente una instancia del AnfitrionRepository en el controlador,
+  // lo que permite acceder a los métodos del repositorio sin tener que crear manualmente su objeto.
   @Autowired
   private AnfitrionRepository anfitrionRepository;
 

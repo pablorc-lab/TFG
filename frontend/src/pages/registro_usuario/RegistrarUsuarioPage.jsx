@@ -2,6 +2,7 @@ import { useState } from "react"
 import styles from "./accesos.module.css"
 import { validateEmail, validateNames, validateIdUser, validateAge } from "../../components/registro_usuarios/validations";
 import { Link } from "react-router-dom";
+import UsuarioService from "../../services/UsuarioService";
 
 export default function RegistrarUsuarioPage() {
   const [actualStep, setActualStep] = useState(0);
@@ -78,7 +79,6 @@ export default function RegistrarUsuarioPage() {
   const handleSubmit_First_Second_Step = (e) => {
     e.preventDefault();
 
-
     const validate_step_errors = actualStep === 0
       ? {
         email: !validateEmail(userValues.email),
@@ -91,9 +91,26 @@ export default function RegistrarUsuarioPage() {
         fecha_nacimiento: !validateAge(userValues.fecha_nacimiento),
       };
 
-    Object.values(validate_step_errors).includes(true)
-      ? setErrorStates({ ...errorStates, ...validate_step_errors })
-      : setActualStep(actualStep + 1); // Se pasa al siguiente paso
+    if (Object.values(validate_step_errors).includes(true)) {
+      setErrorStates({ ...errorStates, ...validate_step_errors });
+      return;
+    }
+
+    // Validar si el correo existe solo en el primer paso
+    if (actualStep === 0) {
+      UsuarioService.existEmail(userValues.email)
+        .then(response => {
+          setErrorStates(prev => ({ ...prev, email_existente: response.data }));
+
+          if (response.data) return; // Si el email ya existe, detener ejecución
+
+          setActualStep(actualStep + 1); // Si el email no existe, avanzar
+        })
+        .catch(error => console.error("Error al buscar el email:", error));
+    }
+    else {
+      setActualStep(actualStep + 1);
+    }
   }
 
   // Formulario del primer paso del registro
@@ -154,7 +171,7 @@ export default function RegistrarUsuarioPage() {
         {errorStates.samePassword && <p>Las contraseñas no coinciden</p>}
       </fieldset>
       <input
-        className={`${styles.submit_input} ${(errorStates.email || errorStates.shortPassword || errorStates.samePassword) && styles.error_submit_input}`}
+        className={`${styles.submit_input} ${(errorStates.email || errorStates.shortPassword || errorStates.samePassword || errorStates.email_existente) ? styles.error_submit_input : undefined}`}
         type="submit"
         name="submit"
         value="Siguiente paso"
@@ -240,8 +257,8 @@ export default function RegistrarUsuarioPage() {
     e.preventDefault();
 
     // Comprobar estado del tipo de user y creare el usuari
-    userValues.userType === "" 
-      ? handleErrorChange("userType", true) 
+    userValues.userType === ""
+      ? handleErrorChange("userType", true)
       : createUser();
   }
 

@@ -2,12 +2,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import AdminHeader from "../AdminHeader";
 import styles from "./FormUser.module.css";
 import { useEffect, useState } from "react";
+import UsuarioService from "../../../services/UsuarioService";
 
 export default function FormUser({ }) {
   const { userType } = useParams();
   const { userID } = useParams();
   const navigate = useNavigate();
   const [errorInput, setErrorInput] = useState(false);
+  const [emailExistente, setEmailExistente] = useState(false);
   const [userService, setUserService] = useState(null);
   const [userData, setUserData] = useState({
     nombre: "",
@@ -53,20 +55,34 @@ export default function FormUser({ }) {
   // Guardar o Editar cliente
   const saveOrUpdateCliente = (e) => {
     e.preventDefault();
-    if (Object.values(userData).some(value => !value)) { // Comprobar que todos estén rellenados
-      setErrorInput(true);
-    }
-    else {
-      setErrorInput(false);
-      const userAction = userID ? userService.update(userID, userData) : userService.create(userData);
 
-      userAction
-        .then(response => {
-          console.log(`Usuario ${userID ? "ACTUALIZADO" : "CREADO"} con éxito`, response);
-          navigate(`/admin-panel/${userType}`);
-        })
-        .catch(error => { console.error(`Error al ${userID ? "ACTUALIZAR" : "CREAR"} el usuario:`, error);});
+    // Comprobar que todos estén rellenados
+    if (Object.values(userData).some(value => !value)) { 
+      setErrorInput(true);
+      return;
     }
+
+    // Comprobar si el email está repetido
+    UsuarioService.existEmail(userData.email)
+      .then(response => {
+        setEmailExistente(response.data);
+        console.log(response.data);
+        if (response.data) return; // Si el email existe, detenemos la ejecución
+
+        // Si todo está bien, proceder
+        setErrorInput(false);
+        const userAction = userID ? userService.update(userID, userData) : userService.create(userData);
+
+        userAction
+          .then(response => {
+            console.log(`Usuario ${userID ? "ACTUALIZADO" : "CREADO"} con éxito`, response);
+            navigate(`/admin-panel/${userType}`);
+          })
+          .catch(error => {
+            console.error(`Error al ${userID ? "ACTUALIZAR" : "CREAR"} el usuario:`, error);
+          });
+      })
+      .catch(error => console.error("Error al buscar el email : ", error));
   };
 
   return (
@@ -78,7 +94,8 @@ export default function FormUser({ }) {
       <section className={styles.container}>
         <article className={styles.card}>
           <h2 className={styles.title}>{userID ? "Editar" : "Agregar"} <span>{userType}</span></h2>
-          {errorInput && <h3>POR FAVOR, REVISA LOS CAMPOS</h3>}
+          {errorInput && <h3>POR FAVOR, RELLENA LOS CAMPOS</h3>}
+          {emailExistente && <h3>EL EMAIL YA ESTÁ EN USO</h3>}
           <div className={styles.card_Body}>
             <form>
               {/* NOMBRE - APELLIDO*/}

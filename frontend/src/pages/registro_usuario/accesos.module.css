@@ -169,10 +169,7 @@
 .input_container.error_input:focus-within label,
 .input_container.error_input article:focus-within label { color: red;}
 
-.submit_input.error_submit_input {
-  filter: brightness(0.8);
-  cursor: not-allowed;
-}
+.submit_input.error_submit_input { filter: brightness(0.8);}
 
 /*? Input */
 .input_container { display: grid;}

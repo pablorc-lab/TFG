@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AnfitrionRepository extends JpaRepository<Anfitrion, Long> {
+  // Spring se encarga de generar el metodo "EXISTS" asociado a encontrar ese campo
+  boolean existsByEmail(String email);
 }

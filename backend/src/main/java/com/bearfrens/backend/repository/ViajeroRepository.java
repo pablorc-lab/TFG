@@ -12,5 +12,7 @@ import org.springframework.stereotype.Repository;
   - Long: Es el tipo de dato de la clave primaria (id) de la entidad Viajero.
  */
 public interface ViajeroRepository  extends JpaRepository<Viajero, Long> {
+  // Spring se encarga de generar el metodo "EXISTS" asociado a encontrar ese campo
+  boolean existsByEmail(String email);
 }
 

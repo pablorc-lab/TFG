@@ -1,6 +1,8 @@
 import axios from "axios";
 
 class UsuarioService {
+  static USUARIO_BASE_REST_API_URL = "http://localhost:8080/api/usuarios"
+
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
     this.auth = {
@@ -27,6 +29,10 @@ class UsuarioService {
 
   delete(userID) {
     return axios.delete(`${this.baseUrl}/${userID}`, { auth: this.auth });
+  }
+
+  static existEmail(email){
+    return axios.get(`${this.USUARIO_BASE_REST_API_URL}/existe/${email}`, { auth: this.auth });
   }
 }
 
