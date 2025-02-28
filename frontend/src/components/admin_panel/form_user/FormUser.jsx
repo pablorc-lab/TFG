@@ -182,10 +182,11 @@ export default function FormUser({ }) {
               </article>
 
               {/* PROFILE IMAGE*/}
-              <div className={styles.form_Group}>
+              <div className={`${styles.form_Group} ${styles.form_File}`}>
                 <label htmlFor="profileIMG" className={styles.form_Label}>Profile Image</label>
                 <input
-                  type="text"
+                  type="file"
+                  accept="image/*"
                   id="profileIMG"
                   name="profileImage"
                   value={userData.profileImage}

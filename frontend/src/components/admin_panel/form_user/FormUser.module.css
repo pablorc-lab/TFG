@@ -96,14 +96,38 @@
   gap: 30px;
 }
 
+/*? Input tipo archivo*/
+.form_File input[type="file"] {
+  position: relative;
+  cursor: pointer;
+  width: 450px;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.form_File input[type="file"]::-webkit-file-upload-button {
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  background-color: #4563d1; 
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+.form_File input[type="file"]::-webkit-file-upload-button:hover { background-color: #5873d3;}
+
+
 @media (max-width:650px){
-  .container {
-    max-width: 450px;
-  }
+  .container { max-width: 450px;}
     
   .form_flex {
     flex-direction: column;
     width: 100%;
   }
   .container input {width: calc(100% - 20px);}
+
+  .form_File input[type="file"] { width: calc(100% - 20px);}
 }
