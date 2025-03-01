@@ -53,6 +53,7 @@ export default function FormUser({ }) {
           privateID: usuario.privateID,
           profileImage: usuario.profileImage,
         }));
+        console.log(response.data);
       }).catch(error => { console.error("Error al obtener el usuario ", error); })
     }
   }, [userService, userID]);
@@ -90,7 +91,6 @@ export default function FormUser({ }) {
       });
   }
 
-
   // Guardar o Editar cliente
   const saveOrUpdateCliente = (e) => {
     e.preventDefault();
@@ -100,7 +100,6 @@ export default function FormUser({ }) {
       setErrorInput(true);
       return;
     }
-    setUploadingData(true);
 
     // Solo comprobar si el email ha cambiado
     if (initialEmail !== userData.email) {
@@ -118,92 +117,45 @@ export default function FormUser({ }) {
     else {
       continuarProceso(); // Si el email no cambió, proceder directamente
     }
+
+    setUploadingData(true);
   };
 
+  // Campos de inputs para el formulario
+  const InputField = ({ label, id, type, placeholder, value, campoOnChange }) => (
+    <div className={styles.form_Group}>
+      <label htmlFor={id} className={styles.form_Label}>{label}</label>
+      <input
+        type={type}
+        id={id}
+        autoCorrect="false"
+        placeholder={placeholder}
+        className={styles.form_Control}
+        value={value}
+        onChange={(e) => setUserData(prev => ({ ...prev, [campoOnChange]: e.target.value }))} />
+    </div>
+  );
+
+  // Formulario completo
   const FormularioUsuario = ({ userData, setUserData, saveOrUpdateCliente, userType }) => (
     <div className={styles.card_Body}>
       <form>
         {/* NOMBRE - APELLIDO*/}
         <article className={styles.form_flex}>
-          <div className={styles.form_Group}>
-            <label htmlFor="nombre" className={styles.form_Label}>Nombre</label>
-            <input
-              type="text"
-              id="nombre"
-              placeholder="Pablo"
-              name="nombre"
-              className={styles.form_Control}
-              value={userData.nombre}
-              onChange={(e) => setUserData(prev => ({ ...prev, nombre: e.target.value }))}
-            />
-          </div>
-          <div className={styles.form_Group}>
-            <label htmlFor="apellido" className={styles.form_Label}>Apellido</label>
-            <input
-              type="text"
-              id="apellido"
-              placeholder="Ramblado"
-              name="apellido"
-              className={styles.form_Control}
-              value={userData.apellido}
-              onChange={(e) => setUserData(prev => ({ ...prev, apellido: e.target.value }))}
-            />
-          </div>
+          {InputField({ label: "Nombre", id: "nombre", type: "text", placeholder: "Pablo", value: userData.nombre, campoOnChange: "nombre" })}
+          {InputField({ label: "Apellido", id: "apellido", type: "text", placeholder: "Ramblado", value: userData.apellido, campoOnChange: "apellido" })}
         </article>
 
         {/* EMAIL - PRIVATEID*/}
         <article className={styles.form_flex}>
-          <div className={styles.form_Group}>
-            <label htmlFor="correo" className={styles.form_Label}>Email</label>
-            <input
-              type="email"
-              id="correo"
-              spellCheck="false"
-              placeholder="pablo@example.com"
-              name="nombre"
-              className={styles.form_Control}
-              value={userData.email}
-              onChange={(e) => setUserData(prev => ({ ...prev, email: e.target.value }))}
-            />
-          </div>
-          <div className={styles.form_Group}>
-            <label htmlFor="privateID" className={styles.form_Label}>PrivateID</label>
-            <input
-              type="text"
-              id="privateID"
-              name="PrivateID"
-              value={userData.privateID}
-              className={styles.form_Control}
-              onChange={(e) => setUserData(prev => ({ ...prev, privateID: e.target.value }))}
-            />
-          </div>
+          {InputField({ label: "Email", id: "correo", type: "email", placeholder: "pablo@example.com", value: userData.email, campoOnChange: "email" })}
+          {InputField({ label: "PrivateID", id: "privateID", type: "text", placeholder: "", value: userData.privateID, campoOnChange: "privateID" })}
         </article>
 
         {/* PASSWORD - FECHA NACIMIENTO*/}
         <article className={styles.form_flex}>
-          <div className={styles.form_Group}>
-            <label htmlFor="password" className={styles.form_Label}>Password</label>
-            <input
-              type="text"
-              id="password"
-              name="password"
-              value={userData.password}
-              onChange={(e) => setUserData(prev => ({ ...prev, password: e.target.value }))}
-              className={styles.form_Control}
-              spellCheck="false"
-            />
-          </div>
-          <div className={styles.form_Group}>
-            <label htmlFor="fecha" className={styles.form_Label}>Fecha de nacimiento</label>
-            <input
-              type="date"
-              id="fecha"
-              value={userData.fecha_nacimiento}
-              onChange={(e) => setUserData(prev => ({ ...prev, fecha_nacimiento: e.target.value }))}
-              name="fecha_nacimiento"
-              className={styles.form_Control}
-            />
-          </div>
+          {InputField({ label: "Password", id: "password", type: "text", placeholder: "", value: userData.password, campoOnChange: "password" })}
+          {InputField({ label: "Fecha de nacimiento", id: "fecha", type: "date", placeholder: "", value: userData.fecha_nacimiento, campoOnChange: "fecha_nacimiento" })}
         </article>
 
         {/* PROFILE IMAGE*/}
@@ -246,8 +198,7 @@ export default function FormUser({ }) {
 
           {uploadingData
             ? <img src="/images/loading_gif.gif" alt="Cargando..." className={styles.loading_gif} />
-            :
-            <FormularioUsuario userData={userData} setUserData={setUserData} saveOrUpdateCliente={saveOrUpdateCliente} userType={userType} />
+            : FormularioUsuario({ userData, setUserData, saveOrUpdateCliente, userType })
           }
         </article>
       </section>

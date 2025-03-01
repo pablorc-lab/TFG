@@ -82,7 +82,7 @@ export default function ListUsuariosPage() {
                   <td>{usuario.apellido}</td>
                   <td>{usuario.fecha_nacimiento}</td>
                   <td>{usuario.email}</td>
-                  <td>{usuario.profileImage}</td>
+                  <td><a href={usuario.profileImage} target="_blank" rel="noopener noreferrer">{usuario.profileImage}</a></td>
                   <td >
                     <div className={styles.img_td}>
                       <Link to={`/admin-panel/${userType}/editar/${usuario.id}`}>
