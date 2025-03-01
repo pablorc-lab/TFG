@@ -5,7 +5,14 @@
   margin: 50px auto;
 }
 
+.loading_gif {
+  width: 250px;
+  display: block;
+  margin: 0 auto;
+}
+
 .card {
+  position: relative;
   background: white;
   padding: 20px;
   border-radius: 8px;
