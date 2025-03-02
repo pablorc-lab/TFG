@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-// Controlador comun para cada tipo de usuario
+// Controlador comun para ambos tipo de usuario
 public abstract class BaseController<T extends Usuario, R extends JpaRepository<T, Long>> {
   protected final R repository;
   private final String userType;

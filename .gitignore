@@ -64,3 +64,4 @@ backend/*.ipr
 /backend/target
 frontend/src/services/.env
 frontend/.env
+backend/src/main/resources/application.properties
