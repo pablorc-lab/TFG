@@ -16,8 +16,8 @@ public class Anfitrion extends Usuario{
     super();
   }
 
-  public Anfitrion(String privateID, String nombre, String apellido, LocalDate fecha_nacimiento, String email, String password, String profileImage, String profile_image_delete_url) {
-    super(privateID, nombre, apellido, fecha_nacimiento, email, password, profileImage, profile_image_delete_url);
+  public Anfitrion(String privateID, String nombre, String apellido, LocalDate fecha_nacimiento, String email, String password, String profileImage) {
+    super(privateID, nombre, apellido, fecha_nacimiento, email, password, profileImage);
   }
 
   // GETTERS and SETTERS

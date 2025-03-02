@@ -2,19 +2,26 @@ package com.bearfrens.backend.controller;
 
 import com.bearfrens.backend.entity.Usuario;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
+import com.bearfrens.backend.service.ImgBBservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 // Controlador comun para ambos tipo de usuario
 public abstract class BaseController<T extends Usuario, R extends JpaRepository<T, Long>> {
   protected final R repository;
   private final String userType;
+
+  @Autowired
+  private ImgBBservice imgBBService;
 
   // ==== CONSTRUCTOR ====
   // @Autowired : se utiliza para inyectar automáticamente una instancia en el controlador,
@@ -43,6 +50,24 @@ public abstract class BaseController<T extends Usuario, R extends JpaRepository<
     return repository.save(user);
   }
 
+  // Subir la imagen de enviada y devolver su ruta
+  @PostMapping("/upload")
+  public ResponseEntity<Map<String,Object>> uploadImage(@RequestParam("image") MultipartFile image){
+    if(image.isEmpty()){
+      return ResponseEntity.badRequest().body(Collections.singletonMap("error", "No se ha enviado ninguna imagen"));
+    }
+
+    try {
+      // Llamar al servicio para subir la imagen
+      Map<String, Object> response = imgBBService.uploadImage(image);
+      return ResponseEntity.ok(response);
+    }
+    catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(Collections.singletonMap("error", "Error en la subida: " + e.getMessage()));
+    }
+  }
+
   // PUT :  actualizar un recurso existente
   @PutMapping("/{id}")
   public ResponseEntity<T> actualizarAnfitrion(@PathVariable Long id, @RequestBody T userRequest){
@@ -57,7 +82,6 @@ public abstract class BaseController<T extends Usuario, R extends JpaRepository<
     user.setApellido(userRequest.getApellido());
     user.setFecha_nacimiento(userRequest.getFecha_nacimiento());
     user.setProfileImage(userRequest.getProfileImage());
-    user.setProfile_image_delete_url(userRequest.getProfile_image_delete_url());
 
     // Guardar el usuario actualizado
     T updated_User = repository.save(user);
@@ -69,12 +93,8 @@ public abstract class BaseController<T extends Usuario, R extends JpaRepository<
     T user = repository.findById(id)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + id));
 
-    // Eliminar su imagen de perfil asociada (si la tiene)
-    //    if(!anfitrion.getProfile_image_delete_url().isEmpty()){
-    //
-    //    }
-
     repository.delete(user);
+
     // Devolvemos una respueta JSON ---> "delete" : true
     return ResponseEntity.ok(Collections.singletonMap("delete", true));
   }

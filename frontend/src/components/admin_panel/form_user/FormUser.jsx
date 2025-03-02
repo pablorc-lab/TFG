@@ -3,7 +3,6 @@ import AdminHeader from "../AdminHeader";
 import styles from "./FormUser.module.css";
 import { useEffect, useState } from "react";
 import UsuarioService from "../../../services/UsuarioService";
-import ImageUploader from "../../image_uploader/ImageUploader";
 
 export default function FormUser({ }) {
   const { userType } = useParams();
@@ -58,29 +57,10 @@ export default function FormUser({ }) {
     }
   }, [userService, userID]);
 
-
-  // Funcion para crear el usuario
-  const continuarProceso = async () => {
-    let updatedUserData = { ...userData };
-
-    // Si hay imagen, subirla a ImgBB a traves de la api
-    if (userData.profileImage instanceof File) {
-      try {
-        const { imageUrl, deleteUrl } = await ImageUploader({ file: userData.profileImage });
-        if (imageUrl) {
-          setUserData(prev => ({ ...prev, profileImage: imageUrl, profileImageDeleteUrl: deleteUrl }));
-          updatedUserData.profileImage = imageUrl;
-          updatedUserData.profileImageDeleteUrl = deleteUrl;
-        }
-      } catch (error) {
-        console.error("Error al subir la imagen:", error);
-        return; // Detener si hay error en la subida de imagen
-      }
-    }
-
-    // Si todo está bien, proceder a crear/actualizar la cuenta
+  // Si todo está bien, proceder a crear/actualizar la cuenta
+  function sendUserData(userData) {
     setErrorInput(false);
-    const userAction = userID ? userService.update(userID, updatedUserData) : userService.create(updatedUserData);
+    const userAction = userID ? userService.update(userID, userData) : userService.create(updatedUseruserDataData);
 
     userAction
       .then(response => {
@@ -90,6 +70,29 @@ export default function FormUser({ }) {
       .catch(error => {
         console.error(`Error al ${userID ? "ACTUALIZAR" : "CREAR"} el usuario:`, error);
       });
+  }
+
+  // Funcion para crear el usuario
+  const continuarProceso = async () => {
+    // Si hay imagen, subirla a ImgBB a traves de la api
+    if (userData.profileImage instanceof File) {
+      let updatedUserData = { ...userData };
+
+      userService.uploadImage(userData.profileImage)
+        .then(imageUrl => {
+          console.log("Imagen subida con éxito:", imageUrl);
+          updatedUserData.profileImage = imageUrl;
+
+          sendUserData(updatedUserData);
+        })
+        .catch(error => {
+          console.error("Error al subir la imagen:", error);
+          return; // Detener si hay error en la subida de imagen
+        });
+    }
+    else {
+      sendUserData(userData);
+    }
   }
 
   // Guardar o Editar cliente
@@ -107,7 +110,7 @@ export default function FormUser({ }) {
       UsuarioService.existEmail(userData.email)
         .then(response => {
           setEmailExistente(response.data);
-          console.log(response.data);
+          console.log("Email existente : ", response.data);
           if (response.data) return; // Si el email existe, detenemos la ejecución
 
           // Proceder con la subida de imagen y creación/actualización del usuario

@@ -24,6 +24,12 @@ El sistema está optimizado para facilitar la creación de perfiles y la gestió
 >
 > Una vez instalado podemos ejecutar en nuestra terminal `node -vp` para verificar que se ha instalado correctamente
 
+> [!IMPORTANT]
+>
+> **Configuración del archivo** `application.properties`
+>
+> Antes de ejecutar el proyecto, es **muy importante** configurar correctamente el archivo `application.properties` ubicado en `src/main/resources/` (explicado en el **Paso 6**). Este archivo contiene las **configuraciones necesarias** para la conexión a la base de datos y otras propiedades clave.
+
 ### **Paso 1: Clonar el repositorio en nuestra máquina local**
 ```bash
 git clone https://github.com/{usuario}/{tu_repositorio}.git
@@ -51,7 +57,24 @@ net start MySQL84
 ```
 
 ### **Paso 6. Configurar la base de datos**
-Asegurar de que la base de datos está creada y configurada en `application.properties` dentro del proyecto Spring Boot.
+Asegurar de que la base de datos `bearfrens_db` está creada en MySQL.
+```bash
+CREATE DATABASE bearfrens_db;
+```
+
+Configura y crea las credenciales de la base de datos en el archivo `application.properties` dentro del proyecto Spring Boot. 
+
+Para ello crealo si no existe en la ruta `src/main/resources/application.properties`.
+
+Luego, edita el archivo `application.properties` y proporciona los siguientes valores:
+```bash
+spring.datasource.url=jdbc:mysql://localhost:3306/bearfrens_db
+spring.datasource.username=TU_USUARIO
+spring.datasource.password=TU_CONTRASEÑA
+spring.jpa.hibernate.ddl-auto=update
+IMGBB_API_KEY=TU_CLAVE_API
+```
+
 
 ### **Paso 7. Compilar y ejecutar el backend**
 ```bash
