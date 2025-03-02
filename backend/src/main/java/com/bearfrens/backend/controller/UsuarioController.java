@@ -3,21 +3,20 @@ package com.bearfrens.backend.controller;
 import com.bearfrens.backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/api")
 public class UsuarioController {
 
   @Autowired
   private UsuarioService usuarioService;
 
-  @GetMapping("/existe/{email}")
+  @GetMapping("/usuarios/existe/{email}")
   public ResponseEntity<Boolean> verificarEmail(@PathVariable String email) {
     boolean existe = usuarioService.existsByEmail(email);
     return ResponseEntity.ok(existe);
   }
+
 }

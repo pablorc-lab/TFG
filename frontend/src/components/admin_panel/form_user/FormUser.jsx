@@ -66,10 +66,11 @@ export default function FormUser({ }) {
     // Si hay imagen, subirla a ImgBB a traves de la api
     if (userData.profileImage instanceof File) {
       try {
-        const imageUrl = await ImageUploader({ file: userData.profileImage });
+        const { imageUrl, deleteUrl } = await ImageUploader({ file: userData.profileImage });
         if (imageUrl) {
-          setUserData(prev => ({ ...prev, profileImage: imageUrl }));
+          setUserData(prev => ({ ...prev, profileImage: imageUrl, profileImageDeleteUrl: deleteUrl }));
           updatedUserData.profileImage = imageUrl;
+          updatedUserData.profileImageDeleteUrl = deleteUrl;
         }
       } catch (error) {
         console.error("Error al subir la imagen:", error);
@@ -77,7 +78,7 @@ export default function FormUser({ }) {
       }
     }
 
-    // Si todo está bien, proceder
+    // Si todo está bien, proceder a crear/actualizar la cuenta
     setErrorInput(false);
     const userAction = userID ? userService.update(userID, updatedUserData) : userService.create(updatedUserData);
 

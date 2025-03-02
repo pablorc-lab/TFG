@@ -43,11 +43,14 @@ public abstract class Usuario {
   @Column(name = "profileImage")
   private String profileImage;
 
+  @Column(name = "profileImageDelete")
+  private String profile_image_delete_url ;
+
   // Constructor vacío necesario para JPA
   public Usuario() {}
 
   // Constructor con cifrado de contraseña
-  public Usuario(String privateID, String nombre, String apellido, LocalDate fecha_nacimiento, String email, String password, String profileImage) {
+  public Usuario(String privateID, String nombre, String apellido, LocalDate fecha_nacimiento, String email, String password, String profileImage, String profile_image_delete_url) {
     this.privateID = privateID;
     this.nombre = nombre;
     this.apellido = apellido;
@@ -55,6 +58,7 @@ public abstract class Usuario {
     this.email = email;
     setPassword(password); // Ciframos la contraseña
     this.profileImage = (profileImage == null || profileImage.isEmpty()) ? null : profileImage;
+    this.profile_image_delete_url = (profile_image_delete_url == null || profile_image_delete_url.isEmpty()) ? null : profile_image_delete_url;
   }
   
   // GETTERS and SETTERS
@@ -73,7 +77,8 @@ public abstract class Usuario {
         " Nombre='" + nombre + '\'' + ",\n" +
         " Apellido='" + apellido + '\'' + ",\n" +
         " Fecha de nacimiento='" + fecha_nacimiento + '\'' + ",\n" +
-        " Imagen de perfil='" + profileImage + '\'' + ",\n";
+        " URL profile image ='" + profileImage + '\'' + ",\n" +
+        " URL delete profile image='" + profile_image_delete_url + '\'' + ",\n";
   }
 }
 
