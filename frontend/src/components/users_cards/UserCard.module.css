@@ -15,7 +15,6 @@
   outline: 2px solid #009080;
 }
 
-
 .btn_conectar {
   position: relative;
   left: 50%;
@@ -26,7 +25,7 @@
   color: #009080;
   cursor: pointer;
   transition: background-color 0.2s;
-  border-radius: 5.2px;
+  border-radius: 50px; 
   border: 2px solid #009080;
   font-size: 14.08px;
   padding: 9.6px 16px;
@@ -207,10 +206,9 @@
 
   .viaj_prof {  width: 360px;}
   .btn_conectar { 
-    border-radius: 6px; 
     font-size: 18px; 
-    padding: 12px 20px; 
-    margin-bottom: 14px; 
+    padding: 12px 25px; 
+    margin-bottom: 20px; 
   }
   .house {
     height: 180px;

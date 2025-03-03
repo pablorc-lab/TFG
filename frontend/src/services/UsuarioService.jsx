@@ -41,7 +41,7 @@ class UsuarioService {
     formData.append("image", image);
 
     return axios.post(`${this.baseUrl}/upload`, formData, { headers: { "Content-Type": "multipart/form-data" }, auth: this.auth })
-      .then(response => response.data.data.url)
+      .then(response => response.data.data.url) // Retornar URL de la imagen dentro del JSON
       .catch(error => {
         console.error("Error al subir la imagen:", error);
         return null;

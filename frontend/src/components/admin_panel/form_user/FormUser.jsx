@@ -174,6 +174,14 @@ export default function FormUser({ }) {
             className={styles.form_Control}
             spellCheck="false"
           />
+          {userData.profileImage && (
+            <img
+              src={userData.profileImage instanceof File
+                ? URL.createObjectURL(userData.profileImage)
+                : userData.profileImage}
+              alt="Vista previa"
+            />
+          )}
         </div>
 
         <article className={styles.btn_Container}>

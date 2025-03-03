@@ -2,7 +2,9 @@
   font-family: "Nunito";
   width: 100%;
   max-width: 600px;
-  margin: 50px auto;
+  margin: 0 auto;
+  padding-top: 50px;
+  padding-bottom: 30px;
 }
 
 .loading_gif {
@@ -104,6 +106,12 @@
 }
 
 /*? Input tipo archivo*/
+.form_File img {
+  margin-top: 20px;
+  width: 200px;
+  height: auto;
+  border-radius: 3px;
+}
 .form_File input[type="file"] {
   position: relative;
   cursor: pointer;

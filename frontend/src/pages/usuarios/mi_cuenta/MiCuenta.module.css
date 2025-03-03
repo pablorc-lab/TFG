@@ -81,46 +81,6 @@
   border-bottom: 4px solid #0a7273;
 }
 
-/*? Menú responsive
-
-/*? PARTE DEL USUARIO*/
-.header_user_section { position: relative;}
-
-.header_prof_user {
-  cursor: pointer;
-  user-select: none;
-  background-color: #0a7273;
-  border: 2px solid #0a7273;
-  border-radius: 60px;
-  display: flex;
-  align-items: center;
-  padding: 4px 15px;
-  gap: 10px; 
-}
-.header_prof_user article {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.header_prof_user article div{
-  background-color: white;
-  height: 2px;
-  width: 35px;
-  transition: all .4s;
-  transform-origin: left;
-  border-radius: 5px;
-}
-
-.header_prof_user.open article div:first-child { transform: rotate(45deg); }
-.header_prof_user.open article div:nth-child(2) { opacity: 0; }
-.header_prof_user.open article div:last-child { transform: rotate(-45deg); }
-.header_prof_user:hover { filter: brightness(0.9); }
-.header_prof_user img { 
-  filter: brightness(0) invert(1);
-  width: 45px;
-}
-
 /*? ===================
 /*? CONTAINER USUARIO*/
 /*? ===================*/

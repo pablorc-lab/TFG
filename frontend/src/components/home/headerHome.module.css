@@ -119,7 +119,7 @@
 @media (max-width: 860px) {
 	/** HEADER */
 	.header {
-	  width: calc(100% - 60px);
+	  width: calc(100% - 100px);
 	  justify-content: space-between;
 	}
 	.header_menu { width: 100%; justify-content: end; }

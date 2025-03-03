@@ -1,0 +1,153 @@
+
+/*? HEADER*/
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Nunito";
+  width: (100%-100px) ;
+  padding: 20px 40px;
+  background-color: #eddbc8;
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.4);
+}
+
+.header .header_logo {
+  width: 60px;
+  height: auto;
+}
+
+.header nav a{
+  filter: brightness(0.8);
+  font-weight: 500;
+  font-size: 21px;
+  color: #737373;
+  cursor: pointer;
+  margin: 0 15px;
+  padding: 0 5px;
+  text-decoration: none;
+  transition: border-bottom 0.1s ease-in-out;
+}
+.header nav a:last-child {margin-right: 0;}
+
+.header nav a:hover {
+  color: #0a7273;
+  filter: none;
+  margin-bottom: 0px;
+  border-bottom: 4px solid #0a7273;
+}
+
+.main {
+  background-color: #fafbfd;
+  font-family: "Nunito";
+  padding: 30px 7vw;
+  padding-bottom: 130px;
+}
+.main h1, .main h2, .main h3, .main p {margin: 0;}
+
+/*? VIVIENDAS IMÁGENES*/
+.vivienda_imgs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin: 20px auto;
+  gap: 7px;
+}
+.vivienda_imgs img {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: 3px;
+}
+
+/*? INFO VIVIENDA*/
+.vivienda_info h1 {
+  font-weight: 750;
+}
+.vivienda_info p {
+  font-size: 20px;
+}
+
+/*? INFO ANFITRION*/
+.user_img {
+  width: 90px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user_info {
+  margin: 50px 0;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #dadada;
+}
+.user_article {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.user_info p {
+  font-size: 19px;
+  color: #737373;
+}
+
+.user_reservas {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/*? PUNTUACIÓN*/
+.user_score  {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #dfdb1838;
+  border-radius: 30px;
+  padding: 2px 7px;
+  height: max-content;
+}
+.user_score h3 {
+  color: #737373;
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.user_score img {
+  aspect-ratio: 1 / 1;
+  width: 19px;
+  margin-bottom: 2px;
+}
+
+/*? GUSTOS DEL ANFITRION*/
+.user_likes {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.user_likes img {
+  width: 35px;
+  aspect-ratio: 1 / 1;
+}
+
+.user_conectar {
+  margin: 10px 0;
+  display: flex;
+  justify-content: start;
+  gap: 50px;
+
+}
+
+.user_conectar button {
+  cursor: pointer;
+  font-family: "Nunito";
+  border: none;
+  background-color: #009080;
+  color: white;
+  border-radius: 50px;
+  padding: 10px 25px;
+  font-size: 23px;
+}
+.user_conectar button:hover {filter: brightness(0.85);}
