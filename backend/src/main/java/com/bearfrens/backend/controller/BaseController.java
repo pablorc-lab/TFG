@@ -60,11 +60,11 @@ public abstract class BaseController<T extends Usuario, R extends JpaRepository<
     try {
       // Llamar al servicio para subir la imagen
       Map<String, Object> response = imgBBService.uploadImage(image);
-      return ResponseEntity.ok(response);
+      return ResponseEntity.ok(response); // Retornar el JSON
     }
     catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body(Collections.singletonMap("error", "Error en la subida: " + e.getMessage()));
+        .body(Collections.singletonMap("error", "Error en la subida de imágen: " + e.getMessage()));
     }
   }
 

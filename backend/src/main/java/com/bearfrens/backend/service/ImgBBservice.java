@@ -1,6 +1,7 @@
 package com.bearfrens.backend.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
+// Este service enviará la imagen a la API de ImgBB usando la Key privada
 @Service
 public class ImgBBservice {
 
@@ -22,7 +24,8 @@ public class ImgBBservice {
   public Map<String, Object> uploadImage(MultipartFile image) throws IOException {
     String url = "https://api.imgbb.com/1/upload?key=" + imgBB_Api_Key;
 
-    // Crear el recurso de la imagen como un ByteArrayResource para enviarlo como formulario
+    // Crear el recurso de la imagen como un `ByteArrayResource` para enviarlo como
+    // formulario en una solicitud `multipart/form-data`
     ByteArrayResource imageResource = new ByteArrayResource(image.getBytes()) {
       @Override
       public String getFilename() {
@@ -30,7 +33,7 @@ public class ImgBBservice {
       }
     };
 
-    // Configurar el cuerpo
+    // Configurar el body
     MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
     body.add("image", imageResource);
 
@@ -39,17 +42,18 @@ public class ImgBBservice {
     headers.setContentType(MediaType.MULTIPART_FORM_DATA); // Indica que se envia un archivo
 
     // Crear la solicitud HTTP (combinando body y header)
+    // `MultiValueMap` permite que una clave tenga múltiples valores
     HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
     // Enviar la solicitud HTTP POST a ImgBB
     RestTemplate restTemplate = new RestTemplate();
-    ResponseEntity<Map> response = restTemplate.postForEntity(url, requestEntity, Map.class);
+    ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+      url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {}
+    );
 
     // Verificar que la respuesta no sea nula y tenga el formato correcto
-    if (response.getStatusCode() == HttpStatus.OK) {
-      return response.getBody(); // Cast explícito
+    return response.getStatusCode().is2xxSuccessful()
+      ? response.getBody()
+      : Collections.singletonMap("error", "Error al subir la imagen");
     }
-
-    return Collections.singletonMap("error", "Error al subir la imagen");
-  }
 }
