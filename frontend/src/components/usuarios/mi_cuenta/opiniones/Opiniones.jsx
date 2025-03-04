@@ -3,7 +3,7 @@ import ScoreMiCuenta from "../Score";
 import styles from "./Opiniones.module.css"
 import Comentarios from "./Comentarios";
 
-const OpinionesMiCuenta = () => {
+const OpinionesMiCuenta = ({ showSize = false }) => {
 
   const estadisticas_valoraciones = [90, 67, 23, 1, 7];
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -35,6 +35,13 @@ const OpinionesMiCuenta = () => {
         <Comentarios />
         <Comentarios />
       </section>
+
+      {showSize &&
+        <div className={styles.show_size}>
+          <p>Ver 67 opiniones</p>
+        </div>
+      }
+      
     </main>
   );
 }

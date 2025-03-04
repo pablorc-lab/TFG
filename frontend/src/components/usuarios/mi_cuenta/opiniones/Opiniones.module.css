@@ -18,7 +18,10 @@
   display: grid;
   gap: 15px;
 }
-.valoraciones_info h2 {color: #0a7273;}
+.valoraciones_info h2 {
+  color: #0a7273;
+  font-size: 23px;
+}
 /*? ESTADISTICAS GENERALES DE LA PUNTUACIÓN*/
 .valoraciones_statistics p {
   color: rgb(71, 71, 71);
@@ -85,6 +88,21 @@
   width: fit-content;
 }
 
+.show_size {
+  text-align: center;
+  font-size: 30px;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.show_size p {  
+  cursor: pointer;
+  color: black;
+  text-decoration: underline;
+}
+.show_size p:hover { color: #009080}
+
 @media (min-width: 781px) and (max-width: 1299px), (min-width: 1300px) {
  .valoraciones_container { padding: 35px 0;}
  .valoraciones_info h2 {font-size: 33px;}
@@ -99,5 +117,8 @@
   /*? COMENTARIOS DE USUARIOS*/
   .comentarios_section {
     padding: 35px 0;
+  }
+  .show_size {
+    font-size: 35px;
   }
 }

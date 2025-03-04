@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import styles from "./MiCuenta.module.css"
 import ScoreMiCuenta from "../../../components/usuarios/mi_cuenta/Score";
 import { Link } from "react-router-dom";
-const ValoracionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/opiniones/Opiniones"));
+const OpinionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/opiniones/Opiniones"));
 const PerfilMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/perfil/Perfil"));
 const SeguridadMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/seguridad/Seguridad"));
 const HistorialReservasMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/historial_reservas/HistorialReservas"));
@@ -122,7 +122,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             {activeMenu === 0 && <PerfilMiCuenta />}
             {activeMenu === 1 && !esViajero && <PerfilMiCuenta mostrarCuenta={false} />}
             {activeMenu === 2 && <SeguridadMiCuenta />}
-            {activeMenu === 3 && <ValoracionesMiCuenta />}
+            {activeMenu === 3 && <OpinionesMiCuenta />}
             {activeMenu === 4 && <HistorialReservasMiCuenta />}
           </Suspense>
         </div>

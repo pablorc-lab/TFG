@@ -46,16 +46,37 @@
 
 /*? VIVIENDAS IMÁGENES*/
 .vivienda_imgs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  margin: 20px auto;
-  gap: 7px;
+  position: relative;
+  background-color: #fafbfd;
 }
-.vivienda_imgs img {
+
+.vivienda_imgs img:not(.arrow_left, .arrow_right){
   width: 100%;
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 5 / 3;
   border-radius: 3px;
+}
+
+/*? CARRUSEL*/
+.arrow_left, .arrow_right {
+  cursor: pointer;
+  width: 40px;
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  background-color: white;
+  opacity: 0.3;
+}
+.arrow_left {
+  left: 15px;
+  transform: translateY(-50%) rotate(180deg);
+}
+.arrow_right {
+  right: 15px;
+  transform: translateY(-50%);
+}
+.arrow_left:hover , .arrow_right:hover {
+  opacity: 1;
+  box-shadow: 0 0 10px rgba(65, 65, 65, 0.7);
 }
 
 /*? INFO VIVIENDA*/
@@ -76,6 +97,7 @@
 
 .user_info {
   margin: 50px 0;
+  margin-bottom: 30px;
   padding-bottom: 30px;
   border-bottom: 2px solid #dadada;
 }
@@ -133,11 +155,10 @@
 }
 
 .user_conectar {
-  margin: 10px 0;
+  margin: 20px 0;
   display: flex;
   justify-content: start;
   gap: 50px;
-
 }
 
 .user_conectar button {
@@ -151,3 +172,107 @@
   font-size: 23px;
 }
 .user_conectar button:hover {filter: brightness(0.85);}
+
+/*? TITULO DE LAS SECCIONES (BIOGRAFIA, RECOMENDACIONES)*/
+.user_title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.user_title2{
+  border-top: 2px solid #dadada;
+  padding-top: 30px;
+}
+
+.user_title img {
+  width: 38px;
+  aspect-ratio: 1 / 1;
+}
+.user_title2 img {margin-top: 2px;}
+.user_title h1 {
+  color: #0a7273;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+/*? BIOGRAFIA DEL USUARIO*/
+.user_descripcion { 
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.user_descripcion h2 {
+  margin-top: 35px;
+  font-size: 18px;
+  color: #231f20;
+}
+.user_descripcion h2:first-of-type {
+  margin-top: 15px;
+}
+
+.user_descripcion p, .user_descripcion ul, .user_recomendations p {
+  margin: 0;
+  font-size: 18px;
+  color: #7e7e7e;
+}
+
+/*? RECOMENDACIONES*/
+.user_recomendations {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.25);
+}
+.user_recomendations p{ margin-bottom: 30px;}
+
+.user_recomendations:nth-child(even) { background-color: rgb(230, 242, 250); }  
+.user_recomendations:nth-child(odd) { background-color: rgb(250, 250, 230); }
+
+.logos_recomendations {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logos_recomendations p{ 
+  margin: 0;
+  color: black;
+  font-size: 17px;
+}
+  
+.valoraciones {
+  position: relative;
+}
+
+@media (min-width:771px) {
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 7vw;
+  }
+  .main .vivienda_imgs {
+    grid-column-start: span 2;
+    margin-bottom: 50px;
+  }
+  .columna_izquierda, .columna_derecha {
+    display: grid;
+    gap: 30px;  
+  }
+  .user_info { margin-top: 0;  }
+  .columna_izquierda { grid-template-rows: auto auto 1fr; }
+  .columna_derecha { grid-template-rows: auto auto 1fr; }
+  
+  /*? Imagenes de la vivienda*/
+  .vivienda_imgs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    margin: 0px auto;
+    padding: 20px 0;
+    gap: 7px;
+  }
+  .vivienda_imgs  img {max-width: 550px;}
+}
