@@ -89,8 +89,8 @@
 }
 
 @media (min-width: 770px) and (max-width: 899px) {
-  .text_info p { font-size: 12px; }
-  .privacy_policy a { font-size: 14px; }
+  .text_info p { font-size: 15px; }
+  .privacy_policy a { font-size: 19px; }
 }
 
 @media (min-width: 900px) {

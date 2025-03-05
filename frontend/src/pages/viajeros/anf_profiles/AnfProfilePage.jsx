@@ -3,14 +3,20 @@ import styles from "./AnfProfilePage.module.css"
 import { Link } from "react-router-dom";
 import ViajerosMobileHeader from "../../../components/viajeros/header/ViajerosMobileHeader";
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
+import Footer from "../../../components/footer/footer";
 
 export default function AnfProfilePage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
+  const [isColumns, setIsColumns] = useState(window.innerWidth <= 1250);
   const [actualImage, setActualImage] = useState(0);
 
   // Controlar cuando es pantalla pequeña
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 770);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 770);
+      setIsColumns(window.innerWidth <= 1250);
+    };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -149,8 +155,6 @@ export default function AnfProfilePage() {
       </header>
       {isMobile && <ViajerosMobileHeader activeSection="" />}
 
-
-
       <main className={styles.main}>
         <section className={styles.vivienda_imgs}>
           {isMobile ? (
@@ -159,7 +163,7 @@ export default function AnfProfilePage() {
                 className={styles.arrow_left}
                 src="/images/profiles/arrow.svg"
                 alt="Biografia logo"
-                onClick={() => setActualImage(actualImage === 0 ? Vivienda_imgs.length : actualImage - 1)}
+                onClick={() => setActualImage(actualImage === 0 ? Vivienda_imgs.length - 1 : actualImage - 1)}
               />
               <img
                 className={styles.arrow_right}
@@ -178,7 +182,7 @@ export default function AnfProfilePage() {
           )}
         </section>
 
-        {isMobile ? (
+        {isColumns ? (
           <>
             {ViviendaInfo}
             {PerfilUsuario /* PERFIL DEL USUARIO*/}
@@ -201,6 +205,8 @@ export default function AnfProfilePage() {
           </>
         )}
       </main>
+
+      <Footer/>
     </>
 
   )

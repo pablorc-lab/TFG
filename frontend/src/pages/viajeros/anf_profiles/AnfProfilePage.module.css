@@ -46,6 +46,7 @@
 
 /*? VIVIENDAS IMÁGENES*/
 .vivienda_imgs {
+  user-select: none;
   position: relative;
   background-color: #fafbfd;
 }
@@ -246,6 +247,22 @@
 }
 
 @media (min-width:771px) {
+ /*? Imagenes de la vivienda*/
+ .vivienda_imgs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    margin: 0px auto;
+    padding: 20px 0;
+    gap: 7px;
+  }
+  .vivienda_imgs  img {max-width: 500px;}
+  .vivienda_imgs img:hover { filter: brightness(0.8);}
+}
+
+@media (min-width:1250px) {
   .main {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -257,22 +274,53 @@
   }
   .columna_izquierda, .columna_derecha {
     display: grid;
-    gap: 30px;  
   }
-  .user_info { margin-top: 0;  }
+
   .columna_izquierda { grid-template-rows: auto auto 1fr; }
   .columna_derecha { grid-template-rows: auto auto 1fr; }
-  
-  /*? Imagenes de la vivienda*/
-  .vivienda_imgs {
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: 1fr 1fr;
-    justify-content: center;
-    margin: 0px auto;
-    padding: 20px 0;
-    gap: 7px;
+
+  /*? Info del usuario*/
+  .user_info {
+    max-width: 550px;
+    margin-top: 0;
+    padding: 20px;  
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
+    width: max-content;  
   }
-  .vivienda_imgs  img {max-width: 550px;}
+
+  .user_info p { font-size: 21px;}
+  .user_info h2 { font-size: 27px;}
+
+  .user_score h3 { font-size: 22px;}
+  .user_score img { width: 23px;}
+
+  .user_conectar {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    justify-content: center;
+    gap: 50px;
+  }
+  .user_conectar button {
+    font-size: 28px;
+    width: 250px;
+  }
+  
+  .user_likes img{ width: 42px;}
+  
+  /*? Info vivienda*/
+  .vivienda_info {margin-bottom: 30px;}
+  .vivienda_info h1 {font-size: 26px;}
+  .vivienda_info p {font-size: 22px;}
+
+  /*? BIOGRAFIA, RECOMENDACIONES*/
+  .user_descripcion {margin-bottom: 30px;}
+  .user_descripcion p, .user_descripcion h2,.user_descripcion ul, .user_recomendations p {
+    font-size: 21px;
+  } 
+  .user_title{
+    border-top: 2px solid #dadada;
+    padding-top: 30px;
+  }
 }
