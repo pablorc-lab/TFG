@@ -3,7 +3,7 @@
 ![estado](https://img.shields.io/badge/Estado-En%20desarrollo-darkred)
 > [!WARNING]
 > 
-> *Este proyectso es parte de mi TFG y aún está en desarrollo. Por lo que faltan algunas funcionalidades por añadir/completar.*
+> *Este proyecto es parte de mi TFG y aún está en desarrollo. Por lo que faltan algunas funcionalidades por añadir/completar.*
 >
 
 [![My Skills](https://skillicons.dev/icons?i=react,js,html,css,java,spring,mysql)](https://skillicons.dev)
