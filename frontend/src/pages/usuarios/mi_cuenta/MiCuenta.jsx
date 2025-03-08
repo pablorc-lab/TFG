@@ -81,7 +81,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           <nav className={styles.user_nav}>
             <ul className={styles.user_nav_ul}>
               {userNavItems.map((item, index) => {
-                if (index == 1 && esViajero) return null;
+                if (index == 2 && esViajero) return null;
 
                 return (
                   <li key={index} onClick={() => setActiveMenu(index)} className={activeMenu === index ? styles.active : undefined}>
