@@ -259,7 +259,7 @@
     gap: 7px;
   }
   .vivienda_imgs  img {max-width: 500px;}
-  .vivienda_imgs img:hover { filter: brightness(0.8);}
+  .vivienda_imgs img:hover { filter: brightness(0.7);}
 }
 
 @media (min-width:1250px) {

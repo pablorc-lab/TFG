@@ -12,7 +12,7 @@
 }
 
 .general_prof:hover { 
-  outline: 2px solid #009080;
+  box-shadow: 0 0 15px 2px #00907f7d;
 }
 
 .btn_conectar {
@@ -27,8 +27,8 @@
   transition: background-color 0.2s;
   border-radius: 50px; 
   border: 2px solid #009080;
-  font-size: 14.08px;
-  padding: 9.6px 16px;
+  font-size: 16px;
+  padding: 9.6px 30px;
   margin-bottom: 11.52px;
 }
 
@@ -206,8 +206,8 @@
 
   .viaj_prof {  width: 360px;}
   .btn_conectar { 
-    font-size: 18px; 
-    padding: 12px 25px; 
+    font-size: 19px; 
+    padding: 12px 40px; 
     margin-bottom: 20px; 
   }
   .house {

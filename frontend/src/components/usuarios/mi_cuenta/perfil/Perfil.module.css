@@ -6,7 +6,7 @@
 }
 .miCuenta_section article {margin-bottom: 20px;}
 /*? TITULO DE LA VIVIENDA*/
-.miCuenta_title h1, .miCuenta_title button p, .miCuenta_data p, .miCuenta_info h2, .miCuenta_info p {margin: 0;}
+.miCuenta_title h1, .miCuenta_title button p, .miCuenta_data p, .miCuenta_info h2, .miCuenta_info p, .miCuenta_text_info {margin: 0;}
 .miCuenta_title {
   display: flex;
   align-items: center;
@@ -83,10 +83,16 @@
   margin-top: 10px;
   padding: 0 5px;
 }
+.miCuenta_text_info {
+  margin-top:  10px;
+  padding: 0 5px;
+}
 .miCuenta_info li{
   list-style: none;
   overflow: hidden;
 }
+
+
 .miCuenta_info li h2 {
   font-size: 19px;
   font-weight: normal;
@@ -103,6 +109,11 @@
 }
 .miCuenta_contacto, .miCuenta_biografia { grid-template-columns: 1fr;}
 .miCuenta_contacto p, .miCuenta_biografia p { width: fit-content;}
+.miCuenta_text_info {
+  font-weight: 400;
+  font-size: 20px;
+  width: 100%;
+}
 
 /*? Biografía*/
 .miCuenta_biografia p {
@@ -143,6 +154,7 @@
     gap: 100px;
   }
   .miCuenta_gustos img{ width: 60px;}
+  
   /*? Imágenes de la vivienda*/
   .vivienda_images {
     margin: 0 5px;
@@ -153,9 +165,9 @@
   .vivienda_images img {width: 100%;}
 
   /*? Datos de la vivienda*/
-  .miCuenta_info li p { font-size: 24px;}
+  .miCuenta_info li p, .miCuenta_text_info { font-size: 24px;}
 
-  .miCuenta_info { width: 600px;}
+  .miCuenta_info, .miCuenta_text_info { width: calc(100% - 15px );}
 }
 
 @media (min-width: 780px) and (max-width: 1299px){

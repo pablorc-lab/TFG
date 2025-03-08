@@ -270,6 +270,10 @@ body:has(.modal[open]) {
   height: 35px;
   text-align: center;
 }
+.input_idioma input{
+  width: 150px;
+  height: 40px;
+}
 
 .input_div input:not(:placeholder-shown), .input_div textarea:not(:placeholder-shown)  { background-color: #0a71731f;}
 /*? BIOGRAFÍA*/
@@ -291,6 +295,7 @@ body:has(.modal[open]) {
 .input_div textarea::placeholder{font-weight: 400;}
 
 .input_MiCuenta .input_div input{width: 150px;}
+.input_idioma input {width: 170px;}
 .input_MiCuenta_contacto div:nth-child(1) input { 
   padding: 5px 15px;
   text-align: start;
@@ -343,6 +348,24 @@ body:has(.modal[open]) {
   color: white;
 }
 
+/*?  Input idiomas*/
+.input_idioma {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 15px;
+}
+
+.idioma_opcion {
+  text-align: center;
+  font-size: 22px;
+  background-color: white !important;
+  width: 150px;
+  justify-content: center;
+  border: 2px solid #0a7273 !important;
+}
+.idioma_opcion:hover {filter: brightness(0.9) !important;}
+
 @media (min-width: 850px) {
   /*? Titulo del modal*/
   .modal {
@@ -366,7 +389,7 @@ body:has(.modal[open]) {
     gap: 50px;
   }
   .input_div p:not(.add_gusto_tooltip) { font-size: 23px;}
-  .input_div input {
+  .input_div input,  .input_idioma input  {
     font-size: 25px;
     font-weight: 400;
   }
@@ -374,8 +397,11 @@ body:has(.modal[open]) {
   .modal_buttons button { font-size: 20px;}
   .input_text input{ width: 350px;}
   .input_detalles {display: flex;}
+  
   /*? Campo mi cuenta*/
   .input_MiCuenta .input_div input{width: 270px;}
+  .input_idioma input {width: 200px;}
+
   .input_MiCuenta_contacto div:nth-child(1) input { 
     width: 80%;
   }

@@ -27,6 +27,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
 
   const userNavItems = [
     { src: "/images/usuarios/account/edit.svg", alt: "Datos personales", text: "Datos personales" },
+    { src: "/images/usuarios/account/biografia.svg", alt: "Biografía", text: "Biografía" },
     { src: "/images/usuarios/account/house.svg", alt: "Vivienda", text: "Vivienda" },
     { src: "/images/usuarios/account/security.svg", alt: "Seguridad", text: "Seguridad" },
     { src: "/images/usuarios/account/star.svg", alt: "Opiniones", text: "Opiniones" },
@@ -72,8 +73,10 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
       </header>
 
       {isMobile && <ViajerosMobileHeader activeSection={activeSection} />}
+      
       <main className={styles.main}>
         <article className={styles.main_containers}>
+
           {/* Menú de nav*/}
           <nav className={styles.user_nav}>
             <ul className={styles.user_nav_ul}>
@@ -119,11 +122,12 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
         {/* Componente de los menús*/}
         <div className={styles.user_component}>
           <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
-            {activeMenu === 0 && <PerfilMiCuenta />}
-            {activeMenu === 1 && !esViajero && <PerfilMiCuenta mostrarCuenta={false} />}
-            {activeMenu === 2 && <SeguridadMiCuenta />}
-            {activeMenu === 3 && <OpinionesMiCuenta />}
-            {activeMenu === 4 && <HistorialReservasMiCuenta />}
+            {activeMenu === 0 && <PerfilMiCuenta showValue={0} />}
+            {activeMenu === 1 && <PerfilMiCuenta showValue={1} />}
+            {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} />}
+            {activeMenu === 3 && <SeguridadMiCuenta />}
+            {activeMenu === 4 && <OpinionesMiCuenta />}
+            {activeMenu ===5 && <HistorialReservasMiCuenta />}
           </Suspense>
         </div>
       </main>

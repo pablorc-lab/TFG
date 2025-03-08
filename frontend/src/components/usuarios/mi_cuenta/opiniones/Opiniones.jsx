@@ -22,7 +22,7 @@ const OpinionesMiCuenta = ({ showSize = false }) => {
           {estadisticas_valoraciones.map((puntuacion, index) => (
             <div key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
               <p>{estadisticas_valoraciones.length - index}</p>
-              <progress max="100" value={puntuacion > 0 ? Math.max(puntuacion, 10) : 0} key={index} />
+              <progress max="100" value={puntuacion > 0 ? Math.sqrt(puntuacion) * 10 : 0} key={index} />
               {hoveredIndex === index && (
                 <span>{puntuacion} valoraciones</span>
               )}

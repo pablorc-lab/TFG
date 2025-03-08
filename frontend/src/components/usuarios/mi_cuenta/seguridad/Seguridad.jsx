@@ -9,11 +9,11 @@ export default function SeguridadMiCuenta() {
         <form className={styles.seguridad_form}>
           <div>
             <p>Nueva contraseña</p>
-            <input type="password" />
+            <input type="password" name="password"/>
           </div>
           <div>
             <p>Repita la contraseña</p>
-            <input type="password" />
+            <input type="password" name="repeat_password" />
           </div>
         </form>
         <button className={styles.seguridad_save}>Guardar cambios</button>
