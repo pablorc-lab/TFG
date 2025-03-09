@@ -350,6 +350,7 @@ body:has(.modal[open]) {
 
 /*?  Input idiomas*/
 .input_idioma {
+  user-select: none;
   display: grid;
   grid-auto-flow: row;
   grid-template-columns: 1fr 1fr 1fr;
@@ -365,6 +366,11 @@ body:has(.modal[open]) {
   border: 2px solid #0a7273 !important;
 }
 .idioma_opcion:hover {filter: brightness(0.9) !important;}
+.idioma_opcion.idioma_active {
+  background-color: #0a7273 !important;
+  color: white;
+  box-shadow: 0 0 10px #0a71737c;
+}
 
 @media (min-width: 850px) {
   /*? Titulo del modal*/

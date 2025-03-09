@@ -109,7 +109,7 @@ export default function HomePage() {
 
           <article className={styles.button_container}>
             <h2>Conecta con personas mundialmente</h2>
-            <Link to="/" className={styles.btn_inquilinos}>
+            <Link to="/anfitriones/inquilinos" className={styles.btn_inquilinos}>
               <img src="images/logos/inquilino.png" alt="Icono inquilino" />
               <p>Inquilinos</p>
             </Link>

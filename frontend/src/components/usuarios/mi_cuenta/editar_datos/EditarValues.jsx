@@ -1,4 +1,4 @@
-import { lazy, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import styles from "./Editar.module.css"
 const FilteredList = lazy(() => import("../../../utilities/filteresCities/FilteredList"));
 
@@ -113,6 +113,8 @@ export const EditarVivienda = ({ addImageState, setAddImageState }) => {
 	const updateEditarStates = (newState) => setEditarStates(prev => ({ ...prev, ...newState }));
 
 	useEffect(() => {
+		import("../../../utilities/filteresCities/FilteredList"); // Importar al cargar el componeten
+
 		// Controlar click fuera del input para cerrar el menú de listas filtradas
 		const handleClickOutside = (event) => {
 			if ((!inputRef.current || !inputRef.current.contains(event.target)) && (!filteredListRef.current || !filteredListRef.current.contains(event.target))) {
@@ -198,12 +200,9 @@ export const EditarVivienda = ({ addImageState, setAddImageState }) => {
 							onFocus={() => updateEditarStates({ locationFocus: true })}
 						/>
 						{editarStates.locationFocus && editarStates.location &&
-							<FilteredList
-								filteredListRef={filteredListRef}
-								listStates={editarStates}
-								updateListStates={updateEditarStates}
-								menuEdit={true}
-							/>
+							<Suspense fallback={null}>
+								<FilteredList filteredListRef={filteredListRef} listStates={editarStates} updateListStates={updateEditarStates} menuEdit={true} />
+							</Suspense>
 						}
 					</div>
 					<div className={styles.input_div}>
@@ -219,6 +218,16 @@ export const EditarVivienda = ({ addImageState, setAddImageState }) => {
 
 // Menu que aparece al editar "Biografia "
 export const EditarBiografia = () => {
+
+	const [UserIdiomas, setUserIdiomas] = useState(["Español", "Italiano", "Francés"]);
+
+	const inputIdiomas = ["Español", "Inglés", "Francés", "Alemán", "Italiano"];
+
+	const handleChangeIdioma = (idiomaValue) => {
+		UserIdiomas.includes(idiomaValue)
+			? setUserIdiomas(UserIdiomas.filter(value => value !== idiomaValue))
+			: setUserIdiomas([...UserIdiomas, idiomaValue]);
+	}
 
 	return (
 		<>
@@ -245,17 +254,14 @@ export const EditarBiografia = () => {
 
 				<form className={styles.input_container}>
 					<div className={`${styles.input_div} ${styles.input_idioma}`}>
-						<button type="button" className={styles.idioma_opcion}>Español</button>
-						<button type="button" className={styles.idioma_opcion}>Inglés</button>
-						<button type="button" className={styles.idioma_opcion}>Francés</button>
-						<button type="button" className={styles.idioma_opcion}>Alemán</button>
-						<button type="button" className={styles.idioma_opcion}>Italiano</button>
-
-						<button type="button" className={styles.idioma_opcion}>Español</button>
-						<button type="button" className={styles.idioma_opcion}>Inglés</button>
-						<button type="button" className={styles.idioma_opcion}>Francés</button>
-						<button type="button" className={styles.idioma_opcion}>Alemán</button>
-						<button type="button" className={styles.idioma_opcion}>Italiano</button>
+						{inputIdiomas.map((idioma, index) => (
+							<button
+								key={index}
+								type="button"
+								className={`${styles.idioma_opcion} ${UserIdiomas.includes(idioma) ? styles.idioma_active : undefined}`}
+								onClick={() => handleChangeIdioma(idioma)}
+							>{idioma}</button>
+						))}
 					</div>
 				</form>
 

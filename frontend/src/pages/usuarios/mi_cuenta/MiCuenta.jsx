@@ -29,6 +29,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
     { src: "/images/usuarios/account/edit.svg", alt: "Datos personales", text: "Datos personales" },
     { src: "/images/usuarios/account/biografia.svg", alt: "Biografía", text: "Biografía" },
     { src: "/images/usuarios/account/house.svg", alt: "Vivienda", text: "Vivienda" },
+    { src: "/images/usuarios/account/recomendaciones.svg", alt: "Recomendaciones", text: "Recomendaciones" },
     { src: "/images/usuarios/account/security.svg", alt: "Seguridad", text: "Seguridad" },
     { src: "/images/usuarios/account/star.svg", alt: "Opiniones", text: "Opiniones" },
     { src: "/images/usuarios/account/history.svg", alt: "Historial de reservas", text: "Historial de reservas" }
@@ -84,7 +85,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
                 if (index == 2 && esViajero) return null;
 
                 return (
-                  <li key={index} onClick={() => setActiveMenu(index)} className={activeMenu === index ? styles.active : undefined}>
+                  <li key={index} className={activeMenu === index ? styles.active : undefined}  onClick={() => setActiveMenu(index)}>
                     <img src={item.src} alt={item.text} />
                     <h2>{item.text}</h2>
                   </li>
@@ -126,8 +127,9 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             {activeMenu === 1 && <PerfilMiCuenta showValue={1} />}
             {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} />}
             {activeMenu === 3 && <SeguridadMiCuenta />}
-            {activeMenu === 4 && <OpinionesMiCuenta />}
-            {activeMenu ===5 && <HistorialReservasMiCuenta />}
+            {activeMenu === 4 && <SeguridadMiCuenta />}
+            {activeMenu === 5 && <OpinionesMiCuenta />}
+            {activeMenu ===6 && <HistorialReservasMiCuenta />}
           </Suspense>
         </div>
       </main>
