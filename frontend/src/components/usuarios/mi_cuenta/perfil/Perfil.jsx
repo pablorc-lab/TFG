@@ -24,7 +24,7 @@ const PerfilMiCuenta = ({ showValue = 0 }) => {
         {isOpen && <EditarPerfil setIsOpen={setIsOpen} showValue={showValue} />}
       </article>
 
-      {/* Mostrar datos de "Mi cuenta" , "Biografía" o "Vivienda"*/}
+      {/* Mostrar datos de "Mi cuenta" , "Biografía" o "Vivienda" respectivamente*/}
       {showValue === 0 && <ContenidoMiCuenta />}
       {showValue === 1 && <ContenidoBiografia/>}
       {showValue === 2 && <ContenidoVivienda />}

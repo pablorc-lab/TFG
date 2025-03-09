@@ -1,0 +1,96 @@
+.recomendaciones_main h1, .add_recomendacion p, .recomendaciones_container li h3, .recomendaciones_container li p  {margin: 0;}
+
+.recomendaciones_main {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
+  padding: 0 30px;
+}
+
+/*? TITULO*/
+.recomendaciones_main h1 {
+  color: #0a7273;
+  font-size: 35px;
+  padding: 30px 0;
+  border-bottom: 2px solid lightgray;
+}
+
+/*? CONTENEDOR RECOMENDACIONES*/
+.recomendaciones_container {
+  padding: 0;
+  margin: 25px 0;
+  display: grid;
+  gap: 30px;
+  font-family: "Nunito";
+
+}
+
+.recomendaciones_container li:not(.add_recomendacion){
+  border-radius: 5px;
+  list-style: none;
+  padding: 10px 15px;
+  background-color: rgba(238, 238, 238, 0.322);
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.4);
+}
+
+.recomendaciones_container li:nth-child(even):not(.add_recomendacion) { background-color: rgb(230, 242, 250); }  
+.recomendaciones_container li:nth-child(odd):not(.add_recomendacion) { background-color: rgb(250, 250, 230); }
+
+.recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) {
+  margin: 0;
+  font-size: 18px;
+  color: #7e7e7e;
+  margin-bottom: 30px;
+}
+
+.recomendaciones_container li:not(.add_recomendacion) h3 {font-size: 19px;}
+
+.logos_recomendations {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logos_recomendations img {
+  user-select: none;
+  width: 25px;
+  aspect-ratio: 1 / 1;
+}
+.logos_recomendations p{ 
+  color: black;
+  font-size: 17px;
+}
+
+/*? ANIADIR RECOMENDACION*/
+.add_recomendacion {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  border-radius: 50px;
+  padding: 15px;
+  gap: 15px;
+  background-color: rgb(237, 237, 237);
+  border: 2px solid rgb(188, 188, 188);
+}
+.add_recomendacion:hover {
+  filter: brightness(0.9);
+}
+.add_recomendacion img {
+  width: 35px;
+  aspect-ratio: 1 / 1;
+}
+
+.add_recomendacion p {
+  color: #0a7273;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+@media (min-width: 780px) {
+  .recomendaciones_main h1 {font-size: 38px;}
+
+  /*? Recomendacion container*/
+  .recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) { font-size: 21px;} 
+  .recomendaciones_container li:not(.add_recomendacion) h3  {font-size: 22px;}
+}

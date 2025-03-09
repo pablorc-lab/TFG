@@ -7,6 +7,7 @@ const PerfilMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta
 const SeguridadMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/seguridad/Seguridad"));
 const HistorialReservasMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/historial_reservas/HistorialReservas"));
 const ViajerosMobileHeader = lazy(() => import("../../../components/viajeros/header/ViajerosMobileHeader"));
+const RecomendacionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/recomendaciones/Recomendaciones"));
 
 export default function MiCuenta({ activeSection = "perfil", esViajero = true }) {
   const [activeMenu, setActiveMenu] = useState(0);
@@ -126,10 +127,10 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             {activeMenu === 0 && <PerfilMiCuenta showValue={0} />}
             {activeMenu === 1 && <PerfilMiCuenta showValue={1} />}
             {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} />}
-            {activeMenu === 3 && <SeguridadMiCuenta />}
+            {activeMenu === 3 && <RecomendacionesMiCuenta />}
             {activeMenu === 4 && <SeguridadMiCuenta />}
             {activeMenu === 5 && <OpinionesMiCuenta />}
-            {activeMenu ===6 && <HistorialReservasMiCuenta />}
+            {activeMenu === 6 && <HistorialReservasMiCuenta />}
           </Suspense>
         </div>
       </main>

@@ -97,6 +97,7 @@
 }
 
 .user_info {
+  user-select: none;
   margin: 50px 0;
   margin-bottom: 30px;
   padding-bottom: 30px;
@@ -216,6 +217,7 @@
   font-size: 18px;
   color: #7e7e7e;
 }
+.user_recomendations h3 {font-size: 19px;}
 
 /*? RECOMENDACIONES*/
 .user_recomendations {
@@ -235,6 +237,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.logos_recomendations img {
+  user-select: none;
+  width: 25px;
+  aspect-ratio: 1 / 1;
 }
 .logos_recomendations p{ 
   margin: 0;
@@ -319,6 +326,8 @@
   .user_descripcion p, .user_descripcion h2,.user_descripcion ul, .user_recomendations p {
     font-size: 21px;
   } 
+  .user_recomendations h3 {font-size: 22px;}
+
   .user_title{
     border-top: 2px solid #dadada;
     padding-top: 30px;

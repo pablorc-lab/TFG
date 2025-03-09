@@ -10,10 +10,9 @@ const HistorialReservasMiCuenta = () => {
     "Por iniciar": { color: "#215ba4" } 
   };
   
-  
   return (
-    <main className={styles.historial_main}>
-      <section className={styles.summary}>
+    <section className={styles.historial_main}>
+      <article className={styles.summary}>
         <h1>Visión general</h1>
         <div className={styles.summary_div}>
           <h2>Reservas totales</h2>
@@ -29,7 +28,7 @@ const HistorialReservasMiCuenta = () => {
           <h2>Ingresos totales</h2>
           <p>372 &euro;</p>
         </div>
-      </section>
+      </article>
 
       <section className={styles.historial_user_section}>
         <h3>ENERO 2024</h3>
@@ -61,10 +60,9 @@ const HistorialReservasMiCuenta = () => {
               ))}
             </article>
           )
-
         })}
       </section>
-    </main>
+    </section>
   );
 }
 
