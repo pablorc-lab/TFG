@@ -214,10 +214,11 @@
 
 .user_descripcion p, .user_descripcion ul, .user_recomendations p {
   margin: 0;
-  font-size: 18px;
-  color: #7e7e7e;
+  font-size: 19px;
+  color: #717171;
+  font-style: italic;
 }
-.user_recomendations h3 {font-size: 19px;}
+.user_recomendations h3 { font-size: 20px;}
 
 /*? RECOMENDACIONES*/
 .user_recomendations {
@@ -246,7 +247,8 @@
 .logos_recomendations p{ 
   margin: 0;
   color: black;
-  font-size: 17px;
+  font-size: 18px !important;
+  font-style: normal ;
 }
   
 .valoraciones {
@@ -300,7 +302,7 @@
   .user_info p { font-size: 21px;}
   .user_info h2 { font-size: 27px;}
 
-  .user_score h3 { font-size: 22px;}
+  .user_score h3 { font-size: 21px;}
   .user_score img { width: 23px;}
 
   .user_conectar {
@@ -323,10 +325,10 @@
 
   /*? BIOGRAFIA, RECOMENDACIONES*/
   .user_descripcion {margin-bottom: 30px;}
-  .user_descripcion p, .user_descripcion h2,.user_descripcion ul, .user_recomendations p {
-    font-size: 21px;
-  } 
-  .user_recomendations h3 {font-size: 22px;}
+  .user_descripcion p, .user_descripcion h2,.user_descripcion ul { font-size: 21px;} 
+
+  .user_recomendations p { font-size: 20px;} 
+  .user_recomendations h3 {font-size: 21px;}
 
   .user_title{
     border-top: 2px solid #dadada;

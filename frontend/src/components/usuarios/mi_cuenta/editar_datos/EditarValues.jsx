@@ -43,7 +43,7 @@ export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
 				<form className={`${styles.input_container} ${styles.input_MiCuenta_contacto}`} >
 					<div className={styles.input_div}>
 						<p>Email</p>
-						<input type="email" placeholder="Pablo@example.com" spellCheck="false" name="Email" autocomplete="email" />
+						<input type="email" placeholder="Pablo@example.com" spellCheck="false" name="Email" autoComplete="email" />
 					</div>
 					<div className={styles.input_div}>
 						<p>Teléfono</p>
@@ -56,7 +56,7 @@ export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
 				<h3>INTERESES</h3>
 
 				<form className={`${styles.input_container} ${styles.input_MiCuenta_contacto}`} >
-					<div className={`${styles.input_div} ${styles.input_MiCuenta_biografia}`}>
+					<div className={styles.input_div}>
 						<p>Breve descripción 0 / 100</p>
 						<textarea
 							placeholder="Me gusta los paisajes al aire libre"
@@ -237,7 +237,7 @@ export const EditarBiografia = () => {
 				<h3>SOBRE MI</h3>
 
 				<form className={styles.input_container} >
-					<div className={`${styles.input_div} ${styles.input_MiCuenta_biografia}`}>
+					<div className={styles.input_div}>
 						<p>Descripción personal 0 / 500</p>
 						<textarea
 							placeholder="Me gusta tener inquilinos que me hagan compañia"
@@ -271,8 +271,8 @@ export const EditarBiografia = () => {
 				<h3>SOBRE EL ALOJAMIENTO</h3>
 
 				<form className={styles.input_container} >
-					<div className={`${styles.input_div} ${styles.input_MiCuenta_biografia}`}>
-						<p>Descripción personales 0 / 500</p>
+					<div className={styles.input_div}>
+						<p>Descripción  del alojamiento 0 / 500</p>
 						<textarea
 							placeholder="Te hospedarás en una acogedora vivienda compartida"
 							spellCheck="false"
@@ -284,5 +284,79 @@ export const EditarBiografia = () => {
 			</section>
 		</>
 
+	)
+};
+
+// Menu que aparece al editar "Recomendaciones "
+export const EditarRecomendaciones = () => {
+	return (
+		<>
+			<h2> AÑADIR RECOMENDACION</h2>
+
+			<section className={styles.modal_sections}>
+				<h3>RECOMENDACIÓN</h3>
+				<form className={`${styles.input_container} ${styles.input_recomendacion}`}>
+					<div className={`${styles.input_div} ${styles.input_recomendacion_title}`}>
+						<p>Titulo</p>
+						<input type="text" placeholder="Restaurante favorito" spellCheck="false" name="Titulo recomendaciones" />
+					</div>
+
+					<div className={styles.input_div}>
+						<p>Descripción  0 / 300</p>
+						<textarea
+							placeholder="Si te encanta la comida local, no puedes perderte ‘La Taberna de Juan’"
+							spellCheck="false"
+							name="biografia"
+							rows="4"
+						></textarea>
+					</div>
+				</form>
+			</section>
+
+			<section className={styles.modal_sections}>
+				<h3>DETALLES (opcionales)</h3>
+				<form className={`${styles.input_container} ${styles.input_details}`} >
+					<div className={styles.input_div}>
+						<p>Ubicación</p>
+						<article className={styles.input_article}>
+							<img src="/images/profiles/recomendaciones/location.svg" alt="Ubicación" className={styles.input_image} />
+							<input type="text" placeholder="Dirección del lugar" spellCheck="false" name="Ubicación" />
+						</article>
+					</div>
+
+					<div className={styles.input_div}>
+						<p>Recomendación</p>
+						<article className={styles.input_article}>
+							<img src="/images/profiles/recomendaciones/backpack.svg" alt="Recomendación" className={styles.input_image} />
+							<input type="text" placeholder="Consejos para visitar" spellCheck="false" name="Recomendación" />
+						</article>
+					</div>
+
+					<div className={styles.input_div}>
+						<p>Teléfono</p>
+						<article className={styles.input_article}>
+							<img src="/images/profiles/recomendaciones/phone.svg" alt="Teléfono" className={styles.input_image} />
+							<input type="number" placeholder="666-777-999" spellCheck="false" name="Teléfono" />
+						</article>
+					</div>
+
+					<div className={styles.input_div}>
+						<p>Horarios</p>
+						<article className={styles.input_article}>
+							<img src="/images/profiles/recomendaciones/clock.svg" alt="Horarios" className={styles.input_image} />
+							<input type="text" placeholder="Horario de apertura y cierre" spellCheck="false" name="Horarios" />
+						</article>
+					</div>
+
+					<div className={styles.input_div}>
+						<p>Ayuda</p>
+						<article className={styles.input_article}>
+							<img src="/images/profiles/recomendaciones/help.svg" alt="Comentarios" className={styles.input_image} />
+							<input type="text" placeholder="Comentarios adicionales" spellCheck="false" name="Comentarios" />
+						</article>
+					</div>
+				</form>
+			</section>
+		</>
 	)
 };

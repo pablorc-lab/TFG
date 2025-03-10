@@ -22,13 +22,12 @@
   display: grid;
   gap: 30px;
   font-family: "Nunito";
-
 }
 
 .recomendaciones_container li:not(.add_recomendacion){
   border-radius: 5px;
   list-style: none;
-  padding: 10px 15px;
+  padding: 15px;
   background-color: rgba(238, 238, 238, 0.322);
   box-shadow: 0 0 5px rgba(65, 65, 65, 0.4);
 }
@@ -38,18 +37,21 @@
 
 .recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) {
   margin: 0;
-  font-size: 18px;
-  color: #7e7e7e;
+  font-size: 19px;
+  font-style: italic;
+  color: #717171;
   margin-bottom: 30px;
 }
 
-.recomendaciones_container li:not(.add_recomendacion) h3 {font-size: 19px;}
+.recomendaciones_container li:not(.add_recomendacion) h3 {font-size: 20px;}
 
 .logos_recomendations {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 10px;
+  
 }
+.logos_recomendations:not(:last-child){ margin-bottom: 15px;}
 .logos_recomendations img {
   user-select: none;
   width: 25px;
@@ -57,7 +59,7 @@
 }
 .logos_recomendations p{ 
   color: black;
-  font-size: 17px;
+  font-size: 18px;
 }
 
 /*? ANIADIR RECOMENDACION*/
@@ -70,8 +72,8 @@
   border-radius: 50px;
   padding: 15px;
   gap: 15px;
-  background-color: rgb(237, 237, 237);
-  border: 2px solid rgb(188, 188, 188);
+  background-color: rgb(228, 228, 228);
+  border: 2px solid rgb(175, 175, 175);
 }
 .add_recomendacion:hover {
   filter: brightness(0.9);
@@ -91,6 +93,7 @@
   .recomendaciones_main h1 {font-size: 38px;}
 
   /*? Recomendacion container*/
-  .recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) { font-size: 21px;} 
-  .recomendaciones_container li:not(.add_recomendacion) h3  {font-size: 22px;}
+  .recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) { font-size: 20px;} 
+  .recomendaciones_container li:not(.add_recomendacion) h3  {font-size: 21px;}
+  .logos_recomendations p{ font-size: 19px;}
 }

@@ -3,7 +3,7 @@ import { lazy, Suspense, useState } from "react";
 const EditarMiCuenta = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarMiCuenta })));
 const EditarVivienda = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarVivienda })));
 const EditarBiografia = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarBiografia })));
-
+const EditarRecomendaciones = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarRecomendaciones })));
 
 export default function EditarPerfil({ setIsOpen, showValue = 0 }) {
   const [addImageState, setAddImageState] = useState(false);
@@ -15,6 +15,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0 }) {
         {showValue === 0 && <EditarMiCuenta addImageState={addImageState} setAddImageState={setAddImageState} />}
         {showValue === 1 && <EditarBiografia />}
         {showValue === 2 && <EditarVivienda addImageState={addImageState} setAddImageState={setAddImageState} />}
+        {showValue === 3 && <EditarRecomendaciones />}
 
         <div className={styles.modal_buttons}>
           <button onClick={() => setIsOpen(false)}>CANCELAR</button>

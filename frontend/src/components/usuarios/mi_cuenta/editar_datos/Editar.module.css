@@ -23,7 +23,7 @@ body:has(.modal[open]) {
 .modal:focus { outline: none;}
 .modal {
   pointer-events: none;
-
+  user-select: none;
   border: none;
   border-radius: 5px;
   padding: 20px 30px;
@@ -259,16 +259,17 @@ body:has(.modal[open]) {
 .input_container.input_ubicacion .input_div { justify-content: start;}
 .input_ubicacion span { font-size: 22px;}
 
-.input_div input, .input_div textarea {
+.input_div input, .input_div textarea, .input_article  {
   font-family: "Nunito";
   font-weight: 600;
-  padding: 5px;
+  padding: 5px 10px;
   border: 2px solid #0a7273;
   border-radius: 5px;
   font-size: 20px;
   width: 110px;
   height: 35px;
   text-align: center;
+  transition: background-color 0.3s ease; 
 }
 .input_idioma input{
   width: 150px;
@@ -286,7 +287,7 @@ body:has(.modal[open]) {
   width: calc(100% - 35px);
 }
 
-.input_div input:focus, .input_div textarea:focus {box-shadow: 0 0 8px #0a71737c;}
+.input_div input:focus, .input_div textarea:focus, .input_article:focus-within {box-shadow: 0 0 8px #0a71737c;}
 .input_div input::placeholder ,.input_div textarea::placeholder{
   color: rgb(168, 168, 168);
   font-style: italic; 
@@ -297,7 +298,6 @@ body:has(.modal[open]) {
 .input_MiCuenta .input_div input{width: 150px;}
 .input_idioma input {width: 170px;}
 .input_MiCuenta_contacto div:nth-child(1) input { 
-  padding: 5px 15px;
   text-align: start;
   min-width: 345px;
   width: 75%;
@@ -322,6 +322,7 @@ body:has(.modal[open]) {
   gap: 30px;
 }
 .modal_buttons button {
+  font-family: "Nunito";
   border-radius: 50px;
   cursor: pointer;
   display: flex;
@@ -345,6 +346,7 @@ body:has(.modal[open]) {
 }
 .modal_buttons button:nth-child(2) {
   border-color: #0a7273;
+  background-color: #0a7273;
   color: white;
 }
 
@@ -370,6 +372,47 @@ body:has(.modal[open]) {
   background-color: #0a7273 !important;
   color: white;
   box-shadow: 0 0 10px #0a71737c;
+}
+
+/*? RECOMENDACIONES*/
+.input_recomendacion { 
+  display: grid;
+  gap: 25px
+}
+
+.input_recomendacion_title input, .input_details input{
+  text-align: left;
+  width: calc(100% - 35px) !important;
+}
+
+.input_details {
+  display: grid;
+  width: 100%;
+  gap: 25px;
+}
+
+.input_article {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 35px);
+}
+.input_article input {
+  background-color: none;
+  border: none;
+  width: 100%;
+}
+.input_article img { 
+  width: 35px !important;
+  aspect-ratio: 1 / 1;
+}
+
+ /* Cambiar el fondo del article cuando el input no tiene placeholder */
+.input_article:has(input:not(:placeholder-shown)) { background-color: #0a71731f !important;}
+.input_article input:not(:placeholder-shown) {background-color:  transparent !important;}
+
+.input_article input:focus {
+  box-shadow: none;
+  border:none;
 }
 
 @media (min-width: 850px) {
