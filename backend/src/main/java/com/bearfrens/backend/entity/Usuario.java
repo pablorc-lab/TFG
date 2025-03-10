@@ -25,7 +25,7 @@ public abstract class Usuario {
   @Column(name = "privateID", length = 50)
   private String privateID;
 
-  @Column(name = "email", length = 100, nullable = false)
+  @Column(name = "email", length = 100, nullable = false, unique = true)
   private String email;
 
   @Column(name = "password", nullable = false)
