@@ -149,7 +149,7 @@ export const ContenidoVivienda = () => {
 
 
 // Contenido "Biografia"
-export const ContenidoBiografia = () => {
+export const ContenidoBiografia = ({esViajero}) => {
 	const idiomasMap = [
 		"Español",
 		"Inglés",
@@ -183,7 +183,7 @@ export const ContenidoBiografia = () => {
 			<article>
 				<div className={styles.miCuenta_data}>
 					<img src="/images/usuarios/account/sobre_necesidad.svg" alt="Localización vivienda" />
-					<p>SOBRE EL ALOJAMIENTO</p>
+					<p>SOBRE  {esViajero ? "MIS VIAJES" : "EL ALOJAMIENTO"}</p>
 				</div>
 				<p className={styles.miCuenta_text_info}>
 				Te hospedarás en una acogedora vivienda compartida, ideal para viajeros que buscan comodidad y una experiencia auténtica. Ubicada a pocos minutos del centro y cerca de las principales atracciones, ofrece un ambiente tranquilo con vistas impresionantes. ¡Será un placer recibirte!				</p>

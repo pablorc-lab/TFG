@@ -125,7 +125,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
         <div className={styles.user_component}>
           <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
             {activeMenu === 0 && <PerfilMiCuenta showValue={0} />}
-            {activeMenu === 1 && <PerfilMiCuenta showValue={1} />}
+            {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero}/>}
             {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} />}
             {activeMenu === 3 && <RecomendacionesMiCuenta />}
             {activeMenu === 4 && <SeguridadMiCuenta />}

@@ -217,7 +217,7 @@ export const EditarVivienda = ({ addImageState, setAddImageState }) => {
 };
 
 // Menu que aparece al editar "Biografia "
-export const EditarBiografia = () => {
+export const EditarBiografia = ({ esViajero = false }) => {
 
 	const [UserIdiomas, setUserIdiomas] = useState(["Español", "Italiano", "Francés"]);
 
@@ -240,7 +240,7 @@ export const EditarBiografia = () => {
 					<div className={styles.input_div}>
 						<p>Descripción personal 0 / 500</p>
 						<textarea
-							placeholder="Me gusta tener inquilinos que me hagan compañia"
+							placeholder="Soy una persona muy activa y sociable, me gusta los lugares aislados"
 							spellCheck="false"
 							name="biografia"
 							rows="4"
@@ -268,13 +268,13 @@ export const EditarBiografia = () => {
 			</section>
 
 			<section className={styles.modal_sections}>
-				<h3>SOBRE EL ALOJAMIENTO</h3>
+				<h3>SOBRE {esViajero ? "MIS VIAJES" : "EL ALOJAMIENTO"}</h3>
 
 				<form className={styles.input_container} >
 					<div className={styles.input_div}>
-						<p>Descripción  del alojamiento 0 / 500</p>
+						<p>Descripción  {esViajero ? "de tus viajes" : "del alojamiento"} 0 / 500</p>
 						<textarea
-							placeholder="Te hospedarás en una acogedora vivienda compartida"
+							placeholder={esViajero ? "En mis anteriores viajes me hospedé en ciudades grandes" : "Te hospedarás en una acogedora vivienda compartida"}
 							spellCheck="false"
 							name="biografia"
 							rows="4"

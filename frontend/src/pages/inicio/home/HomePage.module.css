@@ -140,10 +140,14 @@
 }
 .general_prof:hover{ box-shadow: 0 0 15px rgb(77, 77, 77);}
 
-.btn_conectar {
+.btn_conectar:not(.viaj_prof .btn_conectar) {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+  margin-bottom: 11.52px;
+}
+
+.btn_conectar {
   font-family: "Nunito";
   font-weight: 800;
   font-size: 20px;
@@ -152,10 +156,9 @@
   cursor: pointer;
   transition: background-color 0.2s;
 
-  border-radius: 6px;
+  border-radius: 50px;
   border: 2px solid #009080;
-  padding: 13px 20px;
-  margin-bottom: 10px;
+  padding: 13px 30px;
 }
 
 .btn_conectar:hover{
@@ -306,6 +309,44 @@
 }
 
 
+
+.conectar_section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.estancia_viaj { display: grid;}
+
+.estancia_viaj p{
+  text-align: center;
+  margin: 0;
+  font-weight: 750;
+  color: #545454;
+  font-style: italic;
+}
+
+.estancia_viaj progress {
+  width: 120px; 
+  height: 17px; 
+  appearance: none;
+  margin-top: 10px;
+}
+.estancia_viaj progress::-webkit-progress-bar {
+  border: 1px solid #a6a6a6;
+  background-color: #dbdbdb; 
+  border-radius: 10px;
+}
+.estancia_viaj progress::-webkit-progress-value {
+  background-color: #545454; 
+  border-radius: 10px;
+}
+.estancia_viaj progress::-moz-progress-bar {
+  background-color: #545454; 
+  border-radius: 10px;
+}
+
 /*?=============================
 /*?        VENTAJAS
 /*?===========================*/
@@ -353,7 +394,7 @@
   box-shadow: 0 0 10px 5px rgba(0,0,0,.30);
 }
 .advantage_text h3 {
-  color: #0a7273;
+  color: rgb(45, 45, 45);
   margin: 0.26vw 0 0.26vw 0;
   font-size: 1.3vw;
 }
@@ -470,7 +511,7 @@
   .text_column_viaj h3 {font-size: 32px;}
   .text_column_viaj { margin: 5px 5px 5px 30px; }
   .age { margin-top: 8px; font-size: 20px; }
-  .viaj_likes { margin: 20px 30px; }
+  .viaj_likes { margin: 30px; }
   .viaj_likes img { width: 40px; }
   .btn_viaj { margin-bottom: 8px; }
 }

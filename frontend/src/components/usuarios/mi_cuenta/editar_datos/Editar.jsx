@@ -5,7 +5,7 @@ const EditarVivienda = lazy(() => import("./EditarValues").then(functions => ({ 
 const EditarBiografia = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarBiografia })));
 const EditarRecomendaciones = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarRecomendaciones })));
 
-export default function EditarPerfil({ setIsOpen, showValue = 0 }) {
+export default function EditarPerfil({ setIsOpen, showValue = 0, esViajero = false }) {
   const [addImageState, setAddImageState] = useState(false);
 
   return (
@@ -13,7 +13,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0 }) {
       <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
         {/* Editar datos de "Mi cuenta" , "Biografía" o "Vivienda"*/}
         {showValue === 0 && <EditarMiCuenta addImageState={addImageState} setAddImageState={setAddImageState} />}
-        {showValue === 1 && <EditarBiografia />}
+        {showValue === 1 && <EditarBiografia esViajero={esViajero}/>}
         {showValue === 2 && <EditarVivienda addImageState={addImageState} setAddImageState={setAddImageState} />}
         {showValue === 3 && <EditarRecomendaciones />}
 

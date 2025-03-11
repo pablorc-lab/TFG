@@ -15,10 +15,14 @@
   box-shadow: 0 0 15px 2px #00907f7d;
 }
 
-.btn_conectar {
+.btn_conectar:not(.viaj_prof .btn_conectar) {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+  margin-bottom: 11.52px;
+}
+
+.btn_conectar {
   font-family: "Nunito";
   font-weight: 800;
   background: white;
@@ -29,7 +33,6 @@
   border: 2px solid #009080;
   font-size: 16px;
   padding: 9.6px 30px;
-  margin-bottom: 11.52px;
 }
 
 .btn_conectar:hover {  
@@ -171,7 +174,6 @@
   margin-left: auto;
 }
 .score_viajero p {
-  font-style: italic;
   font-family: "Nunito";
   line-height: 0;
   font-size: 22px;
@@ -198,6 +200,44 @@
   margin-bottom: 7.68px;
 }
 
+/*? Estancia del viajero*/
+.conectar_section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.estancia_viaj { display: grid;}
+
+.estancia_viaj p{
+  text-align: center;
+  margin: 0;
+  font-weight: 750;
+  color: #545454;
+  font-style: italic;
+}
+
+.estancia_viaj progress {
+  width: 120px; 
+  height: 17px; 
+  appearance: none;
+  margin-top: 10px;
+}
+.estancia_viaj progress::-webkit-progress-bar {
+  border: 1px solid #a6a6a6;
+  background-color: #dbdbdb; 
+  border-radius: 10px;
+}
+.estancia_viaj progress::-webkit-progress-value {
+  background-color: #545454; 
+  border-radius: 10px;
+}
+.estancia_viaj progress::-moz-progress-bar {
+  background-color: #545454; 
+  border-radius: 10px;
+}
+
 @media (max-width: 815px), (min-width: 1200px) {
   .general_prof {  
     border-radius: 14px;
@@ -208,8 +248,9 @@
   .btn_conectar { 
     font-size: 19px; 
     padding: 12px 40px; 
-    margin-bottom: 20px; 
+   
   }
+  .btn_conectar:not(.viaj_prof .btn_conectar) { margin-bottom: 20px; }
   .house {
     height: 180px;
     border-radius: 14px 14px 0 0;
@@ -256,4 +297,9 @@
   .viaj_likes { margin: 30px auto; }
   .viaj_likes img { width: 50px; }
   .btn_viaj { margin-bottom: 10px; }
+
+  .estancia_viaj progress {
+    width: 140px; 
+    height: 20px; 
+  }
 }

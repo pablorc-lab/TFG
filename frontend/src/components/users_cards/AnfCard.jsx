@@ -1,7 +1,7 @@
 export default function Anf_card({styles, Casa_img, Perfil_img, Nombre="-", Gustos_imgs, Valoracion="/", Ubicacion="-", Precio="-", Descripcion="-",}) {
   
   return (
-    <div className={styles.general_prof}>
+    <article className={styles.general_prof}>
       {/* Imagen de la casa */}
       <img className={styles.house} src={Casa_img} alt="Imagen casa" width={500} />
 
@@ -40,7 +40,7 @@ export default function Anf_card({styles, Casa_img, Perfil_img, Nombre="-", Gust
         {/* Parte inferior (Conectar) */}
         <button className={styles.btn_conectar}>Conectar</button>
       </div>
-    </div>
+    </article>
   );
 
 }
