@@ -40,8 +40,7 @@ public abstract class BaseController<T extends Usuario, R extends JpaRepository<
   // @PathVariable : extrae el valor del parámetro id de la URL de la solicitud HTTP.
   public ResponseEntity<T> obtenerAnfitrionPorId(@PathVariable Long id){
     // findById() que busca un registro por la clave primaria (en este caso, id), que es la columna marcada como clave primaria en la base de datos.
-    return ResponseEntity.ok(repository
-      .findById(id)
+    return ResponseEntity.ok(repository.findById(id)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + id))
     );
   }

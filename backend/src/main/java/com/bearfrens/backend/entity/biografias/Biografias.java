@@ -13,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 // La combinación de las columnas debe ser única en la base de datos (1 biografía por Usuario).
+// Esto es debido a que puede haber dos usuarios con el mismo id pero ser de distinto tipo
 @Table(name = "biografias", uniqueConstraints = @UniqueConstraint(columnNames = {"usuario_id", "tipo_usuario"}))
 public class Biografias {
 

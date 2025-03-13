@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BiografiasRepository extends JpaRepository<Biografias, Long> {
-//  Biografias findByUsuarioID(Long usuarioID);
 }
