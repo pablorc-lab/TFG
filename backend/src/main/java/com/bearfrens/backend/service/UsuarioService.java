@@ -1,7 +1,7 @@
 package com.bearfrens.backend.service;
 
-import com.bearfrens.backend.repository.AnfitrionRepository;
-import com.bearfrens.backend.repository.ViajeroRepository;
+import com.bearfrens.backend.repository.user.AnfitrionRepository;
+import com.bearfrens.backend.repository.user.ViajeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

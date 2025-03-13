@@ -1,4 +1,4 @@
-package com.bearfrens.backend.controller;
+package com.bearfrens.backend.controller.user;
 
 import com.bearfrens.backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;

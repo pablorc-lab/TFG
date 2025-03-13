@@ -1,7 +1,7 @@
-package com.bearfrens.backend.controller;
+package com.bearfrens.backend.controller.user;
 
-import com.bearfrens.backend.entity.Anfitrion;
-import com.bearfrens.backend.repository.AnfitrionRepository;
+import com.bearfrens.backend.entity.user.Anfitrion;
+import com.bearfrens.backend.repository.user.AnfitrionRepository;
 import org.springframework.web.bind.annotation.*;
 
 // Permitir que nuestra aplicación deje que react desde es enlace acceda a los datos

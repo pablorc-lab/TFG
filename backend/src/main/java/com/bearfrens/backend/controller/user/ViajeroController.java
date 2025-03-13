@@ -1,7 +1,7 @@
-package com.bearfrens.backend.controller;
+package com.bearfrens.backend.controller.user;
 
-import com.bearfrens.backend.entity.Viajero;
-import com.bearfrens.backend.repository.ViajeroRepository;
+import com.bearfrens.backend.entity.user.Viajero;
+import com.bearfrens.backend.repository.user.ViajeroRepository;
 import org.springframework.web.bind.annotation.*;
 
 

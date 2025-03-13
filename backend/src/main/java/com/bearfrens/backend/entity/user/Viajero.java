@@ -1,8 +1,7 @@
-package com.bearfrens.backend.entity;
+package com.bearfrens.backend.entity.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 

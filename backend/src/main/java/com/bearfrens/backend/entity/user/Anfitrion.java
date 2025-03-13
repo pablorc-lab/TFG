@@ -1,8 +1,10 @@
-package com.bearfrens.backend.entity;
+package com.bearfrens.backend.entity.user;
 
+import com.bearfrens.backend.entity.viviendas.Viviendas;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -10,6 +12,9 @@ import java.time.LocalDate;
 @Table(name="anfitriones")
 public class Anfitrion extends Usuario{
   private int reservas_realizadas = 0;
+
+  @OneToOne(mappedBy = "anfitrion", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Viviendas viviendas;
 
   // Constructores
   public Anfitrion() {

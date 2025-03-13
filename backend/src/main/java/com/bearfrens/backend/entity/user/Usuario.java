@@ -1,47 +1,55 @@
-package com.bearfrens.backend.entity;
+package com.bearfrens.backend.entity.user;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.bearfrens.backend.entity.biografias.Biografias;
+import com.bearfrens.backend.entity.recomendaciones.Recomendaciones;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-//  @MappedSuperclass : indica que NO se creará una tabla usuario. Ya que cada tipo de usuario tiene una tabla distinta
 @Getter
 @Setter
-@MappedSuperclass
+@MappedSuperclass // NO se creará una tabla usuario. Ya que cada tipo de usuario tiene una tabla distinta
 public abstract class Usuario {
-  /*
-    - @Id : Clase primaria de la entidad
-    - @GeneratedValue : Indica que su valor se generará automáticamente, normalmente como un número autoincrementable.
-   */
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+  @Id // Clase primaria de la entidad
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // Su valor se generará automáticamente, normalmente como un número autoincrementable.
   private long id;
 
   // @Column: Mapea el campo a la columna correspondiente de la tabla de la base de datos
-  @Column(name = "privateID", length = 50)
+  @Column(length = 50)
   private String privateID;
 
-  @Column(name = "email", length = 100, nullable = false, unique = true)
+  @Column(length = 100, nullable = false, unique = true)
   private String email;
 
-  @Column(name = "password", nullable = false)
+  @Column(nullable = false)
   private String password;
 
-  @Column(name = "nombre", length = 50)
+  @Column(length = 50)
   private String nombre;
 
-  @Column(name = "apellido", length = 50)
+  @Column(length = 50)
   private String apellido;
 
-  @Column(name = "fecha_nacimiento")
+  @Column
   private LocalDate fecha_nacimiento;
 
-  @Column(name = "profileImage")
+  @Column
   private String profileImage;
+
+  // mappedBy : Indica que la clave foranea "usuario_id" está en Biografia, evitando crear una columna en Usuarios con el nombre "usuario"
+  // cascade : Cualquier cambio en Usuario se propaga a Biografias
+  @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+  private Biografias biografia;
+
+  // orphanRemoval = elimina las recomendaciones huérfanas (sin usuario).
+  @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Recomendaciones> recomendaciones = new ArrayList<>();
 
   // Constructor vacío necesario para JPA
   public Usuario() {}

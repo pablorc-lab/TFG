@@ -1,6 +1,6 @@
-package com.bearfrens.backend.controller;
+package com.bearfrens.backend.controller.user;
 
-import com.bearfrens.backend.entity.Usuario;
+import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.service.ImgBBservice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 // Controlador comun para ambos tipo de usuario
 public abstract class BaseController<T extends Usuario, R extends JpaRepository<T, Long>> {
@@ -41,7 +40,10 @@ public abstract class BaseController<T extends Usuario, R extends JpaRepository<
   // @PathVariable : extrae el valor del parámetro id de la URL de la solicitud HTTP.
   public ResponseEntity<T> obtenerAnfitrionPorId(@PathVariable Long id){
     // findById() que busca un registro por la clave primaria (en este caso, id), que es la columna marcada como clave primaria en la base de datos.
-    return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + id)));
+    return ResponseEntity.ok(repository
+      .findById(id)
+      .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + id))
+    );
   }
 
   // @RequestBody : convierte el cuerpo de la solicitud HTTP (JSON) en un objeto Java (Usuario) para ser procesado en el metodo.
