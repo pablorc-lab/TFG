@@ -1,12 +1,12 @@
 package com.bearfrens.backend.entity.user;
 
+import com.bearfrens.backend.entity.recomendaciones.Recomendaciones;
 import com.bearfrens.backend.entity.viviendas.Viviendas;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="anfitriones")
@@ -15,6 +15,10 @@ public class Anfitrion extends Usuario{
 
   @OneToOne(mappedBy = "anfitrion", cascade = CascadeType.ALL, orphanRemoval = true)
   private Viviendas viviendas;
+
+  // orphanRemoval = elimina las recomendaciones huérfanas (sin usuario).
+  @OneToMany(mappedBy = "anfitrion", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Recomendaciones> recomendaciones = new ArrayList<>();
 
   // Constructores
   public Anfitrion() {

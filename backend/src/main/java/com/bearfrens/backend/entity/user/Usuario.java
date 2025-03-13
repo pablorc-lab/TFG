@@ -47,10 +47,6 @@ public abstract class Usuario {
   @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
   private Biografias biografia;
 
-  // orphanRemoval = elimina las recomendaciones huérfanas (sin usuario).
-  @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Recomendaciones> recomendaciones = new ArrayList<>();
-
   // Constructor vacío necesario para JPA
   public Usuario() {}
 

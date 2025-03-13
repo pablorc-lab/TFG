@@ -1,5 +1,6 @@
 package com.bearfrens.backend.entity.recomendaciones;
 
+import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,8 +19,8 @@ public class Recomendaciones {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "usuario_id", nullable = false)
-  private Usuario usuario;
+  @JoinColumn(name = "anfitrion_id", unique = true, nullable = false)
+  private Anfitrion anfitrion;
 
   @Column(nullable = false)
   private String titulo;
