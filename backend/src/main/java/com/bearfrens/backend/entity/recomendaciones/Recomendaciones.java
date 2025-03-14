@@ -13,17 +13,19 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+// Un usuario no puede escribir recomendaciones con el mismo titulo
+@Table(name = "recomendaciones", uniqueConstraints = @UniqueConstraint(columnNames = {"anfitrion_id", "titulo"}))
 public class Recomendaciones {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "anfitrion_id", unique = true, nullable = false)
+  @JoinColumn(name = "anfitrion_id", nullable = false)
   private Anfitrion anfitrion;
 
   @Column(nullable = false)
-  private String titulo;
+  private String titulo; // Titulo inmutable
 
   @Column(nullable = false)
   private String descripcion;

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 // Controlador comun para ambos tipo de usuario
-public abstract class BaseController<T extends Usuario, R extends JpaRepository<T, Long>> {
+public abstract class BaseUserController<T extends Usuario, R extends JpaRepository<T, Long>> {
   protected final R repository;
   private final String userType;
 
@@ -26,7 +26,7 @@ public abstract class BaseController<T extends Usuario, R extends JpaRepository<
   // @Autowired : se utiliza para inyectar automáticamente una instancia en el controlador,
   // lo que permite acceder a los métodos del repositorio sin tener que crear manualmente su objeto.
   @Autowired
-  public BaseController(R repository, String userType) {
+  public BaseUserController(R repository, String userType) {
     this.repository = repository;
     this.userType = userType;
   }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/viajeros")
-public class ViajeroController extends BaseController<Viajero, ViajeroRepository> {
+public class ViajeroController extends BaseUserController<Viajero, ViajeroRepository> {
 
   public ViajeroController(ViajeroRepository repository) {
     super(repository,"viajero");

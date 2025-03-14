@@ -12,6 +12,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "viviendas")
 public class Viviendas {
 
   @Id
@@ -33,4 +34,25 @@ public class Viviendas {
 
   @Column(nullable = true)
   private String imagen4;
+
+  @Column
+  int viajeros;
+
+  @Column
+  int habitaciones;
+
+  @Column
+  int camas;
+
+  @Column
+  int banios; // Baños
+
+  @Column
+  String provincia;
+
+  @Column
+  String ciudad;
+
+  @Column
+  int precio_noche;
 }
