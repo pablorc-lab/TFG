@@ -30,8 +30,7 @@ public class Anfitrion extends Usuario{
     super(privateID, nombre, apellido, fecha_nacimiento, email, password, profileImage);
   }
 
-  // GETTERS and SETTERS
-  public int getReservas_realizadaseservas_realizadas() {return reservas_realizadas;}
+  // GETTERS and SETTERSs
   public void setReservas_realizadas() {this.reservas_realizadas += 1;} // Se incrementa la cantidad de reservas realizadas
 
   @Override

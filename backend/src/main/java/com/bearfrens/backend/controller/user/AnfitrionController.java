@@ -130,7 +130,7 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
       if(recomendacion.getTitulo().equalsIgnoreCase(titulo))
         return ResponseEntity.ok(recomendacion);
     }
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró la viviendo con ese titulo");
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró la recomendación con ese titulo");
   }
 
   // Crear recomendaciones
