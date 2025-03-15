@@ -4,11 +4,11 @@ import React from 'react';
 import ViajerosHeader from './ViajerosHeader';
 import ViajerosMobileHeader from './ViajerosMobileHeader';
 
-export default function ViajerosFinalHeader({ activeSection= "alojamientos" }) {
+export default function ViajerosFinalHeader() {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const inputRef = useRef(null);
   const filteredListRef = useRef(null);
-
+  const [activeSection, setActiveSection] = useState("alojamientos")
   const [headerStates, setHeaderStates] = useState({
     locationFocus: false,
     location: ""
@@ -39,8 +39,22 @@ export default function ViajerosFinalHeader({ activeSection= "alojamientos" }) {
   return (
     <>
       {isLargeScreen
-        ? <ViajerosHeader inputRef={inputRef} filteredListRef={filteredListRef} headerStates={headerStates} updateHeaderStates={updateHeaderStates} activeSection={activeSection}/>
-        : <ViajerosMobileHeader inputRef={inputRef} filteredListRef={filteredListRef} headerStates={headerStates} updateHeaderStates={updateHeaderStates} activeSection={activeSection}/>
+        ? <ViajerosHeader 
+            inputRef={inputRef} 
+            filteredListRef={filteredListRef} 
+            headerStates={headerStates} 
+            updateHeaderStates={updateHeaderStates} 
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
+        : <ViajerosMobileHeader 
+            inputRef={inputRef} 
+            filteredListRef={filteredListRef} 
+            headerStates={headerStates} 
+            updateHeaderStates={updateHeaderStates} 
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
       }
     </>
   );

@@ -11,9 +11,9 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
 
   // Añadimos al menu de anfitriones los nuevos de navegación para escritorio
   const anfMenuLinks = [
-    { path: "/inicio", label: "Inicio", hiddenWhenNavVisible: true },
+    { path: "/inicio/", label: "Grupos", hiddenWhenNavVisible: true },
     { path: "/anfitriones/inquilinos", label: "Inquilinos", hiddenWhenNavVisible: true },
-    { path: "/inicio/", label: "Comunidades", hiddenWhenNavVisible: true },
+    { path: "/inicio", label: "Conexiones", hiddenWhenNavVisible: true },
   ].concat(menuLinks);
 
   // Obtener el "classname" del nav actual
@@ -40,9 +40,9 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
       {showHeaderNav && (
         <section className={styles.search_container}>
           <nav className={styles.search_nav}>
-            <Link to="/inicio">Inicio</Link>
-            <Link to="/viajeros/alojamientos" className={getClassName('inquilinos')} onClick={() => setActiveSection("alojamientos")}> Inquilinos </Link>
-            <Link to="/viajeros/alojamientos" className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>Comunidades</Link>
+            <Link to="/anfitriones/inquilinos" className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>Grupos</Link>
+            <Link to="/anfitriones/inquilinos" className={getClassName('inquilinos')} onClick={() => setActiveSection("inquilinos")}> Inquilinos </Link>
+            <Link to="/anfitriones/inquilinos" className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>Conexiones</Link>
           </nav>
         </section>
       )}

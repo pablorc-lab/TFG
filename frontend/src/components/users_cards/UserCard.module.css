@@ -31,7 +31,7 @@
   transition: background-color 0.2s;
   border-radius: 50px; 
   border: 2px solid #009080;
-  font-size: 16px;
+  font-size: 18px;
   padding: 9.6px 30px;
 }
 
@@ -246,8 +246,8 @@
 
   .viaj_prof {  width: 360px;}
   .btn_conectar { 
-    font-size: 19px; 
-    padding: 12px 40px; 
+    font-size: 20px; 
+    padding: 12px 35px; 
    
   }
   .btn_conectar:not(.viaj_prof .btn_conectar) { margin-bottom: 20px; }

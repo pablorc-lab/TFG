@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import DropDownMenu from '../../dropdown_menu/DropDownMenu';
 import FilteredList from '../../utilities/filteresCities/FilteredList';
 
-export default function ViajerosHeader({ inputRef, filteredListRef, headerStates, updateHeaderStates, activeSection}) {
+export default function ViajerosHeader({ inputRef, filteredListRef, headerStates, updateHeaderStates, activeSection, setActiveSection }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const userRef = useRef(null);
 
   const menuLinks = [
-    { path: "/viajeros/mi-cuenta", label: <strong>Mi Cuenta</strong>},
-    { path: "/inicio/faq", label: "FAQ"},
+    { path: "/viajeros/mi-cuenta", label: <strong>Mi Cuenta</strong> },
+    { path: "/inicio/faq", label: "FAQ" },
     { path: "/", label: "Soporte" }
   ];
 
@@ -31,9 +31,10 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
 
       <section className={styles.search_container}>
         <nav className={styles.search_nav}>
-          <Link to="/inicio">Inicio</Link>
-          <Link to="/viajeros/alojamientos" className={getClassName('alojamientos')}> Alojamientos </Link>
-          <Link to="/viajeros/alojamientos" className={getClassName('comunidades')}>Comunidades</Link>
+          <Link to="/viajeros/alojamientos" className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>Grupos</Link>
+          <Link to="/viajeros/alojamientos" className={getClassName('alojamientos')} onClick={() => setActiveSection("alojamientos")}> Alojamientos </Link>
+          <Link to="/viajeros/alojamientos" className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>Conexiones</Link>
+
         </nav>
 
         {/* Barra de bússqueda para ALOJAMIENTOS*/}
@@ -48,10 +49,10 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
               placeholder="Destino o @usuario"
               spellCheck="false"
               value={headerStates.location}
-              onChange={(e) =>  updateHeaderStates({location : e.currentTarget.value})}
-              onFocus={() => updateHeaderStates({locationFocus : true})}
+              onChange={(e) => updateHeaderStates({ location: e.currentTarget.value })}
+              onFocus={() => updateHeaderStates({ locationFocus: true })}
             />
-            {headerStates.locationFocus && headerStates.location && <FilteredList filteredListRef={filteredListRef} listStates={headerStates} updateListStates={updateHeaderStates}/>}
+            {headerStates.locationFocus && headerStates.location && <FilteredList filteredListRef={filteredListRef} listStates={headerStates} updateListStates={updateHeaderStates} />}
           </form>
 
           <div className={styles.filters}>

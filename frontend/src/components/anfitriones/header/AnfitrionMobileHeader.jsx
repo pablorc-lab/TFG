@@ -14,7 +14,7 @@ export default function AnfitrionMobileHeader({ activeSection, setActiveSection 
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
           <Link to="/anfitriones/inquilinos">
-            <div className={getClassName('alojamientos')} onClick={() => setActiveSection("alojamientos")}>
+            <div className={getClassName('inquilinos')} onClick={() => setActiveSection("inquilinos")}>
               <img src="/images/viajeros/inquilinos.svg" width="50" alt='icono inquilinos' />
               <span>Inquilinos</span>
             </div>

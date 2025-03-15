@@ -80,7 +80,7 @@
 
 .search_nav .active_section {
   color: #0a7273;
-  font-weight: 700;
+  font-weight: 750;
 }
 .search_nav a:not(.active_section):hover {
   color: #0a7273;

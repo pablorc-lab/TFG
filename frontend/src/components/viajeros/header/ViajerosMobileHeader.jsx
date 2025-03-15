@@ -3,7 +3,7 @@ import styles_mobile from "./ViajerosMobileHeader.module.css"
 import { Link } from 'react-router-dom';
 const SearchAlojamiento = lazy(() => import("../alojamientos/SearchAlojamiento"));
 
-export default function ViajerosMobileHeader({ inputRef = null, filteredListRef = null, headerStates = null, updateHeaderStates = null, activeSection = "alojamientos" }) {
+export default function ViajerosMobileHeader({ inputRef = null, filteredListRef = null, headerStates = null, updateHeaderStates = null, activeSection = "alojamientos", setActiveSection }) {
   // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
     return (activeSection === nameSection) ? styles_mobile.active_section : undefined;
@@ -15,20 +15,20 @@ export default function ViajerosMobileHeader({ inputRef = null, filteredListRef 
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
           <Link to="/viajeros/alojamientos">
-            <div className={getClassName('alojamientos')}>
+            <div className={getClassName('alojamientos')} onClick={() => setActiveSection("alojamientos")}>
               <img src={`/images/viajeros/house_header.webp`} width="50" alt='icono casa' />
               <span>Alojamientos</span>
             </div>
           </Link>
 
           <Link to="/viajeros/alojamientos">
-          <div className={getClassName('comunidades')}>
+          <div className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>
             <img
               src={`/images/viajeros/comunidades_header.webp`}
               width="50"
               alt='icono comunidades'
             />
-            <span>Comunidades</span>
+            <span>Grupos</span>
             </div>
           </Link>
 
