@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -35,33 +36,39 @@ public class BiografiasController {
       : viajeroRepository.existsById(userID); // Viajero
   }
 
-  // Obtener una biografía segun el tipo e ID del usuario
-  @GetMapping("/{biografiaID}")
-  public ResponseEntity<Biografias> obtenerBiografia(@PathVariable Long biografiaID) {
-    return ResponseEntity.ok(biografiasRepository.findById(biografiaID)
-      .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía con ID: " + biografiaID))
+  // Obtener una biografía segun el "tipo" e "ID" del usuario
+  @GetMapping("/{tipo_usuario}/{usuarioID}")
+  public ResponseEntity<Biografias> obtenerBiografia(@PathVariable int tipo_usuario, @PathVariable Long usuarioID) {
+    return ResponseEntity.ok(biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo_usuario)
+      .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía asociada al usuario " + tipo_usuario + "con ID: " + usuarioID))
     );
   }
 
   // Crear una nueva biografía
-  @PostMapping("")
-  public ResponseEntity<?> crearBiografia(@RequestBody Biografias biografia) {
-    int tipo_user = biografia.getTipoUsuario();
-    Long user_id = biografia.getUsuario().getId();
-
-    if(!existeUsuario(tipo_user, user_id)) {
+  @PostMapping("/{tipo_usuario}/{usuarioID}")
+  public ResponseEntity<?> crearBiografia(@RequestBody Biografias biografia, @PathVariable int tipo_usuario, @PathVariable Long usuarioID) {
+    if(!existeUsuario(tipo_usuario, usuarioID)) {
       return ResponseEntity.badRequest().body("El usuario asociado debe existir");
     }
+
+    // Comprobar si ya existe una biografia
+    if(biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo_usuario).isPresent()){
+      return ResponseEntity.badRequest().body("El usuario ya tiene una biografia asociada, solo puede modificarla");
+    }
+
+    biografia.setUsuarioID(usuarioID);
+    biografia.setTipoUsuario(tipo_usuario);
 
     Biografias nuevaBiografia = biografiasRepository.save(biografia);
     return ResponseEntity.status(HttpStatus.CREATED).body(nuevaBiografia);
   }
 
+
   // Actualizar una biografía existente (no se puede cambiar el tipo de usuario)
-  @PutMapping("/{biografiaID}")
-  public ResponseEntity<Biografias> actualizarBiografia(@PathVariable Long biografiaID, @RequestBody Biografias detallesBiografia) {
-    Biografias biografia = biografiasRepository.findById(biografiaID)
-      .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía con ID: " + biografiaID));
+  @PutMapping("/{tipo_usuario}/{usuarioID}")
+  public ResponseEntity<Biografias> actualizarBiografia(@PathVariable int tipo_usuario, @PathVariable Long usuarioID, @RequestBody Biografias detallesBiografia) {
+    Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo_usuario)
+      .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía asociada al usuario " + tipo_usuario + "con ID: " + usuarioID));
 
     biografia.setSobreMi(detallesBiografia.getSobreMi());
     biografia.setIdiomas(detallesBiografia.getIdiomas());
@@ -72,10 +79,10 @@ public class BiografiasController {
   }
 
   // Eliminar una biografía
-  @DeleteMapping("/{biografiaID}")
-  public ResponseEntity<Map<String, Boolean>> eliminarBiografia(@PathVariable Long biografiaID) {
-    Biografias biografia = biografiasRepository.findById(biografiaID)
-      .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía con ID: " + biografiaID));
+  @DeleteMapping("/{tipo_usuario}/{usuarioID}")
+  public ResponseEntity<Map<String, Boolean>> eliminarBiografia(@PathVariable int tipo_usuario, @PathVariable Long usuarioID) {
+    Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo_usuario)
+      .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía asociada al usuario " + tipo_usuario + "con ID: " + usuarioID));
 
     biografiasRepository.delete(biografia);
     return ResponseEntity.ok(Collections.singletonMap("deleted", true));

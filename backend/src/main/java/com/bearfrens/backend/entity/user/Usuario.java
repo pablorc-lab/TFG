@@ -1,15 +1,9 @@
 package com.bearfrens.backend.entity.user;
-
-import com.bearfrens.backend.entity.biografias.Biografias;
-import com.bearfrens.backend.entity.recomendaciones.Recomendaciones;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -41,11 +35,6 @@ public abstract class Usuario {
 
   @Column
   private String profileImage;
-
-  // mappedBy : Indica que la clave foranea "usuario_id" está en Biografia, evitando crear una columna en Usuarios con el nombre "usuario"
-  // cascade : Cualquier cambio en Usuario se propaga a Biografias
-  @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-  private Biografias biografia;
 
   // Constructor vacío necesario para JPA
   public Usuario() {}

@@ -141,7 +141,7 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
 
     for(Recomendaciones recomendacionUser : anfitrion.getRecomendaciones()) {
       if(recomendacionUser.getTitulo().equalsIgnoreCase(recomendacion.getTitulo()))
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe una recomendación con ese titulo.");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe una recomendación con ese titulo. solo puede modificarla.");
     }
 
     recomendacion.setAnfitrion(anfitrion); // Asignar el anfitrion a la recomendación

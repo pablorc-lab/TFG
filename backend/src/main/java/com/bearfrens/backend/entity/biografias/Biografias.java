@@ -1,6 +1,8 @@
 package com.bearfrens.backend.entity.biografias;
 
 import com.bearfrens.backend.entity.user.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,12 +24,10 @@ public class Biografias {
   private Long id;
 
   @Column(name = "tipo_usuario", nullable = false)
-  private int tipoUsuario; // Anfitrion = 1, Viajero = 2
+  private int tipoUsuario; // 1 = Anfitrion, 2 = Viajero
 
-  @OneToOne // Indica una relación 1 a 1 entre Biografias y Usuario
-  // Crea una columna 'usuario_id' que actúa como clave foránea apuntando al 'id' de la tabla 'usuarios'.
-  @JoinColumn(name = "usuario_id", nullable = false)
-  private Usuario usuario;
+  @Column(name = "usuario_id", nullable = false)
+  private Long usuarioID;
 
   @Column(name = "sobre_mi", length = 500)
   private String sobreMi;
@@ -35,6 +35,7 @@ public class Biografias {
   @Column(length = 255)
   private String idiomas; // Almacena "Idioma_1,Idioma_2,Idioma_3" como string
 
+  // Para anfitrion, será sobre la vivienda y para el viajero sobre sus viajes
   @Column(name = "descripcion_extra", length = 500)
   private String descripcionExtra;
 }
