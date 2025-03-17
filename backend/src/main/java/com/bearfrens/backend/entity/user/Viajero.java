@@ -1,10 +1,7 @@
 package com.bearfrens.backend.entity.user;
 
-import com.bearfrens.backend.entity.experiencias.Experiencias;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.bearfrens.backend.entity.contenido.Experiencias;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -15,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name="viajeros")
-public class Viajero extends Usuario{
+public class Viajero extends Usuario<Experiencias>{
   private int viajes_realizados = 0;
 
   @OneToMany(mappedBy = "viajero", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -36,5 +33,11 @@ public class Viajero extends Usuario{
   @Override
   public String toString() {
     return super.toString() + " viajes realizados=" + viajes_realizados + '\'' + ",\n}";
+  }
+
+  @Override
+  @Transient // Indiicar que no se cree una columna "contenido"
+  public List<Experiencias> getContenido(){
+    return experiencias;
   }
 }

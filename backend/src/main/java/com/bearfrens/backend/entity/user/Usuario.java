@@ -1,14 +1,16 @@
 package com.bearfrens.backend.entity.user;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 @MappedSuperclass // NO se creará una tabla usuario. Ya que cada tipo de usuario tiene una tabla distinta
-public abstract class Usuario {
+public abstract class Usuario<TC>{
 
   @Id // Clase primaria de la entidad
   @GeneratedValue(strategy = GenerationType.IDENTITY) // Su valor se generará automáticamente, normalmente como un número autoincrementable.
@@ -35,6 +37,11 @@ public abstract class Usuario {
 
   @Column
   private String profileImage;
+
+  // Método genérico para obtener el contenido (Experiencias o Recomendaciones)
+  @Transient // Indiicar que no se cree una columna "contenido"
+  @JsonIgnore
+  public abstract List<TC> getContenido();
 
   // Constructor vacío necesario para JPA
   public Usuario() {}

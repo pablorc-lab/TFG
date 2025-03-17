@@ -1,23 +1,26 @@
 package com.bearfrens.backend.entity.user;
 
-import com.bearfrens.backend.entity.recomendaciones.Recomendaciones;
+import com.bearfrens.backend.entity.contenido.Recomendaciones;
 import com.bearfrens.backend.entity.viviendas.Viviendas;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Table(name="anfitriones")
-public class Anfitrion extends Usuario{
+public class Anfitrion extends Usuario<Recomendaciones>{
   private int reservas_realizadas = 0;
 
   @OneToOne(mappedBy = "anfitrion", cascade = CascadeType.ALL, orphanRemoval = true)
   private Viviendas vivienda;
 
   // orphanRemoval = elimina las recomendaciones huérfanas (sin usuario).
+  // Esto significa que para eliminarla simplemente debemos desvincular la recomendacion con el anfitrion
   @OneToMany(mappedBy = "anfitrion", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Recomendaciones> recomendaciones;
 
@@ -38,4 +41,9 @@ public class Anfitrion extends Usuario{
     return super.toString() + " reservas realizados=" + reservas_realizadas + '\'' + ",\n}";
   }
 
+  @Override
+  @Transient // Indicar que no se cree una columna "contenido"
+  public List<Recomendaciones> getContenido(){
+    return recomendaciones;
+  }
 }
