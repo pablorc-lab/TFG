@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 // Permitir que nuestra aplicación deje que react desde es enlace acceda a los datos
@@ -103,5 +104,33 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
     anfitrion.setVivienda(null);
     repository.save(anfitrion);
     return ResponseEntity.ok(Collections.singletonMap("delete", true));
+  }
+
+  // ==============================
+  // MANEJO DE LAS RECOMENDACIONES
+  // ==============================
+  @GetMapping("/{userID}/recomendaciones")
+  public List<Recomendaciones> obtenerRecomendaciones(@PathVariable Long userID){
+   return obtenerContenidos(userID);
+  }
+
+  @GetMapping("/{userID}/recomendaciones/{titulo}")
+  public ResponseEntity<?> obtenerRecomendacion(@PathVariable Long userID, @PathVariable String titulo) {
+    return obtenerContenido(userID, titulo);
+  }
+
+  @PostMapping("/{userID}/recomendaciones")
+  public ResponseEntity<?> crearRecomendacion(@PathVariable Long userID, @RequestBody Recomendaciones recomendacion) {
+    return crearContenido(userID, recomendacion);
+  }
+
+  @PutMapping("/{userID}/recomendaciones/{titulo}")
+  public ResponseEntity<?> editarRecomendacion(@PathVariable Long userID, @PathVariable String titulo, @RequestBody Recomendaciones infoRecomendacion) {
+    return editarContenido(userID, titulo, infoRecomendacion);
+  }
+
+  @DeleteMapping("/{userID}/recomendaciones/{titulo}")
+  public ResponseEntity<Map<String, Boolean>> eliminarRecomendacion(@PathVariable Long userID, @PathVariable String titulo) {
+    return eliminarContenido(userID, titulo);
   }
 }

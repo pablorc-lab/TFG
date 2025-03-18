@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/biografias")
+@RequestMapping("/api")
 @AllArgsConstructor
 public class BiografiasController {
 
@@ -24,40 +23,50 @@ public class BiografiasController {
   private final AnfitrionRepository anfitrionRepository;
   private final ViajeroRepository viajeroRepository;
 
+  // Transforma el string del tipo de usuario a su respectivo valor numérico
+  private int intTipoUsuario(String tipoUsuario) {
+    return switch (tipoUsuario) {
+      case "anfitriones" -> 1;
+      case "viajeros" -> 2;
+      default -> throw new IllegalArgumentException("Tipo de usuario inválido: " + tipoUsuario);
+    };
+  }
+
   // Funcion para comprobar que el tipo de usuario y el mismo, existan
-  private boolean existeUsuario(int tipoUsuario, Long userID){
-    if (tipoUsuario != 1 && tipoUsuario != 2) {
-      throw new IllegalArgumentException("Tipo de usuario inválido (Debe ser `1` o `2`)");
+  private boolean existeUsuario(String tipoUsuario, Long userID){
+    if (!"anfitriones".equals(tipoUsuario) && !"viajeros".equals(tipoUsuario)) {
+      throw new IllegalArgumentException("Tipo de usuario inválido (Debe ser `anfitriones` o `viajeros`)");
     }
 
     // Comprobar que exista el usuario
-    return (tipoUsuario == 1)
+    return ("anfitriones".equals(tipoUsuario))
       ? anfitrionRepository.existsById(userID) // Anfitrion
       : viajeroRepository.existsById(userID); // Viajero
   }
 
   // Obtener una biografía segun el "tipo" e "ID" del usuario
-  @GetMapping("/{tipo_usuario}/{usuarioID}")
-  public ResponseEntity<Biografias> obtenerBiografia(@PathVariable int tipo_usuario, @PathVariable Long usuarioID) {
-    return ResponseEntity.ok(biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo_usuario)
+  @GetMapping("/{tipo_usuario}/{usuarioID}/biografia")
+  public ResponseEntity<?> obtenerBiografia(@PathVariable String tipo_usuario, @PathVariable Long usuarioID) {
+    return ResponseEntity.ok(biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, intTipoUsuario(tipo_usuario))
       .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía asociada al usuario " + tipo_usuario + "con ID: " + usuarioID))
     );
   }
 
   // Crear una nueva biografía
-  @PostMapping("/{tipo_usuario}/{usuarioID}")
-  public ResponseEntity<?> crearBiografia(@RequestBody Biografias biografia, @PathVariable int tipo_usuario, @PathVariable Long usuarioID) {
+  @PostMapping("/{tipo_usuario}/{usuarioID}/biografia")
+  public ResponseEntity<?> crearBiografia(@RequestBody Biografias biografia, @PathVariable String tipo_usuario, @PathVariable Long usuarioID) {
     if(!existeUsuario(tipo_usuario, usuarioID)) {
       return ResponseEntity.badRequest().body("El usuario asociado debe existir");
     }
 
     // Comprobar si ya existe una biografia
-    if(biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo_usuario).isPresent()){
+    int tipo = intTipoUsuario(tipo_usuario);
+    if(biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo).isPresent()){
       return ResponseEntity.badRequest().body("El usuario ya tiene una biografia asociada, solo puede modificarla");
     }
 
     biografia.setUsuarioID(usuarioID);
-    biografia.setTipoUsuario(tipo_usuario);
+    biografia.setTipoUsuario(tipo);
 
     Biografias nuevaBiografia = biografiasRepository.save(biografia);
     return ResponseEntity.status(HttpStatus.CREATED).body(nuevaBiografia);
@@ -65,9 +74,14 @@ public class BiografiasController {
 
 
   // Actualizar una biografía existente (no se puede cambiar el tipo de usuario)
-  @PutMapping("/{tipo_usuario}/{usuarioID}")
-  public ResponseEntity<Biografias> actualizarBiografia(@PathVariable int tipo_usuario, @PathVariable Long usuarioID, @RequestBody Biografias detallesBiografia) {
-    Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo_usuario)
+  @PutMapping("/{tipo_usuario}/{usuarioID}/biografia")
+  public ResponseEntity<?> actualizarBiografia(@PathVariable String tipo_usuario, @PathVariable Long usuarioID, @RequestBody Biografias detallesBiografia) {
+    if(!existeUsuario(tipo_usuario, usuarioID)) {
+      return ResponseEntity.badRequest().body("El usuario asociado debe existir");
+    }
+
+    int tipo = intTipoUsuario(tipo_usuario);
+    Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo)
       .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía asociada al usuario " + tipo_usuario + "con ID: " + usuarioID));
 
     biografia.setSobreMi(detallesBiografia.getSobreMi());
@@ -79,9 +93,14 @@ public class BiografiasController {
   }
 
   // Eliminar una biografía
-  @DeleteMapping("/{tipo_usuario}/{usuarioID}")
-  public ResponseEntity<Map<String, Boolean>> eliminarBiografia(@PathVariable int tipo_usuario, @PathVariable Long usuarioID) {
-    Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo_usuario)
+  @DeleteMapping("/{tipo_usuario}/{usuarioID}/biografia")
+  public ResponseEntity<Map<String, Boolean>> eliminarBiografia(@PathVariable String tipo_usuario, @PathVariable Long usuarioID) {
+    if(!existeUsuario(tipo_usuario, usuarioID)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("deleted", false));
+    }
+
+    int tipo = intTipoUsuario(tipo_usuario);
+    Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo)
       .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía asociada al usuario " + tipo_usuario + "con ID: " + usuarioID));
 
     biografiasRepository.delete(biografia);

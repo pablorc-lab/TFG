@@ -1,4 +1,5 @@
 package com.bearfrens.backend.entity.user;
+import com.bearfrens.backend.entity.biografias.Biografias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,10 +1,11 @@
 package com.bearfrens.backend.controller.user;
 
+import com.bearfrens.backend.entity.biografias.Biografias;
 import com.bearfrens.backend.entity.contenido.Contenido;
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
-import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
+import com.bearfrens.backend.repository.biografias.BiografiasRepository;
 import com.bearfrens.backend.service.ImgBBservice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ import java.util.Map;
 public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRepository<T, Long>, C extends JpaRepository<TC, Long>, TC extends Contenido> {
   protected final R repository;
   protected final C contenidoRepository;
+
+  @Autowired
+  private BiografiasRepository biografiasRepository;
+
   private final String userType;
   private final String contenidoType;
 
@@ -43,26 +48,28 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
   @GetMapping("")
   public List<T> listarTodos() {
+
     return repository.findAll();
   }
 
-
   @GetMapping("/{userID}")
   // @PathVariable : extrae el valor del parámetro id de la URL de la solicitud HTTP.
-  public ResponseEntity<T> obtenerUsuarioPorId(@PathVariable Long userID){
+  public ResponseEntity<?> obtenerUsuarioPorId(@PathVariable Long userID){
     // findById() que busca un registro por la clave primaria (en este caso, id), que es la columna marcada como clave primaria en la base de datos.
-    return ResponseEntity.ok(repository.findById(userID)
-      .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID))
-    );
-  }
+    T user = repository.findById(userID)
+      .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
+    int tipo_user = userType.equals("anfitrion") ? 1 : 2;
+    Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(userID, tipo_user).orElse(null);
+
+    return biografia == null ? ResponseEntity.ok(user) : ResponseEntity.ok(Map.of("usuario", user, "biografia", biografia));
+  }
 
   // @RequestBody : convierte el cuerpo de la solicitud HTTP (JSON) en un objeto Java (Usuario) para ser procesado en el metodo.
   @PostMapping("")
   public T crearUsuario(@RequestBody T user){
     return repository.save(user);
   }
-
 
   // Subir la imagen de enviada y devolver su ruta
   @PostMapping("/upload")
@@ -81,7 +88,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
         .body(Collections.singletonMap("error", "Error en la subida de imágen: " + e.getMessage()));
     }
   }
-
 
   // PUT :  actualizar un recurso existente
   @PutMapping("/{userID}")
@@ -103,7 +109,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return ResponseEntity.ok(updated_User);
   }
 
-
   @DeleteMapping("/{userID}")
   public ResponseEntity<Map<String,Boolean>> eliminarUsuario(@PathVariable Long userID){
     T user = repository.findById(userID)
@@ -120,18 +125,15 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   // MANEJO DE LAS RECOMENDACIONES O EXPERIENCIAS
   // ============================================
   // Obtener Recomendaciones o Experiencias
-  @GetMapping("/{userID}/{contenidoType}")
-  public List<TC> obtenerContenidos(@PathVariable Long userID){
+  public List<TC> obtenerContenidos(Long userID){
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
     return user.getContenido();
   }
 
-
   // Obtener una Recomendacion o Experiencia en específico
-  @GetMapping("/{userID}/{contenidoType}/{titulo}")
-  public ResponseEntity<?> obtenerContenido(@PathVariable Long userID, @PathVariable String titulo){
+  public ResponseEntity<?> obtenerContenido(Long userID, String titulo){
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
@@ -142,10 +144,8 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró " + contenidoType + " con ese titulo");
   }
 
-
   // Crear Experiencia o Recomendacion
-  @PostMapping("/{userID}/{contenidoType}")
-  public ResponseEntity<?> crearContenido(@PathVariable Long userID, @RequestBody TC contenido) {
+  public ResponseEntity<?> crearContenido(Long userID, TC contenido) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
@@ -159,10 +159,8 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return ResponseEntity.status(HttpStatus.CREATED).body(nuevoContenido);
   }
 
-
   // Editar Recomendacion o Experiencia
-  @PutMapping("/{userID}/{contenidoType}/{titulo}")
-  public ResponseEntity<?> editarContenido(@PathVariable Long userID, @PathVariable String titulo, @RequestBody TC infoContenido) {
+  public ResponseEntity<?> editarContenido(Long userID, String titulo, TC infoContenido) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
@@ -196,10 +194,8 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return ResponseEntity.ok(contenidoActualizado);
   }
 
-
   // Eliminar una Experiencia o Recomendacion
-  @DeleteMapping("/{userID}/{contenidoType}/{titulo}")
-  public ResponseEntity<Map<String, Boolean>> eliminarContenido(@PathVariable Long userID, @PathVariable String titulo) {
+  public ResponseEntity<Map<String, Boolean>> eliminarContenido(Long userID, String titulo) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
