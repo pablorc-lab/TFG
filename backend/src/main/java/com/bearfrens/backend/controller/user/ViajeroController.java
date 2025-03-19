@@ -4,7 +4,6 @@ import com.bearfrens.backend.entity.contenido.Experiencias;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.repository.contenido.ExperienciasRepository;
 import com.bearfrens.backend.repository.user.ViajeroRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

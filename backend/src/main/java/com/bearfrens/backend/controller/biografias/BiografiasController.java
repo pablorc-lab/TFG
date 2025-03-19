@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -99,11 +100,12 @@ public class BiografiasController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("deleted", false));
     }
 
-    int tipo = intTipoUsuario(tipo_usuario);
-    Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipo)
-      .orElseThrow(() -> new ResourceNotFoundException("No se encontró la biografía asociada al usuario " + tipo_usuario + "con ID: " + usuarioID));
+    Optional<Biografias> biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, intTipoUsuario(tipo_usuario));
+    if(biografia.isEmpty()){
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("deleted", false));
+    }
 
-    biografiasRepository.delete(biografia);
+    biografiasRepository.delete(biografia.get());
     return ResponseEntity.ok(Collections.singletonMap("deleted", true));
   }
 }
