@@ -1,4 +1,4 @@
-package com.bearfrens.backend.entity.valoraciones;
+package com.bearfrens.backend.entity.valoracione_conexiones;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -24,20 +23,7 @@ import java.util.Date;
     @Index(name = "idx_usuario", columnList = "usuario_id")
   }
 )
-public class Valoraciones {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @Column(name = "emisor_id", nullable = false) // Usuario que deja la valoración
-  private Long emisorID;
-
-  @Column(name = "tipo_usuario", nullable = false)
-  private int tipoUsuario; // 1 = Anfitrión, 2 = Viajero (RECEPTOR)
-
-  @Column(name = "usuario_id", nullable = false) // Usuario que recibe la valoración (RECEPTOR)
-  private Long usuarioID;
-
+public class Valoraciones extends ValoracionConexion {
   @Column
   private String user_profile_img;
 

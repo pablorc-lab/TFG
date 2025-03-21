@@ -18,4 +18,5 @@ public class UsuarioService {
   public boolean existsByEmail(String email){
     return viajeroRepository.existsByEmail(email) || anfitrionRepository.existsByEmail(email);
   }
+
 }
