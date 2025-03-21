@@ -1,11 +1,13 @@
 package com.bearfrens.backend.repository.valoraciones_conexiones;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 import java.util.Optional;
 
 // Repositorio común
+@NoRepositoryBean
 public interface ValoracionesConexionesRepository<T> extends JpaRepository<T, Long> {
   // - Optional      → Variable que puede tener un valor asignado o que puede contener un valor null
   // - "findBy"      → Indica que se trata de una consulta de búsqueda en la base de datos.

@@ -25,8 +25,8 @@ public class Matches {
   private Long id;
 
   @Column(name = "viajero_id", nullable = false)
-  private Long viajero_id;
+  private Long viajeroID;
 
   @Column(name = "anfitrion_id", nullable = false)
-  private Long anfitrion_id;
+  private Long anfitrionID;
 }

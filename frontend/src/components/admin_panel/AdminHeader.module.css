@@ -2,14 +2,16 @@
   padding: 22px;
   background-color: rgb(32, 32, 32);
   font-family: "Nunito";
-  width: calc(100% - 44px);
+  width: calc(100% - 44px);  
 }
 
 .header nav {
   display: flex;
+  flex-wrap: wrap;
   justify-content: start;
   align-items: center;
-  gap: 50px;
+  column-gap: 50px;
+  row-gap: 30px;
 }
 
 .header nav a{

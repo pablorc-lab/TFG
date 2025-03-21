@@ -1,4 +1,4 @@
-package com.bearfrens.backend.service;
+package com.bearfrens.backend.service.valoraciones_conexiones;
 
 import com.bearfrens.backend.entity.matches.Matches;
 import com.bearfrens.backend.entity.valoracione_conexiones.Likes;
@@ -6,6 +6,7 @@ import com.bearfrens.backend.entity.valoracione_conexiones.ValoracionConexion;
 import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.repository.matches.MatchesRepository;
 import com.bearfrens.backend.repository.valoraciones_conexiones.ValoracionesConexionesRepository;
+import com.bearfrens.backend.service.GestorUsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,8 +61,8 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
 
       if(likeReciproco.isPresent()){
         Matches nuevoMatch = new Matches();
-        nuevoMatch.setAnfitrion_id(tipo_receptor == 1 ? receptorID : usuarioID); // Si el receptor es el anfitrion, guardar el id correspondiente
-        nuevoMatch.setViajero_id(tipo_receptor == 1 ? usuarioID : receptorID); // Si el receptor es anfitrion, guardar el id contrario
+        nuevoMatch.setAnfitrionID(tipo_receptor == 1 ? receptorID : usuarioID); // Si el receptor es el anfitrion, guardar el id correspondiente
+        nuevoMatch.setViajeroID(tipo_receptor == 1 ? usuarioID : receptorID); // Si el receptor es anfitrion, guardar el id contrario
         matchesRepository.save(nuevoMatch);
       }
     }

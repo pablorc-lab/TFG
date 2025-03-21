@@ -10,8 +10,8 @@ const AlojamientosPage = lazy(() => import("./pages/viajeros/alojamientos/Alojam
 const RegistrarUsuarioPage = lazy(() => import("./pages/registro_usuario/RegistrarUsuarioPage"));
 const InicioSesionPage = lazy(() => import("./pages/registro_usuario/InicioSesionPage"));
 const FaqPage = lazy(() => import("./pages/inicio/faq/FaqPage"));
-const ListUsuariosPage = lazy(() => import("./pages/admin_panel/listado_clientes/ListUsuariosPage"));
-const FormUser = lazy(() => import('./components/admin_panel/form_user/FormUser'));
+const ListTablasPage = lazy(() => import("./pages/admin_panel/ListTablasPage"));
+const FormComponent = lazy(() => import('./components/admin_panel/form_user/FormComponent'));
 const MiCuenta = lazy(() => import("./pages/usuarios/mi_cuenta/MiCuenta"));
 const InquilinosPage = lazy(() => import('./pages/anfitriones/inquilinos/InquilinosPage'));
 const AnfProfilePage = lazy(() => import('./pages/viajeros/anf_profiles/AnfProfilePage'));
@@ -44,9 +44,9 @@ export default function App() {
 
           {/* Rutas para PANEL ADMIN con rutas anidadas */}
           <Route path="/admin-panel" element={<Navigate to="/admin-panel/anfitrion" />} />
-          <Route path="/admin-panel/:userType" element={<ListUsuariosPage />} />
-          <Route path="/admin-panel/:userType/crear" element={<FormUser />} />
-          <Route path="/admin-panel/:userType/editar/:userID" element={<FormUser />} />
+          <Route path="/admin-panel/:userType" element={<ListTablasPage />} />
+          <Route path="/admin-panel/:userType/crear" element={<FormComponent />} />
+          <Route path="/admin-panel/:userType/editar/:userID" element={<FormComponent />} />
           
         </Routes>
       </Suspense>

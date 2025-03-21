@@ -44,7 +44,7 @@ public class MatchesController {
    */
   @GetMapping("/viajero/{viajeroId}")
   public ResponseEntity<List<Matches>> obtenerPorViajero(@PathVariable Long viajeroId) {
-    return ResponseEntity.ok(matchesRepository.findByViajeroId(viajeroId));
+    return ResponseEntity.ok(matchesRepository.findByViajeroID(viajeroId));
   }
 
   /**
@@ -54,6 +54,6 @@ public class MatchesController {
    */
   @GetMapping("/anfitrion/{anfitrionId}")
   public ResponseEntity<List<Matches>> obtenerPorAnfitrion(@PathVariable Long anfitrionId) {
-    return ResponseEntity.ok(matchesRepository.findByAnfitrionId(anfitrionId));
+    return ResponseEntity.ok(matchesRepository.findByAnfitrionID(anfitrionId));
   }
 }

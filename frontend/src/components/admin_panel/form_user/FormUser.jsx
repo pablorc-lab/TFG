@@ -1,18 +1,11 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import AdminHeader from "../AdminHeader";
-import styles from "./FormUser.module.css";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import UsuarioService from "../../../services/UsuarioService";
+import UsuarioService from "../../../services/users/UsuarioService";
 
-export default function FormUser({ }) {
-  const { userType } = useParams();
-  const { userID } = useParams();
+export default function FormUser({ styles, userType, userID, InputField, setUploadingData, setErrorInput, setEmailExistente }) {
   const navigate = useNavigate();
-  const [errorInput, setErrorInput] = useState(false);
-  const [emailExistente, setEmailExistente] = useState(false);
   const [userService, setUserService] = useState(null);
   const [initialEmail, setInitialEmail] = useState(null);
-  const [uploadingData, setUploadingData] = useState(false);
 
   const [userData, setUserData] = useState({
     nombre: "",
@@ -29,8 +22,8 @@ export default function FormUser({ }) {
     const loadService = async () => {
       setUserService(
         userType === "anfitrion"
-          ? (await import("../../../services/AnfitrionService")).default
-          : (await import("../../../services/ViajeroService")).default
+          ? (await import("../../../services/users/AnfitrionService")).default
+          : (await import("../../../services/users/ViajeroService")).default
       );
     };
     loadService();
@@ -125,41 +118,26 @@ export default function FormUser({ }) {
     setUploadingData(true);
   };
 
-  // Campos de inputs para el formulario
-  const InputField = ({ label, id, type, placeholder, value, campoOnChange }) => (
-    <div className={styles.form_Group}>
-      <label htmlFor={id} className={styles.form_Label}>{label}</label>
-      <input
-        type={type}
-        id={id}
-        autoCorrect="false"
-        placeholder={placeholder}
-        className={styles.form_Control}
-        value={value}
-        onChange={(e) => setUserData(prev => ({ ...prev, [campoOnChange]: e.target.value }))} />
-    </div>
-  );
 
-  // Formulario completo
-  const FormularioUsuario = ({ userData, setUserData, saveOrUpdateCliente, userType }) => (
+  return (
     <div className={styles.card_Body}>
       <form>
         {/* NOMBRE - APELLIDO*/}
         <article className={styles.form_flex}>
-          {InputField({ label: "Nombre", id: "nombre", type: "text", placeholder: "Pablo", value: userData.nombre, campoOnChange: "nombre" })}
-          {InputField({ label: "Apellido", id: "apellido", type: "text", placeholder: "Ramblado", value: userData.apellido, campoOnChange: "apellido" })}
+          {InputField({ label: "Nombre", id: "nombre", type: "text", placeholder: "Pablo", value: userData.nombre, campoOnChange: "nombre", setUserData })}
+          {InputField({ label: "Apellido", id: "apellido", type: "text", placeholder: "Ramblado", value: userData.apellido, campoOnChange: "apellido", setUserData })}
         </article>
 
         {/* EMAIL - PRIVATEID*/}
         <article className={styles.form_flex}>
-          {InputField({ label: "Email", id: "correo", type: "email", placeholder: "pablo@example.com", value: userData.email, campoOnChange: "email" })}
-          {InputField({ label: "PrivateID", id: "privateID", type: "text", placeholder: "", value: userData.privateID, campoOnChange: "privateID" })}
+          {InputField({ label: "Email", id: "correo", type: "email", placeholder: "pablo@example.com", value: userData.email, campoOnChange: "email", setUserData })}
+          {InputField({ label: "PrivateID", id: "privateID", type: "text", placeholder: "", value: userData.privateID, campoOnChange: "privateID", setUserData })}
         </article>
 
         {/* PASSWORD - FECHA NACIMIENTO*/}
         <article className={styles.form_flex}>
-          {InputField({ label: "Password", id: "password", type: "text", placeholder: "", value: userData.password, campoOnChange: "password" })}
-          {InputField({ label: "Fecha de nacimiento", id: "fecha", type: "date", placeholder: "", value: userData.fecha_nacimiento, campoOnChange: "fecha_nacimiento" })}
+          {InputField({ label: "Password", id: "password", type: "text", placeholder: "", value: userData.password, campoOnChange: "password", setUserData })}
+          {InputField({ label: "Fecha de nacimiento", id: "fecha", type: "date", placeholder: "", value: userData.fecha_nacimiento, campoOnChange: "fecha_nacimiento", setUserData })}
         </article>
 
         {/* PROFILE IMAGE*/}
@@ -175,7 +153,7 @@ export default function FormUser({ }) {
             spellCheck="false"
           />
           {userData.profileImage && (
-            <img
+            <img 
               src={userData.profileImage instanceof File
                 ? URL.createObjectURL(userData.profileImage)
                 : userData.profileImage}
@@ -194,26 +172,5 @@ export default function FormUser({ }) {
         </article>
       </form>
     </div>
-  );
-
-  return (
-    <>
-      <title>{`Admin panel | Crear ${userType}`}</title>
-
-      <AdminHeader userType={userType} />
-      <section className={styles.container}>
-        <article className={styles.card}>
-          <h2 className={styles.title}>{userID ? "Editar" : "Agregar"} <span>{userType}</span></h2>
-
-          {errorInput && !uploadingData && <h3>POR FAVOR, RELLENA LOS CAMPOS</h3>}
-          {emailExistente && !uploadingData && <h3>EL EMAIL YA ESTÁ EN USO</h3>}
-
-          {uploadingData
-            ? <img src="/images/loading_gif.gif" alt="Cargando..." className={styles.loading_gif} />
-            : FormularioUsuario({ userData, setUserData, saveOrUpdateCliente, userType })
-          }
-        </article>
-      </section>
-    </>
   );
 }

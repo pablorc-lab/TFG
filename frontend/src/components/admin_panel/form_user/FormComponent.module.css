@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding-top: 50px;
+  padding-top: 40px;
   padding-bottom: 30px;
 }
 
@@ -106,6 +106,10 @@
 }
 
 /*? Input tipo archivo*/
+.house_img {
+  margin-bottom: 40px;
+}
+
 .form_File img {
   margin-top: 20px;
   width: 200px;

@@ -3,7 +3,7 @@ package com.bearfrens.backend.controller.valoraciones_conexiones;
 import com.bearfrens.backend.entity.valoracione_conexiones.Likes;
 import com.bearfrens.backend.repository.valoraciones_conexiones.LikesRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
-import com.bearfrens.backend.service.ValoracionesConexionesService;
+import com.bearfrens.backend.service.valoraciones_conexiones.LikesService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,26 +18,26 @@ import java.util.*;
 public class LikesController{
 
   private final GestorUsuarioService gestorUsuarioService;
-  private final ValoracionesConexionesService<Likes> valoracionesConexionesService;
+  private final LikesService likesService;
   private final LikesRepository likesRepository;
 
   // Obtener la lista de likes dados por un usuario
   @GetMapping("/{tipo_usuario}/{usuarioID}/likes")
   public ResponseEntity<?> obtenerListaLikes(@PathVariable String tipo_usuario, @PathVariable Long usuarioID){
-    return valoracionesConexionesService.obtenerListaValoracionesConexiones(usuarioID, tipo_usuario);
+    return likesService.obtenerListaValoracionesConexiones(usuarioID, tipo_usuario);
   }
 
   // Crear un like de un usuario a otro
   @PostMapping("/{tipo_usuario}/{usuarioID}/likes/{receptorID}")
   public ResponseEntity<?> crearLike(@PathVariable String tipo_usuario, @PathVariable Long usuarioID, @PathVariable Long receptorID) {
 
-    return valoracionesConexionesService.crearValoracionesConexiones(tipo_usuario, usuarioID, receptorID, new Likes());
+    return likesService.crearValoracionesConexiones(tipo_usuario, usuarioID, receptorID, new Likes());
   }
 
   // Eliminar todos los likes recibidos por un usuario (por ejemplo, si ELIMINAR su cuenta)
   @DeleteMapping("/{tipo_usuario}/{usuarioID}/likes")
   public ResponseEntity<Map<String, Boolean>> eliminarLikesDeReceptor(@PathVariable String tipo_usuario, @PathVariable Long usuarioID) {
-    return valoracionesConexionesService.eliminarValoracionesConexiones(usuarioID, tipo_usuario);
+    return likesService.eliminarValoracionesConexiones(usuarioID, tipo_usuario);
   }
 
   /**
