@@ -15,6 +15,10 @@ class UsuarioService {
     return axios.get(this.baseUrl, { auth: this.auth });
   }
 
+  getAllConDatos() {
+    return axios.get(`${this.baseUrl}/datos`, { auth: this.auth });
+  }
+
   create(userData) {
     return axios.post(this.baseUrl, userData, { auth: this.auth });
   }

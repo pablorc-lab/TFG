@@ -33,7 +33,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
   useEffect(() => {
     if (userService && userID) {
       userService.getById(userID).then(response => {
-        const usuario = response.data;
+        const usuario = response.data.usuario || response.data;
         setInitialEmail(usuario.email);
         //console.log(usuario);
         setUserData(prev => ({

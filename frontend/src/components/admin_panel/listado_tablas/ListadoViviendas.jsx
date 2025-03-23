@@ -51,7 +51,7 @@ export default function ListadoViviendas({styles}) {
             <td>{vivienda.banios}</td>
             <td>{vivienda.provincia}</td>
             <td>{vivienda.ciudad}</td>
-            <td>{vivienda.precio_noche}€</td>
+            <td>{vivienda.precio_noche} €</td>
             <td>
               <div className={styles.img_td}>
                 <Link to={`/admin-panel/viviendas/editar/${vivienda.anfitrion_id}`}>

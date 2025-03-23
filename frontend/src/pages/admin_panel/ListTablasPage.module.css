@@ -40,6 +40,7 @@
   padding: 10px;
   font-size: 15px;
   text-wrap: nowrap;
+  text-align: center;
 }
 .container table tbody tr:nth-child(odd){ background-color: #e2e2e2;}
 .container table tbody tr:hover { 

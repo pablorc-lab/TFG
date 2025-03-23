@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +49,26 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
   @GetMapping("")
   public List<T> listarTodos() {
-
     return repository.findAll();
+  }
+
+  // Listar todos los usuarios pero con sus datos
+  @GetMapping("/datos")
+  public ResponseEntity<?> listarTodosConDatos() {
+    List<T> usuarios = repository.findAll();
+    List<Map<String, Object>> resultado = new ArrayList<>();
+
+    for(T user : usuarios){
+      int tipo_user = userType.equals("anfitrion") ? 1 : 2;
+      Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(user.getId(), tipo_user).orElse(null);
+
+      resultado.add(Map.of(
+        "usuario", user,
+        "biografia", (biografia != null ? biografia : Map.of())
+      ));
+    }
+
+    return ResponseEntity.ok(resultado);
   }
 
   @GetMapping("/{userID}")
