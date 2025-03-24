@@ -1,5 +1,4 @@
 package com.bearfrens.backend.entity.user;
-import com.bearfrens.backend.entity.biografias.Biografias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -38,6 +37,18 @@ public abstract class Usuario<TC>{
 
   @Column
   private String profileImage;
+
+  @Column
+  private String descripcion;
+
+  @Column(length = 50)
+  private String gusto1;
+
+  @Column(length = 50)
+  private String gusto2;
+
+  @Column(length = 50)
+  private String gusto3;
 
   // Método genérico para obtener el contenido (Experiencias o Recomendaciones)
   @Transient // Indiicar que no se cree una columna "contenido"

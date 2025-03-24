@@ -23,7 +23,13 @@ export default function Anf_card({styles, Casa_img, Perfil_img, Nombre="-", Gust
           <div className={styles.anf_likes}>
             {/* Mapeamos las imágenes de gustos */}
             {Gustos_imgs.map((gusto, index) => (
-              <img key={index} src={gusto} alt={`Logo gusto ${index + 1}`} width={100} />
+              <img 
+                key={index} 
+                src={`/images/usuarios/Gustos/${String(gusto).toLowerCase()}.svg`} 
+                alt={`Logo gusto ${index + 1}`} 
+                width={100} 
+                onError={(e) => e.target.style.display = "none"}
+              />
             ))}
           </div>
         </div>

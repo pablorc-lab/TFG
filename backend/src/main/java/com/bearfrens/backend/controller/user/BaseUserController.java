@@ -47,12 +47,20 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     this.contenidoType = contenidoType;
   }
 
+  /**
+   * Obtener todo el listado de usuarios
+   * @return Listado array de usuarios
+   */
   @GetMapping("")
   public List<T> listarTodos() {
     return repository.findAll();
   }
 
-  // Listar todos los usuarios pero con sus datos
+
+  /**
+   * Listar todos los usuarios pero con sus datos
+   * @return Respueta MAP en forma [{usuario, biografia}, {usuario, biografia} ... ]
+   */
   @GetMapping("/datos")
   public ResponseEntity<?> listarTodosConDatos() {
     List<T> usuarios = repository.findAll();
@@ -71,8 +79,22 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return ResponseEntity.ok(resultado);
   }
 
-  @GetMapping("/{userID}")
-  // @PathVariable : extrae el valor del parámetro id de la URL de la solicitud HTTP.
+  /**
+   * Funcion para obtener una biografia dado el Usuario ID y el tipo Usuario
+   * @param usuarioID ID del usuario a buscar
+   * @param tipoUsuario Tipo de usuario a buscar
+   * @return Biografia específica, si no, null.
+   */
+  protected Biografias obtenerBiografia(Long usuarioID, int tipoUsuario){
+    return biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipoUsuario).orElse(null);
+  }
+
+  /**
+   * Obtiene un usuario a través de su ID y, si existe, también su biografía.
+   * @param userID ID del usuario
+   * @return ResponseEntity con el usuario encontrado y, si está disponible, su biografía.  Si no existe, lanza una excepción.
+   */
+  @GetMapping("/{userID}") // @PathVariable : extrae el valor del parámetro id de la URL de la solicitud HTTP.
   public ResponseEntity<?> obtenerUsuarioPorId(@PathVariable Long userID){
     // findById() que busca un registro por la clave primaria (en este caso, id), que es la columna marcada como clave primaria en la base de datos.
     T user = repository.findById(userID)
@@ -84,6 +106,11 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return biografia == null ? ResponseEntity.ok(user) : ResponseEntity.ok(Map.of("usuario", user, "biografia", biografia));
   }
 
+  /**
+   * Crea un usuario
+   * @param user Objeto usuario
+   * @return Objeto usuario creado
+   */
   // @RequestBody : convierte el cuerpo de la solicitud HTTP (JSON) en un objeto Java (Usuario) para ser procesado en el metodo.
   @PostMapping("")
   public T crearUsuario(@RequestBody T user){
@@ -122,6 +149,9 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     user.setApellido(userRequest.getApellido());
     user.setFecha_nacimiento(userRequest.getFecha_nacimiento());
     user.setProfileImage(userRequest.getProfileImage());
+    user.setGusto1(userRequest.getGusto1());
+    user.setGusto2(userRequest.getGusto2());
+    user.setGusto3(userRequest.getGusto3());
 
     // Guardar el usuario actualizado
     T updated_User = repository.save(user);

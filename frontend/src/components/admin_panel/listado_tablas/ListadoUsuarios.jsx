@@ -52,6 +52,9 @@ export default function ListadoUsuarios({ styles, userType }) {
           <th>Fecha</th>
           <th>Email</th>
           <th>Profile_Image</th>
+          <th>Gusto1</th>
+          <th>Gusto2</th>
+          <th>Gusto3</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -69,7 +72,10 @@ export default function ListadoUsuarios({ styles, userType }) {
                 {usuario.profileImage.length > 30 ? `${usuario.profileImage.slice(0,30)}...` : usuario.profileImage}
               </a>
             </td>
-            <td >
+            <td>{usuario.gusto1}</td>
+            <td>{usuario.gusto2}</td>
+            <td>{usuario.gusto3}</td>
+            <td>
               <div className={styles.img_td}>
                 <Link to={`/admin-panel/${userType}/editar/${usuario.id}`}>
                   <img src="/images/admin_panel/edit.svg" alt="Icono delete" />

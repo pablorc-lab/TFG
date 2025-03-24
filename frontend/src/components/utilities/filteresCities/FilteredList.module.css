@@ -60,8 +60,8 @@
 
 @media (min-width: 770px) {
   .filteredCities { width: 450px;}
-  .filteredList span:nth-child(1){ font-size: 23px;}
-  .filteredList span:nth-child(2){ font-size: 22px;}
+  .filteredList span:nth-child(1){ font-size: 21px;}
+  .filteredList span:nth-child(2){ font-size: 20px;}
 
   .editarMenu .filteredList span:nth-child(1){ font-size: 20px;}
   .editarMenu .filteredList span:nth-child(2){ font-size: 18px;}

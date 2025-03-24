@@ -15,6 +15,9 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
     fecha_nacimiento: "",
     privateID: "",
     profileImage: "",
+    gusto1: "",
+    gusto2: "",
+    gusto3: "",
   });
 
   // Cargar el servicio actual requerido
@@ -38,12 +41,15 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
         //console.log(usuario);
         setUserData(prev => ({
           ...prev,
-          nombre: usuario.nombre,
-          apellido: usuario.apellido,
-          email: usuario.email,
-          fecha_nacimiento: usuario.fecha_nacimiento,
-          privateID: usuario.privateID,
-          profileImage: usuario.profileImage,
+          nombre: usuario.nombre || "",
+          apellido: usuario.apellido || "",
+          email: usuario.email || "",
+          fecha_nacimiento: usuario.fecha_nacimiento || "",
+          privateID: usuario.privateID || "",
+          profileImage: usuario.profileImage || "",
+          gusto1: usuario.gusto1 || "",
+          gusto2: usuario.gusto2 || "",
+          gusto3: usuario.gusto3 || "",
         }));
         console.log(response.data);
       }).catch(error => { console.error("Error al obtener el usuario ", error); })
@@ -93,7 +99,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
     e.preventDefault();
 
     // Comprobar que todos estén rellenados
-    if (Object.values(userData).some(value => !value)) {
+    if (Object.entries(userData).some(([key, value]) => !value && key !== "password" && key !== "profileImage")) {
       setErrorInput(true);
       return;
     }
@@ -140,6 +146,16 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
           {InputField({ label: "Fecha de nacimiento", id: "fecha", type: "date", placeholder: "", value: userData.fecha_nacimiento, campoOnChange: "fecha_nacimiento", setUserData })}
         </article>
 
+        {/*GUSTOS */}
+        <article className={styles.form_flex}>
+          {InputField({ label: "Gusto 1", id: "gusto1", type: "text", placeholder: "Ej: fútbol", value: userData.gusto1, campoOnChange: "gusto1", setUserData })}
+          {InputField({ label: "Gusto 2", id: "gusto2", type: "text", placeholder: "Ej: baloncesto", value: userData.gusto2, campoOnChange: "gusto2", setUserData })}
+        </article>
+        <article className={styles.form_flex}>
+          {InputField({ label: "Gusto 3", id: "gusto3", type: "text", placeholder: "Ej: pescar", value: userData.gusto3, campoOnChange: "gusto3", setUserData })}
+        </article>
+
+
         {/* PROFILE IMAGE*/}
         <div className={`${styles.form_Group} ${styles.form_File}`}>
           <label htmlFor="profileIMG" className={styles.form_Label}>Profile Image</label>
@@ -153,7 +169,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
             spellCheck="false"
           />
           {userData.profileImage && (
-            <img 
+            <img
               src={userData.profileImage instanceof File
                 ? URL.createObjectURL(userData.profileImage)
                 : userData.profileImage}

@@ -4,7 +4,7 @@ import React from 'react';
 import ViajerosHeader from './ViajerosHeader';
 import ViajerosMobileHeader from './ViajerosMobileHeader';
 
-export default function ViajerosFinalHeader() {
+export default function ViajerosFinalHeader({setAnfitrionesEspecificos}) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const inputRef = useRef(null);
   const filteredListRef = useRef(null);
@@ -46,6 +46,7 @@ export default function ViajerosFinalHeader() {
             updateHeaderStates={updateHeaderStates} 
             activeSection={activeSection}
             setActiveSection={setActiveSection}
+            setAnfitrionesEspecificos={setAnfitrionesEspecificos}
           />
         : <ViajerosMobileHeader 
             inputRef={inputRef} 
@@ -54,6 +55,7 @@ export default function ViajerosFinalHeader() {
             updateHeaderStates={updateHeaderStates} 
             activeSection={activeSection}
             setActiveSection={setActiveSection}
+            setAnfitrionesEspecificos={setAnfitrionesEspecificos}
           />
       }
     </>

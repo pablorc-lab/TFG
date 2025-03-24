@@ -31,7 +31,7 @@ public class Recomendaciones extends Contenido {
   @Column(nullable = true) // Opcional
   private int telefono;
 
-  @Column(nullable = true) // Opcional
+  @Column(nullable = true, length = 150) // Opcional
   private String horarios;
 
   @Column(nullable = true) // Opcional

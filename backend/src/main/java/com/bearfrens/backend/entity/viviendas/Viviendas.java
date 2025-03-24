@@ -52,11 +52,11 @@ public class Viviendas {
   @Column
   int banios; // Baños
 
-  @Column
-  String provincia;
-
-  @Column
+  @Column(length = 50)
   String ciudad;
+
+  @Column(length = 50)
+  String provincia;
 
   @Column
   int precio_noche;

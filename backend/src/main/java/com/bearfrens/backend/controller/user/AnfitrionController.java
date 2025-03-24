@@ -1,5 +1,6 @@
 package com.bearfrens.backend.controller.user;
 
+import com.bearfrens.backend.entity.biografias.Biografias;
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
 import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.viviendas.Viviendas;
@@ -11,9 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 // Permitir que nuestra aplicación deje que react desde es enlace acceda a los datos
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,6 +29,26 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
   public AnfitrionController(AnfitrionRepository repository, ViviendasRepository viviendasRepository, RecomendacionesRepository recomendacionesRepository) {
     super(repository, "anfitrion", recomendacionesRepository, "recomendaciones");
     this.viviendasRepository = viviendasRepository;
+  }
+
+  // Obtener anfitriones por la ubicación de su vivienda
+  @GetMapping("/viviendas/{ciudad}-{provincia}")
+  public ResponseEntity<?> listarViviendasPorDatos(@PathVariable String ciudad, @PathVariable String provincia) {
+    List<Viviendas> viviendas = viviendasRepository.findAllByCiudadAndProvincia(ciudad, provincia);
+    List<Anfitrion> anfitriones = viviendas.stream().map(Viviendas::getAnfitrion).collect(Collectors.toList());
+
+    List<Map<String, Object>> resultado = new ArrayList<>();
+
+    for (Anfitrion anfitrion : anfitriones) {
+      Biografias biografia = this.obtenerBiografia(anfitrion.getId(), 1);
+
+      resultado.add(Map.of(
+        "usuario", anfitrion,
+        "biografia", (biografia != null ? biografia : Map.of())
+      ));
+    }
+
+    return ResponseEntity.ok(resultado);
   }
 
   // ========================

@@ -1,4 +1,5 @@
 import UsuarioService from "./UsuarioService";
+import axios from "axios";
 
 class AnfitrionService extends UsuarioService{ 
   static ANFITRION_BASE_REST_API_URL = "http://localhost:8080/api/anfitriones"
@@ -8,6 +9,9 @@ class AnfitrionService extends UsuarioService{
   }
 
  // Métodos específicos de un anfitrion
+ getViviendasPorUbicacion(ciudad, provincia) {
+  return axios.get(`${this.baseUrl}/viviendas/${ciudad}-${provincia}`, { auth: this.auth });
+}
 }
 
 export default new AnfitrionService();
