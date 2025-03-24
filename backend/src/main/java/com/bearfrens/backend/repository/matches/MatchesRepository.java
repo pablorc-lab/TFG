@@ -10,4 +10,5 @@ import java.util.List;
 public interface MatchesRepository extends JpaRepository<Matches, Long> {
   List<Matches> findByViajeroID(Long viajeroId);
   List<Matches> findByAnfitrionID(Long anfitrionId);
+  Matches findByAnfitrionIDAndViajeroID(Long anfitrionId, Long viajeroId);
 }

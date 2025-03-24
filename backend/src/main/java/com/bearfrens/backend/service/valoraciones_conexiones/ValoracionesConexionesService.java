@@ -1,6 +1,8 @@
 package com.bearfrens.backend.service.valoraciones_conexiones;
 
 import com.bearfrens.backend.entity.matches.Matches;
+import com.bearfrens.backend.entity.user.Anfitrion;
+import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.entity.valoracione_conexiones.Likes;
 import com.bearfrens.backend.entity.valoracione_conexiones.ValoracionConexion;
 import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
@@ -24,13 +26,13 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
 
   /**
    * Obtener la lista de tipo <T></T> dados por un usuario
-   * @param tipo_usuario Tipo de usuario emisor en String
+   * @param tipo_usuario Tipo de usuario emisor en String (se convierte al del receptor)
    * @param usuarioID ID del usuario emisor
    * @return Lista de likes
    */
-  public ResponseEntity<?> obtenerListaValoracionesConexiones(Long usuarioID, String tipo_usuario){
+  public List<T> obtenerListaValoracionesConexiones(Long usuarioID, String tipo_usuario){
     int tipo = gestorUsuarioService.intTipoUsuario(tipo_usuario);
-    return ResponseEntity.ok(repository.findAllByEmisorIDAndTipoUsuario(usuarioID,tipo == 1 ? 2 : 1));
+    return repository.findAllByEmisorIDAndTipoUsuario(usuarioID,tipo == 1 ? 2 : 1);
   }
 
   /**
@@ -41,7 +43,7 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
    * @return <T> creado o mensaje de error si ya existe
    */
   public ResponseEntity<?> crearValoracionesConexiones(String tipo_usuario, Long usuarioID, Long receptorID, T nuevoElemento) {
-    if(!gestorUsuarioService.existeAmbosUsuario(tipo_usuario, usuarioID, receptorID)) {
+    if(gestorUsuarioService.NoExisteAmbosUsuario(tipo_usuario, usuarioID, receptorID)) {
       return ResponseEntity.badRequest().body("Los usuarios asociados debe existir");
     }
 
@@ -67,9 +69,27 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
       }
     }
 
-    // Si es valoraciones añadir fecha
+    // Si es valoraciones añadir fecha, imagen de perfil del emisor
     else if(nuevoElemento instanceof Valoraciones) {
       ((Valoraciones) nuevoElemento).setFecha(LocalDate.now());
+
+      // Al crear una valoracion, se actualiza la media del usuario
+      List<Valoraciones> response = (List<Valoraciones>) repository.findAllByEmisorIDAndTipoUsuario(usuarioID, tipo_receptor);
+
+      //Actualizar la nota media del usuario receptor
+      if (tipo_receptor == 1) {
+        Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(receptorID);
+        anfitrion.setValoracion_media(((Valoraciones) nuevoElemento).getNum_valoracion());
+        gestorUsuarioService.guardarAnfitrion(anfitrion);
+        ((Valoraciones) nuevoElemento).setEmisor_profile_img(anfitrion.getProfileImage());
+      }
+
+      else{
+        Viajero viajero = gestorUsuarioService.obtenerViajero(receptorID);
+        viajero.setValoracion_media(((Valoraciones) nuevoElemento).getNum_valoracion());
+        gestorUsuarioService.guardarViajero(viajero);
+        ((Valoraciones) nuevoElemento).setEmisor_profile_img(viajero.getProfileImage());
+      }
     }
 
     repository.save(nuevoElemento);

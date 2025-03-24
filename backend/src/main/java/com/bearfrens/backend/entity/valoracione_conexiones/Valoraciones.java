@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -25,10 +26,11 @@ import java.time.LocalDate;
 )
 public class Valoraciones extends ValoracionConexion {
   @Column
-  private String user_profile_img;
+  private String emisor_profile_img; // Imagen de perfil del emisor
 
-  @Column
-  private int num_valoracion;
+  // 3 digitos, con 2 decimales (Ej : 4.7)
+  @Column(precision = 3, scale = 1)
+  private BigDecimal num_valoracion;
 
   @Column
   private LocalDate fecha;

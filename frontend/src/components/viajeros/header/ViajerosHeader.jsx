@@ -1,14 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from "./ViajerosHeader.module.css"
 import { Link } from "react-router-dom";
 import DropDownMenu from '../../dropdown_menu/DropDownMenu';
 import FilteredList from '../../utilities/filteresCities/FilteredList';
-import AnfitrionService from '../../../services/users/AnfitrionService';
 
-export default function ViajerosHeader({ inputRef, filteredListRef, headerStates, updateHeaderStates, activeSection, setActiveSection, setAnfitrionesEspecificos }) {
+export default function ViajerosHeader({ inputRef, filteredListRef, headerStates, updateHeaderStates, activeSection, setActiveSection, setRealizarBusqueda}) {
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [buscarUsuario, setBuscarUsuario] = useState(false);
-  const [locationBuscada, SetLocationBuscada] = useState("");
 
   const userRef = useRef(null);
 
@@ -22,29 +19,6 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
   const getClassName = (nameSection) => {
     return (activeSection === nameSection) ? styles.active_section : undefined;
   }
-
-  useEffect(() => {
-    if (buscarUsuario) {
-      SetLocationBuscada(headerStates.location);
-      setBuscarUsuario(false);
-      const [ciudad, provincia] = headerStates.location.split(",").map(word => String(word).toLocaleUpperCase().trim());
-
-      AnfitrionService.getViviendasPorUbicacion(ciudad, provincia)
-        .then(response => {
-          setAnfitrionesEspecificos(response.data);
-        })
-        .catch(error => {
-          console.error("Error obteniendo anfitriones:", error);
-        });
-
-      console.log(headerStates.location)
-    }
-
-    else if(locationBuscada !== headerStates.location){
-      setAnfitrionesEspecificos([]);
-    }
-
-  }, [buscarUsuario, headerStates.location])
 
   return (
     <header className={styles.header}>
@@ -67,7 +41,7 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
         {/* Barra de bússqueda para ALOJAMIENTOS*/}
         <article className={`${styles.search_form_container} ${activeSection !== "alojamientos" ? styles.inactive_form : undefined}`}>
           <form className={styles.search_form}>
-            <img src="/images/viajeros/lupa.webp" width="50" alt='icono lupa' onClick={() => setBuscarUsuario(true)} />
+            <img src="/images/viajeros/lupa.webp" width="50" alt='icono lupa' onClick={() =>  setRealizarBusqueda(true)} />
             <input
               ref={inputRef}
               type="text"
@@ -81,7 +55,7 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault(); // Evita que el formulario se envíe
-                  setBuscarUsuario(true);
+                  setRealizarBusqueda(true);
                 }
               }}
             />

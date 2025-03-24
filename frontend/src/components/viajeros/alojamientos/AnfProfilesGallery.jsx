@@ -2,26 +2,30 @@ import AnfCard from '../../users_cards/AnfCard';
 import anf_card_styles from "../../users_cards/UserCard.module.css";
 import styles from "./AnfProfilesGallery.module.css";
 
-export default function Anf_Profiles_Gallery({anfitriones, anfitrionesEspecificos}) {
-  const listaAnfitriones = anfitrionesEspecificos.length > 0 ? anfitrionesEspecificos : anfitriones;
+export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecificos, buscarUsuario }) {
+  const listaAnfitriones = buscarUsuario ? anfitrionesEspecificos : anfitriones;
 
   return (
-    <section className={styles.card_users}>
-      {listaAnfitriones.map(anfitrion => (
-        <article key={anfitrion.usuario.id}>
-          <AnfCard
-            styles={anf_card_styles}
-            Casa_img={anfitrion.usuario.vivienda?.imagen1 || "/images/not_found/vivienda.webp"}
-            Perfil_img={anfitrion.usuario.profileImage}
-            Nombre={anfitrion.usuario.nombre}
-            Gustos_imgs={[anfitrion.usuario?.gusto1, anfitrion.usuario?.gusto2, anfitrion.usuario?.gusto3].filter(gusto => gusto != null)}
-            Valoracion={0.3}
-            Ubicacion={`${anfitrion.usuario.vivienda?.ciudad || ""}, ${anfitrion.usuario.vivienda?.provincia || ""}`}
-            Precio={anfitrion.usuario.vivienda?.precio_noche || "-"}
-            Descripcion={anfitrion.biografia?.sobreMi ||"Texto"}
-          />
-        </article>
-      ))}
+    <section className={styles.card_users_container}>
+      <article className={styles.card_users}>
+        {listaAnfitriones.map(anfitrion => (
+          <div key={anfitrion.id}>
+            <AnfCard
+              styles={anf_card_styles}
+              Casa_img={anfitrion.vivienda?.imagen1 || "/images/not_found/vivienda.webp"}
+              Perfil_img={anfitrion.profileImage || "/images/not_found/user_img.png"}
+              Nombre={anfitrion.nombre}
+              Gustos_imgs={[anfitrion.gusto1, anfitrion.gusto2, anfitrion.gusto3].filter(gusto => gusto != null)}
+              Valoracion={anfitrion.valoracion_media || 0.0}
+              Ubicacion={`${anfitrion.vivienda?.ciudad || ""}, ${anfitrion.vivienda?.provincia || ""}`}
+              Precio={anfitrion.vivienda?.precio_noche || "-"}
+              Descripcion={anfitrion.descripcion || "Este anfitrión aún no se ha descrito."}
+            />
+          </div>
+        ))}
+
+        {listaAnfitriones.length === 0 && listaAnfitriones === anfitrionesEspecificos && <h1 className={styles.not_found}>No hay anfitriones en esa ubicación.</h1>}
+      </article>
     </section>
   )
 }

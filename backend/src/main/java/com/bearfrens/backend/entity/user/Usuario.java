@@ -4,8 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -38,7 +42,14 @@ public abstract class Usuario<TC>{
   @Column
   private String profileImage;
 
-  @Column
+  // 3 digitos, con 2 decimales (Ej : 4.7)
+  @Column(precision = 3, scale = 1)
+  private BigDecimal valoracion_media;
+
+  @Column(nullable = false)
+  private int num_valoraciones = 0;
+
+  @Column(length = 100)
   private String descripcion;
 
   @Column(length = 50)
@@ -59,22 +70,53 @@ public abstract class Usuario<TC>{
   public Usuario() {}
 
   // Constructor con cifrado de contraseña
-  public Usuario(String privateID, String nombre, String apellido, LocalDate fecha_nacimiento, String email, String password, String profileImage) {
+  public Usuario(String privateID, String email, String nombre, String password, String apellido, LocalDate fecha_nacimiento,
+                 String profileImage, BigDecimal valoracion_media, String descripcion, String gusto1, String gusto2, String gusto3, int num_valoraciones) {
     this.privateID = privateID;
+    this.email = email;
     this.nombre = nombre;
+    setPassword(password); // Ciframos la contraseña
     this.apellido = apellido;
     this.fecha_nacimiento = fecha_nacimiento;
-    this.email = email;
-    setPassword(password); // Ciframos la contraseña
     this.profileImage = (profileImage == null || profileImage.isEmpty()) ? null : profileImage;
+    this.valoracion_media = valoracion_media;
+    this.num_valoraciones = Math.max(num_valoraciones, 0);
+    this.descripcion = descripcion;
+    this.gusto1 = gusto1;
+    this.gusto2 = gusto2;
+    this.gusto3 = gusto3;
   }
-  
+
   // GETTERS and SETTERS
   // Cifrar la nueva contraseña
   public void setPassword(String newPassword) {
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     this.password = encoder.encode(newPassword);
   }
+
+  // Calcular la nueva media
+  public void setValoracion_media(BigDecimal nuevaValoracion) {
+    if (nuevaValoracion == null) return;
+
+    // Si es la primera valoración, simplemente asignamos la nueva valoración
+    if (this.num_valoraciones == 0) {
+      this.valoracion_media = nuevaValoracion.setScale(1, RoundingMode.HALF_UP);
+      this.num_valoraciones = 1;
+    }
+
+    else {
+      // Calculamos la nueva media ponderada
+      BigDecimal totalValoraciones = this.valoracion_media.multiply(BigDecimal.valueOf(this.num_valoraciones));
+      totalValoraciones = totalValoraciones.add(nuevaValoracion);
+
+      // Aumentamos el número de valoraciones
+      this.num_valoraciones++;
+
+      // Calculamos la media final y la redondeamos a 2 decimales
+      this.valoracion_media = totalValoraciones.divide(BigDecimal.valueOf(this.num_valoraciones), 1, RoundingMode.HALF_UP);
+    }
+  }
+
 
   @Override
   public String toString() {

@@ -3,11 +3,12 @@ package com.bearfrens.backend.controller.matches;
 import com.bearfrens.backend.entity.matches.Matches;
 import com.bearfrens.backend.repository.matches.MatchesRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -55,5 +56,18 @@ public class MatchesController {
   @GetMapping("/anfitrion/{anfitrionId}")
   public ResponseEntity<List<Matches>> obtenerPorAnfitrion(@PathVariable Long anfitrionId) {
     return ResponseEntity.ok(matchesRepository.findByAnfitrionID(anfitrionId));
+  }
+
+  /**
+   * Eliminar un match entre anfitrion y viajero
+   * @param anfitrionId ID del anfitrión
+   * @return Respueta de borrado
+   */
+  @GetMapping("/eliminar/{anfitrionId}-{viajeroId}")
+  public ResponseEntity<Map<String,Boolean>> eliminarMatch(@PathVariable Long anfitrionId, @PathVariable Long viajeroId) {
+    Matches match = matchesRepository.findByAnfitrionIDAndViajeroID(anfitrionId, viajeroId);
+
+    matchesRepository.delete(match);
+    return ResponseEntity.ok(Collections.singletonMap("deleted", true));
   }
 }

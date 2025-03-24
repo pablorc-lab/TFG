@@ -1,6 +1,8 @@
 package com.bearfrens.backend.controller.valoraciones_conexiones;
 
+import com.bearfrens.backend.entity.matches.Matches;
 import com.bearfrens.backend.entity.valoracione_conexiones.Likes;
+import com.bearfrens.backend.repository.matches.MatchesRepository;
 import com.bearfrens.backend.repository.valoraciones_conexiones.LikesRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
 import com.bearfrens.backend.service.valoraciones_conexiones.LikesService;
@@ -17,13 +19,14 @@ import java.util.*;
 @AllArgsConstructor
 public class LikesController{
 
+  private final MatchesRepository matchesRepository;
   private final GestorUsuarioService gestorUsuarioService;
   private final LikesService likesService;
   private final LikesRepository likesRepository;
 
   // Obtener la lista de likes dados por un usuario
   @GetMapping("/{tipo_usuario}/{usuarioID}/likes")
-  public ResponseEntity<?> obtenerListaLikes(@PathVariable String tipo_usuario, @PathVariable Long usuarioID){
+  public List<Likes> obtenerListaLikes(@PathVariable String tipo_usuario, @PathVariable Long usuarioID){
     return likesService.obtenerListaValoracionesConexiones(usuarioID, tipo_usuario);
   }
 
@@ -49,7 +52,7 @@ public class LikesController{
    */
   @DeleteMapping("/{tipo_usuario}/{usuarioID}/likes/{receptorID}")
   public ResponseEntity<?> eliminarLikeEspecifico(@PathVariable String tipo_usuario, @PathVariable Long usuarioID, @PathVariable Long receptorID) {
-    if (!gestorUsuarioService.existeAmbosUsuario(tipo_usuario, usuarioID, receptorID)) {
+    if (gestorUsuarioService.NoExisteAmbosUsuario(tipo_usuario, usuarioID, receptorID)) {
       return ResponseEntity.badRequest().body("Los usuarios asociados debe existir");
     }
 
@@ -61,8 +64,15 @@ public class LikesController{
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el like.");
     }
 
-    // Eliminar el like
+    // Eliminar el like y su match asociado
     likesRepository.delete(like.get());
+
+    Matches match = matchesRepository.findByAnfitrionIDAndViajeroID(
+      tipo_receptor == 2 ? receptorID : usuarioID,
+      tipo_receptor == 2 ? usuarioID : receptorID
+    );
+    matchesRepository.delete(match);
+
     return ResponseEntity.ok(Collections.singletonMap("deleted", true));
   }
 }

@@ -3,9 +3,11 @@ package com.bearfrens.backend.entity.user;
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
 import com.bearfrens.backend.entity.viviendas.Viviendas;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,8 +31,8 @@ public class Anfitrion extends Usuario<Recomendaciones>{
     super();
   }
 
-  public Anfitrion(String privateID, String nombre, String apellido, LocalDate fecha_nacimiento, String email, String password, String profileImage) {
-    super(privateID, nombre, apellido, fecha_nacimiento, email, password, profileImage);
+  public Anfitrion(String privateID, String email, String nombre, String password, String apellido, LocalDate fecha_nacimiento, String profileImage, BigDecimal valoracion_media, String descripcion, String gusto1, String gusto2, String gusto3, int num_valoraciones) {
+    super(privateID, email, nombre, password, apellido, fecha_nacimiento, profileImage, valoracion_media, descripcion, gusto1, gusto2, gusto3, num_valoraciones);
   }
 
   // GETTERS and SETTERSs

@@ -8,11 +8,12 @@ import { Suspense } from "react";
 export default function AlojamientosPage() {
   const [anfitriones, setAnfitriones] = useState([]);
   const [anfitrionesEspecificos, setAnfitrionesEspecificos] = useState([]);
+  const [buscarUsuario, setBuscarUsuario] = useState(false);
 
   // Obtener los anfitriones
   useEffect(() => {
     // Obtener anfitriones
-    AnfitrionService.getAllConDatos().then(response => {
+    AnfitrionService.getAll().then(response => {
       // Obtener el id de cada anfitrion y su vivienda
       setAnfitriones(response.data);
       //console.log(response.data)
@@ -23,11 +24,11 @@ export default function AlojamientosPage() {
     <>
       <title>Alojamientos | Viajeros</title>
       {/* CABECERA */}
-      {<ViajerosFinalHeader setAnfitrionesEspecificos={setAnfitrionesEspecificos} />}
+      {<ViajerosFinalHeader buscarUsuario={buscarUsuario} setBuscarUsuario={setBuscarUsuario} setAnfitrionesEspecificos={setAnfitrionesEspecificos}/>}
 
       {/* PERFILES DE VIAJEROS  */}
       <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{width:"350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
-        <AnfProfilesGallery anfitriones={anfitriones} anfitrionesEspecificos={anfitrionesEspecificos} />
+        <AnfProfilesGallery anfitriones={anfitriones} anfitrionesEspecificos={anfitrionesEspecificos} buscarUsuario={buscarUsuario}/>
       </Suspense>
 
       {/*Pie de pagina*/}

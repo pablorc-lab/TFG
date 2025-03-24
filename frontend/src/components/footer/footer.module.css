@@ -1,5 +1,4 @@
 .footer {
-  margin-top: 50px;
   background-color: #0a7273;
   padding: 1.6vw 0px;
   font-family: "Nunito";
@@ -7,6 +6,8 @@
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 0 5px 1px rgb(184, 180, 178);
+  position: relative;
+  bottom: 0;
 }
 
 /*? Logo*/

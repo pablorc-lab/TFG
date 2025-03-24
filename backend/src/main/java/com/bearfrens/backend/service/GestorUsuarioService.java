@@ -1,5 +1,7 @@
 package com.bearfrens.backend.service;
 
+import com.bearfrens.backend.entity.user.Anfitrion;
+import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.repository.user.AnfitrionRepository;
 import com.bearfrens.backend.repository.user.ViajeroRepository;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,11 @@ public class GestorUsuarioService {
 
   private final AnfitrionRepository anfitrionRepository;
   private final ViajeroRepository viajeroRepository;
+
+  public Anfitrion obtenerAnfitrion(Long anfitrionID){ return anfitrionRepository.findById(anfitrionID).get();  }
+  public Viajero obtenerViajero(Long viajeroID){ return viajeroRepository.findById(viajeroID).get();  }
+  public void guardarAnfitrion(Anfitrion anfitrion) { anfitrionRepository.save(anfitrion);}
+  public void guardarViajero(Viajero viajero) { viajeroRepository.save(viajero); }
 
   /**
    * Transforma el string del tipo de usuario a su respectivo valor numérico
@@ -52,7 +59,7 @@ public class GestorUsuarioService {
    * @param receptorID Identificador único del receptor
    * @return Booleanos con la existencia de ambos tipos de usuario
    */
-  public boolean existeAmbosUsuario(String tipoUsuarioEmisor, Long emisorID, Long receptorID){
+  public boolean NoExisteAmbosUsuario(String tipoUsuarioEmisor, Long emisorID, Long receptorID){
     if (!"anfitriones".equals(tipoUsuarioEmisor) && !"viajeros".equals(tipoUsuarioEmisor)) {
       throw new IllegalArgumentException("Tipo de usuario inválido (Debe ser `anfitriones` o `viajeros`)");
     }
@@ -66,6 +73,6 @@ public class GestorUsuarioService {
       ? viajeroRepository.existsById(receptorID)
       : anfitrionRepository.existsById(receptorID);
 
-    return emisorExiste && receptorExiste;
+    return !emisorExiste || !receptorExiste;
   }
 }

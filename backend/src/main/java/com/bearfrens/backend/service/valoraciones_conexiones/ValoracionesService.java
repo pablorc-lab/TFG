@@ -2,7 +2,6 @@ package com.bearfrens.backend.service.valoraciones_conexiones;
 
 import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.repository.matches.MatchesRepository;
-import com.bearfrens.backend.repository.valoraciones_conexiones.ValoracionesConexionesRepository;
 import com.bearfrens.backend.repository.valoraciones_conexiones.ValoracionesRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
 import org.springframework.stereotype.Service;

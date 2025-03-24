@@ -18,6 +18,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
     gusto1: "",
     gusto2: "",
     gusto3: "",
+    descripcion: "",
   });
 
   // Cargar el servicio actual requerido
@@ -50,6 +51,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
           gusto1: usuario.gusto1 || "",
           gusto2: usuario.gusto2 || "",
           gusto3: usuario.gusto3 || "",
+          descripcion: usuario.descripcion || "",
         }));
         console.log(response.data);
       }).catch(error => { console.error("Error al obtener el usuario ", error); })
@@ -153,6 +155,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
         </article>
         <article className={styles.form_flex}>
           {InputField({ label: "Gusto 3", id: "gusto3", type: "text", placeholder: "Ej: pescar", value: userData.gusto3, campoOnChange: "gusto3", setUserData })}
+          {InputField({ label: "Descripcion", id: "descripcion", type: "text", placeholder: "Me gusta pasear", value: userData.descripcion, campoOnChange: "descripcion", setUserData })}
         </article>
 
 

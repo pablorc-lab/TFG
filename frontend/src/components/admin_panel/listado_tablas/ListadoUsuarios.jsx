@@ -55,6 +55,7 @@ export default function ListadoUsuarios({ styles, userType }) {
           <th>Gusto1</th>
           <th>Gusto2</th>
           <th>Gusto3</th>
+          <th>Descripcion</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -69,12 +70,15 @@ export default function ListadoUsuarios({ styles, userType }) {
             <td>{usuario.email}</td>
             <td>
               <a href={usuario.profileImage} target="_blank" rel="noopener noreferrer">
-                {usuario.profileImage.length > 30 ? `${usuario.profileImage.slice(0,30)}...` : usuario.profileImage}
+                {usuario.profileImage.length > 20 ? `${usuario.profileImage.slice(0,20)}...` : usuario.profileImage}
               </a>
             </td>
             <td>{usuario.gusto1}</td>
             <td>{usuario.gusto2}</td>
             <td>{usuario.gusto3}</td>
+            <td>
+              {usuario.descripcion?.length > 25 ? `${usuario.descripcion.slice(0,25)}...` : usuario.descripcion}
+              </td>
             <td>
               <div className={styles.img_td}>
                 <Link to={`/admin-panel/${userType}/editar/${usuario.id}`}>

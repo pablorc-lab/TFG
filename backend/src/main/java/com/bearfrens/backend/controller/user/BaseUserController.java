@@ -135,7 +135,13 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     }
   }
 
-  // PUT :  actualizar un recurso existente
+
+  /**
+   * Actualiza un usuario existente
+   * @param userID ID del usuario a modificar
+   * @param userRequest Contenido del nuevo usuario
+   * @return Response Entity, en caso de ser ok, devuelve el usuario modificado
+   */
   @PutMapping("/{userID}")
   public ResponseEntity<T> actualizarUsuario(@PathVariable Long userID, @RequestBody T userRequest){
     T user = repository.findById(userID)
@@ -152,12 +158,18 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     user.setGusto1(userRequest.getGusto1());
     user.setGusto2(userRequest.getGusto2());
     user.setGusto3(userRequest.getGusto3());
+    user.setDescripcion(userRequest.getDescripcion());
 
     // Guardar el usuario actualizado
-    T updated_User = repository.save(user);
-    return ResponseEntity.ok(updated_User);
+    T updated_user = repository.save(user);
+    return ResponseEntity.ok(updated_user);
   }
 
+  /**
+   * Eliminar un usuario
+   * @param userID ID del usuario a eliminar
+   * @return Mensaje deleted, indicando con booleano si se ha borrado o no
+   */
   @DeleteMapping("/{userID}")
   public ResponseEntity<Map<String,Boolean>> eliminarUsuario(@PathVariable Long userID){
     T user = repository.findById(userID)

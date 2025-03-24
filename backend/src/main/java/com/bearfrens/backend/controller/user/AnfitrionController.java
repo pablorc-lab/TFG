@@ -35,20 +35,8 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
   @GetMapping("/viviendas/{ciudad}-{provincia}")
   public ResponseEntity<?> listarViviendasPorDatos(@PathVariable String ciudad, @PathVariable String provincia) {
     List<Viviendas> viviendas = viviendasRepository.findAllByCiudadAndProvincia(ciudad, provincia);
-    List<Anfitrion> anfitriones = viviendas.stream().map(Viviendas::getAnfitrion).collect(Collectors.toList());
-
-    List<Map<String, Object>> resultado = new ArrayList<>();
-
-    for (Anfitrion anfitrion : anfitriones) {
-      Biografias biografia = this.obtenerBiografia(anfitrion.getId(), 1);
-
-      resultado.add(Map.of(
-        "usuario", anfitrion,
-        "biografia", (biografia != null ? biografia : Map.of())
-      ));
-    }
-
-    return ResponseEntity.ok(resultado);
+    List<Anfitrion> anfitriones = viviendas.stream().map(Viviendas::getAnfitrion).toList();
+    return ResponseEntity.ok(anfitriones);
   }
 
   // ========================

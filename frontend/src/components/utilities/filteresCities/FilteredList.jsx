@@ -46,7 +46,7 @@ export default function FilteredList({ filteredListRef, listStates,  updateListS
         return (
           <li key={id} className={styles.filteredList} onClick={() => updateListStates({ location: `${name},${provincia.name}`, locationFocus: false })}>
             <span>{name}</span>
-            <span>{provincia.name}, {pais.name}</span>
+            <span>{provincia.name} ({pais.name})</span>
           </li>
         );
       })}
