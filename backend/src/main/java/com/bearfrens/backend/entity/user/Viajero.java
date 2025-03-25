@@ -2,7 +2,6 @@ package com.bearfrens.backend.entity.user;
 
 import com.bearfrens.backend.entity.contenido.Experiencias;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.math.BigDecimal;

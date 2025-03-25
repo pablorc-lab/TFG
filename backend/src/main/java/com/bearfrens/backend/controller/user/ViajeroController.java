@@ -20,6 +20,12 @@ public class ViajeroController extends BaseUserController<Viajero, ViajeroReposi
     super(repository,"viajero", experienciasRepository, "experiencias");
   }
 
+  // Eliminar un viajero
+  @DeleteMapping("/{userID}")
+  public ResponseEntity<Map<String,Boolean>> eliminarViajero(@PathVariable Long userID){
+    return eliminarUsuario(userID, "viajeros");
+  }
+
   // ==============================
   // MANEJO DE LAS EXPERIENCIAS
   // ==============================
@@ -42,6 +48,7 @@ public class ViajeroController extends BaseUserController<Viajero, ViajeroReposi
   public ResponseEntity<?> editarExperiencia(@PathVariable Long userID, @PathVariable String titulo, @RequestBody Experiencias infoExperiencia) {
     return editarContenido(userID, titulo, infoExperiencia);
   }
+
 
   @DeleteMapping("/{userID}/experiencias/{titulo}")
   public ResponseEntity<Map<String, Boolean>> eliminarExperiencia(@PathVariable Long userID, @PathVariable String titulo) {

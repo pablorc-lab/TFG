@@ -3,10 +3,12 @@ package com.bearfrens.backend.controller.user;
 import com.bearfrens.backend.entity.biografias.Biografias;
 import com.bearfrens.backend.entity.contenido.Contenido;
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
+import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
-import com.bearfrens.backend.repository.biografias.BiografiasRepository;
+import com.bearfrens.backend.service.biografias.BiografiasService;
 import com.bearfrens.backend.service.ImgBBservice;
+import com.bearfrens.backend.service.viviendas.ViviendasService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,10 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // Controlador comun para ambos tipo de usuario
 // T -> Tipo de usuario (anfitrion o viajero)
@@ -31,7 +30,10 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   protected final C contenidoRepository;
 
   @Autowired
-  private BiografiasRepository biografiasRepository;
+  private BiografiasService biografiasService;
+
+  @Autowired
+  private ViviendasService viviendasService;
 
   private final String userType;
   private final String contenidoType;
@@ -67,8 +69,8 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     List<Map<String, Object>> resultado = new ArrayList<>();
 
     for(T user : usuarios){
-      int tipo_user = userType.equals("anfitrion") ? 1 : 2;
-      Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(user.getId(), tipo_user).orElse(null);
+      String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
+      Biografias biografia = biografiasService.obtenerBiografia(tipo_user, user.getId()).orElse(null);
 
       resultado.add(Map.of(
         "usuario", user,
@@ -77,16 +79,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     }
 
     return ResponseEntity.ok(resultado);
-  }
-
-  /**
-   * Funcion para obtener una biografia dado el Usuario ID y el tipo Usuario
-   * @param usuarioID ID del usuario a buscar
-   * @param tipoUsuario Tipo de usuario a buscar
-   * @return Biografia específica, si no, null.
-   */
-  protected Biografias obtenerBiografia(Long usuarioID, int tipoUsuario){
-    return biografiasRepository.findByUsuarioIDAndTipoUsuario(usuarioID, tipoUsuario).orElse(null);
   }
 
   /**
@@ -100,8 +92,8 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
-    int tipo_user = userType.equals("anfitrion") ? 1 : 2;
-    Biografias biografia = biografiasRepository.findByUsuarioIDAndTipoUsuario(userID, tipo_user).orElse(null);
+    String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
+    Biografias biografia = biografiasService.obtenerBiografia(tipo_user, userID).orElse(null);
 
     return biografia == null ? ResponseEntity.ok(user) : ResponseEntity.ok(Map.of("usuario", user, "biografia", biografia));
   }
@@ -166,26 +158,41 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   }
 
   /**
-   * Eliminar un usuario
+   * Eliminar un usuario y todo lo asociado a él
    * @param userID ID del usuario a eliminar
    * @return Mensaje deleted, indicando con booleano si se ha borrado o no
    */
-  @DeleteMapping("/{userID}")
-  public ResponseEntity<Map<String,Boolean>> eliminarUsuario(@PathVariable Long userID){
+  public ResponseEntity<Map<String,Boolean>> eliminarUsuario(Long userID, String tipo_usuario){
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
+    Map<String, Boolean> respuesta = new HashMap<>();
     repository.delete(user);
+    respuesta.put("User delete ", true);
+
+    // Eliminar todo lo asociado al usuario
+    respuesta.put("Contenido delete ", this.eliminarTodoContenido(userID).getBody().get("delete")); // Contenido asociado (Recomendaciones/Experiencias)
+    respuesta.put("Biografia delete", biografiasService.eliminarBiografia(tipo_usuario, userID)); // Biografia asociada
+
+    // Eliminar vivienda si es anfitrion
+    if(user instanceof Anfitrion){
+      respuesta.put("Vivienda delete ", viviendasService.eliminarVivienda(userID).getBody().get("delete")); // Contenido asociado (Recomendaciones/Experiencias)
+    }
 
     // Devolvemos una respueta JSON ---> "delete" : true
-    return ResponseEntity.ok(Collections.singletonMap("delete", true));
+    return ResponseEntity.ok(respuesta);
   }
 
 
   // ============================================
   // MANEJO DE LAS RECOMENDACIONES O EXPERIENCIAS
   // ============================================
-  // Obtener Recomendaciones o Experiencias
+
+  /**
+   * Obtener Recomendaciones o Experiencias
+   * @param userID ID del usuario
+   * @return Listado de Recomendaciones o Experiencias
+   */
   public List<TC> obtenerContenidos(Long userID){
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -193,7 +200,13 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return user.getContenido();
   }
 
-  // Obtener una Recomendacion o Experiencia en específico
+
+  /**
+   * Obtener una Recomendacion o Experiencia en específico
+   * @param userID ID del usuario
+   * @param titulo Titulo del contenido
+   * @return Recomendacion o Experiencia en específico
+   */
   public ResponseEntity<?> obtenerContenido(Long userID, String titulo){
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -205,7 +218,12 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró " + contenidoType + " con ese titulo");
   }
 
-  // Crear Experiencia o Recomendacion
+  /**
+   * Crear Experiencia o Recomendacion
+   * @param userID ID del usuario
+   * @param contenido Objeto con el contenido de la recomendacion/experiencia
+   * @return Objeto creado
+   */
   public ResponseEntity<?> crearContenido(Long userID, TC contenido) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -220,7 +238,13 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return ResponseEntity.status(HttpStatus.CREATED).body(nuevoContenido);
   }
 
-  // Editar Recomendacion o Experiencia
+  /**
+   * Editar Recomendacion o Experiencia
+   * @param userID ID del usuario
+   * @param titulo Titulo del contenido
+   * @param infoContenido Información del contenido a editar
+   * @return Objeto editado
+   */
   public ResponseEntity<?> editarContenido(Long userID, String titulo, TC infoContenido) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -255,7 +279,12 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return ResponseEntity.ok(contenidoActualizado);
   }
 
-  // Eliminar una Experiencia o Recomendacion
+  /**
+   * Eliminar una Experiencia o Recomendacion
+   * @param userID ID del usuario
+   * @param titulo Titulo del contenido
+   * @return Booleanos indicando si se ha eliminado no
+   */
   public ResponseEntity<Map<String, Boolean>> eliminarContenido(Long userID, String titulo) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -274,6 +303,24 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
     // Desvincular simplemente la recomendacion/experiencia del anfitrión antes de eliminarla
     user.getContenido().remove(contenidoAEliminar);
+    repository.save(user);
+    return ResponseEntity.ok(Collections.singletonMap("delete", true));
+  }
+
+  /**
+   * Eliminar todas las Experiencias o Recomendaciones de un usuario
+   * @param userID ID del usuario
+   * @return Booleano indicando si se han eliminado
+   */
+  public ResponseEntity<Map<String, Boolean>> eliminarTodoContenido(Long userID) {
+    T user = repository.findById(userID)
+      .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe: " + userID));
+
+    if (user.getContenido().isEmpty()) { // Si no hay contenido que eliminar
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("error", false));
+    }
+
+    user.getContenido().clear(); // Al borrar la experiencia, se desvinculan y se eliminar de su tabla
     repository.save(user);
     return ResponseEntity.ok(Collections.singletonMap("delete", true));
   }
