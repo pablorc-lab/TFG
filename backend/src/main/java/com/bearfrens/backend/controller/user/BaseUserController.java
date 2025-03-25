@@ -8,6 +8,8 @@ import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.service.biografias.BiografiasService;
 import com.bearfrens.backend.service.ImgBBservice;
+import com.bearfrens.backend.service.valoraciones_conexiones.LikesService;
+import com.bearfrens.backend.service.valoraciones_conexiones.ValoracionesService;
 import com.bearfrens.backend.service.viviendas.ViviendasService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,11 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
   @Autowired
   private ViviendasService viviendasService;
+
+  @Autowired
+  private ValoracionesService valoracionesService;
+  @Autowired
+  private LikesService likesService;
 
   private final String userType;
   private final String contenidoType;
@@ -171,8 +178,11 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     respuesta.put("User delete ", true);
 
     // Eliminar todo lo asociado al usuario
+    String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
     respuesta.put("Contenido delete ", this.eliminarTodoContenido(userID).getBody().get("delete")); // Contenido asociado (Recomendaciones/Experiencias)
     respuesta.put("Biografia delete", biografiasService.eliminarBiografia(tipo_usuario, userID)); // Biografia asociada
+    respuesta.put("Valoraciones delete ", valoracionesService.eliminarValoracionesConexiones(userID, tipo_user).getBody().get("delete")); // Valoraciones recibidas y dadas
+    respuesta.put("Likes delete ", likesService.eliminarValoracionesConexiones(userID, tipo_user).getBody().get("delete")); // Likes recibidas y dadas
 
     // Eliminar vivienda si es anfitrion
     if(user instanceof Anfitrion){

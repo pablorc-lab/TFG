@@ -97,7 +97,7 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
   }
 
   /**
-   * Elimina todos los valores de tipo <T> recibidos por un usuario (por ejemplo, si ELIMINAR su cuenta)
+   * Elimina todos los valores de tipo <T> recibidos/enviadas por un usuario (por ejemplo, si ELIMINAR su cuenta)
    * @param tipo_usuario Tipo de usuario receptor en String
    * @param usuarioID ID del usuario receptor
    * @return Respuesta con el resultado de la operación
