@@ -3,7 +3,9 @@
 /*?==============================*/
 .card_users_container {
   min-height: 100vh;
+  user-select: none;
 }
+
 .card_users {
   padding: 50px;
   display: flex;
@@ -15,8 +17,6 @@
 .card_users div {
   z-index: 0;
 }
-
-
 
 
 .not_found {

@@ -8,7 +8,8 @@
 .valoraciones_container {
   user-select: none;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  gap: 15px;
   align-items: center;
   padding: 30px 0px;
 }
@@ -21,7 +22,7 @@
 }
 .valoraciones_info h2 {
   color: #0a7273;
-  font-size: 23px;
+  font-size: 22px;
 }
 /*? ESTADISTICAS GENERALES DE LA PUNTUACIÓN*/
 .valoraciones_statistics p {
@@ -105,8 +106,13 @@
 .show_size p:hover { color: #009080}
 
 @media (min-width: 781px) and (max-width: 1299px), (min-width: 1300px) {
- .valoraciones_container { padding: 35px 0;}
- .valoraciones_info h2 {font-size: 33px;}
+ .valoraciones_container { 
+  display: flex;
+  justify-content: start;
+  gap: 100px;
+  padding: 35px 0px;
+}
+ .valoraciones_info h2 {font-size: 32px;}
  .valoraciones_statistics p { font-size: 21px;}
 
  .valoraciones_statistics progress {
@@ -121,5 +127,11 @@
   }
   .show_size {
     font-size: 30px;
+  }
+}
+
+@media (min-width: 1251px) and (max-width: 1600px) {
+  .valoraciones_container { 
+    gap: 60px;
   }
 }

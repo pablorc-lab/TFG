@@ -21,9 +21,20 @@ public class ValoracionesController {
    * @param usuarioID ID del usuario emisor
    * @return Listado con las valoraciones
    */
-  @GetMapping("/{tipo_usuario}/{usuarioID}/valoraciones")
+  @GetMapping("/{tipo_usuario}/{usuarioID}/valoraciones/enviadas")
+  public List<?> obtenerValoracionesEnviadas(@PathVariable String tipo_usuario, @PathVariable Long usuarioID) {
+    return valoracionesService.obtenerListaValoracionesConexionesEnviadas(usuarioID, tipo_usuario);
+  }
+
+  /**
+   * Obtener todas las valoraciones de un usuario RECEPTOR
+   * @param tipo_usuario Tipo de usuario emisor
+   * @param usuarioID ID del usuario emisor
+   * @return Listado con las valoraciones
+   */
+  @GetMapping("/{tipo_usuario}/{usuarioID}/valoraciones/recibidas")
   public List<?> obtenerValoraciones(@PathVariable String tipo_usuario, @PathVariable Long usuarioID) {
-    return valoracionesService.obtenerListaValoracionesConexiones(usuarioID, tipo_usuario);
+    return valoracionesService.obtenerListaValoracionesConexionesRecibidas(usuarioID, tipo_usuario);
   }
 
   /**

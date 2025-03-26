@@ -12,11 +12,12 @@ export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecific
           <div key={anfitrion.id}>
             <AnfCard
               styles={anf_card_styles}
+              anf_id={anfitrion.id}
               Casa_img={anfitrion.vivienda?.imagen1 || "/images/not_found/vivienda.webp"}
               Perfil_img={anfitrion.profileImage || "/images/not_found/user_img.png"}
               Nombre={anfitrion.nombre}
               Gustos_imgs={[anfitrion.gusto1, anfitrion.gusto2, anfitrion.gusto3].filter(gusto => gusto != null)}
-              Valoracion={anfitrion.valoracion_media || 0.0}
+              Valoracion={anfitrion.valoracion_media || 0.1}
               Ubicacion={`${anfitrion.vivienda?.ciudad || ""}, ${anfitrion.vivienda?.provincia || ""}`}
               Precio={anfitrion.vivienda?.precio_noche || "-"}
               Descripcion={anfitrion.descripcion || "Este anfitrión aún no se ha descrito."}

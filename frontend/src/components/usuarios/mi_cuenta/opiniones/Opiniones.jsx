@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ScoreMiCuenta from "../Score";
 import styles from "./Opiniones.module.css"
 import Comentarios from "./Comentarios";
 
-const OpinionesMiCuenta = ({ showSize = false }) => {
-
-  const estadisticas_valoraciones = [90, 67, 23, 1, 7];
+const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = [] }) => {
+  const [estadisticas_valoraciones, setEstadisticas_valoraciones] = useState([0, 0, 0, 0, 0]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  // Almancenar cuantas notas de ese valor hay
+  useEffect(() => {
+    if(valoraciones.length > 0){
+      const estadisticas = [0,0,0,0,0];
+      
+      for (const valoracion of valoraciones) {
+        console.log(valoracion.num_valoracion);
+        estadisticas[valoracion.num_valoracion - 1] += 1;
+      }
+      setEstadisticas_valoraciones(estadisticas);
+    }
+   
+  }, [valoraciones]);
+
 
   return (
     <main className={styles.valoraciones_main}>
@@ -15,16 +29,20 @@ const OpinionesMiCuenta = ({ showSize = false }) => {
           <div>
             <h2>Opiniones recibidas</h2>
           </div>
-          <ScoreMiCuenta miCuenta={true} />
+          <ScoreMiCuenta miCuenta={true} nota_media={nota_media} valoraciones={valoraciones} />
         </article>
 
         <article className={styles.valoraciones_statistics}>
-          {estadisticas_valoraciones.map((puntuacion, index) => (
+          {estadisticas_valoraciones.slice().reverse().map((aparicion_valoracion, index) => (
             <div key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
               <p>{estadisticas_valoraciones.length - index}</p>
-              <progress max="100" value={puntuacion > 0 ? Math.sqrt(puntuacion) * 10 : 0} key={index} />
+              <progress 
+                max="100" 
+                value={(aparicion_valoracion / Math.max(...estadisticas_valoraciones)) * 100}
+                key={index} 
+              />
               {hoveredIndex === index && (
-                <span>{puntuacion} valoraciones</span>
+                <span>{aparicion_valoracion} valoraciones</span>
               )}
             </div>
           ))}
@@ -38,10 +56,10 @@ const OpinionesMiCuenta = ({ showSize = false }) => {
 
       {showSize &&
         <div className={styles.show_size}>
-          <p>Ver 67 opiniones</p>
+          <p>Ver {valoraciones.length} opiniones</p>
         </div>
       }
-      
+
     </main>
   );
 }

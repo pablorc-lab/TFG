@@ -5,6 +5,7 @@ import com.bearfrens.backend.entity.contenido.Contenido;
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
 import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Usuario;
+import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.service.biografias.BiografiasService;
 import com.bearfrens.backend.service.ImgBBservice;
@@ -78,7 +79,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     for(T user : usuarios){
       String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
       Biografias biografia = biografiasService.obtenerBiografia(tipo_user, user.getId()).orElse(null);
-
       resultado.add(Map.of(
         "usuario", user,
         "biografia", (biografia != null ? biografia : Map.of())
@@ -101,8 +101,9 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
     String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
     Biografias biografia = biografiasService.obtenerBiografia(tipo_user, userID).orElse(null);
+    List<Valoraciones> valoraciones = valoracionesService.obtenerListaValoracionesConexionesRecibidas(userID, tipo_user);
 
-    return biografia == null ? ResponseEntity.ok(user) : ResponseEntity.ok(Map.of("usuario", user, "biografia", biografia));
+    return biografia == null ? ResponseEntity.ok(user) : ResponseEntity.ok(Map.of("usuario", user, "biografia", biografia, "valoraciones" , valoraciones));
   }
 
   /**

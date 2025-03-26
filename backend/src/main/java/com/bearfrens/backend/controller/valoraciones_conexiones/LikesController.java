@@ -25,9 +25,9 @@ public class LikesController{
   private final LikesRepository likesRepository;
 
   // Obtener la lista de likes dados por un usuario
-  @GetMapping("/{tipo_usuario}/{usuarioID}/likes")
+  @GetMapping("/{tipo_usuario}/{usuarioID}/likes/enviados")
   public List<Likes> obtenerListaLikes(@PathVariable String tipo_usuario, @PathVariable Long usuarioID){
-    return likesService.obtenerListaValoracionesConexiones(usuarioID, tipo_usuario);
+    return likesService.obtenerListaValoracionesConexionesEnviadas(usuarioID, tipo_usuario);
   }
 
   // Crear un like de un usuario a otro

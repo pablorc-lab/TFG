@@ -25,14 +25,25 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
   private final MatchesRepository matchesRepository;
 
   /**
-   * Obtener la lista de tipo <T></T> dados por un usuario
+   * Obtener la lista de tipo <T> dados por un usuario
    * @param tipo_usuario Tipo de usuario emisor en String (se convierte al del receptor)
    * @param usuarioID ID del usuario emisor
    * @return Lista de likes
    */
-  public List<T> obtenerListaValoracionesConexiones(Long usuarioID, String tipo_usuario){
+  public List<T> obtenerListaValoracionesConexionesEnviadas(Long usuarioID, String tipo_usuario){
     int tipo = gestorUsuarioService.intTipoUsuario(tipo_usuario);
     return repository.findAllByEmisorIDAndTipoUsuario(usuarioID,tipo == 1 ? 2 : 1);
+  }
+
+  /**
+   * Obtener la lista de tipo <T> recibidas por un usuario
+   * @param tipo_usuario Tipo de usuario emisor en String (se convierte al del receptor)
+   * @param usuarioID ID del usuario emisor
+   * @return Lista de likes
+   */
+  public List<T> obtenerListaValoracionesConexionesRecibidas(Long usuarioID, String tipo_usuario){
+    int tipo = gestorUsuarioService.intTipoUsuario(tipo_usuario);
+    return repository.findAllByUsuarioIDAndTipoUsuario(usuarioID,tipo);
   }
 
   /**
@@ -69,7 +80,7 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
       }
     }
 
-    // Si es valoraciones añadir fecha, imagen de perfil del emisor
+    // Si es una valoración añadir fecha e imagen de perfil del emisor
     else if(nuevoElemento instanceof Valoraciones) {
       ((Valoraciones) nuevoElemento).setFecha(LocalDate.now());
 

@@ -102,6 +102,13 @@
   margin-bottom: 30px;
   padding-bottom: 30px;
   border-bottom: 2px solid #dadada;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
+  padding: 20px;  
+    
+  width: max-content;  
+  max-width: calc(100% - 30px);
 }
 .user_article {
   display: flex;
@@ -216,7 +223,6 @@
   margin: 0;
   font-size: 19px;
   color: #717171;
-  font-style: italic;
 }
 .user_recomendations h3 { font-size: 20px;}
 
@@ -271,7 +277,7 @@
   .vivienda_imgs img:hover { filter: brightness(0.7);}
 }
 
-@media (min-width:1250px) {
+@media (min-width:1251px) {
   .main {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -292,11 +298,6 @@
   .user_info {
     max-width: 550px;
     margin-top: 0;
-    padding: 20px;  
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
-    width: max-content;  
   }
 
   .user_info p { font-size: 21px;}

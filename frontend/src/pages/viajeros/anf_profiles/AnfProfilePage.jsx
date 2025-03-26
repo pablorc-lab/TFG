@@ -1,16 +1,45 @@
 import { useEffect, useState } from "react";
 import styles from "./AnfProfilePage.module.css"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ViajerosMobileHeader from "../../../components/viajeros/header/ViajerosMobileHeader";
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
 import Footer from "../../../components/footer/footer";
+import AnfitrionService from "../../../services/users/AnfitrionService";
 
 export default function AnfProfilePage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const [isColumns, setIsColumns] = useState(window.innerWidth <= 1250);
   const [actualImage, setActualImage] = useState(0);
 
-  // Controlar cuando es pantalla pequeña
+  const [anfitrionInfo, SetAnfitrionInfo] = useState([]);
+  const [Gustos_imgs, setGustos_imgs] = useState([]);
+  const [idiomasUser, setIdiomasUser] = useState(["Español"]);
+  const [valoraciones, setValoraciones] = useState([]);
+
+  const location = useLocation();
+  const id = location.state?.id;
+  
+  // Obtener datos del usuario si no hay y se tiene su id
+  useEffect(() => {
+    if(id && anfitrionInfo.length === 0){
+      AnfitrionService.getById(id).then(response => {
+        console.log(response.data);
+        SetAnfitrionInfo(response.data);
+        setValoraciones(response.data.valoraciones);
+
+        setGustos_imgs([
+          response.data.usuario.gusto1,
+          response.data.usuario.gusto2,
+          response.data.usuario.gusto3
+        ].filter(gusto => gusto != null))
+
+        setIdiomasUser(response.data.biografia.idiomas.trim().split(","));
+      }
+      ).catch(error => console.error("No se encontró el usuario " + error));
+    }
+  }, [id, anfitrionInfo])
+
+  // Controlar cuando es pantalla pequeña 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 770);
@@ -21,11 +50,6 @@ export default function AnfProfilePage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const Gustos_imgs = [
-    "/images/usuarios/Gustos/baseball.svg",
-    "/images/usuarios/Gustos/pesca.svg",
-    "/images/usuarios/Gustos/poker.svg",
-  ];
 
   const Vivienda_imgs = [
     "/images/landing_page/casa_1.webp",
@@ -47,23 +71,29 @@ export default function AnfProfilePage() {
       <article className={styles.user_article}>
         <img className={styles.user_img} src="/images/landing_page/persona_2.webp" alt="Imagen de perfil" width={50} />
         <div>
-          <h2>Anfitrión : Eduardo</h2>
+          <h2>Anfitrión : {anfitrionInfo.usuario?.nombre || "-"}</h2>
           <div className={styles.user_reservas}>
             <p>23 reservas</p>
             <div className={styles.user_score}>
               <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
-              <h3>4.9</h3>
+              <h3>{anfitrionInfo.usuario?.valoracion_media || 0.1}</h3>
             </div>
           </div>
         </div>
       </article>
 
-      <p>Amante de la aventura y los viajes hacia lugares aislados</p>
+      <p>{anfitrionInfo.usuario?.descripcion || "Este anfitrión aún no se ha descrito."}</p>
 
       <article className={styles.user_conectar}>
         <div className={styles.user_likes}>
           {Gustos_imgs.map((gusto, index) => (
-            <img key={index} src={gusto} alt={`Logo gusto ${index + 1}`} width={100} />
+            <img 
+              key={index} 
+              src={`/images/usuarios/Gustos/${String(gusto).toLowerCase()}.svg`} 
+              alt={`Logo gusto ${index + 1}`} 
+              width={100} 
+              onError={(e) => e.target.src = "/images/usuarios/Gustos/default.svg"}
+            />
           ))}
         </div>
         <button>Conectar</button>
@@ -80,17 +110,17 @@ export default function AnfProfilePage() {
 
       <article className={styles.user_descripcion}>
         <h2>Sobre mí</h2>
-        <p>¡Hola! Soy Pablo, un apasionado de los viajes, la gastronomía y mi ciudad. Me encanta conocer gente de todo el mundo y compartir recomendaciones sobre los mejores rincones locales. Como anfitrión, mi objetivo es que disfrutes de una estancia cómoda y te sientas como en casa. Siempre estoy disponible para ayudarte con consejos sobre restaurantes, actividades y lugares secretos que solo los locales conocemos.</p>
+        <p>{anfitrionInfo.biografia?.sobreMi}</p>
 
         <h2>Idiomas que hablo</h2>
         <ul>
-          <li>Español</li>
-          <li>Francés</li>
-          <li>Inglés</li>
+          {idiomasUser?.map((idioma, index) => (
+            <li key={index}>{idioma}</li>
+          ))}
         </ul>
 
         <h2>Sobre el alojamiento</h2>
-        <p>Te hospedarás en una acogedora vivienda compartida, ideal para viajeros que buscan comodidad y una experiencia auténtica. Ubicada a pocos minutos del centro y cerca de las principales atracciones, ofrece un ambiente tranquilo con vistas impresionantes. ¡Será un placer recibirte!</p>
+        <p>{anfitrionInfo.biografia?.descripcionExtra || "Aun no existe una descripción del alojamiento"}</p>
       </article>
     </section>
   );
@@ -126,7 +156,11 @@ export default function AnfProfilePage() {
 
   const Valoraciones = (
     <section className={styles.valoraciones}>
-      <OpinionesMiCuenta showSize={true} />
+      <OpinionesMiCuenta 
+        showSize={true} 
+        nota_media={anfitrionInfo.usuario?.valoracion_media} 
+        valoraciones={valoraciones}
+      />
     </section>
   );
 
