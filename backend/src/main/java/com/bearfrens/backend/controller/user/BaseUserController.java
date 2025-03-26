@@ -103,7 +103,13 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     Biografias biografia = biografiasService.obtenerBiografia(tipo_user, userID).orElse(null);
     List<Valoraciones> valoraciones = valoracionesService.obtenerListaValoracionesConexionesRecibidas(userID, tipo_user);
 
-    return biografia == null ? ResponseEntity.ok(user) : ResponseEntity.ok(Map.of("usuario", user, "biografia", biografia, "valoraciones" , valoraciones));
+    Map<String, Object> respuesta = Map.of(
+      "usuario", user,
+      "biografia", biografia != null ? biografia : new Biografias(),
+      "valoraciones" , valoraciones
+    );
+
+    return ResponseEntity.ok(respuesta);
   }
 
   /**

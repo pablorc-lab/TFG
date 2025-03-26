@@ -15,25 +15,32 @@ export default function AnfProfilePage() {
   const [Gustos_imgs, setGustos_imgs] = useState([]);
   const [idiomasUser, setIdiomasUser] = useState(["Español"]);
   const [valoraciones, setValoraciones] = useState([]);
+  const [Vivienda_imgs, setVivienda_imgs] = useState([null, null, null, null]);
 
   const location = useLocation();
   const id = location.state?.id;
-  
+
   // Obtener datos del usuario si no hay y se tiene su id
   useEffect(() => {
-    if(id && anfitrionInfo.length === 0){
+    if (id && anfitrionInfo.length === 0) {
       AnfitrionService.getById(id).then(response => {
         console.log(response.data);
         SetAnfitrionInfo(response.data);
         setValoraciones(response.data.valoraciones);
+        setIdiomasUser(response.data.biografia?.idiomas ? response.data.biografia.idiomas.trim().split(",") : []);
+        setVivienda_imgs([
+          response.data.usuario.vivienda.imagen1,
+          response.data.usuario.vivienda.imagen2,
+          response.data.usuario.vivienda.imagen3,
+          response.data.usuario.vivienda.imagen4
+        ]);
 
         setGustos_imgs([
           response.data.usuario.gusto1,
           response.data.usuario.gusto2,
           response.data.usuario.gusto3
-        ].filter(gusto => gusto != null))
+        ].filter(img => img != null));
 
-        setIdiomasUser(response.data.biografia.idiomas.trim().split(","));
       }
       ).catch(error => console.error("No se encontró el usuario " + error));
     }
@@ -50,30 +57,27 @@ export default function AnfProfilePage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
-  const Vivienda_imgs = [
-    "/images/landing_page/casa_1.webp",
-    "/images/landing_page/casa_2.webp",
-    "/images/landing_page/casa_1.webp",
-    "/images/landing_page/casa_2.webp"
-  ]
-
   const ViviendaInfo = (
     <section className={styles.vivienda_info}>
-      <h1>Vivienda en Granada, Granada</h1>
-      <h1>187 &euro; / noche</h1>
-      <p>2 viajeros - 6 habitaciones - 3 camas - 2 baños</p>
+      <h1>Vivienda en {anfitrionInfo.usuario?.vivienda.ciudad || "-"}, {anfitrionInfo.usuario?.vivienda.provincia || "-"}</h1>
+      <h1>{anfitrionInfo.usuario?.vivienda.precio_noche || "-"}&euro; / noche</h1>
+      <p>
+        {(anfitrionInfo.usuario?.vivienda.viajeros || "-") + " viajeros - "}
+        {(anfitrionInfo.usuario?.vivienda.habitaciones || "-") + " habitaciones - "}
+        {(anfitrionInfo.usuario?.vivienda.camas || "-") + " camas - "}
+        {(anfitrionInfo.usuario?.vivienda.banios || "-") + " baños"}
+      </p>
     </section>
   );
 
   const PerfilUsuario = (
     <section className={styles.user_info}>
       <article className={styles.user_article}>
-        <img className={styles.user_img} src="/images/landing_page/persona_2.webp" alt="Imagen de perfil" width={50} />
+        <img className={styles.user_img} src={anfitrionInfo.usuario?.profileImage || "/images/not_found/user_img.png"} alt="Imagen de perfil" width={50} />
         <div>
           <h2>Anfitrión : {anfitrionInfo.usuario?.nombre || "-"}</h2>
           <div className={styles.user_reservas}>
-            <p>23 reservas</p>
+            <p>{anfitrionInfo.usuario?.reservas_realizadas || 0} reservas</p>
             <div className={styles.user_score}>
               <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
               <h3>{anfitrionInfo.usuario?.valoracion_media || 0.1}</h3>
@@ -87,11 +91,11 @@ export default function AnfProfilePage() {
       <article className={styles.user_conectar}>
         <div className={styles.user_likes}>
           {Gustos_imgs.map((gusto, index) => (
-            <img 
-              key={index} 
-              src={`/images/usuarios/Gustos/${String(gusto).toLowerCase()}.svg`} 
-              alt={`Logo gusto ${index + 1}`} 
-              width={100} 
+            <img
+              key={index}
+              src={`/images/usuarios/Gustos/${String(gusto).toLowerCase()}.svg`}
+              alt={`Logo gusto ${index + 1}`}
+              width={100}
               onError={(e) => e.target.src = "/images/usuarios/Gustos/default.svg"}
             />
           ))}
@@ -156,9 +160,9 @@ export default function AnfProfilePage() {
 
   const Valoraciones = (
     <section className={styles.valoraciones}>
-      <OpinionesMiCuenta 
-        showSize={true} 
-        nota_media={anfitrionInfo.usuario?.valoracion_media} 
+      <OpinionesMiCuenta
+        showSize={true}
+        nota_media={anfitrionInfo.usuario?.valoracion_media}
         valoraciones={valoraciones}
       />
     </section>
@@ -205,12 +209,13 @@ export default function AnfProfilePage() {
                 alt="Biografia logo"
                 onClick={() => setActualImage((actualImage + 1) % Vivienda_imgs.length)}
               />
-              <img src={Vivienda_imgs[actualImage]} alt="Vivienda" width={100} />
+              <img src={Vivienda_imgs[actualImage] || "/images/not_found/vivienda.webp"} alt="Vivienda" width={100} />
+              <span>{actualImage + 1}</span>
             </>
           ) : (
             <>
               {Vivienda_imgs.map((vivienda, index) => (
-                <img key={index} src={vivienda} alt="Vivienda imagen" width={100} />
+                <img key={index} src={vivienda || "/images/not_found/vivienda.webp"} alt="Vivienda imagen" width={100} />
               ))}
             </>
           )}
@@ -240,7 +245,7 @@ export default function AnfProfilePage() {
         )}
       </main>
 
-      <Footer/>
+      <Footer />
     </>
 
   )

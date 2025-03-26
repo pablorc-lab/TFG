@@ -94,6 +94,10 @@ public abstract class Usuario<TC>{
     this.password = encoder.encode(newPassword);
   }
 
+  // Borrar la valoración media
+  public void setDeleteValoracion_media(BigDecimal nuevaValoracion){
+    this.valoracion_media = nuevaValoracion;
+  }
   // Calcular la nueva media
   public void setValoracion_media(BigDecimal nuevaValoracion) {
     if (nuevaValoracion == null) return;

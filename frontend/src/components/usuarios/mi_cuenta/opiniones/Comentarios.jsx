@@ -1,28 +1,32 @@
 import styles from "./Comentarios.module.css"
 
-const Comentarios = () => {
-
+const Comentarios = ({ profileImg, fecha, nombre, nota, descripcion }) => {
   return (
     <article className={styles.comentarios_container}>
       <div className={styles.profile_img}>
-        <img  src="/images/landing_page/persona_3.webp" alt="Imagen de perfil" width={50} />
-        <h2>Juan P</h2>
+        <img
+          src={profileImg || "/images/not_found/user_img.png" }
+          onError={(e) => e.target.src = "/images/not_found/user_img.png"}
+          alt="Imagen de perfil"
+          width={50}
+        />
+        <h2>{nombre}</h2>
       </div>
 
       <article className={styles.valoracion}>
         <div>
-          <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
-          <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
-          <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
-          <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
-          <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
+          {[...Array(5)].map((_, i) => (
+            <img
+              key={i}
+              src={`/images/usuarios/estrella${i + 1 <= nota ? "" : "_gris"}.webp`}
+              alt="Ícono de estrella"
+            />
+          ))}
         </div>
-        <p>31/12/24</p>
+        <p>{fecha || "--/--/--"}</p>
       </article>
 
-      <p className={styles.comentario}>
-        La estadía fue buena en general. El lugar estaba limpio y bien ubicado, aunque hubo algunos pequeños detalles que podrían mejorar. Aun así, la comunicación fue clara y la experiencia fue positiva. ¡Gracias!
-      </p>
+      <p className={styles.comentario}>{descripcion || "Reseña no encontrada"}</p>
     </article>
   );
 }

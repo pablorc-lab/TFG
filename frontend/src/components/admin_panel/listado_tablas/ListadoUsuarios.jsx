@@ -27,7 +27,7 @@ export default function ListadoUsuarios({ styles, userType }) {
 
   const listarUsuarios = () => {
     userService.getAll()
-      .then(response => setUsuarios(response.data))
+      .then(response => {setUsuarios(response.data); console.log(response.data)})
       .catch(error => console.error("Error al listar los usuarios : ", error));
   };
 
@@ -55,12 +55,13 @@ export default function ListadoUsuarios({ styles, userType }) {
           <th>Gusto1</th>
           <th>Gusto2</th>
           <th>Gusto3</th>
+          <th>Nota</th>
           <th>Descripcion</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        {usuarios.map(usuario => (
+        {usuarios && usuarios.map(usuario => (
           <tr key={usuario.id}>
             <td>{usuario.id}</td>
             <td>{usuario.privateID}</td>
@@ -70,14 +71,15 @@ export default function ListadoUsuarios({ styles, userType }) {
             <td>{usuario.email}</td>
             <td>
               <a href={usuario.profileImage} target="_blank" rel="noopener noreferrer">
-                {usuario.profileImage.length > 20 ? `${usuario.profileImage.slice(0,20)}...` : usuario.profileImage}
+                {(usuario.profileImage?.length > 20 ? `${usuario.profileImage.slice(0, 20)}...` : usuario.profileImage) || "-" }
               </a>
             </td>
             <td>{usuario.gusto1}</td>
             <td>{usuario.gusto2}</td>
             <td>{usuario.gusto3}</td>
+            <td>{usuario.valoracion_media}</td>
             <td>
-              {usuario.descripcion?.length > 25 ? `${usuario.descripcion.slice(0,25)}...` : usuario.descripcion}
+              {(usuario.descripcion?.length > 25 ? `${usuario.descripcion.slice(0,25)}...` : usuario.descripcion) || "-"}
               </td>
             <td>
               <div className={styles.img_td}>

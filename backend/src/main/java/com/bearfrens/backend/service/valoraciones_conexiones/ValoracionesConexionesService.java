@@ -2,6 +2,7 @@ package com.bearfrens.backend.service.valoraciones_conexiones;
 
 import com.bearfrens.backend.entity.matches.Matches;
 import com.bearfrens.backend.entity.user.Anfitrion;
+import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.entity.valoracione_conexiones.Likes;
 import com.bearfrens.backend.entity.valoracione_conexiones.ValoracionConexion;
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -43,7 +45,27 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
    */
   public List<T> obtenerListaValoracionesConexionesRecibidas(Long usuarioID, String tipo_usuario){
     int tipo = gestorUsuarioService.intTipoUsuario(tipo_usuario);
-    return repository.findAllByUsuarioIDAndTipoUsuario(usuarioID,tipo);
+    List<T> lista = repository.findAllByUsuarioIDAndTipoUsuario(usuarioID,tipo);
+
+    // SI es una valoración, hay que obtener la imagen de perfil y nombre del usuario
+    if(!lista.isEmpty() && lista.getFirst() instanceof Valoraciones){
+      int tipo_emisor = tipo == 1 ? 2 : 1;
+
+      for(Valoraciones valoracion : (List<Valoraciones>) lista){
+        Usuario emisor;
+
+        if(tipo_emisor == 1){
+          emisor = gestorUsuarioService.obtenerAnfitrion(valoracion.getEmisorID());
+        } else{
+          emisor = gestorUsuarioService.obtenerViajero(valoracion.getEmisorID());
+        }
+
+        valoracion.setEmisor_profile_img(emisor.getProfileImage());
+        valoracion.setEmisor_nombre(emisor.getNombre() + " " + emisor.getApellido().charAt(0));
+      }
+    }
+
+    return lista;
   }
 
   /**
@@ -84,22 +106,17 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
     else if(nuevoElemento instanceof Valoraciones) {
       ((Valoraciones) nuevoElemento).setFecha(LocalDate.now());
 
-      // Al crear una valoracion, se actualiza la media del usuario
-      List<Valoraciones> response = (List<Valoraciones>) repository.findAllByEmisorIDAndTipoUsuario(usuarioID, tipo_receptor);
-
       //Actualizar la nota media del usuario receptor
       if (tipo_receptor == 1) {
-        Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(receptorID);
-        anfitrion.setValoracion_media(((Valoraciones) nuevoElemento).getNum_valoracion());
-        gestorUsuarioService.guardarAnfitrion(anfitrion);
-        ((Valoraciones) nuevoElemento).setEmisor_profile_img(anfitrion.getProfileImage());
+        Anfitrion receptor = gestorUsuarioService.obtenerAnfitrion(receptorID);
+        receptor.setValoracion_media(((Valoraciones) nuevoElemento).getNum_valoracion());
+        gestorUsuarioService.guardarAnfitrion(receptor);
       }
 
       else{
-        Viajero viajero = gestorUsuarioService.obtenerViajero(receptorID);
-        viajero.setValoracion_media(((Valoraciones) nuevoElemento).getNum_valoracion());
-        gestorUsuarioService.guardarViajero(viajero);
-        ((Valoraciones) nuevoElemento).setEmisor_profile_img(viajero.getProfileImage());
+        Viajero receptor = gestorUsuarioService.obtenerViajero(receptorID);
+        receptor.setValoracion_media(((Valoraciones) nuevoElemento).getNum_valoracion());
+        gestorUsuarioService.guardarViajero(receptor);
       }
     }
 
@@ -121,6 +138,23 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
     int tipo = gestorUsuarioService.intTipoUsuario(tipo_usuario);
     List<T> recibidos = repository.findAllByUsuarioIDAndTipoUsuario(usuarioID, tipo);
     List<T> enviados = repository.findAllByEmisorIDAndTipoUsuario(usuarioID, tipo == 1 ? 2 : 1);
+
+    if (!recibidos.isEmpty() && recibidos.getFirst() instanceof Valoraciones) {
+      // Eliminar nota media
+      if(tipo == 1){
+        Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(usuarioID);
+        anfitrion.setDeleteValoracion_media(BigDecimal.ZERO);
+        anfitrion.setNum_valoraciones(0);
+        gestorUsuarioService.guardarAnfitrion(anfitrion);
+      }
+
+      else{
+        Viajero viajero = gestorUsuarioService.obtenerViajero(usuarioID);
+        viajero.setDeleteValoracion_media(BigDecimal.ZERO);
+        viajero.setNum_valoraciones(0);
+        gestorUsuarioService.guardarViajero(viajero);
+      }
+    }
 
     List<T> totales = new ArrayList<>();
     totales.addAll(recibidos);

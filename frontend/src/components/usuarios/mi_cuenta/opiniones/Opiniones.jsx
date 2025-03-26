@@ -6,19 +6,19 @@ import Comentarios from "./Comentarios";
 const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = [] }) => {
   const [estadisticas_valoraciones, setEstadisticas_valoraciones] = useState([0, 0, 0, 0, 0]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [activeShowMore, setActiveShowMore] = useState(false);
 
   // Almancenar cuantas notas de ese valor hay
   useEffect(() => {
-    if(valoraciones.length > 0){
-      const estadisticas = [0,0,0,0,0];
-      
+    if (valoraciones.length > 0) {
+      const estadisticas = [0, 0, 0, 0, 0];
+
       for (const valoracion of valoraciones) {
-        console.log(valoracion.num_valoracion);
         estadisticas[valoracion.num_valoracion - 1] += 1;
       }
       setEstadisticas_valoraciones(estadisticas);
     }
-   
+
   }, [valoraciones]);
 
 
@@ -36,10 +36,10 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
           {estadisticas_valoraciones.slice().reverse().map((aparicion_valoracion, index) => (
             <div key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
               <p>{estadisticas_valoraciones.length - index}</p>
-              <progress 
-                max="100" 
+              <progress
+                max="100"
                 value={(aparicion_valoracion / Math.max(...estadisticas_valoraciones)) * 100}
-                key={index} 
+                key={index}
               />
               {hoveredIndex === index && (
                 <span>{aparicion_valoracion} valoraciones</span>
@@ -49,14 +49,25 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
         </article>
       </section>
 
-      <section className={styles.comentarios_section}>
-        <Comentarios />
-        <Comentarios />
+      <section className={`${styles.comentarios_section} ${activeShowMore && styles.show_more}`}>
+        {valoraciones.map((valoracion, index) => (
+          <Comentarios 
+            key={index} 
+            profileImg={valoracion.emisor_profile_img}
+            nombre={`${valoracion.emisor_nombre}`}
+            fecha={valoracion.fecha}
+            nota={valoracion.num_valoracion}
+            descripcion={valoracion.descripcion}
+          />
+        ))}
+
       </section>
 
       {showSize &&
         <div className={styles.show_size}>
-          <p>Ver {valoraciones.length} opiniones</p>
+          <p onClick={() => setActiveShowMore(!activeShowMore)}>
+            {activeShowMore ? `Ocultar` : `Ver ${valoraciones.length}`}  opiniones
+          </p>
         </div>
       }
 

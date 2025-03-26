@@ -25,8 +25,9 @@ import java.time.LocalDate;
   }
 )
 public class Valoraciones extends ValoracionConexion {
-  @Column
   private String emisor_profile_img; // Imagen de perfil del emisor
+
+  private String emisor_nombre;
 
   // 3 digitos, con 2 decimales (Ej : 4.7)
   @Column(precision = 3, scale = 1)
@@ -35,6 +36,7 @@ public class Valoraciones extends ValoracionConexion {
   @Column
   private LocalDate fecha;
 
-  @Column
+  @Lob // Large Object
+  @Column(columnDefinition = "TEXT")
   private String descripcion;
 }

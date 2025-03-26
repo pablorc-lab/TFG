@@ -8,6 +8,7 @@
 
 /*? IMAGEN DE PERFIL Y NOMBRE*/
 .profile_img {
+  user-select: none;
   display: flex;
   align-items: center;
   font-size: 18px;
@@ -22,6 +23,7 @@
 
 /*? ESTRELLAS*/
 .valoracion {
+  user-select: none;
   display: flex;
   align-items: center;
   gap: 15px;

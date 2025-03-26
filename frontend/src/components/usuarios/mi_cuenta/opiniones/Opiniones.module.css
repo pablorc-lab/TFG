@@ -90,10 +90,18 @@
   width: fit-content;
 }
 
+.show_more {
+  padding-bottom: 0px;
+  padding-right: 12px;
+  overflow-y: auto;
+  max-height: 600px;
+}
+
 .show_size {
+  user-select: none;
   text-align: center;
   font-size: 30px;
-  padding-bottom: 40px;
+  padding: 40px 0;
   display: flex;
   justify-content: center;
 }
@@ -125,6 +133,11 @@
   .comentarios_section {
     padding: 35px 0;
   }
+  .show_more {
+    padding-bottom: 0px;
+    padding-right: 15px;
+  }
+
   .show_size {
     font-size: 30px;
   }
