@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import ScoreMiCuenta from "../Score";
 import styles from "./Opiniones.module.css"
 import Comentarios from "./Comentarios";
+import ShowAllComentarios from "./ShowAllComentarios";
 
 const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = [] }) => {
   const [estadisticas_valoraciones, setEstadisticas_valoraciones] = useState([0, 0, 0, 0, 0]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [activeShowMore, setActiveShowMore] = useState(false);
 
-  // Almancenar cuantas notas de ese valor hay
+  // Almancenar cuantas valoraciones de ese valor hay
   useEffect(() => {
     if (valoraciones.length > 0) {
       const estadisticas = [0, 0, 0, 0, 0];
@@ -24,7 +25,7 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
 
   return (
     <main className={styles.valoraciones_main}>
-      <section className={styles.valoraciones_container}>
+      <section className={`${styles.valoraciones_container} ${valoraciones ? styles.valoraciones_container_show : undefined}`}>
         <article className={styles.valoraciones_info}>
           <div>
             <h2>Opiniones recibidas</h2>
@@ -50,9 +51,9 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
       </section>
 
       <section className={`${styles.comentarios_section} ${activeShowMore && styles.show_more}`}>
-        {valoraciones.map((valoracion, index) => (
-          <Comentarios 
-            key={index} 
+        {valoraciones.slice(0, 3).map((valoracion, index) => (
+          <Comentarios
+            key={index}
             profileImg={valoracion.emisor_profile_img}
             nombre={`${valoracion.emisor_nombre}`}
             fecha={valoracion.fecha}
@@ -60,12 +61,13 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
             descripcion={valoracion.descripcion}
           />
         ))}
-
       </section>
+      
+      {activeShowMore && <ShowAllComentarios styles={styles} valoraciones={valoraciones} setActiveShowMore={setActiveShowMore}/>}
 
       {showSize &&
         <div className={styles.show_size}>
-          <p onClick={() => setActiveShowMore(!activeShowMore)}>
+          <p onClick={() => setActiveShowMore(true)}>
             {activeShowMore ? `Ocultar` : `Ver ${valoraciones.length}`}  opiniones
           </p>
         </div>

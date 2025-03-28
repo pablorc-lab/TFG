@@ -13,6 +13,10 @@
   align-items: center;
   padding: 30px 0px;
 }
+.valoraciones_container_show {
+  border-bottom: 2px solid lightgray;
+  margin-bottom: 35px;
+}
 .valoraciones_container h2, .valoraciones_container p {margin: 0;}
 
 /*? INFORMACIÓN GENERAL DE LA PUNTUACIÓN*/
@@ -83,25 +87,82 @@
 
 /*? COMENTARIOS DE LOS USUARIOS*/
 .comentarios_section {
-  border-top: 2px solid lightgray;
-  padding: 30px 0;
+  padding-bottom: 30px;
   display: grid;
   gap: 50px;
-  width: fit-content;
+  width: 100%;
 }
 
-.show_more {
-  padding-bottom: 0px;
-  padding-right: 12px;
+body:has(.dialog_container[open]) {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cerra_menu {
+  user-select: none;
+  width: 40px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  background-color: rgba(255, 5, 5, 0.144);
+}
+.cerra_menu:hover {
+  filter: brightness(0.9);
+  background-color: rgba(255, 5, 5, 0.25);
+}
+.dialog_container:focus, .dialog_main:focus {outline: none;}
+.dialog_container h1 {
+  user-select: none;
+  padding-bottom: 20px;
+  font-size: 22px;
+  text-align: center;
+  color: #0a7273;
+  border-bottom: 2px solid lightgray;
+  margin-bottom: 20px;
+}
+.dialog_container {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  padding-right: 0;
+  pointer-events: all;
+  outline: none;
+  border: none;
+  height: 80vh;
+
+  width: 80vw;
+  border-radius: 15px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.dialog_main::-webkit-scrollbar { width: 15px;}
+.dialog_main::-webkit-scrollbar-button { padding: 5px;}
+.dialog_main::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.35);
+	border-radius: 15px;
+}
+.dialog_main::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0.15);
+	border-radius: 15px;
+}
+.dialog_main {
+  display: grid;
+  gap: 35px;
+  max-height: calc(80vh - 61px - 30px);
   overflow-y: auto;
-  max-height: 600px;
+  padding-right: 15px;
+}
+.dialog_container::backdrop {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
 }
 
 .show_size {
   user-select: none;
   text-align: center;
   font-size: 30px;
-  padding: 40px 0;
+  padding-bottom: 40px;
   display: flex;
   justify-content: center;
 }
@@ -130,8 +191,15 @@
   .valoraciones_statistics span { font-size: 17px;}
 
   /*? COMENTARIOS DE USUARIOS*/
+  .cerra_menu { width: 55px;}
+
+  .dialog_container {
+    padding: 30px;
+    width: 700px;
+  }
+  .dialog_container h1 { font-size: 29px;}
   .comentarios_section {
-    padding: 35px 0;
+    padding-bottom: 35px;
   }
   .show_more {
     padding-bottom: 0px;

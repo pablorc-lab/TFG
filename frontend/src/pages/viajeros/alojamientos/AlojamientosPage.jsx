@@ -27,7 +27,7 @@ export default function AlojamientosPage() {
       {<ViajerosFinalHeader buscarUsuario={buscarUsuario} setBuscarUsuario={setBuscarUsuario} setAnfitrionesEspecificos={setAnfitrionesEspecificos}/>}
 
       {/* PERFILES DE VIAJEROS  */}
-      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{width:"350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
+      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{width:"300px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
         <AnfProfilesGallery anfitriones={anfitriones} anfitrionesEspecificos={anfitrionesEspecificos} buscarUsuario={buscarUsuario}/>
       </Suspense>
 
