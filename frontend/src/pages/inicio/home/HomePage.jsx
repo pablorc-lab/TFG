@@ -83,6 +83,7 @@ export default function HomePage() {
               Ubicacion="Barcelona"
               Precio="300"
               Descripcion="Amante de la aventura y los viajes improvisados"
+              enlace={false}
             />
           </article>
         </section>

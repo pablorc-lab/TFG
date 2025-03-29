@@ -50,6 +50,7 @@
 /*?==================================
 /*? CARDS SECTIONS
 /*?================================*/
+.general_prof a {color: black;}
 .card_section {
   padding: 5.2vw 4vw;
   display: flex;
@@ -144,7 +145,7 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: 11.52px;
+  margin-bottom: 20px;
 }
 
 .btn_conectar {
@@ -263,6 +264,7 @@
 /*?=============================
 /*?        VIAJEROS
 /*?===========================*/
+
 /*?FOTO E INFO*/
 .text_column_viaj p {
   margin: 0;
@@ -495,7 +497,7 @@
   /** VIAJERO */
   .house { height: 160px; }
   .profile_img { width: 110px; padding: 5px; margin-left: 10px; }
-  .anf_name { margin: 0 20px 10px; border-bottom: 1px solid #d0dbd9; }
+  .anf_name { margin: 0 20px 15px; border-bottom: 1px solid #d0dbd9; }
   .anf_name h3, .text_column_viaj h3 { font-weight: 700; font-size: 30px; margin: 0; }
   .anf_info { padding: 0px 22px; }
   .anf_rating { margin-bottom: 15px; padding-top: 80px; gap: 15%; }
@@ -592,6 +594,15 @@
     margin-bottom: 5px;
     gap: 15px;
   }
+
+  
+.estancia_viaj p{
+ font-size: 18px;
+}
+
+.estancia_viaj progress {
+  width: 130px; 
+}
 }
 
 @media (min-width: 770px) and (max-width: 899px) {
@@ -667,4 +678,13 @@
 
   /** VENTAJAS */
   .advantages_container { margin: 0 15vw; }
+
+      
+  .estancia_viaj p{
+    font-size: 20px;
+  }
+  
+  .estancia_viaj progress {
+    width: 170px; 
+  }
 }

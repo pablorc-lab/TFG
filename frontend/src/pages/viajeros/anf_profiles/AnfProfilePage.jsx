@@ -13,9 +13,16 @@ export default function AnfProfilePage() {
 
   const [anfitrionInfo, SetAnfitrionInfo] = useState([]);
   const [Gustos_imgs, setGustos_imgs] = useState([]);
-  const [idiomasUser, setIdiomasUser] = useState(["Español"]);
+  const [idiomasUser, setIdiomasUser] = useState([]);
   const [valoraciones, setValoraciones] = useState([]);
   const [Vivienda_imgs, setVivienda_imgs] = useState([null, null, null, null]);
+  const datos_recomendaciones = [
+    { key: "recomendacion", label: "Sugerencia", icon: "backpack" },
+    { key: "ayuda", label: "Importante", icon: "help" },
+    { key: "ubicacion", label: "Ubicación", icon: "location" },
+    { key: "horarios", label: "Horarios", icon: "clock" },
+    { key: "telefono", label: "Teléfono", icon: "phone" },
+  ];
 
   const location = useLocation();
   const id = location.state?.id;
@@ -27,7 +34,7 @@ export default function AnfProfilePage() {
         console.log(response.data);
         SetAnfitrionInfo(response.data);
         setValoraciones(response.data.valoraciones);
-        setIdiomasUser(response.data.biografia?.idiomas ? response.data.biografia.idiomas.trim().split(",") : []);
+        setIdiomasUser(response.data.biografia?.idiomas ? response.data.biografia.idiomas.trim().split(",") : ["Español"]);
         setVivienda_imgs([
           response.data.usuario.vivienda.imagen1,
           response.data.usuario.vivienda.imagen2,
@@ -114,7 +121,7 @@ export default function AnfProfilePage() {
 
       <article className={styles.user_descripcion}>
         <h2>Sobre mí</h2>
-        <p>{anfitrionInfo.biografia?.sobreMi}</p>
+        <p>{anfitrionInfo.biografia?.sobreMi || "Aun no existe una descripción del usuario"}</p>
 
         <h2>Idiomas que hablo</h2>
         <ul>
@@ -136,25 +143,25 @@ export default function AnfProfilePage() {
         <h1>Mis recomendaciones</h1>
       </div>
 
-      <article className={styles.user_recomendations}>
-        <h3>Restaurante favorito en la ciudad</h3>
-        <p>Si te encanta la comida local, no puedes perderte ‘La Taberna de Juan’. Su especialidad es el pescado fresco y los platos tradicionales. Además, si vas los viernes, hay música en vivo. ¡Te encantará!</p>
+      {anfitrionInfo.usuario?.recomendaciones && anfitrionInfo.usuario.recomendaciones.length > 0
+        ? (
+          anfitrionInfo.usuario.recomendaciones.map((recomendacion, index) => (
+            <article key={index} className={styles.user_recomendations}>
+              <h3>{recomendacion.titulo}</h3>
+              <p>{recomendacion.recomendacion}</p>
 
-        <div className={styles.logos_recomendations}>
-          <img src="/images/profiles/location.svg" alt="Imagen location" />
-          <p><strong>Ubicación:</strong> Calle Mayor, 23, 18028.</p>
-        </div>
-      </article>
-
-      <article className={styles.user_recomendations}>
-        <h3>Ruta de senderismo secreta con vistas increíbles</h3>
-        <p>A solo 20 minutos de aquí, hay un sendero poco conocido que lleva a un mirador impresionante. Ideal para ver el atardecer y desconectar. Si te interesa, dime y te doy más detalles.</p>
-
-        <div className={styles.logos_recomendations}>
-          <img src="/images/profiles/backpack.svg" alt="Icono de mochila" />
-          <p><strong>Recomendación:</strong> Lleva calzado cómodo y agua.</p>
-        </div>
-      </article>
+              {datos_recomendaciones.map(({ key, label, icon }) =>
+                recomendacion[key] && (
+                  <div className={styles.logos_recomendations} key={key}>
+                    <img src={`/images/profiles/recomendaciones/${icon}.svg`} alt={`Imagen ${label}`} />
+                    <p><strong>{label}:</strong> {recomendacion[key]}</p>
+                  </div>
+                )
+              )}
+            </article>
+          ))
+        ) : <p className={styles.recomendacion_not_found}>Aún no existen recomendaciones proporcionadas por el anfitrión</p>
+      }
     </section>
   );
 

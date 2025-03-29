@@ -65,7 +65,7 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
       
       {activeShowMore && <ShowAllComentarios styles={styles} valoraciones={valoraciones} setActiveShowMore={setActiveShowMore}/>}
 
-      {showSize &&
+      {showSize && valoraciones.length > 0 && 
         <div className={styles.show_size}>
           <p onClick={() => setActiveShowMore(true)}>
             {activeShowMore ? `Ocultar` : `Ver ${valoraciones.length}`}  opiniones

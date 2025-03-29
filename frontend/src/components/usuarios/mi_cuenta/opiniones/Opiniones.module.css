@@ -106,11 +106,11 @@ body:has(.dialog_container[open]) {
   left: 15px;
   border-radius: 50px;
   cursor: pointer;
-  background-color: rgba(255, 5, 5, 0.144);
+  background-color: rgba(255, 5, 5, 0.15);
 }
 .cerra_menu:hover {
   filter: brightness(0.9);
-  background-color: rgba(255, 5, 5, 0.25);
+  background-color: rgba(255, 5, 5, 0.35);
 }
 .dialog_container:focus, .dialog_main:focus {outline: none;}
 .dialog_container h1 {
@@ -191,7 +191,7 @@ body:has(.dialog_container[open]) {
   .valoraciones_statistics span { font-size: 17px;}
 
   /*? COMENTARIOS DE USUARIOS*/
-  .cerra_menu { width: 55px;}
+  .cerra_menu { width: 45px;}
 
   .dialog_container {
     padding: 30px;
