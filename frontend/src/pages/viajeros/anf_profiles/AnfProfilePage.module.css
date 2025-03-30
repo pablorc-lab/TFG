@@ -234,6 +234,7 @@
   font-size: 19px;
   color: #717171;
 }
+.user_recomendations p {font-style: italic;}
 .recomendacion_not_found {padding: 10px 0 50px 0;}
 
 .user_recomendations h3 { 
@@ -268,13 +269,12 @@
   aspect-ratio: 1 / 1;
 }
 .logos_recomendations p{ 
+  color: black;
   margin: 0;
-  color: #717171;
   font-size: 18px !important;
   font-style: normal ;
 }
 .logos_recomendations p strong{ 
-  color: black;
   font-weight: 650;
 }
 

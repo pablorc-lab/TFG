@@ -59,7 +59,7 @@ body:has(.modal[open]) {
 
 /*? SECCIONES DE EDICIÓN*/
 .modal_sections{ 
-  padding: 20px 0 30px 0;
+  padding: 20px 0 40px 0;
   width: 100%;
 }
 .modal_sections:nth-last-of-type(1), .modal_sections:nth-last-of-type(2) {
@@ -106,6 +106,7 @@ body:has(.modal[open]) {
 .house_images img:nth-last-child(1){
   cursor: pointer;
   position: absolute;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   top: 5px;
   right: 5px;
   width: 35px;
@@ -151,9 +152,9 @@ body:has(.modal[open]) {
   border-color: transparent transparent #646464 transparent;
 }
 
-.add_image_tooltip, .add_gusto_tooltip{
+.add_image_tooltip{
   position: absolute;
-  top: 85px;
+  top: calc(100% - 5px);
   padding: 10px 15px;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -166,14 +167,18 @@ body:has(.modal[open]) {
 
 /*? IMÁGENES DE LOS GUSTOS*/
 .input_MiCuenta_gustos {
+  margin-top: 20px;
   display: flex;
+  flex-wrap: wrap;
+  column-gap: 30px;
+  row-gap: 15px;
   align-items: center;
   justify-content: center;
 }
 .input_MiCuenta_gustos div {
   position: relative;
   padding: 10px;
-  border-radius: 50px;
+  border-radius: 5px;
 }
 .input_MiCuenta_gustos img:nth-child(1){
   min-width: 50px;
@@ -181,12 +186,25 @@ body:has(.modal[open]) {
   aspect-ratio: 1 / 1;
 }
 
-.gusto_delete {
+.gusto_active {
+  outline: 2px solid #0a7273;
+  background-color: #0a717318;
+}
+
+.gusto_active:hover {
   background-color: #d12e2e1c;
   outline: 2px solid #d12e2e;
 }
 
+.input_MiCuenta_gustos div:not(.gusto_active):hover{
+  background-color: rgba(189, 189, 189, 0.219);
+  outline: 2px solid lightgray;
+}
+.input_MiCuenta_gustos div:not(.gusto_active) {
+  cursor: pointer;
+}
 .delete_icon {
+  aspect-ratio: 1 / 1;
   position: absolute;
   cursor: pointer;
   width: 30px;
@@ -213,13 +231,7 @@ body:has(.modal[open]) {
   filter: brightness(0.95);
   box-shadow: 0 0 10px #0a71737c;
 }
-.add_gusto_tooltip { 
-  color: white;
-  margin: 0;
-  width: max-content;
-  top: -50px;
-  right: 0;
-}
+
 
 /*? INPUT*/
 .input_div {
@@ -230,30 +242,36 @@ body:has(.modal[open]) {
   align-items: start;
   width: 100%;
 }
+
 .input_details {
   width: fit-content;
 }
 .input_container.input_MiCuenta .input_div, .input_MiCuenta_contacto .input_div { justify-content: start;}
 
-.input_div p:not(.add_gusto_tooltip) {
+.input_div p {
   font-size: 17px;
   color: #0a7273;
   font-weight: 600;
 }
 
 .input_detalles {
-  display: grid;
-  justify-self: center;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 50px;
+  row-gap: 30px;
+  justify-content: center;
   width: fit-content;
 }
 .input_container.input_ubicacion {
-  display: grid; 
+  display: flex;
+  flex-wrap: wrap; 
   justify-content: start;
   align-items: start;
-  gap: 10px;
+  row-gap: 20px;
+  column-gap: 30px;
   width: 100%;
 }
+.input_container.input_ubicacion div {width: fit-content;}
 
 .input_container.input_ubicacion .input_div { justify-content: start;}
 .input_ubicacion span { font-size: 22px;}
@@ -313,6 +331,7 @@ body:has(.modal[open]) {
 }
 
 /*? Botones de la edición*/
+
 .modal_buttons {
   margin-top: 20px;
   display: flex;
@@ -390,6 +409,12 @@ body:has(.modal[open]) {
   gap: 25px;
 }
 
+.input_details_vivienda {
+  width: 100%;
+  text-align: center;
+}
+
+
 .input_article {
   display: flex;
   align-items: center;
@@ -414,19 +439,25 @@ body:has(.modal[open]) {
   border:none;
 }
 
+.input_details_vivienda  {
+  width: fit-content;
+}
 @media (min-width: 850px) {
   /*? Titulo del modal*/
   .modal {
     width: 80vw;
     max-width: 750px;
   }
-  .modal h2 {font-size: 30px; margin: 20px 0;}
+  .modal h2 {font-size: 30px; margin-top: 20px;}
 
   /*? Imágenes*/
   .modal_images {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-  .input_MiCuenta_gustos { gap: 100px;}
+  .input_MiCuenta_gustos { 
+    column-gap: 45px;
+    row-gap: 30px;
+  }
   .input_MiCuenta_gustos img:nth-child(1){ width: 65px;}
   .delete_icon {width: 35px;}
 
@@ -436,7 +467,7 @@ body:has(.modal[open]) {
     display: flex;
     gap: 50px;
   }
-  .input_div p:not(.add_gusto_tooltip) { font-size: 23px;}
+  .input_div p { font-size: 23px;}
   .input_div input,  .input_idioma input  {
     font-size: 25px;
     font-weight: 400;
@@ -444,7 +475,13 @@ body:has(.modal[open]) {
 
   .modal_buttons button { font-size: 20px;}
   .input_text input{ width: 350px;}
-  .input_detalles {display: flex;}
+  .input_details_vivienda {
+    width: fit-content;
+  }
+  .input_detalles {
+    display: flex;
+    flex-wrap: wrap;
+  }
   
   /*? Campo mi cuenta*/
   .input_MiCuenta .input_div input{width: 270px;}

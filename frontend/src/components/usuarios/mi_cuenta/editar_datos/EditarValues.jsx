@@ -3,14 +3,19 @@ import styles from "./Editar.module.css"
 const FilteredList = lazy(() => import("../../../utilities/filteresCities/FilteredList"));
 
 // Menu que aparece al editar "Mi Cuenta"
-export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
+export const EditarMiCuenta = ({ addImageState, setAddImageState}) => {
 
 	const [showDeleteImage, setShowDeleteImage] = useState(null);
-	const [gustosImages, setGustosImages] = useState([
-		"/images/usuarios/Gustos/baseball.svg",
-		"/images/usuarios/Gustos/pesca.svg",
-		"/images/usuarios/Gustos/poker.svg",
-	]);
+	const gustosImages = [
+		"baseball", "costura", "natacion", "pesca", 
+		"poker", "social", "correr", "futbol", 
+		"animales", "videojuegos", "comer", "cafe",
+		"lectura", "peliculas", "musica", "ajedrez",
+		"pintura", "cocina", "plantas", "camping",
+		"ciclismo", "fotografia", "viajar", "gym"
+	];
+
+	const [gustos_actuales, SetGustos_actuales] = useState(["baseball", "natacion", "pesca"]);
 
 	return (
 		<>
@@ -67,31 +72,26 @@ export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
 					</div>
 
 					<div className={styles.input_div}>
-						<p>Gustos (máximo 3)</p>
+						<p>Gustos ({gustos_actuales.length} / 3)</p>
 						<article className={`${styles.input_container} ${styles.input_MiCuenta_gustos}`}>
-							{gustosImages.map((src, index) => (
-								<div key={index} className={`${showDeleteImage === index ? styles.gusto_delete : undefined}`} onMouseEnter={() => setShowDeleteImage(index)} onMouseLeave={() => setShowDeleteImage(null)}>
-									<img src={src} alt={`Gusto ${index}`} />
-									{showDeleteImage === index &&
+							{gustosImages.map((img, index) => (
+								<div 
+									key={index} 
+									className={`${gustos_actuales.includes(img) ? styles.gusto_active : undefined}`} 
+									onMouseEnter={() => setShowDeleteImage(index)} 
+									onMouseLeave={() => setShowDeleteImage(null)}
+									onClick={() => gustos_actuales.length+1 <= 3 && SetGustos_actuales(prev => [...prev, img])}
+								>
+									<img src={`/images/usuarios/Gustos/${img}.svg`} alt={`Gusto ${index}`} className={styles.gusto_image}/>
+									{showDeleteImage === index && gustos_actuales.includes(img) &&
 										<img
 											src="/images/usuarios/account/delete_img.svg"
 											alt="Eliminar"
 											className={styles.delete_icon}
-											onClick={() => setGustosImages(gustosImages.filter((_, i) => i !== index))}
+											onClick={() => SetGustos_actuales(gustos_actuales.filter(prev => prev !== img))}
 										/>}
 								</div>
 							))}
-							{gustosImages.length < 3 && (
-								<div className={styles.add_gusto}>
-									<img
-										src="/images/usuarios/account/add_img.svg"
-										alt="Editar vivienda"
-										onMouseEnter={() => setAddImageState(true)}
-										onMouseLeave={() => setAddImageState(false)}
-									/>
-									{addImageState && <p className={styles.add_gusto_tooltip}>Añadir gusto personal</p>}
-								</div>
-							)}
 						</article>
 					</div>
 				</form>
@@ -125,11 +125,7 @@ export const EditarVivienda = ({ addImageState, setAddImageState }) => {
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, []);
 
-	const [viviendasImages, setViviendasImages] = useState([
-		"/images/landing_page/casa_1.webp",
-		"/images/landing_page/casa_2.webp",
-		"/images/landing_page/casa_2.webp",
-	]);
+	const [viviendasImages, setViviendasImages] = useState([]);
 
 	return (
 		<>
@@ -138,11 +134,11 @@ export const EditarVivienda = ({ addImageState, setAddImageState }) => {
 			<section className={styles.modal_sections}>
 				<h3>IMÁGENES <span>(máximo 4)</span></h3>
 				<article className={styles.modal_images}>
-					{viviendasImages.map((path_img, index) => (
+					{viviendasImages.map((img, index) => (
 						<div key={index} className={styles.house_images}>
-							<img src={path_img} alt={`Imagen ${index}`} />
+							<img src={img instanceof File ? URL.createObjectURL(img) : img} alt={`Imagen ${index}`} />
 							<img
-								src="/images/usuarios/account/delete_img.svg"
+								src={"/images/usuarios/account/delete_img.svg"}
 								alt="delete img"
 								onClick={() => setViviendasImages(viviendasImages.filter((_, i) => i !== index))}
 							/>
@@ -153,7 +149,13 @@ export const EditarVivienda = ({ addImageState, setAddImageState }) => {
 					{viviendasImages.length < 4 && (
 						<div className={styles.file_input_wrapper}>
 							<label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)} >
-								<input type="file" accept="image/*" className={styles.file_input} name="archivo" />
+								<input
+									type="file" 
+									accept="image/*" 
+									className={styles.file_input} 
+									name="archivo" 
+									onChange={(e) => setViviendasImages(prev => [...prev, e.target.files[0]])}
+								/>
 								<img src="/images/usuarios/account/add_img.svg" alt="Editar vivienda" />
 							</label>
 							{addImageState && <p className={styles.add_image_tooltip}>Añadir imagen</p>}
@@ -165,19 +167,19 @@ export const EditarVivienda = ({ addImageState, setAddImageState }) => {
 			<section className={styles.modal_sections}>
 				<h3>DETALLES</h3>
 				<form className={`${styles.input_container} ${styles.input_detalles}`}>
-					<div className={`${styles.input_div} ${styles.input_details}`}>
+					<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 						<p>Viajeros</p>
 						<input type="number" placeholder="1 - 4" min="1" max="4" name="habitaciones" />
 					</div>
-					<div className={`${styles.input_div} ${styles.input_details}`}>
+					<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 						<p>Habitaciones</p>
 						<input type="number" placeholder="1 - 4" min="1" max="4" name="baños" />
 					</div>
-					<div className={`${styles.input_div} ${styles.input_details}`}>
+					<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 						<p>Camas</p>
 						<input type="number" placeholder="1 - 4" min="1" max="4" name="habitaciones" />
 					</div>
-					<div className={`${styles.input_div} ${styles.input_details}`}>
+					<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 						<p>Baños</p>
 						<input type="number" placeholder="1 - 4" min="1" max="4" name="baños" />
 					</div>

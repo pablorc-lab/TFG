@@ -99,7 +99,27 @@
 .user_container h2, .user_container h3, .user_container h4, .user_container p, .user_nav h2 {margin: 0;}
 
 /*? USUARIO E INFORMACIÓN GENERAL*/
+.profile_img{
+  user-select: none;
+  position: absolute;
+  left: -3px;
+  top: -5px;
+  border-radius: 50%;
+  padding: 7px;
+  border: none;
+  outline-offset: -1px;
+  background-color: #0a7273;
+}
+.profile_img img {
+  aspect-ratio: 1 / 1;
+  width: 25px;
+  filter: grayscale(1) invert(1);
+}
+.file_input_label img {cursor: pointer;}
+.file_input_label:hover img {filter: brightness(0.8);}
 .user_profile {
+  cursor: pointer;
+  position: relative;
   grid-row: 1;
   display: flex;
   align-items: center;
@@ -109,6 +129,7 @@
 }
 
 .user_img{
+  outline: 2px solid #0a7273;
   width: 120px;
   border-radius: 50%;
   object-fit: cover;

@@ -85,11 +85,7 @@ export default function FormVivienda({ styles, userType, userID, InputField, set
               />
               {viviendaData[img] && (
                 <img
-                  src={
-                    viviendaData[img] instanceof File
-                      ? URL.createObjectURL(viviendaData[img])
-                      : viviendaData[img]
-                  }
+                  src={viviendaData[img] instanceof File ? URL.createObjectURL(viviendaData[img]) : viviendaData[img]}
                   alt={`Vista previa ${img}`}
                   className={styles.preview_image}
                 />

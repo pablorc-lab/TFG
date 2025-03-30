@@ -12,6 +12,7 @@ const RecomendacionesMiCuenta = lazy(() => import("../../../components/usuarios/
 export default function MiCuenta({ activeSection = "perfil", esViajero = true }) {
   const [activeMenu, setActiveMenu] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
+  const [perfilImage, setPerfilImage] = useState(null);
 
   // Controlar cuando es pantalla pequeña
   useEffect(() => {
@@ -75,7 +76,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
       </header>
 
       {isMobile && <ViajerosMobileHeader activeSection={activeSection} />}
-      
+
       <main className={styles.main}>
         <article className={styles.main_containers}>
 
@@ -86,7 +87,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
                 if (index == 2 && esViajero) return null;
 
                 return (
-                  <li key={index} className={activeMenu === index ? styles.active : undefined}  onClick={() => setActiveMenu(index)}>
+                  <li key={index} className={activeMenu === index ? styles.active : undefined} onClick={() => setActiveMenu(index)}>
                     <img src={item.src} alt={item.text} />
                     <h2>{item.text}</h2>
                   </li>
@@ -98,7 +99,21 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           {/* Perfil de usuario*/}
           <section className={styles.user_container}>
             <article className={styles.user_profile}>
-              <img className={styles.user_img} src="/images/landing_page/persona_2.webp" alt="Imagen de perfil" width={50} />
+              <div >
+                <label className={styles.file_input_label}>
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    style={{ display: "none" }}
+                    onChange={(e) => {setPerfilImage(URL.createObjectURL(e.target.files[0]))}} 
+                  />
+                  <img className={styles.user_img} src={perfilImage || "/images/not_found/user_img.png"} alt="Imagen de perfil" width={50}/>
+                </label>
+
+                <div className={styles.profile_img} >
+                  <img src="/images/usuarios/account/edit_img.svg" alt="Editar imagen" />
+                </div>
+              </div>
 
               <div className={styles.user_general_info}>
                 <div className={styles.user_name}>
@@ -125,7 +140,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
         <div className={styles.user_component}>
           <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
             {activeMenu === 0 && <PerfilMiCuenta showValue={0} />}
-            {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero}/>}
+            {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} />}
             {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} />}
             {activeMenu === 3 && <RecomendacionesMiCuenta />}
             {activeMenu === 4 && <SeguridadMiCuenta />}
