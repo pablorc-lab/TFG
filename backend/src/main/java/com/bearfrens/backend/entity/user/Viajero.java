@@ -3,6 +3,7 @@ package com.bearfrens.backend.entity.user;
 import com.bearfrens.backend.entity.contenido.Experiencias;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,9 +13,14 @@ import java.util.List;
 // @NoArgsConstructor : permite que JPA cree instancias de las entidades utilizando un constructor vacío, requerido para realizar la deserialización y la persistencia de objetos en la base de datos.
 @Entity
 @Getter
+@Setter
 @Table(name="viajeros")
 public class Viajero extends Usuario<Experiencias>{
+  @Column
   private int viajes_realizados = 0;
+
+  @Column
+  private String profesion;
 
   @OneToMany(mappedBy = "viajero", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Experiencias> experiencias;

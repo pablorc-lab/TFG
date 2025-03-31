@@ -77,7 +77,7 @@ export default function ListadoUsuarios({ styles, userType }) {
             <td>{usuario.gusto1}</td>
             <td>{usuario.gusto2}</td>
             <td>{usuario.gusto3}</td>
-            <td>{usuario.valoracion_media}</td>
+            <td>{usuario.valoracion_media || 0}</td>
             <td>
               {(usuario.descripcion?.length > 25 ? `${usuario.descripcion.slice(0,25)}...` : usuario.descripcion) || "-"}
               </td>

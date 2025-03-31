@@ -5,6 +5,7 @@ import com.bearfrens.backend.entity.contenido.Contenido;
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
 import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Usuario;
+import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.service.biografias.BiografiasService;
@@ -153,18 +154,23 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
-    // Actualizar los valores de cada campo
-    user.setPrivateID(userRequest.getPrivateID());
-    user.setEmail(userRequest.getEmail());
-    user.setPassword(userRequest.getPassword());
-    user.setNombre(userRequest.getNombre());
-    user.setApellido(userRequest.getApellido());
-    user.setFecha_nacimiento(userRequest.getFecha_nacimiento());
-    user.setProfileImage(userRequest.getProfileImage());
-    user.setGusto1(userRequest.getGusto1());
-    user.setGusto2(userRequest.getGusto2());
-    user.setGusto3(userRequest.getGusto3());
-    user.setDescripcion(userRequest.getDescripcion());
+    // Actualizar los valores de cada campo que no sean null
+    Optional.ofNullable(userRequest.getPrivateID()).ifPresent(user::setPrivateID);
+    Optional.ofNullable(userRequest.getEmail()).ifPresent(user::setEmail);
+    Optional.ofNullable(userRequest.getPassword()).ifPresent(user::setPassword);
+    Optional.ofNullable(userRequest.getNombre()).ifPresent(user::setNombre);
+    Optional.ofNullable(userRequest.getApellido()).ifPresent(user::setApellido);
+    Optional.ofNullable(userRequest.getFecha_nacimiento()).ifPresent(user::setFecha_nacimiento);
+    Optional.ofNullable(userRequest.getProfileImage()).ifPresent(user::setProfileImage);
+    Optional.ofNullable(userRequest.getGusto1()).ifPresent(user::setGusto1);
+    Optional.ofNullable(userRequest.getGusto2()).ifPresent(user::setGusto2);
+    Optional.ofNullable(userRequest.getGusto3()).ifPresent(user::setGusto3);
+    Optional.ofNullable(userRequest.getDescripcion()).ifPresent(user::setDescripcion);
+
+    // Almacenar valores distintos si es viajero
+    if(user instanceof Viajero){
+      Optional.ofNullable(((Viajero) userRequest).getProfesion()).ifPresent(((Viajero) user)::setProfesion);
+    }
 
     // Guardar el usuario actualizado
     T updated_user = repository.save(user);

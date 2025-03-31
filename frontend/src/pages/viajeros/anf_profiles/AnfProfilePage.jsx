@@ -1,31 +1,35 @@
 import { useEffect, useState } from "react";
-import styles from "./AnfProfilePage.module.css"
 import { Link, useLocation } from "react-router-dom";
 import ViajerosMobileHeader from "../../../components/viajeros/header/ViajerosMobileHeader";
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
 import Footer from "../../../components/footer/footer";
+import UserPage from "../../../components/usuarios/user_page/UserPage";
 import AnfitrionService from "../../../services/users/AnfitrionService";
+import styles from "./AnfProfilePage.module.css"
 
 export default function AnfProfilePage() {
+  const [anfitrionInfo, SetAnfitrionInfo] = useState([]);
+  const [valoraciones, setValoraciones] = useState([]);
+  const [Gustos_imgs, setGustos_imgs] = useState([]);
+  const [idiomasUser, setIdiomasUser] = useState([]);
+  const [Vivienda_imgs, setVivienda_imgs] = useState([null, null, null, null]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const [isColumns, setIsColumns] = useState(window.innerWidth <= 1250);
   const [actualImage, setActualImage] = useState(0);
 
-  const [anfitrionInfo, SetAnfitrionInfo] = useState([]);
-  const [Gustos_imgs, setGustos_imgs] = useState([]);
-  const [idiomasUser, setIdiomasUser] = useState([]);
-  const [valoraciones, setValoraciones] = useState([]);
-  const [Vivienda_imgs, setVivienda_imgs] = useState([null, null, null, null]);
-  const datos_recomendaciones = [
-    { key: "recomendacion", label: "Sugerencia", icon: "backpack" },
-    { key: "ayuda", label: "Importante", icon: "help" },
-    { key: "ubicacion", label: "Ubicación", icon: "location" },
-    { key: "horarios", label: "Horarios", icon: "clock" },
-    { key: "telefono", label: "Teléfono", icon: "phone" },
-  ];
-
   const location = useLocation();
   const id = location.state?.id;
+
+  // Controlar cuando es pantalla pequeña 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 770);
+      setIsColumns(window.innerWidth <= 1250);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Obtener datos del usuario si no hay y se tiene su id
   useEffect(() => {
@@ -53,17 +57,7 @@ export default function AnfProfilePage() {
     }
   }, [id, anfitrionInfo])
 
-  // Controlar cuando es pantalla pequeña 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 770);
-      setIsColumns(window.innerWidth <= 1250);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+  // Información de la vivienda
   const ViviendaInfo = (
     <section className={styles.vivienda_info}>
       <h1>Vivienda en {anfitrionInfo.usuario?.vivienda.ciudad || "-"}, {anfitrionInfo.usuario?.vivienda.provincia || "-"}</h1>
@@ -77,108 +71,8 @@ export default function AnfProfilePage() {
     </section>
   );
 
-  const PerfilUsuario = (
-    <section className={styles.user_info}>
-      <article className={styles.user_article}>
-        <img className={styles.user_img} src={anfitrionInfo.usuario?.profileImage || "/images/not_found/user_img.png"} alt="Imagen de perfil" width={50} />
-        <div>
-          <h2>Anfitrión : {anfitrionInfo.usuario?.nombre || "-"}</h2>
-          <div className={styles.user_reservas}>
-            <p>{anfitrionInfo.usuario?.reservas_realizadas || 0} reservas</p>
-            <div className={styles.user_score}>
-              <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
-              <h3>{anfitrionInfo.usuario?.valoracion_media || 0.1}</h3>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <p>{anfitrionInfo.usuario?.descripcion || "Este anfitrión aún no se ha descrito."}</p>
-
-      <article className={styles.user_conectar}>
-        <div className={styles.user_likes}>
-          {Gustos_imgs.map((gusto, index) => (
-            <img
-              key={index}
-              src={`/images/usuarios/Gustos/${String(gusto).toLowerCase()}.svg`}
-              alt={`Logo gusto ${index + 1}`}
-              width={100}
-              onError={(e) => e.target.src = "/images/usuarios/Gustos/default.svg"}
-            />
-          ))}
-        </div>
-        <button>Conectar</button>
-      </article>
-    </section>
-  );
-
-  const Biografia = (
-    <section className={styles.user_biografia}>
-      <div className={styles.user_title}>
-        <img src="/images/profiles/biografia.svg" alt="Biografia logo" />
-        <h1>Biografía</h1>
-      </div>
-
-      <article className={styles.user_descripcion}>
-        <h2>Sobre mí</h2>
-        <p>{anfitrionInfo.biografia?.sobreMi || "Aun no existe una descripción del usuario"}</p>
-
-        <h2>Idiomas que hablo</h2>
-        <ul>
-          {idiomasUser?.map((idioma, index) => (
-            <li key={index}>{idioma}</li>
-          ))}
-        </ul>
-
-        <h2>Sobre el alojamiento</h2>
-        <p>{anfitrionInfo.biografia?.descripcionExtra || "Aun no existe una descripción del alojamiento"}</p>
-      </article>
-    </section>
-  );
-
-  const Recomendaciones = (
-    <section className={styles.user_recomendations_section}>
-      <div className={`${styles.user_title} ${styles.user_title2}`}>
-        <img src="/images/profiles/recomendaciones.svg" alt="Recomendaciones logo" />
-        <h1>Mis recomendaciones</h1>
-      </div>
-
-      {anfitrionInfo.usuario?.recomendaciones && anfitrionInfo.usuario.recomendaciones.length > 0
-        ? (
-          anfitrionInfo.usuario.recomendaciones.map((recomendacion, index) => (
-            <article key={index} className={styles.user_recomendations}>
-              <h3>{recomendacion.titulo}</h3>
-              <p>{recomendacion.recomendacion}</p>
-
-              {datos_recomendaciones.map(({ key, label, icon }) =>
-                recomendacion[key] && (
-                  <div className={styles.logos_recomendations} key={key}>
-                    <img src={`/images/profiles/recomendaciones/${icon}.svg`} alt={`Imagen ${label}`} />
-                    <p><strong>{label}:</strong> {recomendacion[key]}</p>
-                  </div>
-                )
-              )}
-            </article>
-          ))
-        ) : <p className={styles.recomendacion_not_found}>Aún no existen recomendaciones proporcionadas por el anfitrión</p>
-      }
-    </section>
-  );
-
-  const Valoraciones = (
-    <section className={styles.valoraciones}>
-      <OpinionesMiCuenta
-        showSize={true}
-        nota_media={anfitrionInfo.usuario?.valoracion_media}
-        valoraciones={valoraciones}
-      />
-    </section>
-  );
-
   return (
     <>
-      <title>Perfil anfitrion | Viajeros</title>
-
       {/* CABECERA */}
       <header className={styles.header}>
         <img className={styles.header_logo} src="/images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
@@ -200,60 +94,43 @@ export default function AnfProfilePage() {
       </header>
       {isMobile && <ViajerosMobileHeader activeSection="" />}
 
-      <main className={styles.main}>
-        <section className={styles.vivienda_imgs}>
-          {isMobile ? (
-            <>
-              <img
-                className={styles.arrow_left}
-                src="/images/profiles/arrow.svg"
-                alt="Biografia logo"
-                onClick={() => setActualImage(actualImage === 0 ? Vivienda_imgs.length - 1 : actualImage - 1)}
-              />
-              <img
-                className={styles.arrow_right}
-                src="/images/profiles/arrow.svg"
-                alt="Biografia logo"
-                onClick={() => setActualImage((actualImage + 1) % Vivienda_imgs.length)}
-              />
-              <img src={Vivienda_imgs[actualImage] || "/images/not_found/vivienda.webp"} alt="Vivienda" width={100} />
-              <span>{actualImage + 1}</span>
-            </>
-          ) : (
-            <>
-              {Vivienda_imgs.map((vivienda, index) => (
-                <img key={index} src={vivienda || "/images/not_found/vivienda.webp"} alt="Vivienda imagen" width={100} />
-              ))}
-            </>
-          )}
-        </section>
-
-        {isColumns ? (
+      <section className={styles.vivienda_imgs}>
+        {isMobile ? (
           <>
-            {ViviendaInfo}
-            {PerfilUsuario /* PERFIL DEL USUARIO*/}
-            {Biografia /* BIOGRAFÍA*/}
-            {Recomendaciones /* RECOMENDACIONES*/}
-            {Valoraciones}
+            <img
+              className={styles.arrow_left}
+              src="/images/profiles/arrow.svg"
+              alt="Biografia logo"
+              onClick={() => setActualImage(actualImage === 0 ? Vivienda_imgs.length - 1 : actualImage - 1)}
+            />
+            <img
+              className={styles.arrow_right}
+              src="/images/profiles/arrow.svg"
+              alt="Biografia logo"
+              onClick={() => setActualImage((actualImage + 1) % Vivienda_imgs.length)}
+            />
+            <img src={Vivienda_imgs[actualImage] || "/images/not_found/vivienda.webp"} alt="Vivienda" width={100} />
+            <span>{actualImage + 1}</span>
           </>
         ) : (
           <>
-            <div className={styles.columna_izquierda}>
-              {ViviendaInfo}
-              {Biografia /* BIOGRAFÍA*/}
-              {Recomendaciones /* RECOMENDACIONES*/}
-            </div>
-
-            <div className={styles.columna_derecha}>
-              {PerfilUsuario /* PERFIL DEL USUARIO*/}
-              {Valoraciones}
-            </div>
+            {Vivienda_imgs.map((vivienda, index) => (
+              <img key={index} src={vivienda || "/images/not_found/vivienda.webp"} alt="Vivienda imagen" width={100} />
+            ))}
           </>
         )}
-      </main>
+      </section>
 
+      <UserPage
+        usuarioData={anfitrionInfo}
+        valoraciones={valoraciones}
+        Gustos_imgs={Gustos_imgs}
+        idiomasUser={idiomasUser}
+        ViviendaInfo={ViviendaInfo}
+        isMobile={isMobile}
+        isColumns={isColumns}
+      />
       <Footer />
     </>
-
   )
 }

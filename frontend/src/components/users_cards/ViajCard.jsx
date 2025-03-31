@@ -23,7 +23,13 @@ export default function Inq_card({ styles, Perfil_img, Nombre = "-", Valoracion 
       {/*?Gustos*/}
       <div className={styles.viaj_likes}>
         {Gustos_imgs.map((gusto, index) => (
-          <img key={index} src={gusto} alt={`Logo gusto ${index + 1}`} width={100} />
+          <img 
+            key={index} 
+            src={`/images/usuarios/Gustos/${String(gusto).toLowerCase()}.svg`}
+            alt={`Logo gusto ${index + 1}`} 
+            onError={(e) => e.target.src = "/images/usuarios/Gustos/default.svg"}
+            width={100} 
+          />
         ))}
       </div>
 
