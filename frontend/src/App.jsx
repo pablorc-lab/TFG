@@ -5,8 +5,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 // Se mantiene con un import normal porque es la primera vista y se carga inmediatamente,
 import HomePage from './pages/inicio/home/HomePage';
 import ScrollToTop from './components/utilities/ScrollToTop';
-import InqProfilePage from './pages/anfitriones/inq_profiles/InqProfilePage';
 
+const InqProfilePage = lazy(() => import("./pages/anfitriones/inq_profiles/InqProfilePage"));
+const ConexionesAnfPage = lazy(() => import("./pages/anfitriones/conexiones/ConexionesAnfPage"));
 const AlojamientosPage = lazy(() => import("./pages/viajeros/alojamientos/AlojamientosPage"));
 const RegistrarUsuarioPage = lazy(() => import("./pages/registro_usuario/RegistrarUsuarioPage"));
 const InicioSesionPage = lazy(() => import("./pages/registro_usuario/InicioSesionPage"));
@@ -37,6 +38,7 @@ export default function App() {
           {/* Rutas para ANFITRIONES*/}
           <Route path="/anfitriones" element={<Navigate to="/anfitriones/inquilinos" />} />
           <Route path="/anfitriones/inquilinos" element={<InquilinosPage/>} />
+          <Route path="/anfitriones/conexiones" element={<ConexionesAnfPage/>} />
           <Route path="/anfitriones/mi-cuenta" element={<MiCuenta esViajero={false}/>} />
           <Route path="/anfitriones/perfil-viajero" element={<InqProfilePage/>} />
 

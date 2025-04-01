@@ -83,6 +83,7 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
             userRef={userRef}
             setMenuOpen={setMenuOpen}
             menuLinks={menuLinks}
+            activeSection={activeSection}
           />
         )}
       </section>

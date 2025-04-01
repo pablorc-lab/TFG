@@ -23,6 +23,7 @@
   100% {opacity: 1; transform: translateY(10px);}
 }
 
+
 .first_row {
 	border-bottom: 1px solid lightgray;
 	padding-bottom: 5px;
@@ -62,3 +63,13 @@
 
 /* Si no hay ninguno oculto arreglar el margen entre bordes*/
 .no_hidden li:nth-last-child(2) span{ margin-bottom: 3.5px;}
+
+.active_section a:not(:hover) span {
+	color: #009080;
+	font-weight: 700;
+}
+
+.dropdown_menu:hover a:not(:hover) span {
+  color: black;
+	font-weight: normal;
+}

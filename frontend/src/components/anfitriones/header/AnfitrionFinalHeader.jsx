@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import AnfitrionHeader from "./AnfitrionHeader"
 import AnfitrionMobileHeader from "./AnfitrionMobileHeader";
 
-export default function AnfitrionFinalHeader() {
+export default function AnfitrionFinalHeader({activeSectionDefecto = "inquilinos"}) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
-  const [activeSection, setActiveSection] = useState("inquilinos")
+  const [activeSection, setActiveSection] = useState(activeSectionDefecto);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 770);
