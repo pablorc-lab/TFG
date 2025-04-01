@@ -2,23 +2,23 @@ import { Suspense, useState } from "react";
 import styles from "./Recomendaciones.module.css";
 import EditarPerfil from "../editar_datos/Editar";
 
-const RecomendacionesMiCuenta = () => {
+const RecomendacionesMiCuenta = ({esViajero}) => {
   const [isOpen, setIsOpen] = useState(null);
 
   return (
     <section className={styles.recomendaciones_main}>
-      <h1>Recomendaciones - 2</h1>
+      <h1>{esViajero ? "Experiencias" : "Recomendaciones"} - 2</h1>
 
       {isOpen &&
         <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} />}>
-          <EditarPerfil setIsOpen={setIsOpen} showValue={3} />
+          <EditarPerfil setIsOpen={setIsOpen} showValue={3} esViajero={esViajero}/>
         </Suspense>
       }
 
       <ul className={styles.recomendaciones_container}>
         <li className={styles.add_recomendacion} onClick={() => setIsOpen(true)}>
           <img src="/images/usuarios/account/aniadir_recomendacion.svg" alt="Aniadir recomendacion" />
-          <p>Añadir recomendacion</p>
+          <p>Añadir {esViajero ? "experiencia" : "recomendacion"}</p>
         </li>
         <li>
           <h3>Restaurante favorito en la ciudad</h3>

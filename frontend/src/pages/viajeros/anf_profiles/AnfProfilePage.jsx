@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ViajerosMobileHeader from "../../../components/viajeros/header/ViajerosMobileHeader";
-import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
 import Footer from "../../../components/footer/footer";
 import UserPage from "../../../components/usuarios/user_page/UserPage";
 import AnfitrionService from "../../../services/users/AnfitrionService";
@@ -127,7 +126,7 @@ export default function AnfProfilePage() {
         Gustos_imgs={Gustos_imgs}
         idiomasUser={idiomasUser}
         ViviendaInfo={ViviendaInfo}
-        isMobile={isMobile}
+        recomendaciones={anfitrionInfo.usuario?.recomendaciones}
         isColumns={isColumns}
       />
       <Footer />

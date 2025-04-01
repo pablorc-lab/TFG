@@ -38,8 +38,8 @@
 .recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) {
   margin: 0;
   font-size: 19px;
-  font-style: italic;
-  color: #717171;
+  font-weight: 350;
+  color: #696969;
   margin-bottom: 30px;
 }
 

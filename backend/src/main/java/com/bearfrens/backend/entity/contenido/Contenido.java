@@ -15,7 +15,7 @@ public abstract class Contenido{
   @Column(nullable = false, length = 60)
   private String titulo; // Titulo inmutable
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 500)
   private String descripcion;
 
   @Column(nullable = true)

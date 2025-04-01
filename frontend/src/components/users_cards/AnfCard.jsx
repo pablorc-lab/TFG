@@ -50,7 +50,9 @@ export default function Anf_card({ styles, anf_id, Casa_img, Perfil_img, Nombre 
         <p className={styles.description}>{Descripcion}</p>
 
         {/* Parte inferior (Conectar) */}
+        <Link to="/viajeros/perfil-anfitrion" state={{ id: anf_id }} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
         <button className={styles.btn_conectar}>Conectar</button>
+        </Link>
       </div>
     </article>
   );

@@ -9,7 +9,7 @@ export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecific
     <section className={styles.card_users_container}>
       <article className={styles.card_users}>
         {listaAnfitriones.map(anfitrion => (
-          <div key={anfitrion.id}>
+          <div key={anfitrion.id} className={styles.user_card}>
             <AnfCard
               styles={anf_card_styles}
               anf_id={anfitrion.id}

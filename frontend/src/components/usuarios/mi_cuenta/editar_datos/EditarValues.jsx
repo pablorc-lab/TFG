@@ -290,13 +290,13 @@ export const EditarBiografia = ({ esViajero = false }) => {
 };
 
 // Menu que aparece al editar "Recomendaciones "
-export const EditarRecomendaciones = () => {
+export const EditarRecomendaciones = ({esViajero }) => {
 	return (
 		<>
-			<h2> AÑADIR RECOMENDACION</h2>
+			<h2> AÑADIR {esViajero ? "EXPERIENCIA" : "RECOMENDACION"}</h2>
 
 			<section className={styles.modal_sections}>
-				<h3>RECOMENDACIÓN</h3>
+				<h3>{esViajero ? "EXPERIENCIA" : "RECOMENDACIÓN"}</h3>
 				<form className={`${styles.input_container} ${styles.input_recomendacion}`}>
 					<div className={`${styles.input_div} ${styles.input_recomendacion_title}`}>
 						<p>Titulo</p>
@@ -304,7 +304,7 @@ export const EditarRecomendaciones = () => {
 					</div>
 
 					<div className={styles.input_div}>
-						<p>Descripción  0 / 300</p>
+						<p>Descripción  0 / 500</p>
 						<textarea
 							placeholder="Si te encanta la comida local, no puedes perderte ‘La Taberna de Juan’"
 							spellCheck="false"
@@ -318,13 +318,13 @@ export const EditarRecomendaciones = () => {
 			<section className={styles.modal_sections}>
 				<h3>DETALLES (opcionales)</h3>
 				<form className={`${styles.input_container} ${styles.input_details}`} >
-					<div className={styles.input_div}>
+					{!esViajero && <div className={styles.input_div}>
 						<p>Ubicación</p>
 						<article className={styles.input_article}>
 							<img src="/images/profiles/recomendaciones/location.svg" alt="Ubicación" className={styles.input_image} />
 							<input type="text" placeholder="Dirección del lugar" spellCheck="false" name="Ubicación" />
 						</article>
-					</div>
+					</div>}
 
 					<div className={styles.input_div}>
 						<p>Recomendación</p>
@@ -334,29 +334,29 @@ export const EditarRecomendaciones = () => {
 						</article>
 					</div>
 
-					<div className={styles.input_div}>
+					{!esViajero &&<div className={styles.input_div}>
 						<p>Teléfono</p>
 						<article className={styles.input_article}>
 							<img src="/images/profiles/recomendaciones/phone.svg" alt="Teléfono" className={styles.input_image} />
 							<input type="number" placeholder="666-777-999" spellCheck="false" name="Teléfono" />
 						</article>
-					</div>
+					</div>}
 
-					<div className={styles.input_div}>
+					{!esViajero &&<div className={styles.input_div}>
 						<p>Horarios</p>
 						<article className={styles.input_article}>
 							<img src="/images/profiles/recomendaciones/clock.svg" alt="Horarios" className={styles.input_image} />
 							<input type="text" placeholder="Horario de apertura y cierre" spellCheck="false" name="Horarios" />
 						</article>
-					</div>
+					</div>}
 
-					<div className={styles.input_div}>
+					{!esViajero && <div className={styles.input_div}>
 						<p>Ayuda</p>
 						<article className={styles.input_article}>
 							<img src="/images/profiles/recomendaciones/help.svg" alt="Comentarios" className={styles.input_image} />
 							<input type="text" placeholder="Comentarios adicionales" spellCheck="false" name="Comentarios" />
 						</article>
-					</div>
+					</div>}
 				</form>
 			</section>
 		</>

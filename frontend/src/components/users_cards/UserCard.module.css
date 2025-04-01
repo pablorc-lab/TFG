@@ -14,7 +14,7 @@
 .anf_link {color: black;}
 
 .general_prof:hover { 
-  box-shadow: 0 0 15px 2px #00907f7d;
+  box-shadow: 0 0 20px #00000088;
 }
 
 .btn_conectar:not(.viaj_prof .btn_conectar) {
@@ -256,6 +256,7 @@
   .house {
     height: 180px;
     border-radius: 14px 14px 0 0;
+    aspect-ratio: 1 / 1;
   }  
   .anf_personal_info { transform: translate(-10px, -50px); }
   .anf_info { padding: 0 20px; }

@@ -1,13 +1,7 @@
 import styles from "./UserPage.module.css"
-
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import ViajerosMobileHeader from "../../../components/viajeros/header/ViajerosMobileHeader";
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
 
-export default function UserPage({ usuarioData, valoraciones, Gustos_imgs, idiomasUser, ViviendaInfo, isMobile, isColumns }) {
-
-
+export default function UserPage({ usuarioData, valoraciones, Gustos_imgs, idiomasUser, ViviendaInfo, isColumns, recomendaciones = [], esAnfitrion = true }) {
   const datos_recomendaciones = [
     { key: "recomendacion", label: "Sugerencia", icon: "backpack" },
     { key: "ayuda", label: "Importante", icon: "help" },
@@ -16,13 +10,12 @@ export default function UserPage({ usuarioData, valoraciones, Gustos_imgs, idiom
     { key: "telefono", label: "Teléfono", icon: "phone" },
   ];
 
-
   const PerfilUsuario = (
     <section className={styles.user_info}>
       <article className={styles.user_article}>
         <img className={styles.user_img} src={usuarioData.usuario?.profileImage || "/images/not_found/user_img.png"} alt="Imagen de perfil" width={50} />
         <div>
-          <h2>Anfitrión : {usuarioData.usuario?.nombre || "-"}</h2>
+          <h2>{esAnfitrion ? "Anfitrión" : "Viajero"} : {usuarioData.usuario?.nombre || "-"}</h2>
           <div className={styles.user_reservas}>
             <p>{usuarioData.usuario?.reservas_realizadas || 0} reservas</p>
             <div className={styles.user_score}>
@@ -70,8 +63,8 @@ export default function UserPage({ usuarioData, valoraciones, Gustos_imgs, idiom
           ))}
         </ul>
 
-        <h2>Sobre el alojamiento</h2>
-        <p>{usuarioData.biografia?.descripcionExtra || "Aun no existe una descripción del alojamiento"}</p>
+        <h2>Sobre {esAnfitrion ? "el alojamiento" : "mis intereses"}</h2>
+        <p>{usuarioData.biografia?.descripcionExtra || "Aun no existe una descripción proporcionada"}</p>
       </article>
     </section>
   );
@@ -80,15 +73,15 @@ export default function UserPage({ usuarioData, valoraciones, Gustos_imgs, idiom
     <section className={styles.user_recomendations_section}>
       <div className={`${styles.user_title} ${styles.user_title2}`}>
         <img src="/images/profiles/recomendaciones.svg" alt="Recomendaciones logo" />
-        <h1>Mis recomendaciones</h1>
+        <h1>Mis {esAnfitrion ? "recomendaciones" : "experiencias"}</h1>
       </div>
 
-      {usuarioData.usuario?.recomendaciones && usuarioData.usuario.recomendaciones.length > 0
+      {recomendaciones.length > 0
         ? (
-          usuarioData.usuario.recomendaciones.map((recomendacion, index) => (
+          recomendaciones.map((recomendacion, index) => (
             <article key={index} className={styles.user_recomendations}>
               <h3>{recomendacion.titulo}</h3>
-              <p>{recomendacion.recomendacion}</p>
+              <p>{recomendacion.descripcion}</p>
 
               {datos_recomendaciones.map(({ key, label, icon }) =>
                 recomendacion[key] && (

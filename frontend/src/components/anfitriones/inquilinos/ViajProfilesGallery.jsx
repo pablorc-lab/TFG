@@ -23,6 +23,7 @@ export default function ViajProfilesGallery({ viajeros }) {
         <article key={index}>
           <ViajCard
             styles={viaj_card_styles}
+            viaj_id={viajero.id}
             Perfil_img={viajero.profileImage || "/images/not_found/user_img.png"}
             Nombre={viajero.nombre}
             Valoracion={viajero.valoracion_media || "0.0"}

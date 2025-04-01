@@ -288,14 +288,15 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     }
 
     // El titulo es inmutable
-    contenido.setDescripcion(infoContenido.getDescripcion());
-    contenido.setRecomendacion(infoContenido.getRecomendacion());
+    Optional.ofNullable(infoContenido.getDescripcion()).ifPresent(contenido::setDescripcion);
+    Optional.ofNullable(infoContenido.getRecomendacion()).ifPresent(contenido::setRecomendacion);
 
     if(contenido instanceof Recomendaciones){
-      ((Recomendaciones) contenido).setUbicacion(((Recomendaciones) infoContenido).getUbicacion());
-      ((Recomendaciones) contenido).setTelefono(((Recomendaciones) infoContenido).getTelefono());
-      ((Recomendaciones) contenido).setHorarios(((Recomendaciones) infoContenido).getHorarios());
-      ((Recomendaciones) contenido).setAyuda(((Recomendaciones) infoContenido).getAyuda());
+      Optional.ofNullable(((Recomendaciones) infoContenido).getUbicacion()).ifPresent(((Recomendaciones) contenido)::setUbicacion);
+      Optional.of(((Recomendaciones) infoContenido).getTelefono()).ifPresent(((Recomendaciones) contenido)::setTelefono);
+      Optional.ofNullable(((Recomendaciones) infoContenido).getHorarios()).ifPresent(((Recomendaciones) contenido)::setHorarios);
+      Optional.ofNullable(((Recomendaciones) infoContenido).getAyuda()).ifPresent(((Recomendaciones) contenido)::setAyuda);
+
     }
 
     TC contenidoActualizado = contenidoRepository.save(contenido);

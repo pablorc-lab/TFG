@@ -1,0 +1,37 @@
+
+/*? HEADER*/
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Nunito";
+  width: (100%-100px) ;
+  padding: 20px 40px;
+  background-color: #eddbc8;
+  box-shadow: 0 0 5px rgba(65, 65, 65, 0.4);
+}
+
+.header .header_logo {
+  width: 60px;
+  height: auto;
+}
+
+.header nav a{
+  filter: brightness(0.8);
+  font-weight: 500;
+  font-size: 21px;
+  color: #737373;
+  cursor: pointer;
+  margin: 0 15px;
+  padding: 0 5px;
+  text-decoration: none;
+  transition: border-bottom 0.1s ease-in-out;
+}
+.header nav a:last-child {margin-right: 0;}
+
+.header nav a:hover {
+  color: #0a7273;
+  filter: none;
+  margin-bottom: 0px;
+  border-bottom: 4px solid #0a7273;
+}

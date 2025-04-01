@@ -15,7 +15,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, esViajero = fal
         {showValue === 0 && <EditarMiCuenta addImageState={addImageState} setAddImageState={setAddImageState} />}
         {showValue === 1 && <EditarBiografia esViajero={esViajero}/>}
         {showValue === 2 && <EditarVivienda addImageState={addImageState} setAddImageState={setAddImageState} />}
-        {showValue === 3 && <EditarRecomendaciones />}
+        {showValue === 3 && <EditarRecomendaciones esViajero={esViajero} />}
 
         <div className={styles.modal_buttons}>
           <button onClick={() => setIsOpen(false)}>CANCELAR</button>

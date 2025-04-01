@@ -120,7 +120,7 @@ body:has(.dialog_container[open]) {
   text-align: center;
   color: #0a7273;
   border-bottom: 2px solid lightgray;
-  margin-bottom: 20px;
+ 
 }
 .dialog_container {
   padding-top: 20px;
@@ -136,6 +136,9 @@ body:has(.dialog_container[open]) {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
+.dialog_main {
+  margin-top: 20px;
+}
 .dialog_main::-webkit-scrollbar { width: 15px;}
 .dialog_main::-webkit-scrollbar-button { padding: 5px;}
 .dialog_main::-webkit-scrollbar-thumb {
@@ -197,7 +200,9 @@ body:has(.dialog_container[open]) {
     padding: 30px;
     width: 700px;
   }
-  .dialog_container h1 { font-size: 29px;}
+  .dialog_container h1 { 
+    font-size: 29px;
+  }
   .comentarios_section {
     padding-bottom: 35px;
   }

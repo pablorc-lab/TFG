@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 // Se mantiene con un import normal porque es la primera vista y se carga inmediatamente,
 import HomePage from './pages/inicio/home/HomePage';
 import ScrollToTop from './components/utilities/ScrollToTop';
+import InqProfilePage from './pages/anfitriones/inq_profiles/InqProfilePage';
 
 const AlojamientosPage = lazy(() => import("./pages/viajeros/alojamientos/AlojamientosPage"));
 const RegistrarUsuarioPage = lazy(() => import("./pages/registro_usuario/RegistrarUsuarioPage"));
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/anfitriones" element={<Navigate to="/anfitriones/inquilinos" />} />
           <Route path="/anfitriones/inquilinos" element={<InquilinosPage/>} />
           <Route path="/anfitriones/mi-cuenta" element={<MiCuenta esViajero={false}/>} />
+          <Route path="/anfitriones/perfil-viajero" element={<InqProfilePage/>} />
 
           {/* Rutas para REGISTRO o ACCESO*/}
           <Route path="/registro" element={<RegistrarUsuarioPage />} />

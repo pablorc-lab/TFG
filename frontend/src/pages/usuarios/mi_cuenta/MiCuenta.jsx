@@ -31,7 +31,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
     { src: "/images/usuarios/account/edit.svg", alt: "Datos personales", text: "Datos personales" },
     { src: "/images/usuarios/account/biografia.svg", alt: "Biografía", text: "Biografía" },
     { src: "/images/usuarios/account/house.svg", alt: "Vivienda", text: "Vivienda" },
-    { src: "/images/usuarios/account/recomendaciones.svg", alt: "Recomendaciones", text: "Recomendaciones" },
+    { src: "/images/usuarios/account/recomendaciones.svg", alt: "Recomendaciones", text: esViajero ? "Experiencias" : "Recomendaciones" },
     { src: "/images/usuarios/account/security.svg", alt: "Seguridad", text: "Seguridad" },
     { src: "/images/usuarios/account/star.svg", alt: "Opiniones", text: "Opiniones" },
     { src: "/images/usuarios/account/history.svg", alt: "Historial de reservas", text: "Historial de reservas" }
@@ -142,7 +142,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             {activeMenu === 0 && <PerfilMiCuenta showValue={0} />}
             {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} />}
             {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} />}
-            {activeMenu === 3 && <RecomendacionesMiCuenta />}
+            {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero}/>}
             {activeMenu === 4 && <SeguridadMiCuenta />}
             {activeMenu === 5 && <OpinionesMiCuenta />}
             {activeMenu === 6 && <HistorialReservasMiCuenta />}
