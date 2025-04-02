@@ -36,8 +36,15 @@
   font-size: 18px;
   padding: 9.6px 30px;
 }
-
-.btn_conectar:hover {  
+.conectado {
+  background-color: #ff5757;
+  border-color: #ff5757;
+  color: white;
+}
+.conectado:hover {
+  filter: brightness(0.8);
+}
+.btn_conectar:hover:not(.conectado) {  
   background: #009080; 
   color: white; 
 }

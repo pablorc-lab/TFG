@@ -51,7 +51,6 @@ export default function App() {
           <Route path="/admin-panel/:userType" element={<ListTablasPage />} />
           <Route path="/admin-panel/:userType/crear" element={<FormComponent />} />
           <Route path="/admin-panel/:userType/editar/:userID" element={<FormComponent />} />
-          
         </Routes>
       </Suspense>
     </BrowserRouter>

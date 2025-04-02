@@ -1,5 +1,5 @@
 .header {
-  padding: 22px;
+  padding: 30px 22px;
   background-color: rgb(32, 32, 32);
   font-family: "Nunito";
   width: calc(100% - 44px);  
@@ -10,7 +10,7 @@
   flex-wrap: wrap;
   justify-content: start;
   align-items: center;
-  column-gap: 50px;
+  column-gap: 30px;
   row-gap: 30px;
 }
 
@@ -22,6 +22,7 @@
   padding: 4px;
   font-weight: 600;
   letter-spacing: 2px;
+  padding: 5px 15px;
 }
 .header nav a:hover:not(.active){ 
   color: rgb(32, 32, 32);
@@ -29,6 +30,7 @@
   outline: 9px solid rgb(112, 112, 112);
   outline-offset: -1px; 
   border-radius: 25px;
+  border-color : transparent;
 }
 .header nav .active { 
   color: white;

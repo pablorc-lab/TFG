@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import{ useEffect, useState } from 'react'
 import AnfitrionService from '../../../services/users/AnfitrionService'
 import { Link } from 'react-router-dom';
 
@@ -7,16 +7,29 @@ export default function ListadoViviendas({styles}) {
 
   // Obtener las viviendas
   useEffect(() => {
+    // Obtener viviendas
+    listarViviendas();
+  }, []);
 
-    // Obtener anfitriones
+  const listarViviendas = () => (
     AnfitrionService.getAll().then(response => {
       // Obtener el id de cada anfitrion y su vivienda
       setViviendas(response.data
         .map(anfitrion => anfitrion.vivienda)
         .filter(vivienda => vivienda !== null)
       );
-    }).catch(error => console.error("Error al listar los usuarios : ", error));
-  }, []);
+    }).catch(error => console.error("Error al listar los usuarios : ", error))
+  );
+  
+  const deleteVivienda = (viviendaID) => {
+    let confirmacion = window.confirm(`¿Eliminar vivienda? con ID : ${viviendaID}`);
+
+    if (confirmacion) {
+      AnfitrionService.deleteVivienda(viviendaID)
+        .then(() => listarViviendas())
+        .catch(error => console.error(`Error al eliminar la vivienda con ID ${viviendaID} : `, error));
+    }
+  }
 
   return (
     <table>

@@ -2,7 +2,7 @@ import viaj_card_styles from "../../users_cards/UserCard.module.css"
 import ViajCard from "../../users_cards/ViajCard";
 import styles from "./ViajProfilesGallery.module.css"
 
-export default function ViajProfilesGallery({ viajeros }) {
+export default function ViajProfilesGallery({ viajeros, conectado = false}) {
   // Return : edad en años dada la fecha en estilo yyyy-mm-dd
   function calcularEdad(fechaNacimiento) {
     const hoy = new Date();
@@ -32,6 +32,7 @@ export default function ViajProfilesGallery({ viajeros }) {
             Profesion={viajero.profesion || "Profesional"}
             Descripcion={viajero.descripcion}
             Gustos_imgs={[viajero.gusto1, viajero.gusto2, viajero.gusto3].filter(gusto => gusto != null)}
+            conectado={conectado}
           />
         </article>
       ))}

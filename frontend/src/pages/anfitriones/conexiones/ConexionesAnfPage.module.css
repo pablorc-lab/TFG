@@ -1,0 +1,9 @@
+h1 {
+  font-family: "Nunito";
+  font-size: clamp(16px, 6vw, 43px);
+  color: #0a7273;
+  text-align: center;
+  margin: 80px 50px 30px 50px;
+  padding-bottom: 50px;
+  border-bottom: 2px solid gray;
+}

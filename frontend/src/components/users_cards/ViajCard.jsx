@@ -1,6 +1,25 @@
 import { Link } from "react-router-dom";
 
-export default function Inq_card({ styles, viaj_id, Perfil_img, Nombre = "-", Valoracion = "/", Num_viajes = "/", Edad = "/", Profesion = "-", Descripcion = "-", Gustos_imgs, enlace = true }) {
+// TODO : GESTIONAR EL LIKE Y ENVIARLO A LA BD
+export default function Inq_card({
+  styles,
+  viaj_id,
+  Perfil_img,
+  Nombre = "-",
+  Valoracion = "/",
+  Num_viajes = "/",
+  Edad = "/",
+  Profesion = "-",
+  Descripcion = "-",
+  Gustos_imgs,
+  enlace = true,
+  conectado = false,
+  anfitrion_id = null
+}) {
+
+  function handleLike(anfitrion_id) {
+    //TODO : CONECTADO : !CONECTADO
+  }
 
   return (
     <article className={`${styles.general_prof} ${styles.viaj_prof}`}>
@@ -46,9 +65,9 @@ export default function Inq_card({ styles, viaj_id, Perfil_img, Nombre = "-", Va
           <p>1 mes - 1 año</p>
         </article>
 
-        <Link to="/anfitriones/perfil-viajero" state={{ id: viaj_id }} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
-          <button className={styles.btn_conectar}>Conectar</button>
-        </Link>
+        <button className={`${styles.btn_conectar} ${conectado ? styles.conectado : ""}`} onClick={() => handleLike(anfitrion_id)}>
+          {!conectado ? "Conectar" : "Conectado"}
+        </button>
       </section>
     </article>
   );

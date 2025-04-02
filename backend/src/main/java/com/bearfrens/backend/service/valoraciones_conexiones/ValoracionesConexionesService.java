@@ -80,7 +80,7 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
       return ResponseEntity.badRequest().body("Los usuarios asociados debe existir");
     }
 
-    // Comprobar si ya existe un like dado por el usuario Emisor
+    // Comprobar si ya existe un like/valoracion dado por el usuario Emisor
     int tipo_receptor = gestorUsuarioService.intTipoUsuario(tipo_usuario) == 1 ? 2 : 1;// Almacenar el tipo del RECEPTOR no del emisor
     if(repository.findByEmisorIDAndUsuarioIDAndTipoUsuario(usuarioID, receptorID, tipo_receptor).isPresent()){
       return ResponseEntity.badRequest().body("Ya se ha dado like/valoración al receptor con id = " + receptorID);

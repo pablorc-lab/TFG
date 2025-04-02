@@ -24,6 +24,12 @@ public class LikesController{
   private final LikesService likesService;
   private final LikesRepository likesRepository;
 
+  // Obtener todos los likes existentes
+  @GetMapping("/likes")
+  public List<Likes> obtenerListaLikesTodos(){
+    return likesRepository.findAll();
+  }
+
   // Obtener la lista de likes dados por un usuario
   @GetMapping("/{tipo_usuario}/{usuarioID}/likes/enviados")
   public List<Likes> obtenerListaLikes(@PathVariable String tipo_usuario, @PathVariable Long usuarioID){
@@ -33,7 +39,6 @@ public class LikesController{
   // Crear un like de un usuario a otro
   @PostMapping("/{tipo_usuario}/{usuarioID}/likes/{receptorID}")
   public ResponseEntity<?> crearLike(@PathVariable String tipo_usuario, @PathVariable Long usuarioID, @PathVariable Long receptorID) {
-
     return likesService.crearValoracionesConexiones(tipo_usuario, usuarioID, receptorID, new Likes());
   }
 
@@ -67,11 +72,12 @@ public class LikesController{
     // Eliminar el like y su match asociado
     likesRepository.delete(like.get());
 
-    Matches match = matchesRepository.findByAnfitrionIDAndViajeroID(
+    Optional<Matches> match = matchesRepository.findByAnfitrionIDAndViajeroID(
       tipo_receptor == 2 ? receptorID : usuarioID,
       tipo_receptor == 2 ? usuarioID : receptorID
     );
-    matchesRepository.delete(match);
+
+    match.ifPresent(matchesRepository::delete);
 
     return ResponseEntity.ok(Collections.singletonMap("deleted", true));
   }
