@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import LikesService from "../../services/matches/LikesService";
 
-// TODO : GESTIONAR EL LIKE Y ENVIARLO A LA BD
 export default function Inq_card({
   styles,
-  viaj_id,
+  viaj_ID,
   Perfil_img,
   Nombre = "-",
   Valoracion = "/",
@@ -14,17 +15,20 @@ export default function Inq_card({
   Gustos_imgs,
   enlace = true,
   conectado = false,
-  anfitrion_id = null
+  anfitrion_ID = null
 }) {
 
-  function handleLike(anfitrion_id) {
-    //TODO : CONECTADO : !CONECTADO
+  const [changeConectado, setChangeConectado] = useState(conectado);
+
+  function handleLike(anfitrion_ID) {
+    setChangeConectado(true);
+    LikesService.crearLike("anfitriones", anfitrion_ID, viaj_ID);
   }
 
   return (
     <article className={`${styles.general_prof} ${styles.viaj_prof}`}>
       <div className={styles.personal_info}>
-        <Link to="/anfitriones/perfil-viajero" state={{ id: viaj_id }} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
+        <Link to="/anfitriones/perfil-viajero" state={{ id: viaj_ID }} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
           <img className={`${styles.profile_img} ${styles.viaj_img}`} src={Perfil_img} alt="Imagen viajero" width={250} />
         </Link>
         <div className={styles.text_column_viaj}>
@@ -65,8 +69,11 @@ export default function Inq_card({
           <p>1 mes - 1 año</p>
         </article>
 
-        <button className={`${styles.btn_conectar} ${conectado ? styles.conectado : ""}`} onClick={() => handleLike(anfitrion_id)}>
-          {!conectado ? "Conectar" : "Conectado"}
+        <button
+          className={`${styles.btn_conectar} ${changeConectado ? styles.conectado : ""}`}
+          onClick={() => !conectado && handleLike(anfitrion_ID)}
+        >
+          {!changeConectado ? "Conectar" : "Favorito"}
         </button>
       </section>
     </article>

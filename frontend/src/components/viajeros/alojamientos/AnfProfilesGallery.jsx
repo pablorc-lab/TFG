@@ -2,8 +2,14 @@ import AnfCard from '../../users_cards/AnfCard';
 import anf_card_styles from "../../users_cards/UserCard.module.css";
 import styles from "./AnfProfilesGallery.module.css";
 
-export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecificos, buscarUsuario }) {
+export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecificos = [], buscarUsuario = false, match = false, conectados_ID = [] }) {
   const listaAnfitriones = buscarUsuario ? anfitrionesEspecificos : anfitriones;
+
+  // Comprueba si se dio like
+  function likeDado(AnfitrionID) {
+    let contiene_id = conectados_ID.length > 0 && conectados_ID.some(id => id === AnfitrionID);
+    return contiene_id || match;
+  }
 
   return (
     <section className={styles.card_users_container}>
@@ -21,6 +27,8 @@ export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecific
               Ubicacion={`${anfitrion.vivienda?.ciudad || ""}, ${anfitrion.vivienda?.provincia || ""}`}
               Precio={anfitrion.vivienda?.precio_noche || "-"}
               Descripcion={anfitrion.descripcion || "Este anfitrión aún no se ha descrito."}
+              conectado={likeDado(anfitrion.id)}
+              viajero_ID={1}
             />
           </div>
         ))}

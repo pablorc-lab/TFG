@@ -34,7 +34,7 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
         <nav className={styles.search_nav}>
           <Link to="/viajeros/alojamientos" className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>Grupos</Link>
           <Link to="/viajeros/alojamientos" className={getClassName('alojamientos')} onClick={() => setActiveSection("alojamientos")}> Alojamientos </Link>
-          <Link to="/viajeros/alojamientos" className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>Conexiones</Link>
+          <Link to="/viajeros/conexiones" className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>Conexiones</Link>
 
         </nav>
 

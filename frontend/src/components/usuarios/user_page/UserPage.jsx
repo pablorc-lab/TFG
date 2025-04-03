@@ -110,7 +110,6 @@ export default function UserPage({ usuarioData, valoraciones, Gustos_imgs, idiom
 
   return (
     <>
-      <title>Perfil anfitrion | Viajeros</title>
       <main className={styles.main}>
         {isColumns ? (
           <>

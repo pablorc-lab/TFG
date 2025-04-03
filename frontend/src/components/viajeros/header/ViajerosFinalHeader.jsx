@@ -5,11 +5,11 @@ import ViajerosHeader from './ViajerosHeader';
 import ViajerosMobileHeader from './ViajerosMobileHeader';
 import AnfitrionService from '../../../services/users/AnfitrionService';
 
-export default function ViajerosFinalHeader({ buscarUsuario, setBuscarUsuario, setAnfitrionesEspecificos,}) {
+export default function ViajerosFinalHeader({ defaultActive = "alojamientos", buscarUsuario = false, setBuscarUsuario = null, setAnfitrionesEspecificos = []}) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const inputRef = useRef(null);
   const filteredListRef = useRef(null);
-  const [activeSection, setActiveSection] = useState("alojamientos");
+  const [activeSection, setActiveSection] = useState(defaultActive);
   const [realizarBusqueda, setRealizarBusqueda] = useState(false);
   const [headerStates, setHeaderStates] = useState({
     locationFocus: false,
@@ -43,7 +43,7 @@ export default function ViajerosFinalHeader({ buscarUsuario, setBuscarUsuario, s
 
   // Realizar busuqeda de usuario
   useEffect(() => {
-    if(headerStates.location.length === 0) {
+    if(headerStates.location.length === 0 && setBuscarUsuario != null) {
       setBuscarUsuario(false);
       setAnfitrionesEspecificos([]);
     }

@@ -1,6 +1,30 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import LikesService from "../../services/matches/LikesService";
 
-export default function Anf_card({ styles, anf_id, Casa_img, Perfil_img, Nombre = "-", Gustos_imgs, Valoracion = "/", Ubicacion = "-", Precio = "-", Descripcion = "-", enlace = true }) {
+export default function Anf_card({
+  styles,
+  anf_id,
+  Casa_img,
+  Perfil_img,
+  Nombre = "-",
+  Gustos_imgs,
+  Valoracion = "/",
+  Ubicacion = "-",
+  Precio = "-",
+  Descripcion = "-",
+  enlace = true,
+  conectado = false,
+  viajero_ID = null
+
+}) {
+
+  const [changeConectado, setChangeConectado] = useState(conectado);
+
+  function handleLike(viajero_ID) {
+    setChangeConectado(true);
+    LikesService.crearLike("viajeros", viajero_ID, anf_id);
+  }
 
   return (
     <article className={styles.general_prof}>
@@ -50,9 +74,12 @@ export default function Anf_card({ styles, anf_id, Casa_img, Perfil_img, Nombre 
         <p className={styles.description}>{Descripcion}</p>
 
         {/* Parte inferior (Conectar) */}
-        <Link to="/viajeros/perfil-anfitrion" state={{ id: anf_id }} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
-        <button className={styles.btn_conectar}>Conectar</button>
-        </Link>
+        <button
+          className={`${styles.btn_conectar} ${changeConectado ? styles.conectado : ""}`}
+          onClick={() => !conectado && handleLike(viajero_ID)}
+        >
+          {!changeConectado ? "Conectar" : "Favorito"}
+        </button>
       </div>
     </article>
   );

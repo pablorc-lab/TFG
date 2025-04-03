@@ -51,6 +51,9 @@ export default function InqProfilePage() {
 
   return (
     <>
+      <title>Perfil viajero | Anfitriones</title>
+
+
       {/* CABECERA */}
       <header className={styles.header}>
         <img className={styles.header_logo} src="/images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />
@@ -70,7 +73,7 @@ export default function InqProfilePage() {
           )}
         </nav>
       </header>
-      {isMobile && <AnfitrionMobileHeader activeSection=""/>}
+      {isMobile && <AnfitrionMobileHeader activeSection="" />}
 
       <UserPage
         usuarioData={viajeroInfo}
@@ -81,7 +84,7 @@ export default function InqProfilePage() {
         recomendaciones={viajeroInfo.usuario?.experiencias}
         esAnfitrion={false}
       />
-      
+
       <Footer />
     </>
   )

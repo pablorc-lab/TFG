@@ -12,8 +12,17 @@ class LikesService {
     return axios.get(`${this.LIKES_BASE_REST_API_URL}/likes`, { auth: this.auth });
   }
   
+  static getAllEnviados(tipoUsuario, emisorID){
+    return axios.get(`${this.LIKES_BASE_REST_API_URL}/${tipoUsuario}/${emisorID}/likes/enviados`, { auth: this.auth });
+  }
+
   static crearLike(tipoUsuario, emisorID, usuarioID){
-    return axios.post(`${this.LIKES_BASE_REST_API_URL}/${tipoUsuario}/${emisorID}/${usuarioID}`, { auth: this.auth });
+    return axios.post(`${this.LIKES_BASE_REST_API_URL}/${tipoUsuario}/${emisorID}/likes/${usuarioID}`, { auth: this.auth });
+  }
+
+  // tipoUsuario es el tipo que ha dado like al usuarioID, es decir enviar el contrario al almacenado
+  static deleteLike(tipoUsuario, emisorID, usuarioID){
+    return axios.delete(`${this.LIKES_BASE_REST_API_URL}/${tipoUsuario}/${emisorID}/likes/${usuarioID}`, { auth: this.auth });
   }
 }
 

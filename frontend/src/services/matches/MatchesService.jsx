@@ -12,13 +12,18 @@ class MatchesService {
     return axios.get(`${this.MATCHES_BASE_REST_API_URL}`, { auth: this.auth });
   }
 
-  static eliminarMatch(matchID){
+  static deleteMatch(matchID){
     return axios.delete(`${this.MATCHES_BASE_REST_API_URL}/eliminar/${matchID}`, { auth: this.auth });
   }
 
   static getAllViajeros(anfitrionID){
     return axios.get(`${this.MATCHES_BASE_REST_API_URL}/anfitrion/${anfitrionID}`, { auth: this.auth });
   }
+
+  static getAllAnfitriones(viajeroID){
+    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/viajero/${viajeroID}`, { auth: this.auth });
+  }
+
 }
 
 export default MatchesService;

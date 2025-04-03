@@ -8,6 +8,7 @@ import ScrollToTop from './components/utilities/ScrollToTop';
 
 const InqProfilePage = lazy(() => import("./pages/anfitriones/inq_profiles/InqProfilePage"));
 const ConexionesAnfPage = lazy(() => import("./pages/anfitriones/conexiones/ConexionesAnfPage"));
+const ConexionesViajPage = lazy(() => import("./pages/viajeros/conexiones/ConexionesViajPage"));
 const AlojamientosPage = lazy(() => import("./pages/viajeros/alojamientos/AlojamientosPage"));
 const RegistrarUsuarioPage = lazy(() => import("./pages/registro_usuario/RegistrarUsuarioPage"));
 const InicioSesionPage = lazy(() => import("./pages/registro_usuario/InicioSesionPage"));
@@ -32,6 +33,7 @@ export default function App() {
           {/* Rutas para VIAJEROS*/}
           <Route path="/viajeros" element={<Navigate to="/viajeros/alojamientos" />} />
           <Route path="/viajeros/alojamientos" element={<AlojamientosPage/>} />
+          <Route path="/viajeros/conexiones" element={<ConexionesViajPage/>} />
           <Route path="/viajeros/mi-cuenta" element={<MiCuenta/>} />
           <Route path="/viajeros/perfil-anfitrion" element={<AnfProfilePage/>} />
 

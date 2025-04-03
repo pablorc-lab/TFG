@@ -1,23 +1,23 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import AnfitrionFinalHeader from "../../../components/anfitriones/header/AnfitrionFinalHeader"
-const ViajProfilesGallery = lazy(() => import("../../../components/anfitriones/inquilinos/ViajProfilesGallery"));
 import MatchesService from "../../../services/matches/MatchesService";
+import ViajerosFinalHeader from "../../../components/viajeros/header/ViajerosFinalHeader";
+import Anf_Profiles_Gallery from "../../../components/viajeros/alojamientos/AnfProfilesGallery";
 
-const ConexionesAnfPage = () => {
-  const [viajeros, setViajeros] = useState([]);
+const ConexionesViajPage = () => {
+  const [anfitriones, setAnfitriones] = useState([]);
 
   // Cargar viajeros
   useEffect(() => {
-    MatchesService.getAllViajeros(1).then(response => setViajeros(response.data))
+    MatchesService.getAllAnfitriones(1).then(response => setAnfitriones(response.data))
       .catch(error => "Error al listar los viajeros " + error);
   }, [])
 
   return (
     <>
-      <title>Conexiones con Viajeros</title>
+      <title>Conexiones con Anfitriones</title>
 
       {/* CABECERA */}
-      <AnfitrionFinalHeader activeSectionDefecto={"conexiones"} />
+      {<ViajerosFinalHeader defaultActive={"conexiones"}/>}
 
       <h1 style={{
         fontFamily: "Nunito",
@@ -28,15 +28,15 @@ const ConexionesAnfPage = () => {
         paddingBottom: "50px",
         borderBottom: "2px solid rgb(160, 160, 160)"
       }}>
-        {viajeros.length} conexiones establecidas
+        {anfitriones.length} conexiones establecidas
       </h1>
 
-      {/* PERFILES DE VIAJEROS  */}
+{/* PERFILES DE VIAJEROS  */}
       <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "300px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
-        <ViajProfilesGallery viajeros={viajeros} match={true} />
+        <Anf_Profiles_Gallery anfitriones={anfitriones} match={true}/>
       </Suspense>
     </>
   )
 }
 
-export default ConexionesAnfPage;
+export default ConexionesViajPage;

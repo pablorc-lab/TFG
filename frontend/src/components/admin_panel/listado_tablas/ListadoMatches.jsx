@@ -21,7 +21,7 @@ export default function ListadoMatches({styles}) {
     let confirmacion = window.confirm(`¿Eliminar match? con ID : ${matchID}`);
 
     if (confirmacion) {
-      AnfitrionService.deleteMatch(matchID)
+      MatchesService.deleteMatch(matchID)
         .then(() => listarMatchs())
         .catch(error => console.error(`Error al eliminar el match con ID ${matchID} : `, error));
     }

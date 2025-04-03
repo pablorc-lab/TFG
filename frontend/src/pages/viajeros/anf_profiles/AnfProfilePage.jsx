@@ -72,6 +72,9 @@ export default function AnfProfilePage() {
 
   return (
     <>
+      <title>Perfil anfitrion | Viajeros</title>
+
+
       {/* CABECERA */}
       <header className={styles.header}>
         <img className={styles.header_logo} src="/images/logos/logo_verde.png" alt="Logo Bearfrens" width="150" />

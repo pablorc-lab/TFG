@@ -37,13 +37,12 @@
   padding: 9.6px 30px;
 }
 .conectado {
+  cursor: default;
   background-color: #ff5757;
   border-color: #ff5757;
   color: white;
 }
-.conectado:hover {
-  filter: brightness(0.8);
-}
+
 .btn_conectar:hover:not(.conectado) {  
   background: #009080; 
   color: white; 
@@ -157,9 +156,11 @@
 .description {
   color: #737373;
   font-size: 15.36px;
-  margin: 7.68px 0 11.52px;
+  margin: 4px 0 15px;
 }
-
+.viaj_prof .description {
+  font-size: 17.5px;
+}
 .text_column_viaj p {
   margin: 0;
   font-family: "Nunito";
