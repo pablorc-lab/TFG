@@ -13,32 +13,41 @@ export default function AnfitrionMobileHeader({ activeSection, setActiveSection 
       {/*Cabecera*/}
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
+          <Link>
+            <div className={getClassName('grupos')} onClick={() => setActiveSection("grupos")}>
+              <img src="/images/viajeros/comunidades_header.webp" width="50" alt='icono comunidades' />
+              <span>Grupos</span>
+            </div>
+          </Link>
+
           <Link to="/anfitriones/inquilinos">
             <div className={getClassName('inquilinos')} onClick={() => setActiveSection("inquilinos")}>
               <img src="/images/viajeros/inquilinos.svg" width="50" alt='icono inquilinos' />
               <span>Inquilinos</span>
             </div>
           </Link>
-
-          <Link>
-            <div className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>
-              <img src="/images/viajeros/comunidades_header.webp" width="50" alt='icono comunidades' />
-              <span>Comunidades</span>
+          <Link to="/anfitriones/conexiones">
+            <div className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>
+              <img src="/images/viajeros/conexiones.svg" width="50" alt='icono conexiones' />
+              <span>Conexiones</span>
             </div>
           </Link>
-
           <Link to="/anfitriones/mi-cuenta">
-            <img
-              className={getClassName('perfil')}
-              src="/images/viajeros/user_header.webp"
-              width="55"
-              alt='icono user'
-              onClick={() => setActiveSection("perfil")}
-            />
-          </Link>
-
+          <img
+            className={getClassName('perfil')}
+            src="/images/viajeros/user_header.webp"
+            width="55"
+            alt='icono user'
+            onClick={() => setActiveSection("perfil")}
+          />
+        </Link>
         </nav>
       </header>
+
+      {/*Sección del usuario*/}
+        <div className={styles_mobile.conectado_container}>
+          <img src="/images/usuarios/heart_green.svg" className={styles_mobile.conectado} />
+        </div>
     </>
   )
 }

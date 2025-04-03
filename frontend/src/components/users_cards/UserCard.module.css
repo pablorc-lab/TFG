@@ -21,10 +21,11 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: 11.52px;
+  margin-bottom: 15px;
 }
 
 .btn_conectar {
+  user-select: none;
   font-family: "Nunito";
   font-weight: 800;
   background: white;
@@ -33,19 +34,33 @@
   transition: background-color 0.2s;
   border-radius: 50px; 
   border: 2px solid #009080;
-  font-size: 18px;
-  padding: 9.6px 30px;
-}
-.conectado {
-  cursor: default;
-  background-color: #ff5757;
-  border-color: #ff5757;
-  color: white;
+  font-size: 20px;
+  padding: 10px 31px;
 }
 
 .btn_conectar:hover:not(.conectado) {  
   background: #009080; 
   color: white; 
+}
+
+.conectado {
+  user-select: none;
+  border-radius: 50px; 
+  padding: 10px 60px;
+  width: 160px;
+  cursor: default;
+  background-color: #ff5757;
+  border-color: #ff5757;
+  color: white;
+}
+.conectado  {
+  width: 30px;
+  aspect-ratio: 1 / 1;
+}
+.anf_conectado {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
 }
 
 .house {
@@ -80,7 +95,11 @@
   user-select: none;
   width: 96px;
 }
-
+.profile_img:hover{
+  filter: brightness(0.95);
+  box-shadow: 0 0 10px #009080;
+  outline: 2px solid #009080;
+}
 .anf_name {
   flex-grow: 1;
   border-bottom: 1px solid #d0dbd9;
@@ -313,4 +332,6 @@
     width: 140px; 
     height: 20px; 
   }
+
+  .anf_conectado {padding-bottom: 20px;}
 }

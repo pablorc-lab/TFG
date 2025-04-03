@@ -24,8 +24,8 @@ const ConexionesViajPage = () => {
         fontSize: "clamp(16px, 6vw, 43px)",
         color: "#0a7273",
         textAlign: "center",
-        margin: "80px 50px 30px 50px",
-        paddingBottom: "50px",
+        margin: "clamp(30px,10vw,80px) 50px 10px 50px",
+        paddingBottom: "clamp(30px,8vw,50px)",
         borderBottom: "2px solid rgb(160, 160, 160)"
       }}>
         {anfitriones.length} conexiones establecidas

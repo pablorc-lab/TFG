@@ -69,12 +69,13 @@ export default function Inq_card({
           <p>1 mes - 1 año</p>
         </article>
 
-        <button
-          className={`${styles.btn_conectar} ${changeConectado ? styles.conectado : ""}`}
-          onClick={() => !conectado && handleLike(anfitrion_ID)}
-        >
-          {!changeConectado ? "Conectar" : "Favorito"}
-        </button>
+        {!changeConectado ? (
+          <button className={styles.btn_conectar} onClick={() => !conectado && handleLike(anfitrion_ID)}>
+            Conectar
+          </button>
+        ) : (
+          <img src="/images/usuarios/heart.svg" className={styles.conectado} />
+        )}
       </section>
     </article>
   );

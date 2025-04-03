@@ -24,7 +24,7 @@ const ConexionesAnfPage = () => {
         fontSize: "clamp(16px, 6vw, 43px)",
         color: "#0a7273",
         textAlign: "center",
-        margin: "80px 50px 30px 50px",
+        margin: "80px 50px 10px 50px",
         paddingBottom: "50px",
         borderBottom: "2px solid rgb(160, 160, 160)"
       }}>

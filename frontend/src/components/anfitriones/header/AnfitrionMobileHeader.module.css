@@ -2,7 +2,6 @@
 /*?      HEADER
 /*? ===================*/
 .header {
-  height: 65px;
   user-select: none;
   width: 100%;
   font-family: "Nunito";
@@ -17,8 +16,7 @@
 .search_nav {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 65px;
+  justify-content: space-evenly;
 }
 
 .search_nav img {
@@ -44,4 +42,29 @@
 }
 .active_section, .active_section img {
   filter: none !important; /* Forzar la eliminación del filtro */
+}
+
+
+/* Seccion posterior del usuario*/
+.conectado_container {
+  cursor: pointer;
+  position: fixed;
+  background-color: #eddbc8;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  top: 15px;
+  left: 15px;
+  z-index: 999;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.conectado {
+  width: 35px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+.conectado_container:hover{
+  filter: brightness(0.85);
+  background-color: rgb(220, 255, 233);
 }

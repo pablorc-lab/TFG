@@ -32,6 +32,13 @@ export default function ViajerosMobileHeader({ inputRef = null, filteredListRef 
             </div>
           </Link>
 
+          <Link to="/viajeros/conexiones">
+            <div className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>
+              <img src="/images/viajeros/conexiones.svg" width="50" alt='icono conexiones' />
+              <span>Conexiones</span>
+            </div>
+          </Link>
+
           <Link to="/viajeros/mi-cuenta">
             <img
               className={getClassName('perfil')}

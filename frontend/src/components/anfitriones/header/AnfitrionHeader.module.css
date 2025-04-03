@@ -89,6 +89,28 @@
 }
 
 /*? PARTE DEL USUARIO*/
+.user_section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.conectado_container {
+  position: relative;
+  display: flex;
+}
+.conectado {
+  cursor: pointer;
+  width: 35px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+.conectado:hover{
+  filter: brightness(0.85);
+  background-color: rgb(220, 255, 233);
+  outline: 10px solid rgb(220, 255, 233);
+  outline-offset: -1px;
+}
 .header_user_section { 
   position: relative;}
 

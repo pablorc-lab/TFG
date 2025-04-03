@@ -6,7 +6,7 @@ import DropDownMenu from "../../dropdown_menu/DropDownMenu";
 
 export default function AnfitrionHeader({ activeSection, setActiveSection, menuLinks }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [showHeaderNav, setShowHeaderNav] = useState(window.innerWidth > 1000);
+  const [showHeaderNav, setShowHeaderNav] = useState(window.innerWidth > 1050);
   const userRef = useRef(null);
 
   // Añadimos al menu de anfitriones los nuevos de navegación para escritorio
@@ -22,7 +22,7 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
   }
 
   useEffect(() => {
-    const handleResize = () => setShowHeaderNav(window.innerWidth > 1000);
+    const handleResize = () => setShowHeaderNav(window.innerWidth > 1050);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [showHeaderNav]);
@@ -47,25 +47,35 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
         </section>
       )}
 
-      <section className={styles.header_user_section}>
-        <button className={`${styles.header_prof_user}  ${isMenuOpen && styles.open}`} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
-          <img src="/images/logos/logo_usuario_blanco.png" width="40" alt="logo user vacio" />
-          <article>
-            <div></div>
-            <div></div>
-            <div></div>
-          </article>
-        </button>
-        {isMenuOpen && (
-          <DropDownMenu
-            userRef={userRef}
-            setMenuOpen={setMenuOpen}
-            menuLinks={anfMenuLinks}
-            visibleWidth={1000}
-            activeSection={activeSection}
-          />
-        )}
+      <section className={styles.user_section}>
+        <div className={styles.conectado_container}>
+        <img src="/images/usuarios/heart_green.svg" className={styles.conectado}/>
+        
+        </div>
+
+        <div className={styles.header_user_section}>
+          <button className={`${styles.header_prof_user}  ${isMenuOpen && styles.open}`} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
+            <img src="/images/logos/logo_usuario_blanco.png" width="40" alt="logo user vacio" />
+            <article>
+              <div></div>
+              <div></div>
+              <div></div>
+            </article>
+          </button>
+          {isMenuOpen && (
+            <DropDownMenu
+              userRef={userRef}
+              setMenuOpen={setMenuOpen}
+              menuLinks={anfMenuLinks}
+              visibleWidth={1050}
+              activeSection={activeSection}
+            />
+          )}
+        </div>
       </section>
+
+
+
     </header>
   )
 }

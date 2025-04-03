@@ -74,12 +74,15 @@ export default function Anf_card({
         <p className={styles.description}>{Descripcion}</p>
 
         {/* Parte inferior (Conectar) */}
-        <button
-          className={`${styles.btn_conectar} ${changeConectado ? styles.conectado : ""}`}
-          onClick={() => !conectado && handleLike(viajero_ID)}
-        >
-          {!changeConectado ? "Conectar" : "Favorito"}
-        </button>
+        {!changeConectado ? (
+          <button className={styles.btn_conectar} onClick={() => !conectado && handleLike(anfitrion_ID)}>
+            Conectar
+          </button>
+        ) : (
+          <div className={styles.anf_conectado}>
+            <img src="/images/usuarios/heart.svg" className={styles.conectado} />
+          </div>
+        )}
       </div>
     </article>
   );
