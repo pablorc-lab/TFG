@@ -2,9 +2,8 @@ import { useRef, useState } from 'react';
 import styles from "./ViajerosHeader.module.css"
 import { Link } from "react-router-dom";
 import DropDownMenu from '../../dropdown_menu/DropDownMenu';
-import FilteredList from '../../utilities/filteresCities/FilteredList';
 
-export default function ViajerosHeader({ inputRef, filteredListRef, headerStates, updateHeaderStates, activeSection, setActiveSection, setRealizarBusqueda}) {
+export default function ViajerosHeader({ inputRef, filteredListRef, FilteredList, setOpenFilterMenu, headerStates, updateHeaderStates, activeSection, setActiveSection, setRealizarBusqueda}) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const userRef = useRef(null);
@@ -62,7 +61,7 @@ export default function ViajerosHeader({ inputRef, filteredListRef, headerStates
             {headerStates.locationFocus && headerStates.location && <FilteredList filteredListRef={filteredListRef} listStates={headerStates} updateListStates={updateHeaderStates} />}
           </form>
 
-          <div className={styles.filters}>
+          <div className={styles.filters} onClick={() => setOpenFilterMenu(true)}>
             <img src="/images/viajeros/filtros.webp" width="50" alt="icono filtro" />
             <span>Filtros</span>
           </div>

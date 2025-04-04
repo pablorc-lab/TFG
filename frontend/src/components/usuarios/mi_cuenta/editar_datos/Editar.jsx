@@ -13,16 +13,15 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, esViajero = fal
       <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
         {/* Editar datos de "Mi cuenta" , "Biografía" o "Vivienda"*/}
         {showValue === 0 && <EditarMiCuenta addImageState={addImageState} setAddImageState={setAddImageState} />}
-        {showValue === 1 && <EditarBiografia esViajero={esViajero}/>}
+        {showValue === 1 && <EditarBiografia esViajero={esViajero} />}
         {showValue === 2 && <EditarVivienda addImageState={addImageState} setAddImageState={setAddImageState} />}
         {showValue === 3 && <EditarRecomendaciones esViajero={esViajero} />}
-
-        <div className={styles.modal_buttons}>
-          <button onClick={() => setIsOpen(false)}>CANCELAR</button>
-          <button onClick={() => setIsOpen(false)}>GUARDAR</button>
-        </div>
       </Suspense>
 
-    </dialog>
+      <div className={styles.modal_buttons}>
+        <button onClick={() => setIsOpen(false)}>CANCELAR</button>
+        <button onClick={() => setIsOpen(false)}>GUARDAR</button>
+      </div>
+    </dialog >
   );
 }

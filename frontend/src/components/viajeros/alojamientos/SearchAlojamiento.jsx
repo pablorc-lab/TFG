@@ -1,8 +1,7 @@
 import styles_mobile from "./SearchAlojamiento.module.css";
-import FilteredList from '../../utilities/filteresCities/FilteredList';
 import { useState } from "react";
 
-export default function SearchAlojamiento({inputRef, filteredListRef, headerStates, updateHeaderStates}) {
+export default function SearchAlojamiento({inputRef, filteredListRef, FilteredList, headerStates, updateHeaderStates}) {
   const [username, setUsername] = useState("");
 
   // Cada vez que se reenderiza el componente, se crean los arrays de los JSON

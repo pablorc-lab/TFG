@@ -21,20 +21,25 @@ body:has(.modal[open]) {
 
 .modal:focus { outline: none;}
 .modal {
+  overflow: none;
   pointer-events: none;
   user-select: none;
   border: none;
   border-radius: 5px;
-  padding: 20px 30px;
+  padding: 20px 0px;
+  padding-left: 30px;
   background: white;
   max-height: 90vh;
-  overflow-y: auto;
   width: 80%;
   pointer-events: auto;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   animation: aparecer 0.25s ease-in-out forwards;
 }
 
+.main {
+  overflow-y: auto;
+  height: calc(90vh - 55px - 100px);
+}
 @keyframes aparecer {
   0% {opacity: 0; transform: translateY(-120px);}
   100% {opacity: 1; transform: translateY(0px);}
@@ -52,6 +57,7 @@ body:has(.modal[open]) {
 
 .modal h2, .modal_sections h3, .input_div p  {margin: 0;}
 .modal h2 {
+  margin-right: 30px;
   text-align: center;
   color: #0a7273;
   margin-bottom: 10px;
@@ -60,7 +66,7 @@ body:has(.modal[open]) {
 /*? SECCIONES DE EDICIÓN*/
 .modal_sections{ 
   padding: 20px 0 40px 0;
-  width: 100%;
+  width: calc(100% - 20px);
 }
 .modal_sections:nth-last-of-type(1), .modal_sections:nth-last-of-type(2) {
   border-top: 2px solid lightgray;
@@ -83,11 +89,12 @@ body:has(.modal[open]) {
   flex: 1;
 }
 .input_MiCuenta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   gap: 25px 15px;
 }
+.input_MiCuenta div {width: fit-content;}
 .input_MiCuenta_contacto {
   display: grid;
   gap: 25px;
@@ -166,6 +173,10 @@ body:has(.modal[open]) {
 }
 
 /*? IMÁGENES DE LOS GUSTOS*/
+.gusto_image {
+  max-width: px;
+  aspect-ratio: 1 / 1;
+}
 .input_MiCuenta_gustos {
   margin-top: 20px;
   display: flex;
@@ -187,11 +198,12 @@ body:has(.modal[open]) {
 }
 
 .gusto_active {
+  cursor: pointer;
   outline: 2px solid #0a7273;
   background-color: #0a717318;
 }
 
-.gusto_active:hover {
+.gusto_delete:hover {
   background-color: #d12e2e1c;
   outline: 2px solid #d12e2e;
 }
@@ -334,6 +346,7 @@ body:has(.modal[open]) {
 
 .modal_buttons {
   margin-top: 20px;
+  margin-right: 30px;
   display: flex;
   align-items: center;
   justify-content: end;
