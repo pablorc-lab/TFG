@@ -10,7 +10,19 @@ import FilterMenu from '../filter_menu/FilterMenu';
 export default function ViajerosFinalHeader({ defaultActive = "alojamientos", buscarUsuario = false, setBuscarUsuario = null, setAnfitrionesEspecificos = [], filtrado = false}) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const inputRef = useRef(null);
+
   const filteredListRef = useRef(null);
+  const [filterOptions, setFilterOptions] = useState({
+    gustos: [],
+    max: 0,
+    min: 120,
+    viajeros : -1,
+    habitaciones : -1,
+    camas : -1,
+    banios : -1,
+    idiomas : [],
+  });
+  console.log(filterOptions);
 
   const [openFilterMenu, setOpenFilterMenu] = useState(null)
 
@@ -100,6 +112,7 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
             inputRef={inputRef} 
             filteredListRef={filteredListRef} 
             FilteredList={FilteredList}
+            setOpenFilterMenu={setOpenFilterMenu}
             headerStates={headerStates} 
             updateHeaderStates={updateHeaderStates} 
             activeSection={activeSection}
@@ -111,7 +124,12 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
       }
 
       {/* Abrir menú de filtrado*/}
-      {openFilterMenu && <FilterMenu setOpenFilterMenu={setOpenFilterMenu}/>}
+      {openFilterMenu && 
+        <FilterMenu 
+          setOpenFilterMenu={setOpenFilterMenu} 
+          filterOptions={filterOptions}
+          setFilterOptions={setFilterOptions}
+        />}
     </>
   );
 }

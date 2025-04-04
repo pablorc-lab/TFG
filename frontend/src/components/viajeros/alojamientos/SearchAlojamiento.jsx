@@ -1,7 +1,7 @@
 import styles_mobile from "./SearchAlojamiento.module.css";
 import { useState } from "react";
 
-export default function SearchAlojamiento({inputRef, filteredListRef, FilteredList, headerStates, updateHeaderStates}) {
+export default function SearchAlojamiento({ inputRef, filteredListRef, FilteredList, setOpenFilterMenu, headerStates, updateHeaderStates }) {
   const [username, setUsername] = useState("");
 
   // Cada vez que se reenderiza el componente, se crean los arrays de los JSON
@@ -56,7 +56,13 @@ export default function SearchAlojamiento({inputRef, filteredListRef, FilteredLi
         </div>
       </form>
 
-      <img className={styles_mobile.filters} src="/images/viajeros/filtros.webp" width="50" alt='icono filtros' />
+      <img
+        className={styles_mobile.filters}
+        src="/images/viajeros/filtros.webp"
+        onClick={() => setOpenFilterMenu(true)}
+        width="50"
+        alt='icono filtros'
+      />
     </article>
   )
 }

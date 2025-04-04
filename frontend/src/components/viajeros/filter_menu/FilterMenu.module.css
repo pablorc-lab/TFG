@@ -2,7 +2,7 @@ body:has(.dialog[open]) {
   overflow: hidden;
   pointer-events: none;
 }
-.dialog:focus{outline: none;}
+.dialog:focus, .main:focus{outline: none;}
 .dialog::backdrop {
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(2px);
@@ -91,11 +91,13 @@ body:has(.dialog[open]) {
   cursor: pointer;
   outline: 2px solid #0a7273;
   background-color: #0a717318;
+  box-shadow: 0 0 9px #0a71737c;
 }
 
 .gusto_delete:hover {
   background-color: #d12e2e1c;
   outline: 2px solid #d12e2e;
+  box-shadow: 0 0 10px rgba(211, 11, 4, 0.507)
 }
 
 .input_MiCuenta_gustos div:not(.gusto_active):hover{
@@ -148,19 +150,22 @@ body:has(.dialog[open]) {
   font-weight: 650;
   color: #0a7273;
 }
-.main section:first-child h2{
-  margin-top: 0;
-}
-.main section:not(:last-child) {
-  padding-bottom: 25px;
-  border-bottom: 1px solid rgb(219, 219, 219);
-}
+.main section:first-child h2{ margin-top: 0;}
+.main section:not(:last-child) { border-bottom: 1px solid rgb(219, 219, 219);}
+.main section {padding-bottom: 25px;}
 
 /*? RANGO DE PRECIOS*/
+.line_range {
+  margin-top: 22px;
+  height: 2px;
+  width: 50px;
+  background-color: rgb(194, 194, 194);
+}
 .input_Rango {
   display: flex;
   justify-content: center;
-  gap: 80px;
+  align-items: center;
+  gap: 15px;
 }
 
 .input_Rango div {
@@ -172,9 +177,7 @@ body:has(.dialog[open]) {
   font-weight: 600;
 }
 
-.input_Rango div input:focus {
-  border-color: rgb(194, 194, 194);
-}
+.input_Rango div input:focus { border-color: rgb(194, 194, 194);}
 .input_Rango div input{
   width: 110px;
   text-align: center;
@@ -206,10 +209,103 @@ body:has(.dialog[open]) {
   border: none;
   border-radius: 3px;
 }
-.button_filtros button:hover {
-  filter: brightness(0.8);
+.button_filtros button:hover { filter: brightness(0.8);}
+
+/*? OPCIONES DE LA VIVIENDA*/
+.input_habitaciones {
+  display: grid;
+  gap: 30px;
 }
+.input_habitaciones div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.input_habitaciones label {
+  font-size: 19px;
+  font-weight: 600;
+}
+.lista_botones {
+  padding-left: 0;
+  display: grid;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lista_botones button{
+  text-align: center;
+  cursor: pointer;
+  color: rgb(95, 95, 95);
+  background-color: rgb(248, 248, 248);
+  border: 2px solid lightgray;
+  border-radius: 5px;
+  font-family: "Nunito";
+  padding: 5px 10px;
+  font-size: 19px;
+  width: 45px;
+}
+.lista_botones button:not(.opcion_activa):hover{ filter: brightness(0.9);}
+.lista_botones  .opcion_activa {
+  color: #0a7273;
+  font-weight: 500;
+  border-color: #0a7273;
+  background-color: #0a717318;
+  box-shadow: 0 0 3px #0a71737c;
+}
+
+/*? IDIOMAS*/
+.input_idioma {
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 25px;
+  row-gap: 15px;
+}
+
+.idioma_opcion {
+  cursor: pointer;
+  font-family: "Nunito";
+  padding: 6px 0;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 22px;
+  background-color: white ;
+  width: 150px;
+  justify-content: center;
+  color: rgb(95, 95, 95);
+  background-color: rgb(248, 248, 248);
+  border: 2px solid lightgray;
+}
+.idioma_opcion:hover {filter: brightness(0.9);}
+.idioma_opcion.idioma_active {
+  background-color: #0a7273;
+  color: #0a7273;
+  font-weight: 500;
+  border-color: #0a7273;
+  background-color: #0a717318;
+  box-shadow: 0 0 3px #0a71737c;
+}
+
 @media (min-width: 750px){
+
+  .input_Rango { gap: 30px;}
+  .input_habitaciones {
+    padding: 0 40px;
+  }
+  .input_habitaciones label {
+    font-size: 21px;
+  }
+  .lista_botones button{
+    width: 70px;
+
+  }
+
+  .line_range {
+    margin-top: 28px;
+  }
   .input_Rango div label { font-size: 21px;}
   .input_Rango div input{   font-size: 24px; }
 }

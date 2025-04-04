@@ -231,7 +231,7 @@ export const EditarBiografia = ({ esViajero = false }) => {
 
 	const [UserIdiomas, setUserIdiomas] = useState(["Español", "Italiano", "Francés"]);
 
-	const inputIdiomas = ["Español", "Inglés", "Francés", "Alemán", "Italiano"];
+	const inputIdiomas = ["Español", "Inglés", "Francés", "Alemán", "Italiano", "Portugués", "Chino", "Árabe", "Ruso", "Japonés"];
 
 	const handleChangeIdioma = (idiomaValue) => {
 		UserIdiomas.includes(idiomaValue)
