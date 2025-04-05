@@ -232,19 +232,6 @@ body:has(.modal[open]) {
   padding: 0px;
 }
 
-.add_gusto img {
-  background-color: rgb(241, 241, 241);
-  border-radius: 10px;
-  padding: 10px;
-  border: 2px solid #0a7273;
-  object-fit: cover;
-}
-.add_gusto img:hover {
-  filter: brightness(0.95);
-  box-shadow: 0 0 10px #0a71737c;
-}
-
-
 /*? INPUT*/
 .input_div {
   padding: 0 5px;

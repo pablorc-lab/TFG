@@ -17,6 +17,10 @@ class AnfitrionService extends UsuarioService {
     return axios.delete(`${this.baseUrl}/${anfitrionID}/vivienda`, { auth: this.auth });
   }
 
+  obtenerBiografia(anfitrionID){
+    return axios.get(`${this.baseUrl}/${anfitrionID}/biografia`, { auth: this.auth });
+  }
+
 }
 
 export default new AnfitrionService();

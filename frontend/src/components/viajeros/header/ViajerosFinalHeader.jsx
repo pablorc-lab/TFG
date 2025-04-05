@@ -1,28 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-
-import React from 'react';
 import ViajerosHeader from './ViajerosHeader';
 import ViajerosMobileHeader from './ViajerosMobileHeader';
 import AnfitrionService from '../../../services/users/AnfitrionService';
-import FilteredList from '../../utilities/filteresCities/FilteredList';
+import FilteredCitiesList from '../../utilities/filteresCities/FilteredList';
 import FilterMenu from '../filter_menu/FilterMenu';
 
-export default function ViajerosFinalHeader({ defaultActive = "alojamientos", buscarUsuario = false, setBuscarUsuario = null, setAnfitrionesEspecificos = [], filtrado = false}) {
+export default function ViajerosFinalHeader({ defaultActive = "alojamientos", buscarUsuario = false, setBuscarUsuario = null, setAnfitrionesEspecificos = [], setBuscarFiltrado, filterOptions, setFilterOptions}) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const inputRef = useRef(null);
-
-  const filteredListRef = useRef(null);
-  const [filterOptions, setFilterOptions] = useState({
-    gustos: [],
-    max: 0,
-    min: 120,
-    viajeros : -1,
-    habitaciones : -1,
-    camas : -1,
-    banios : -1,
-    idiomas : [],
-  });
-  console.log(filterOptions);
+  const filteredCitiesListRef = useRef(null);
 
   const [openFilterMenu, setOpenFilterMenu] = useState(null)
 
@@ -41,7 +27,7 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
    */
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if ( (!inputRef.current || !inputRef.current.contains(event.target)) && (!filteredListRef.current || !filteredListRef.current.contains(event.target))){
+      if ( (!inputRef.current || !inputRef.current.contains(event.target)) && (!filteredCitiesListRef.current || !filteredListRef.current.contains(event.target))){
         updateHeaderStates({locationFocus : false});
       }
     };
@@ -52,7 +38,7 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
   
 
   /**
-   * Controlar el cambnio de pantalla
+   * Controlar el cambio de pantalla
    */
   useEffect(() => {
     const handleResize = () => setIsLargeScreen(window.innerWidth >= 770);
@@ -99,8 +85,8 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
       {isLargeScreen
         ? <ViajerosHeader 
             inputRef={inputRef} 
-            filteredListRef={filteredListRef} 
-            FilteredList={FilteredList}
+            filteredCitiesListRef={filteredCitiesListRef} 
+            FilteredCitiesList={FilteredCitiesList}
             setOpenFilterMenu={setOpenFilterMenu}
             headerStates={headerStates} 
             updateHeaderStates={updateHeaderStates} 
@@ -110,8 +96,8 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
           />
         : <ViajerosMobileHeader 
             inputRef={inputRef} 
-            filteredListRef={filteredListRef} 
-            FilteredList={FilteredList}
+            filteredCitiesListRef={filteredCitiesListRef} 
+            FilteredCitiesList={FilteredCitiesList}
             setOpenFilterMenu={setOpenFilterMenu}
             headerStates={headerStates} 
             updateHeaderStates={updateHeaderStates} 
@@ -129,6 +115,7 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
           setOpenFilterMenu={setOpenFilterMenu} 
           filterOptions={filterOptions}
           setFilterOptions={setFilterOptions}
+          setBuscarFiltrado={setBuscarFiltrado}
         />}
     </>
   );

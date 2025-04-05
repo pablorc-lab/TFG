@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./FilterMenu.module.css";
 
 
-export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions}) {
+export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado }) {
   const [mouseEnter, SetMouseEnter] = useState(null);
 
   const [rango, setRango] = useState({ min: filterOptions.min, max: filterOptions.max });
@@ -14,7 +14,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
     { label: "Baños", clave: "baños" },
   ];
   const [opcionesViviendaEscogida, SetOpcionesViviendaEscogida] = useState([
-    filterOptions.viajeros, 
+    filterOptions.viajeros,
     filterOptions.habitaciones,
     filterOptions.camas,
     filterOptions.banios
@@ -36,11 +36,11 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
 
   const handleChangeRango = (e, tipo) => {
     const valor = e.target.value.replace(/[^\d]/g, ""); // Eliminar todo lo que NO sea dígito
-    if(tipo === "min" && Number(valor) > rango.max){
-      setRango({ min : Number(valor), max : Number(valor)});
+    if (tipo === "min" && Number(valor) > rango.max) {
+      setRango({ min: Number(valor), max: Number(valor) });
 
     }
-    else{
+    else {
       setRango({ ...rango, [tipo]: Number(valor) });
     }
   };
@@ -51,17 +51,50 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
       : setUserIdiomas([...UserIdiomas, idiomaValue]);
   }
 
+  const handleChangeViviendaValue = (index, item) => {
+    SetOpcionesViviendaEscogida(prev => ({
+      ...prev,
+      [index]: opcionesViviendaEscogida[index] === -1 ? item : -1
+    }))
+  }
+
   const saveFilter = () => {
     setFilterOptions({
       gustos: gustos_actuales,
       max: rango.max,
       min: rango.min,
-      viajeros : opcionesViviendaEscogida[0],
-      habitaciones : opcionesViviendaEscogida[1],
-      camas : opcionesViviendaEscogida[2],
-      banios : opcionesViviendaEscogida[3],
-      idiomas : UserIdiomas,
+      viajeros: opcionesViviendaEscogida[0],
+      habitaciones: opcionesViviendaEscogida[1],
+      camas: opcionesViviendaEscogida[2],
+      banios: opcionesViviendaEscogida[3],
+      idiomas: UserIdiomas,
     });
+
+    const isFilterChanged = rango.max !== 0 ||
+      opcionesViviendaEscogida[0] !== -1 ||
+      opcionesViviendaEscogida[1] !== -1 ||
+      opcionesViviendaEscogida[2] !== -1 ||
+      opcionesViviendaEscogida[3] !== -1 ||
+      gustos_actuales.length > 0 ||
+      UserIdiomas.length > 0;
+
+    setBuscarFiltrado(isFilterChanged);
+    setOpenFilterMenu(false);
+  }
+
+  const deleteFilters = () => {
+    setFilterOptions({
+      gustos: [],
+      max: 0,
+      min: 0,
+      viajeros: -1,
+      habitaciones: -1,
+      camas: -1,
+      banios: -1,
+      idiomas: [],
+    });
+    setBuscarFiltrado(false);
+    setOpenFilterMenu(false);
   }
 
   return (
@@ -130,7 +163,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
                   {[1, 2, 3, "4+"].map((item) => (
                     <li key={item}>
                       <button
-                        onClick={() => SetOpcionesViviendaEscogida(prev => ({ ...prev, [index]: item }))}
+                        onClick={() => handleChangeViviendaValue(index, item)}
                         className={opcionesViviendaEscogida[index] === item ? styles.opcion_activa : ""}
                       >
                         {item}
@@ -160,6 +193,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
       </main>
 
       <div className={styles.button_filtros}>
+        <p onClick={() => deleteFilters()}>Borrar filtros</p>
         <button onClick={() => saveFilter()}>
           Mostrar viviendas
         </button>

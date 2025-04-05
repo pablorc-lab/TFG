@@ -41,6 +41,7 @@ body:has(.dialog[open]) {
   left: 30px;
   border-radius: 50px;
   cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
 }
 .cerra_menu:hover {
   filter: brightness(0.9);
@@ -80,6 +81,7 @@ body:has(.dialog[open]) {
   position: relative;
   padding: 10px;
   border-radius: 5px;
+  transition: background-color 0.1s ease-in-out;
 }
 .input_MiCuenta_gustos img:nth-child(1){
   min-width: 50px;
@@ -97,7 +99,7 @@ body:has(.dialog[open]) {
 .gusto_delete:hover {
   background-color: #d12e2e1c;
   outline: 2px solid #d12e2e;
-  box-shadow: 0 0 10px rgba(211, 11, 4, 0.507)
+  box-shadow: 0 0 10px rgba(211, 11, 4, 0.507);
 }
 
 .input_MiCuenta_gustos div:not(.gusto_active):hover{
@@ -124,17 +126,6 @@ body:has(.dialog[open]) {
   padding: 0px;
 }
 
-.add_gusto img {
-  background-color: rgb(241, 241, 241);
-  border-radius: 10px;
-  padding: 10px;
-  border: 2px solid #0a7273;
-  object-fit: cover;
-}
-.add_gusto img:hover {
-  filter: brightness(0.95);
-  box-shadow: 0 0 10px #0a71737c;
-}
 
 /*? SECCIONES*/
 .main {
@@ -189,13 +180,26 @@ body:has(.dialog[open]) {
 }
 
 /*? BOTON DE APLICAR FILTROS*/
+.button_filtros p {
+  cursor: pointer;
+  margin: 0;
+  margin-left: 30px;
+  border-radius: 1px;
+  font-size: 23px;
+  text-decoration: underline;
+}
+.button_filtros p:hover {
+  outline: 10px solid rgb(235, 235, 235);
+  background-color: rgb(235, 235, 235);
+}
 .button_filtros {
   box-shadow: 0 -4px 10px -4px rgba(0, 0, 0, 0.25);
   border-top: 1px solid lightgray;
   padding-top: 20px;
   margin-top: 10px;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
+  align-items: center;
 }
 .button_filtros button {
   margin-right: 30px;
@@ -245,6 +249,7 @@ body:has(.dialog[open]) {
   padding: 5px 10px;
   font-size: 19px;
   width: 45px;
+  transition: filter 0.1s ease-in-out;
 }
 .lista_botones button:not(.opcion_activa):hover{ filter: brightness(0.9);}
 .lista_botones  .opcion_activa {
@@ -278,6 +283,7 @@ body:has(.dialog[open]) {
   color: rgb(95, 95, 95);
   background-color: rgb(248, 248, 248);
   border: 2px solid lightgray;
+  transition: filter 0.1s ease-in-out;
 }
 .idioma_opcion:hover {filter: brightness(0.9);}
 .idioma_opcion.idioma_active {

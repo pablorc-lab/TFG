@@ -3,7 +3,7 @@ import styles_mobile from "./ViajerosMobileHeader.module.css"
 import { Link } from 'react-router-dom';
 const SearchAlojamiento = lazy(() => import("../alojamientos/SearchAlojamiento"));
 
-export default function ViajerosMobileHeader({ inputRef = null, filteredListRef = null, FilteredList, setOpenFilterMenu, headerStates = null, updateHeaderStates = null, activeSection = "alojamientos", setActiveSection }) {
+export default function ViajerosMobileHeader({ inputRef = null, filteredCitiesListRef = null, FilteredCitiesList, setOpenFilterMenu, headerStates = null, updateHeaderStates = null, activeSection = "alojamientos", setActiveSection }) {
   // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
     return (activeSection === nameSection) ? styles_mobile.active_section : undefined;
@@ -54,9 +54,9 @@ export default function ViajerosMobileHeader({ inputRef = null, filteredListRef 
       {activeSection === 'alojamientos' && 
         <SearchAlojamiento 
           inputRef={inputRef} 
-          filteredListRef={filteredListRef}
+          filteredListRef={filteredCitiesListRef}
           setOpenFilterMenu={setOpenFilterMenu}
-          FilteredList={FilteredList}
+          FilteredList={FilteredCitiesList}
           headerStates={headerStates}
           updateHeaderStates={updateHeaderStates}
         />
