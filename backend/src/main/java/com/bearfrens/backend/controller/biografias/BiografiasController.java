@@ -4,11 +4,13 @@ import com.bearfrens.backend.entity.biografias.Biografias;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.service.biografias.BiografiasService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -16,7 +18,13 @@ import java.util.Map;
 @AllArgsConstructor
 public class BiografiasController {
 
+  @Autowired
   private final BiografiasService biografiasService;
+
+  @GetMapping("/{tipo_usuario}/biografias/list")
+  public List<Biografias> obtenerTodasBiografia(@PathVariable String tipo_usuario) {
+    return biografiasService.obtenerTodasBiografia(tipo_usuario);
+  }
 
   @GetMapping("/{tipo_usuario}/{usuarioID}/biografia")
   public ResponseEntity<?> obtenerBiografia(@PathVariable String tipo_usuario, @PathVariable Long usuarioID) {

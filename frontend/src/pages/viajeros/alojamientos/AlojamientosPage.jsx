@@ -3,12 +3,15 @@ const AnfProfilesGallery = lazy(() => import('../../../components/viajeros/aloja
 import Footer from '../../../components/footer/footer';
 import ViajerosFinalHeader from '../../../components/viajeros/header/ViajerosFinalHeader';
 import AnfitrionService from "../../../services/users/AnfitrionService";
+import BiografiasService from "../../../services/biografias/BiografiasService";
 import LikesService from "../../../services/matches/LikesService";
 import { Suspense } from "react";
 
 export default function AlojamientosPage() {
   const [anfitriones, setAnfitriones] = useState([]);
   const [anfitrionesEspecificos, setAnfitrionesEspecificos] = useState([]);
+  const [biografias, setBiografias] = useState([]);
+
   const [buscarUsuario, setBuscarUsuario] = useState(false);
   const [conectados_ID, SetConectados_ID] = useState([]);
 
@@ -29,7 +32,7 @@ export default function AlojamientosPage() {
    * @param anfitrion Objeto del anfitrion con su información
    * @returns True si cumple el filtrado
    */
-  function filtrarUsuario(anfitrion) {
+  function filtrarUsuario(anfitrion, biografia) {
     let opcionesCumplidas = true; // Indica si el anfitrion cumple todo
 
     // Verificamos si `filterOptions.gustos` no está vacío
@@ -58,18 +61,11 @@ export default function AlojamientosPage() {
     if (filterOptions.banios !== -1) opcionesCumplidas &= anfitrion.vivienda.banios === filterOptions.banios;
 
     // Si `filterOptions.idiomas` no está vacío
-    /*
     if (filterOptions.idiomas.length > 0) {
-      // TODO: llamada en la pagina y obtener anfitriones ya con su biografia y no hace llamadas extra
-      AnfitrionService.obtenerBiografia(anfitrion.id)
-        .then(response => {
-          const idiomas = response.data.idiomas.split(",");
-          opcionesCumplidas &= idiomas.some(idioma => filterOptions.idiomas.some(filtro => filtro === idioma))
-        })
-        .catch(
-          opcionesCumplidas = false,
-        );
-    }*/
+      if (biografia == null) return false;
+      const idiomas = biografia.idiomas.split(",");
+      opcionesCumplidas &= idiomas.some(idioma => filterOptions.idiomas.some(filtro => filtro === idioma))
+    }
 
     return opcionesCumplidas;
   }
@@ -84,11 +80,22 @@ export default function AlojamientosPage() {
       }
 
       else {
-        setAnfitriones(response.data.filter(anfitrion => filtrarUsuario(anfitrion)));
-        setBuscarFiltrado(false);
+        // TODO: SI YA HAY BIOGRAFIAS GUARDADAS NO HAFCE DE NUEVO LA LLAMADA
+        // Obtener las biografias y pasarle a cada anfitrión la suya
+        BiografiasService.getAll("anfitriones")
+          .then(biografia_response => {
+            const biografias = biografia_response.data;
+            setBiografias(biografias);
+
+            setAnfitriones(response.data.filter(anfitrion =>
+              filtrarUsuario(anfitrion, biografias.find(bio => bio.id === anfitrion.id) || null)
+            ));
+            setBuscarFiltrado(false);
+          })
+          .catch(error => "Error al listar las biografías " + error);
       }
 
-      console.log(response.data)
+      //console.log(response.data)
     }).catch(error => console.error("Error al listar los usuarios : ", error));
 
     // Obtener usuarios a los que se ha enviado el like

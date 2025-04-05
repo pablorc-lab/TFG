@@ -27,7 +27,9 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
    */
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if ( (!inputRef.current || !inputRef.current.contains(event.target)) && (!filteredCitiesListRef.current || !filteredListRef.current.contains(event.target))){
+      if ( (!inputRef.current || !inputRef.current.contains(event.target)) 
+        && (!filteredCitiesListRef.current || !filteredCitiesListRef.current.contains(event.target)))
+      {
         updateHeaderStates({locationFocus : false});
       }
     };

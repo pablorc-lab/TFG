@@ -7,6 +7,7 @@ import com.bearfrens.backend.service.GestorUsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +16,16 @@ public class BiografiasService {
 
   private final BiografiasRepository biografiasRepository;
   private final GestorUsuarioService gestorUsuarioService;
+
+  /**
+   * Devuelve todas las biografías dado un tipo de usuario
+   * @param tipo_usuario Tipo de usuario
+   * @return Lista de biografías
+   */
+  public List<Biografias> obtenerTodasBiografia(String tipo_usuario) {
+    int tipo = gestorUsuarioService.intTipoUsuario(tipo_usuario);
+    return biografiasRepository.findAllByTipoUsuario(tipo);
+  }
 
   /**
    * Obtiene una biografia

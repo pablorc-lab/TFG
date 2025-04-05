@@ -34,6 +34,8 @@ export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecific
         ))}
 
         {listaAnfitriones.length === 0 && listaAnfitriones === anfitrionesEspecificos && <h1 className={styles.not_found}>No hay anfitriones en esa ubicación.</h1>}
+        {listaAnfitriones.length === 0 && listaAnfitriones === anfitriones && <h1 className={styles.not_found}>No existen anfitriones con esos filtros.</h1>}
+
       </article>
     </section>
   )
