@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import DropDownMenu from "../../dropdown_menu/DropDownMenu";
 
 
-export default function AnfitrionHeader({ activeSection, setActiveSection, menuLinks }) {
+export default function AnfitrionHeader({ activeSection, setActiveSection, menuLinks, SetOpenLikesMenu }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [showHeaderNav, setShowHeaderNav] = useState(window.innerWidth > 1050);
   const userRef = useRef(null);
@@ -48,9 +48,8 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
       )}
 
       <section className={styles.user_section}>
-        <div className={styles.conectado_container}>
-        <img src="/images/usuarios/heart_green.svg" className={styles.conectado}/>
-        
+        <div className={styles.conectado_container} onClick={() => SetOpenLikesMenu(true)}>
+          <img src="/images/usuarios/heart_green.svg" className={styles.conectado} />
         </div>
 
         <div className={styles.header_user_section}>

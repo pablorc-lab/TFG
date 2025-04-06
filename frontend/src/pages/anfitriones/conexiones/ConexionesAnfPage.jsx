@@ -24,9 +24,9 @@ const ConexionesAnfPage = () => {
         fontSize: "clamp(16px, 6vw, 43px)",
         color: "#0a7273",
         textAlign: "center",
-        margin: "80px 50px 10px 50px",
+        margin: "50px 50px 0px 50px",
         paddingBottom: "50px",
-        borderBottom: "2px solid rgb(160, 160, 160)"
+        borderBottom: "2px solid rgba(160, 160, 160, 0.5)"
       }}>
         {viajeros.length} conexiones establecidas
       </h1>

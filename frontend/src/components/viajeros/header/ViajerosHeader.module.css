@@ -165,7 +165,10 @@
   align-items: center;
   gap: 10px;
 } 
-.search_form_container:not(.inactive_form) .filters:hover{ box-shadow: 0 0 7px gray;}
+.search_form_container:not(.inactive_form) .filters:hover{ 
+  filter: brightness(0.9);
+  box-shadow: 0 0 7px gray;
+}
 .filters img {width: 30px;}
 .filters span{
   letter-spacing: 1px;

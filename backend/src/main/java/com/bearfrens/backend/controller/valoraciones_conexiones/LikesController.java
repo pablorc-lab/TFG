@@ -1,17 +1,22 @@
 package com.bearfrens.backend.controller.valoraciones_conexiones;
 
 import com.bearfrens.backend.entity.matches.Matches;
+import com.bearfrens.backend.entity.user.Usuario;
+import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.entity.valoracione_conexiones.Likes;
 import com.bearfrens.backend.repository.matches.MatchesRepository;
 import com.bearfrens.backend.repository.valoraciones_conexiones.LikesRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
 import com.bearfrens.backend.service.valoraciones_conexiones.LikesService;
 import lombok.AllArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -28,6 +33,31 @@ public class LikesController{
   @GetMapping("/likes")
   public List<Likes> obtenerListaLikesTodos(){
     return likesRepository.findAll();
+  }
+
+  // Obtener la LISTA de VIAJEROS que han dado like a un RECEPTOR ANFITRIÓN id
+  @GetMapping("/anfitriones/{receptorID}/likes/recibidos")
+  public List<Map<String, Object>> obtenerListaLikes(@PathVariable Long receptorID) {
+    Map<Viajero, LocalDate> viajeros = likesService.obtenerLikesViajerosPerfiles(receptorID);
+
+   List<Map<String, Object>> info_viajeros = new LinkedList<>();
+
+    // Añadir cada anfitrión al map con la información necesaria
+    viajeros.forEach((viajero, fecha) -> {
+      Map<String, Object> resumen = new HashMap<>();
+      resumen.put("id", viajero.getId());
+      resumen.put("nombre", viajero.getNombre());
+      resumen.put("profileImage", viajero.getProfileImage());
+      resumen.put("gusto1", viajero.getGusto1());
+      resumen.put("gusto2", viajero.getGusto2());
+      resumen.put("gusto3", viajero.getGusto3());
+      resumen.put("descripcion", viajero.getDescripcion());
+      resumen.put("fecha", fecha);
+
+      info_viajeros.add(resumen);
+    });
+
+    return info_viajeros;
   }
 
   // Obtener la lista de likes dados por un usuario

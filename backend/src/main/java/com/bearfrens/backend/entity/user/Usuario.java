@@ -21,7 +21,7 @@ public abstract class Usuario<TC>{
   private long id;
 
   // @Column: Mapea el campo a la columna correspondiente de la tabla de la base de datos
-  @Column(length = 50)
+  @Column(length = 50, unique = true)
   private String privateID;
 
   @Column(length = 100, nullable = false, unique = true)

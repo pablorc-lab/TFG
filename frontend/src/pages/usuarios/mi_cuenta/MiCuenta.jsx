@@ -101,13 +101,13 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             <article className={styles.user_profile}>
               <div >
                 <label className={styles.file_input_label}>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
+                  <input
+                    type="file"
+                    accept="image/*"
                     style={{ display: "none" }}
-                    onChange={(e) => {setPerfilImage(URL.createObjectURL(e.target.files[0]))}} 
+                    onChange={(e) => { setPerfilImage(URL.createObjectURL(e.target.files[0])) }}
                   />
-                  <img className={styles.user_img} src={perfilImage || "/images/not_found/user_img.png"} alt="Imagen de perfil" width={50}/>
+                  <img className={styles.user_img} src={perfilImage || "/images/not_found/user_img.png"} alt="Imagen de perfil" width={50} />
                 </label>
 
                 <div className={styles.profile_img} >
@@ -142,7 +142,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             {activeMenu === 0 && <PerfilMiCuenta showValue={0} />}
             {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} />}
             {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} />}
-            {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero}/>}
+            {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} />}
             {activeMenu === 4 && <SeguridadMiCuenta />}
             {activeMenu === 5 && <OpinionesMiCuenta />}
             {activeMenu === 6 && <HistorialReservasMiCuenta />}

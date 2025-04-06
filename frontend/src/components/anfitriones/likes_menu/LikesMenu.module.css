@@ -1,0 +1,128 @@
+body:has(.dialog[open]) {
+  overflow: hidden;
+  pointer-events: none;
+}
+.dialog:focus, .main:focus{outline: none;}
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+.dialog h1 {margin: 0;}
+.dialog{
+  font-family: "Nunito";
+  pointer-events: none;
+  user-select: none;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 0px;
+  background: rgb(250, 250, 250);
+  max-height: 90vh;
+  width: 85%;
+  max-width: 750px;
+  pointer-events: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  animation: aparecer 0.25s ease-in-out forwards;
+  overflow: none;
+}
+
+
+/*? CERRAR DIALOG*/
+.cerra_menu {
+  user-select: none;
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(calc(-50% - 12.5px));
+  left: 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+}
+.cerra_menu:hover {
+  filter: brightness(0.9);
+  background-color: rgba(255, 5, 5, 0.15);
+}
+
+/*? TITULO*/
+.titulo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid lightgray;
+}
+
+.titulo h1 {
+  font-size: 25px;
+}
+
+/*? Perfiles*/
+.fecha{
+  color: black;
+  position: absolute;
+  right: 20px;
+  top: 0;
+}
+.viaj_prof { 
+  padding: 15px 30px;
+  max-height: 77vh;
+  overflow-y: auto;
+}
+.viaj_prof a {
+  text-decoration: none;
+}
+.viaj_prof article {
+  background-color: white;
+  margin-bottom: 30px;
+  position: relative;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.viaj_prof a:last-of-type article {
+  margin-bottom: 0;
+}
+
+.viaj_prof article:hover{
+  background-color: #0a717317;
+  box-shadow: 0 0 10px rgba(10, 113, 115, 0.5);
+  outline: 2px solid #0a7173;
+}
+
+.info_profile {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.gustos p{
+  color: black;
+  font-size: 23px;
+  font-weight: 700;
+  margin: 0 10px;
+  margin-bottom: 5px;
+}
+.gustos img {
+  margin: 0 10px;
+  margin-top: 5px;
+  width: 30px;
+  aspect-ratio: 1 / 1;
+}
+
+.profile_image {
+  width: 70px;
+  border-radius: 50px;
+  aspect-ratio: 1 /1;
+}
+
+.descripcion {
+  color: rgb(105, 105, 105);
+  font-size: 20px;
+  margin: 0;
+  margin-top: 10px;
+  margin-left: 5px;
+  font-weight: 350;
+}

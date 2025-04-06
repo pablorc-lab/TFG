@@ -8,6 +8,8 @@ import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
+import com.bearfrens.backend.repository.user.AnfitrionRepository;
+import com.bearfrens.backend.service.GestorUsuarioService;
 import com.bearfrens.backend.service.biografias.BiografiasService;
 import com.bearfrens.backend.service.ImgBBservice;
 import com.bearfrens.backend.service.valoraciones_conexiones.LikesService;
@@ -37,10 +39,14 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   private BiografiasService biografiasService;
 
   @Autowired
+  private GestorUsuarioService gestorUsuarioService;
+
+  @Autowired
   private ViviendasService viviendasService;
 
   @Autowired
   private ValoracionesService valoracionesService;
+
   @Autowired
   private LikesService likesService;
 
@@ -112,6 +118,37 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
     return ResponseEntity.ok(respuesta);
   }
+
+  /**
+   * Obtiene un usuario a través de su ID privado y, si existe, también su biografía.
+   * @param privateID ID privado del usuario
+   * @return ResponseEntity con el usuario encontrado y, si está disponible, su biografía. Si no existe, lanza una excepción.
+   */
+  @GetMapping("/private-id/{privateID}")
+  public ResponseEntity<?> obtenerUsuarioPorPrivateID(@PathVariable String privateID) {
+    T user;
+
+    if (userType.equals("anfitrion")) {
+      user = (T) gestorUsuarioService.obtenerAnfitrionPorIDPrivado(privateID)
+        .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID Privado no existe : " + privateID));
+    } else {
+      user = (T) gestorUsuarioService.obtenerViajeroPorIDPrivado(privateID)
+        .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID Privado no existe : " + privateID));
+    }
+
+    String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
+    Biografias biografia = biografiasService.obtenerBiografia(tipo_user, user.getId()).orElse(null);
+    List<Valoraciones> valoraciones = valoracionesService.obtenerListaValoracionesConexionesRecibidas(user.getId(), tipo_user);
+
+    Map<String, Object> respuesta = Map.of(
+      "usuario", user,
+      "biografia", biografia != null ? biografia : new Biografias(),
+      "valoraciones", valoraciones
+    );
+
+    return ResponseEntity.ok(respuesta);
+  }
+
 
   /**
    * Crea un usuario

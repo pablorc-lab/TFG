@@ -33,9 +33,6 @@ public class Valoraciones extends ValoracionConexion {
   @Column(precision = 3, scale = 1)
   private BigDecimal num_valoracion;
 
-  @Column
-  private LocalDate fecha;
-
   @Lob // Large Object
   @Column(columnDefinition = "TEXT")
   private String descripcion;

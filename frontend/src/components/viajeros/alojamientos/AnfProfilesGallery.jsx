@@ -14,8 +14,8 @@ export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecific
   return (
     <section className={styles.card_users_container}>
       <article className={styles.card_users}>
-        {listaAnfitriones.map(anfitrion => (
-          <div key={anfitrion.id} className={styles.user_card}>
+        {listaAnfitriones.map((anfitrion, index) => (
+          <div key={index} className={styles.user_card}>
             <AnfCard
               styles={anf_card_styles}
               anf_id={anfitrion.id}
@@ -33,7 +33,8 @@ export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecific
           </div>
         ))}
 
-        {listaAnfitriones.length === 0 && listaAnfitriones === anfitrionesEspecificos && <h1 className={styles.not_found}>No hay anfitriones en esa ubicación.</h1>}
+        
+        {listaAnfitriones.length === 0 && listaAnfitriones === anfitrionesEspecificos && <h1 className={styles.not_found}>No hay anfitriones para esa ubicación o identificador.</h1>}
         {listaAnfitriones.length === 0 && listaAnfitriones === anfitriones && <h1 className={styles.not_found}>No existen anfitriones con esos filtros.</h1>}
 
       </article>

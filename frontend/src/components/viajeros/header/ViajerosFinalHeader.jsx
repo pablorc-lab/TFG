@@ -5,7 +5,7 @@ import AnfitrionService from '../../../services/users/AnfitrionService';
 import FilteredCitiesList from '../../utilities/filteresCities/FilteredList';
 import FilterMenu from '../filter_menu/FilterMenu';
 
-export default function ViajerosFinalHeader({ defaultActive = "alojamientos", buscarUsuario = false, setBuscarUsuario = null, setAnfitrionesEspecificos = [], setBuscarFiltrado, filterOptions, setFilterOptions}) {
+export default function ViajerosFinalHeader({ defaultActive = "alojamientos", setBuscarUsuario = null, setAnfitrionesEspecificos = [], setBuscarFiltrado, filterOptions, setFilterOptions }) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const inputRef = useRef(null);
   const filteredCitiesListRef = useRef(null);
@@ -20,24 +20,23 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
   })
 
   // Actualizar objeto de estado
-  const updateHeaderStates = (newState) => setHeaderStates(prev => ({...prev, ...newState })); 
+  const updateHeaderStates = (newState) => setHeaderStates(prev => ({ ...prev, ...newState }));
 
   /**
    * Controlar click fuera del input para cerrar el menú de ciudades filtradas
    */
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if ( (!inputRef.current || !inputRef.current.contains(event.target)) 
-        && (!filteredCitiesListRef.current || !filteredCitiesListRef.current.contains(event.target)))
-      {
-        updateHeaderStates({locationFocus : false});
+      if ((!inputRef.current || !inputRef.current.contains(event.target))
+        && (!filteredCitiesListRef.current || !filteredCitiesListRef.current.contains(event.target))) {
+        updateHeaderStates({ locationFocus: false });
       }
     };
-  
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  
+
 
   /**
    * Controlar el cambio de pantalla
@@ -52,69 +51,78 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", bu
 
 
   /**
-   * Realizar busuqeda de usuario
+   * Realizar búsqueda de usuario por ciudad o identificador
    */
   useEffect(() => {
-    if(headerStates.location.length === 0 && setBuscarUsuario != null) {
+    if (headerStates.location.length === 0 && setBuscarUsuario != null) {
       setBuscarUsuario(false);
       setAnfitrionesEspecificos([]);
     }
-    
-    if (realizarBusqueda) {
-      const [ciudad, provincia] = headerStates.location
-        .split(",")
-        .map(word => word.replace(/\s*\(.*?\)\s*/g, "").trim().charAt(0).toLowerCase() + word.replace(/\s*\(.*?\)\s*/g, "").trim().slice(1));
 
-      AnfitrionService.getViviendasPorUbicacion(ciudad, provincia)
-        .then(response => {
-          setAnfitrionesEspecificos(response.data);
-        })
-        .catch(error => {
-          console.error("Error obteniendo anfitriones:", error);
-        })
-        .finally(() => {
-          setBuscarUsuario(true);
-          setRealizarBusqueda(false);
-        });      
+    if (realizarBusqueda) {
+      // Comprobamos si se está buscando por identificador
+      if (headerStates.location.charAt(0) === "@") {
+        AnfitrionService.getByPrivateID(headerStates.location.slice(1))
+          .then(response => setAnfitrionesEspecificos([response.data.usuario]))
+          .catch(error => {
+            console.error("Error obteniendo anfitriones:", error);
+            setAnfitrionesEspecificos([]);
+          })
+          .finally(() => {
+            setBuscarUsuario(true);
+            setRealizarBusqueda(false);
+          });
+      }
+
+      // Se busca por ciudad
+      else {
+        const [ciudad, provincia] = headerStates.location
+          .split(",")
+          .map(word => word.replace(/\s*\(.*?\)\s*/g, "").trim().charAt(0).toLowerCase() + word.replace(/\s*\(.*?\)\s*/g, "").trim().slice(1));
+
+        AnfitrionService.getViviendasPorUbicacion(ciudad, provincia)
+          .then(response => setAnfitrionesEspecificos(response.data))
+          .catch(error => console.error("Error obteniendo anfitriones:", error))
+          .finally(() => {
+            setBuscarUsuario(true);
+            setRealizarBusqueda(false);
+          });
+      }
     }
   }, [realizarBusqueda, headerStates.location])
 
 
-  //TODO: Realizar búsqueda de usuario segun filtros
-
   return (
     <>
       {isLargeScreen
-        ? <ViajerosHeader 
-            inputRef={inputRef} 
-            filteredCitiesListRef={filteredCitiesListRef} 
-            FilteredCitiesList={FilteredCitiesList}
-            setOpenFilterMenu={setOpenFilterMenu}
-            headerStates={headerStates} 
-            updateHeaderStates={updateHeaderStates} 
-            activeSection={activeSection}
-            setActiveSection={setActiveSection}
-            setRealizarBusqueda={setRealizarBusqueda}
-          />
-        : <ViajerosMobileHeader 
-            inputRef={inputRef} 
-            filteredCitiesListRef={filteredCitiesListRef} 
-            FilteredCitiesList={FilteredCitiesList}
-            setOpenFilterMenu={setOpenFilterMenu}
-            headerStates={headerStates} 
-            updateHeaderStates={updateHeaderStates} 
-            activeSection={activeSection}
-            setActiveSection={setActiveSection}
-            setAnfitrionesEspecificos={setAnfitrionesEspecificos}
-            setBuscarUsuario={setBuscarUsuario}
-            buscarUsuario={buscarUsuario}
-          />
+        ? <ViajerosHeader
+          inputRef={inputRef}
+          filteredCitiesListRef={filteredCitiesListRef}
+          FilteredCitiesList={FilteredCitiesList}
+          setOpenFilterMenu={setOpenFilterMenu}
+          headerStates={headerStates}
+          updateHeaderStates={updateHeaderStates}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          setRealizarBusqueda={setRealizarBusqueda}
+        />
+        : <ViajerosMobileHeader
+          inputRef={inputRef}
+          filteredCitiesListRef={filteredCitiesListRef}
+          FilteredCitiesList={FilteredCitiesList}
+          setOpenFilterMenu={setOpenFilterMenu}
+          headerStates={headerStates}
+          updateHeaderStates={updateHeaderStates}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          setRealizarBusqueda={setRealizarBusqueda}
+        />
       }
 
       {/* Abrir menú de filtrado*/}
-      {openFilterMenu && 
-        <FilterMenu 
-          setOpenFilterMenu={setOpenFilterMenu} 
+      {openFilterMenu &&
+        <FilterMenu
+          setOpenFilterMenu={setOpenFilterMenu}
           filterOptions={filterOptions}
           setFilterOptions={setFilterOptions}
           setBuscarFiltrado={setBuscarFiltrado}

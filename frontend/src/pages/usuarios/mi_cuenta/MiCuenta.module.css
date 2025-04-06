@@ -118,7 +118,6 @@
 .file_input_label img {cursor: pointer;}
 .file_input_label:hover img {filter: brightness(0.8);}
 .user_profile {
-  cursor: pointer;
   position: relative;
   grid-row: 1;
   display: flex;
@@ -129,6 +128,7 @@
 }
 
 .user_img{
+  cursor: pointer;
   outline: 2px solid #0a7273;
   width: 120px;
   border-radius: 50%;
@@ -138,6 +138,7 @@
 
 /*? INFORMACIÓN GENERAL*/
 .user_general_info{
+
   display: grid;
   gap: 15px;
 }

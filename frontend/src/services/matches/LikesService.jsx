@@ -16,6 +16,10 @@ class LikesService {
     return axios.get(`${this.LIKES_BASE_REST_API_URL}/${tipoUsuario}/${emisorID}/likes/enviados`, { auth: this.auth });
   }
 
+  static getAllViajerosRecibidos(receptorID){
+    return axios.get(`${this.LIKES_BASE_REST_API_URL}/anfitriones/${receptorID}/likes/recibidos`, { auth: this.auth });
+  }
+
   static crearLike(tipoUsuario, emisorID, usuarioID){
     return axios.post(`${this.LIKES_BASE_REST_API_URL}/${tipoUsuario}/${emisorID}/likes/${usuarioID}`, { auth: this.auth });
   }

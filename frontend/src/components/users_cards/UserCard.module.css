@@ -71,7 +71,7 @@
   aspect-ratio: 1 / 1;
   user-select: none;
 }
-
+.house:hover{filter: brightness(0.8)}
 .personal_info { 
   align-items: end; 
   display: flex; 
@@ -95,10 +95,18 @@
   user-select: none;
   width: 96px;
 }
+.viaj_img {padding: 0;}
+
 .profile_img:hover{
-  filter: brightness(0.95);
-  box-shadow: 0 0 10px #009080;
-  outline: 2px solid #009080;
+  background-color: #ccfff9;
+  filter: brightness(0.8);
+  outline: 3px solid #00c5ae;
+  outline-offset: -3px;
+
+}
+.viaj_prof .profile_img:hover{
+  outline-offset: 0px;
+
 }
 .anf_name {
   flex-grow: 1;

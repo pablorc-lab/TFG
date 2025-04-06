@@ -4,6 +4,9 @@ import com.bearfrens.backend.entity.user.Viajero;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 // @Repository  : La marca como un componente de acceso a datos, permitiendo que Spring la detecte y la gestione automáticamente
 @Repository
 /*
@@ -14,5 +17,10 @@ import org.springframework.stereotype.Repository;
 public interface ViajeroRepository  extends JpaRepository<Viajero, Long> {
   // Spring se encarga de generar el metodo "EXISTS" asociado a encontrar ese campo
   boolean existsByEmail(String email);
+
+  // Encontrar todos los viajeros dado sus id
+  List<Viajero> findAllByIdIn(List<Long> ids);
+
+  Optional<Viajero> findByPrivateID(String privateID);
 }
 

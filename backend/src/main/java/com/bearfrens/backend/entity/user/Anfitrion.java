@@ -3,7 +3,6 @@ package com.bearfrens.backend.entity.user;
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
 import com.bearfrens.backend.entity.viviendas.Viviendas;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

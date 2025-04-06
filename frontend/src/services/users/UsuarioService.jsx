@@ -28,6 +28,10 @@ class UsuarioService {
     return axios.get(`${this.baseUrl}/${userID}`, { auth: this.auth });
   }
 
+  getByPrivateID(privateID){
+    return axios.get(`${this.baseUrl}/private-id/${privateID}`, { auth: this.auth });
+  }
+  
   update(userID, userData) {
     return axios.put(`${this.baseUrl}/${userID}`, userData, { auth: this.auth });
   }

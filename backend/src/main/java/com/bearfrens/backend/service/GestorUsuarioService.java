@@ -7,6 +7,9 @@ import com.bearfrens.backend.repository.user.ViajeroRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 // Esta clase se encarga de crear funcion comunes a otros controladore respecto
 // la gestion del tipo de usuario o si ambos existen
 @Service
@@ -16,10 +19,33 @@ public class GestorUsuarioService {
   private final AnfitrionRepository anfitrionRepository;
   private final ViajeroRepository viajeroRepository;
 
-  public Anfitrion obtenerAnfitrion(Long anfitrionID){ return anfitrionRepository.findById(anfitrionID).get();  }
-  public Viajero obtenerViajero(Long viajeroID){ return viajeroRepository.findById(viajeroID).get();  }
-  public void guardarAnfitrion(Anfitrion anfitrion) { anfitrionRepository.save(anfitrion);}
-  public void guardarViajero(Viajero viajero) { viajeroRepository.save(viajero); }
+  public Anfitrion obtenerAnfitrion(Long anfitrionID){
+    return anfitrionRepository.findById(anfitrionID).get();
+  }
+
+  public Optional<Anfitrion> obtenerAnfitrionPorIDPrivado(String privateID){
+    return anfitrionRepository.findByPrivateID(privateID);
+  }
+
+  public Optional<Viajero> obtenerViajeroPorIDPrivado(String privateID){
+    return viajeroRepository.findByPrivateID(privateID);
+  }
+
+  public Viajero obtenerViajero(Long viajeroID){
+    return viajeroRepository.findById(viajeroID).get();
+  }
+
+  public List<Viajero> obtenerListaViajeros(List<Long> viajeros_IDs){
+    return viajeroRepository.findAllByIdIn(viajeros_IDs);
+  }
+
+  public void guardarAnfitrion(Anfitrion anfitrion) {
+    anfitrionRepository.save(anfitrion);
+  }
+
+  public void guardarViajero(Viajero viajero) {
+    viajeroRepository.save(viajero);
+  }
 
   /**
    * Transforma el string del tipo de usuario a su respectivo valor numérico

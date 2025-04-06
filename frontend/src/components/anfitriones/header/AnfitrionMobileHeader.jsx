@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles_mobile from "./AnfitrionMobileHeader.module.css"
 
-export default function AnfitrionMobileHeader({ activeSection, setActiveSection }) {
+export default function AnfitrionMobileHeader({ activeSection, setActiveSection, SetOpenLikesMenu }) {
 
   // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
@@ -33,21 +33,21 @@ export default function AnfitrionMobileHeader({ activeSection, setActiveSection 
             </div>
           </Link>
           <Link to="/anfitriones/mi-cuenta">
-          <img
-            className={getClassName('perfil')}
-            src="/images/viajeros/user_header.webp"
-            width="55"
-            alt='icono user'
-            onClick={() => setActiveSection("perfil")}
-          />
-        </Link>
+            <img
+              className={getClassName('perfil')}
+              src="/images/viajeros/user_header.webp"
+              width="55"
+              alt='icono user'
+              onClick={() => setActiveSection("perfil")}
+            />
+          </Link>
         </nav>
       </header>
 
       {/*Sección del usuario*/}
-        <div className={styles_mobile.conectado_container}>
-          <img src="/images/usuarios/heart_green.svg" className={styles_mobile.conectado} />
-        </div>
+      <div className={styles_mobile.conectado_container} onClick={() => SetOpenLikesMenu(true)}>
+        <img src="/images/usuarios/heart_green.svg" className={styles_mobile.conectado} />
+      </div>
     </>
   )
 }

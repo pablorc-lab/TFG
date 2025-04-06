@@ -11,6 +11,7 @@ import com.bearfrens.backend.repository.matches.MatchesRepository;
 import com.bearfrens.backend.repository.valoraciones_conexiones.ValoracionesConexionesRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -22,9 +23,38 @@ import java.util.*;
 // <T> puede ser Valoraciones, Likes o Matches
 @AllArgsConstructor
 public abstract class ValoracionesConexionesService<T extends ValoracionConexion> {
+  @Autowired
   private final GestorUsuarioService gestorUsuarioService;
+
   private final ValoracionesConexionesRepository<T> repository;
   private final MatchesRepository matchesRepository;
+
+
+  /**
+   * Devuelve una lista de viajeros, dado el ID del anfitrión receptor
+   * @param receptorID ID del anfitrión receptor
+   * @return Lista de viajeros
+   */
+  public Map<Viajero, LocalDate> obtenerLikesViajerosPerfiles(Long receptorID){
+    List<Likes> likes_dados = (List<Likes>) repository.findAllByUsuarioIDAndTipoUsuario(receptorID, 1);
+
+    Map<Long, LocalDate> viajeros_ids = new HashMap<>();
+    List<Long> lista_ids = new ArrayList<>();
+
+    for(Likes like : likes_dados){
+      viajeros_ids.put(like.getEmisorID(), like.getFecha());
+      lista_ids.add(like.getEmisorID());
+    }
+
+    List<Viajero> viajeros = gestorUsuarioService.obtenerListaViajeros(lista_ids);
+
+    Map<Viajero, LocalDate> resultado = new HashMap<>();
+    for (Viajero viajero : viajeros) {
+      resultado.put(viajero, viajeros_ids.get(viajero.getId()));
+    }
+
+    return resultado;
+  }
 
   /**
    * Obtener la lista de tipo <T> dados por un usuario
@@ -89,6 +119,7 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
     nuevoElemento.setEmisorID(usuarioID);
     nuevoElemento.setTipoUsuario(tipo_receptor);
     nuevoElemento.setUsuarioID(receptorID);
+    nuevoElemento.setFecha(LocalDate.now());
 
     // Si es un like comprobar si es recíproco para guardarlo en la tabla "matches"
     if(nuevoElemento instanceof Likes){
@@ -102,9 +133,8 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
       }
     }
 
-    // Si es una valoración añadir fecha e imagen de perfil del emisor
+    // Si es una valoración añadir imagen de perfil del emisor
     else if(nuevoElemento instanceof Valoraciones) {
-      ((Valoraciones) nuevoElemento).setFecha(LocalDate.now());
 
       //Actualizar la nota media del usuario receptor
       if (tipo_receptor == 1) {

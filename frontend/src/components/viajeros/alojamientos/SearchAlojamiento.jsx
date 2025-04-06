@@ -1,34 +1,28 @@
 import styles_mobile from "./SearchAlojamiento.module.css";
-import { useState } from "react";
 
-export default function SearchAlojamiento({ inputRef, filteredListRef, FilteredList, setOpenFilterMenu, headerStates, updateHeaderStates }) {
-  const [username, setUsername] = useState("");
-
-  // Cada vez que se reenderiza el componente, se crean los arrays de los JSON
-  const handleOnChange_searchUser = (e) => {
-    if (e.target.value === '' || e.target.value[0] !== '@') {
-      setUsername('@');
-    }
-    else
-      setUsername(e.target.value);
-  };
-
+export default function SearchAlojamiento({ inputRef, filteredListRef, FilteredList, setOpenFilterMenu, headerStates, updateHeaderStates, setRealizarBusqueda }) {
   return (
     <article className={styles_mobile.search_form_container}>
       <form className={styles_mobile.search_form}>
         {/*BUSCAR DESTINO*/}
         <div >
-          <img src="/images/viajeros/lupa_mobile.webp" width="50" alt='icono lupa' />
+          <img src="/images/viajeros/lupa_mobile.webp" width="50" alt='icono lupa' onClick={() =>  setRealizarBusqueda(true)}/>
           <input
             ref={inputRef}
             type="text"
             className={styles_mobile.searcher}
             name="buscador"
-            placeholder="Destino"
+            placeholder="Destino o @usuario"
             spellCheck="false"
             value={headerStates.location}
             onChange={(e) => updateHeaderStates({ location: e.currentTarget.value })}
             onFocus={() => updateHeaderStates({ locationFocus: true })}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault(); // Evita que el formulario se envíe
+                setRealizarBusqueda(true);
+              }
+            }}
           />
           {headerStates.locationFocus && headerStates.location &&
             <FilteredList
@@ -37,23 +31,7 @@ export default function SearchAlojamiento({ inputRef, filteredListRef, FilteredL
               updateListStates={updateHeaderStates}
             />
           }
-        </div>
-
-        {/*BUSCAR USUARIO*/}
-        <div>
-          <img src="/images/logos/search_user_active.webp" width="50" alt='icono usuario lupa' />
-          <input
-            type="text"
-            className={styles_mobile.searcher}
-            name="buscador"
-            placeholder="@username"
-            spellCheck="false"
-            value={username}
-            onFocus={() => { username === '' && setUsername('@'); }}
-            onBlur={() => setUsername("")}
-            onChange={handleOnChange_searchUser}
-          />
-        </div>
+        </div>       
       </form>
 
       <img
