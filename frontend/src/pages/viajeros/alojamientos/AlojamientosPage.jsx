@@ -3,13 +3,13 @@ const AnfProfilesGallery = lazy(() => import('../../../components/viajeros/aloja
 import Footer from '../../../components/footer/footer';
 import ViajerosFinalHeader from '../../../components/viajeros/header/ViajerosFinalHeader';
 import AnfitrionService from "../../../services/users/AnfitrionService";
-import BiografiasService from "../../../services/biografias/BiografiasService";
 import LikesService from "../../../services/matches/LikesService";
 import { Suspense } from "react";
 
 export default function AlojamientosPage() {
   const [anfitriones, setAnfitriones] = useState([]);
   const [anfitrionesEspecificos, setAnfitrionesEspecificos] = useState([]);
+  const [anfitrionesFiltrados, setAnfitrionesFiltrados] = useState([]);
   const [biografias, setBiografias] = useState([]);
 
   const [buscarUsuario, setBuscarUsuario] = useState(false);
@@ -32,7 +32,7 @@ export default function AlojamientosPage() {
    * @param anfitrion Objeto del anfitrion con su información
    * @returns True si cumple el filtrado
    */
-  function filtrarUsuario(anfitrion, biografia) {
+  function UsuarioFiltradoCorrecto(anfitrion, biografia) {
     let opcionesCumplidas = true; // Indica si el anfitrion cumple todo
 
     // Verificamos si `filterOptions.gustos` no está vacío
@@ -72,38 +72,47 @@ export default function AlojamientosPage() {
 
   // Obtener los anfitriones
   useEffect(() => {
-    // Obtener anfitriones
-    AnfitrionService.getAll().then(response => {
-      // Comprobar si hay un filtrado activo o no
-      if (!buscarFiltrado) {
-        setAnfitriones(response.data)
-      }
+    // Obtener anfitriones y sus biografias
+    if (anfitriones.length === 0) {
+      AnfitrionService.getAllConDatos().then(response => {
+        setAnfitriones(response.data.map(item => item.usuario));
+        setBiografias(response.data.map(item => item.biografia));
+        //console.log(response.data)
+      }).catch(error => console.error("Error al listar los usuarios : ", error));
+    }
 
-      else {
-        // TODO: SI YA HAY BIOGRAFIAS GUARDADAS NO HAFCE DE NUEVO LA LLAMADA
-        // Obtener las biografias y pasarle a cada anfitrión la suya
-        BiografiasService.getAll("anfitriones")
-          .then(biografia_response => {
-            const biografias = biografia_response.data;
-            setBiografias(biografias);
+    // Si se hace un buscado por filtrado
+    if (buscarFiltrado && biografias.length > 0) {
+      const UsuarioAMapear = buscarUsuario && anfitrionesEspecificos.length > 0 ? anfitrionesEspecificos : anfitriones;
 
-            setAnfitriones(response.data.filter(anfitrion =>
-              filtrarUsuario(anfitrion, biografias.find(bio => bio.id === anfitrion.id) || null)
-            ));
-            setBuscarFiltrado(false);
-          })
-          .catch(error => "Error al listar las biografías " + error);
-      }
+      // Obtener las biografias y pasarle a cada anfitrión la suya
+      const anfitrionesFiltrados = UsuarioAMapear.map(anfitrion => {
+        const biografia = biografias.find(bio => bio.usuarioID === anfitrion.id) || null;
+        return UsuarioFiltradoCorrecto(anfitrion, biografia) && anfitrion;
+      }).filter(Boolean)
+      
+      setAnfitrionesFiltrados(anfitrionesFiltrados);
+    }
 
-      //console.log(response.data)
-    }).catch(error => console.error("Error al listar los usuarios : ", error));
+    else if(!buscarFiltrado && anfitrionesFiltrados.length > 0){
+      setAnfitrionesFiltrados([]);
+    }
 
     // Obtener usuarios a los que se ha enviado el like
-    LikesService.getAllEnviados("viajeros", 1).then(response => {
-      SetConectados_ID(response.data.map(usuario => usuario.usuarioID));
-    }).catch(error => "Error al obtener los likes " + error)
-  }, [filterOptions]);
+    if (conectados_ID.length === 0) {
+      LikesService.getAllEnviados("viajeros", 1).then(response => {
+        SetConectados_ID(response.data.map(usuario => usuario.usuarioID));
+      }).catch(error => "Error al obtener los likes " + error)
+    }
+  }, [filterOptions, buscarUsuario, buscarFiltrado]);
 
+
+  const eliminarBuscados = () => {
+    setAnfitrionesEspecificos([]);
+    setAnfitrionesFiltrados([]);
+  } 
+
+  
   return (
     <>
       <title>Alojamientos | Viajeros</title>
@@ -112,6 +121,7 @@ export default function AlojamientosPage() {
         buscarUsuario={buscarUsuario}
         setBuscarUsuario={setBuscarUsuario}
         setAnfitrionesEspecificos={setAnfitrionesEspecificos}
+        setAnfitrionesFiltrados={setAnfitrionesFiltrados}
         setBuscarFiltrado={setBuscarFiltrado}
         filterOptions={filterOptions}
         setFilterOptions={setFilterOptions}
@@ -122,8 +132,11 @@ export default function AlojamientosPage() {
         <AnfProfilesGallery
           anfitriones={anfitriones}
           anfitrionesEspecificos={anfitrionesEspecificos}
+          anfitrionesFiltrados={anfitrionesFiltrados}
+          buscarFiltrado={buscarFiltrado}
           buscarUsuario={buscarUsuario}
           conectados_ID={conectados_ID}
+          eliminarBuscados={eliminarBuscados}
         />
       </Suspense>
 

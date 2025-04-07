@@ -5,7 +5,16 @@ import AnfitrionService from '../../../services/users/AnfitrionService';
 import FilteredCitiesList from '../../utilities/filteresCities/FilteredList';
 import FilterMenu from '../filter_menu/FilterMenu';
 
-export default function ViajerosFinalHeader({ defaultActive = "alojamientos", setBuscarUsuario = null, setAnfitrionesEspecificos = [], setBuscarFiltrado, filterOptions, setFilterOptions }) {
+export default function ViajerosFinalHeader({
+  defaultActive = "alojamientos",
+  setBuscarUsuario = null,
+  buscarUsuario = false,
+  setAnfitrionesEspecificos,
+  setBuscarFiltrado,
+  filterOptions,
+  setFilterOptions,
+  setAnfitrionesFiltrados
+}) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const inputRef = useRef(null);
   const filteredCitiesListRef = useRef(null);
@@ -58,8 +67,8 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", se
       setBuscarUsuario(false);
       setAnfitrionesEspecificos([]);
     }
-
-    if (realizarBusqueda) {
+    
+    else if (realizarBusqueda) {
       // Comprobamos si se está buscando por identificador
       if (headerStates.location.charAt(0) === "@") {
         AnfitrionService.getByPrivateID(headerStates.location.slice(1))
@@ -70,7 +79,6 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", se
           })
           .finally(() => {
             setBuscarUsuario(true);
-            setRealizarBusqueda(false);
           });
       }
 
@@ -85,10 +93,11 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", se
           .catch(error => console.error("Error obteniendo anfitriones:", error))
           .finally(() => {
             setBuscarUsuario(true);
-            setRealizarBusqueda(false);
           });
       }
     }
+
+    setRealizarBusqueda(false);
   }, [realizarBusqueda, headerStates.location])
 
 
@@ -126,6 +135,7 @@ export default function ViajerosFinalHeader({ defaultActive = "alojamientos", se
           filterOptions={filterOptions}
           setFilterOptions={setFilterOptions}
           setBuscarFiltrado={setBuscarFiltrado}
+          setAnfitrionesFiltrados={setAnfitrionesFiltrados}
         />}
     </>
   );

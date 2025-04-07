@@ -1,20 +1,37 @@
+import { useEffect, useState } from 'react';
 import AnfCard from '../../users_cards/AnfCard';
 import anf_card_styles from "../../users_cards/UserCard.module.css";
 import styles from "./AnfProfilesGallery.module.css";
 
-export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecificos = [], buscarUsuario = false, match = false, conectados_ID = [] }) {
-  const listaAnfitriones = buscarUsuario ? anfitrionesEspecificos : anfitriones;
+export default function Anf_Profiles_Gallery({ anfitriones = [], anfitrionesEspecificos = [], buscarUsuario = false, anfitrionesFiltrados = [], buscarFiltrado = false, match = false, conectados_ID = [], eliminarBuscados}) {
+  const [ListaAnfitriones, setListaAnfitriones] = useState([]);
+  
+  useEffect(() => {
+    if((anfitrionesFiltrados.length > 0 || buscarFiltrado && anfitrionesEspecificos.length > 0) && ListaAnfitriones !== anfitrionesFiltrados){
+      setListaAnfitriones(anfitrionesFiltrados);
+    }
 
+    else if((anfitrionesEspecificos.length > 0 || buscarUsuario) && ListaAnfitriones !== anfitrionesEspecificos){
+      setListaAnfitriones(anfitrionesEspecificos);
+    }
+
+    else if(ListaAnfitriones !== anfitriones){
+      setListaAnfitriones(anfitriones);
+      if (anfitrionesEspecificos.length > 0 || anfitrionesFiltrados.length > 0) {
+        eliminarBuscados();
+      }
+    }
+  },[anfitrionesEspecificos, anfitrionesFiltrados, anfitriones, buscarFiltrado, buscarUsuario])
+  
   // Comprueba si se dio like
   function likeDado(AnfitrionID) {
-    let contiene_id = conectados_ID.length > 0 && conectados_ID.some(id => id === AnfitrionID);
-    return contiene_id || match;
+    return conectados_ID.find(id => Number(id) === Number(AnfitrionID)) || match;
   }
 
   return (
     <section className={styles.card_users_container}>
       <article className={styles.card_users}>
-        {listaAnfitriones.map((anfitrion, index) => (
+        {ListaAnfitriones.map((anfitrion, index) => (
           <div key={index} className={styles.user_card}>
             <AnfCard
               styles={anf_card_styles}
@@ -34,8 +51,8 @@ export default function Anf_Profiles_Gallery({ anfitriones, anfitrionesEspecific
         ))}
 
         
-        {listaAnfitriones.length === 0 && listaAnfitriones === anfitrionesEspecificos && <h1 className={styles.not_found}>No hay anfitriones para esa ubicación o identificador.</h1>}
-        {listaAnfitriones.length === 0 && listaAnfitriones === anfitriones && <h1 className={styles.not_found}>No existen anfitriones con esos filtros.</h1>}
+        {ListaAnfitriones.length === 0 && ListaAnfitriones === anfitrionesEspecificos && <h1 className={styles.not_found}>No hay anfitriones para esa ubicación o identificador.</h1>}
+        {ListaAnfitriones.length === 0 && ListaAnfitriones === anfitrionesFiltrados && <h1 className={styles.not_found}>No existen anfitriones con esos filtros.</h1>}
 
       </article>
     </section>

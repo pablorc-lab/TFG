@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./FilterMenu.module.css";
 
 
-export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado }) {
+export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setAnfitrionesFiltrados }) {
   const [mouseEnter, SetMouseEnter] = useState(null);
 
   const [rango, setRango] = useState({ min: filterOptions.min, max: filterOptions.max });
@@ -19,7 +19,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
     filterOptions.camas,
     filterOptions.banios
   ]);
-
+  
   const [gustos_actuales, SetGustos_actuales] = useState(filterOptions.gustos);
   const [showDeleteImage, setShowDeleteImage] = useState(null);
   const gustosImages = [
@@ -54,7 +54,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
   const handleChangeViviendaValue = (index, item) => {
     SetOpcionesViviendaEscogida(prev => ({
       ...prev,
-      [index]: opcionesViviendaEscogida[index] === -1 ? item : -1
+      [index]: prev[index] === item ? -1 : item
     }))
   }
 
@@ -93,8 +93,9 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
       banios: -1,
       idiomas: [],
     });
-    setBuscarFiltrado(false);
     setOpenFilterMenu(false);
+    setBuscarFiltrado(false);
+    setAnfitrionesFiltrados([]);
   }
 
   return (
