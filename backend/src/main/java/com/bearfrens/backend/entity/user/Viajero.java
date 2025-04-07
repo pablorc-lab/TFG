@@ -19,8 +19,11 @@ public class Viajero extends Usuario<Experiencias>{
   @Column
   private int viajes_realizados = 0;
 
-  @Column
+  @Column(length = 20)
   private String profesion;
+
+  @Column(length = 15)
+  String tiempo_estancia;
 
   @OneToMany(mappedBy = "viajero", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Experiencias> experiencias;

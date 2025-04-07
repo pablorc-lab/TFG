@@ -1,0 +1,32 @@
+
+.filters_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.filters {
+  width: fit-content;
+  margin: 0 50px;
+  font-family: "Nunito";
+  user-select: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  background-color: #0a7273;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
+} 
+.filters:hover{ 
+  scale: 1.05;
+  box-shadow: 0 0 5px rgba(124, 124, 124, 0.705);
+}
+.filters img {width: 35px;}
+.filters span{
+  letter-spacing: 1px;
+  font-size: 27px;
+  color: white;
+  font-weight: 500;
+}

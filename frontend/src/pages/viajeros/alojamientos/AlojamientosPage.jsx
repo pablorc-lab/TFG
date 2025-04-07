@@ -32,7 +32,7 @@ export default function AlojamientosPage() {
    * @param anfitrion Objeto del anfitrion con su información
    * @returns True si cumple el filtrado
    */
-  function UsuarioFiltradoCorrecto(anfitrion, biografia) {
+  function AnfitrionFiltradoCorrecto(anfitrion, biografia) {
     let opcionesCumplidas = true; // Indica si el anfitrion cumple todo
 
     // Verificamos si `filterOptions.gustos` no está vacío
@@ -88,7 +88,7 @@ export default function AlojamientosPage() {
       // Obtener las biografias y pasarle a cada anfitrión la suya
       const anfitrionesFiltrados = UsuarioAMapear.map(anfitrion => {
         const biografia = biografias.find(bio => bio.usuarioID === anfitrion.id) || null;
-        return UsuarioFiltradoCorrecto(anfitrion, biografia) && anfitrion;
+        return AnfitrionFiltradoCorrecto(anfitrion, biografia) && anfitrion;
       }).filter(Boolean)
       
       setAnfitrionesFiltrados(anfitrionesFiltrados);

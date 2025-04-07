@@ -207,6 +207,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     // Almacenar valores distintos si es viajero
     if(user instanceof Viajero){
       Optional.ofNullable(((Viajero) userRequest).getProfesion()).ifPresent(((Viajero) user)::setProfesion);
+      Optional.ofNullable(((Viajero) userRequest).getTiempo_estancia()).ifPresent(((Viajero) user)::setTiempo_estancia);
     }
 
     // Guardar el usuario actualizado

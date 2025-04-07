@@ -67,7 +67,7 @@ export default function ViajerosFinalHeader({
       setBuscarUsuario(false);
       setAnfitrionesEspecificos([]);
     }
-    
+
     else if (realizarBusqueda) {
       // Comprobamos si se está buscando por identificador
       if (headerStates.location.charAt(0) === "@") {
@@ -136,7 +136,8 @@ export default function ViajerosFinalHeader({
           setFilterOptions={setFilterOptions}
           setBuscarFiltrado={setBuscarFiltrado}
           setAnfitrionesFiltrados={setAnfitrionesFiltrados}
-        />}
+        />
+      }
     </>
   );
 }

@@ -3,7 +3,7 @@ import styles from "./ViajerosHeader.module.css"
 import { Link } from "react-router-dom";
 import DropDownMenu from '../../dropdown_menu/DropDownMenu';
 
-export default function ViajerosHeader({ inputRef, filteredCitiesListRef, FilteredCitiesList, setOpenFilterMenu, headerStates, updateHeaderStates, activeSection, setActiveSection, setRealizarBusqueda}) {
+export default function ViajerosHeader({ inputRef, filteredCitiesListRef, FilteredCitiesList, setOpenFilterMenu, headerStates, updateHeaderStates, activeSection, setActiveSection, setRealizarBusqueda }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const userRef = useRef(null);
@@ -40,7 +40,7 @@ export default function ViajerosHeader({ inputRef, filteredCitiesListRef, Filter
         {/* Barra de bússqueda para ALOJAMIENTOS*/}
         <article className={`${styles.search_form_container} ${activeSection !== "alojamientos" ? styles.inactive_form : undefined}`}>
           <form className={styles.search_form}>
-            <img src="/images/viajeros/lupa.webp" width="50" alt='icono lupa' onClick={() =>  setRealizarBusqueda(true)} />
+            <img src="/images/viajeros/lupa.webp" width="50" alt='icono lupa' onClick={() => setRealizarBusqueda(true)} />
             <input
               ref={inputRef}
               type="text"
@@ -58,7 +58,13 @@ export default function ViajerosHeader({ inputRef, filteredCitiesListRef, Filter
                 }
               }}
             />
-            {headerStates.locationFocus && headerStates.location && <FilteredCitiesList filteredListRef={filteredCitiesListRef} listStates={headerStates} updateListStates={updateHeaderStates} />}
+            {headerStates.locationFocus && headerStates.location &&
+              <FilteredCitiesList
+                filteredListRef={filteredCitiesListRef}
+                listStates={headerStates}
+                updateListStates={updateHeaderStates}
+                setRealizarBusqueda={setRealizarBusqueda}
+              />}
           </form>
 
           <div className={styles.filters} onClick={() => setOpenFilterMenu(true)}>

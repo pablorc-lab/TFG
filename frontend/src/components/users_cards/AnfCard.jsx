@@ -21,7 +21,7 @@ export default function Anf_card({
 
   const [changeConectado, setChangeConectado] = useState(conectado);
 
-  function handleLike(viajero_ID) {
+  function handleLike(anf_id) {
     setChangeConectado(true);
     LikesService.crearLike("viajeros", viajero_ID, anf_id);
   }

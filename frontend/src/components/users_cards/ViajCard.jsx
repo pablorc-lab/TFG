@@ -13,6 +13,7 @@ export default function Inq_card({
   Profesion = "-",
   Descripcion = "-",
   Gustos_imgs,
+  tiempo_estancia,
   enlace = true,
   conectado = false,
   anfitrion_ID = null
@@ -23,6 +24,16 @@ export default function Inq_card({
   function handleLike(anfitrion_ID) {
     setChangeConectado(true);
     LikesService.crearLike("anfitriones", anfitrion_ID, viaj_ID);
+  }
+
+  function returnTiempoValue(tiempo_estancia){
+    switch (tiempo_estancia){
+      case "< 1 mes" : return 20;
+      case "1 - 3 meses" : return 35;
+      case "3 - 6 meses" : return 55;
+      case "6 - 12 meses" : return 75;
+      case "> 1 año" : return 95;
+    }
   }
 
   return (
@@ -64,9 +75,9 @@ export default function Inq_card({
       <section className={styles.conectar_section}>
         <article className={styles.estancia_viaj}>
           <div>
-            <progress max="100" value={90} />
+            <progress max="100" value={returnTiempoValue(tiempo_estancia)} />
           </div>
-          <p>1 mes - 1 año</p>
+          <p>{tiempo_estancia}</p>
         </article>
 
         {!changeConectado ? (

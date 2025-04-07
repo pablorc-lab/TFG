@@ -7,11 +7,11 @@ export default function Anf_Profiles_Gallery({ anfitriones = [], anfitrionesEspe
   const [ListaAnfitriones, setListaAnfitriones] = useState([]);
   
   useEffect(() => {
-    if((anfitrionesFiltrados.length > 0 || buscarFiltrado && anfitrionesEspecificos.length > 0) && ListaAnfitriones !== anfitrionesFiltrados){
+    if(buscarFiltrado){
       setListaAnfitriones(anfitrionesFiltrados);
     }
 
-    else if((anfitrionesEspecificos.length > 0 || buscarUsuario) && ListaAnfitriones !== anfitrionesEspecificos){
+    else if(anfitrionesEspecificos.length > 0 || buscarUsuario){
       setListaAnfitriones(anfitrionesEspecificos);
     }
 

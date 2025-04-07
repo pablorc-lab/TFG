@@ -1,0 +1,283 @@
+body:has(.dialog[open]) {
+  overflow: hidden;
+  pointer-events: none;
+}
+.dialog:focus, .main:focus{outline: none;}
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2px);
+}
+
+.dialog h1 {margin: 0;}
+.dialog{
+  font-family: "Nunito";
+  pointer-events: none;
+  user-select: none;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 0px;
+  background: white;
+  max-height: 90vh;
+  width: 85%;
+  max-width: 750px;
+  pointer-events: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  animation: aparecer 0.25s ease-in-out forwards;
+  overflow: none;
+}
+
+@keyframes aparecer {
+  0% {opacity: 0; transform: translateY(-120px);}
+  100% {opacity: 1; transform: translateY(0px);}
+}
+
+/*? CERRAR DIALOG*/
+.cerra_menu {
+  user-select: none;
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(calc(-50% - 12.5px));
+  left: 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+}
+.cerra_menu:hover {
+  filter: brightness(0.9);
+  background-color: rgba(255, 5, 5, 0.15);
+}
+
+/*? TITULO*/
+.titulo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid lightgray;
+}
+
+.titulo h1 {
+  font-size: 25px;
+}
+
+
+/*? IMÁGENES DE LOS GUSTOS*/
+.gusto_image {
+  max-width: 55px;
+  aspect-ratio: 1 / 1;
+}
+
+.input_MiCuenta_gustos {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 30px;
+  row-gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.input_MiCuenta_gustos div {
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.1s ease-in-out;
+}
+.input_MiCuenta_gustos img:nth-child(1){
+  min-width: 50px;
+  width: 8vw;
+  aspect-ratio: 1 / 1;
+}
+
+.gusto_active {
+  cursor: pointer;
+  outline: 2px solid #0a7273;
+  background-color: #0a717318;
+  box-shadow: 0 0 9px #0a71737c;
+}
+
+.gusto_delete:hover {
+  background-color: #d12e2e1c;
+  outline: 2px solid #d12e2e;
+  box-shadow: 0 0 10px rgba(211, 11, 4, 0.507);
+}
+
+.input_MiCuenta_gustos div:not(.gusto_active):hover{
+  background-color: rgba(189, 189, 189, 0.219);
+  outline: 2px solid lightgray;
+}
+.input_MiCuenta_gustos div:not(.gusto_active) {
+  cursor: pointer;
+}
+.delete_icon {
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  cursor: pointer;
+  width: 30px;
+  top: -10px;
+  right: -17px;
+  padding: 3px;
+  background-color: #d12e2e;
+  border-radius: 50px;
+}
+
+.input_MiCuenta_gustos div.add_gusto  { 
+  cursor: pointer;
+  padding: 0px;
+}
+
+
+/*? SECCIONES*/
+.main {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+  overflow-y: auto;
+  height: calc(90vh - 170px);
+}
+.main h2 {
+  margin-bottom: 15px;
+  font-size: 27px;
+  font-weight: 650;
+  color: #0a7273;
+}
+.main section:first-child h2{ margin-top: 0;}
+.main section:not(:last-child) { border-bottom: 1px solid rgb(219, 219, 219);}
+.main section {padding-bottom: 25px;}
+
+/*? BOTON DE APLICAR FILTROS*/
+.button_filtros p {
+  cursor: pointer;
+  margin: 0;
+  margin-left: 30px;
+  border-radius: 1px;
+  font-size: 23px;
+  text-decoration: underline;
+}
+.button_filtros p:hover {
+  outline: 10px solid rgb(235, 235, 235);
+  background-color: rgb(235, 235, 235);
+}
+.button_filtros {
+  box-shadow: 0 -4px 10px -4px rgba(0, 0, 0, 0.25);
+  border-top: 1px solid lightgray;
+  padding-top: 20px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.button_filtros button {
+  margin-right: 30px;
+  cursor: pointer;
+  background-color: #0a7273;
+  color: white;
+  font-family: "Nunito";
+  font-weight: 600;
+  padding: 10px 15px;
+  font-size: 22px;
+  border: none;
+  border-radius: 3px;
+}
+.button_filtros button:hover { filter: brightness(0.8);}
+
+/*? OPCIONES DE LA VIVIENDA*/
+.input_habitaciones {
+  display: grid;
+  gap: 30px;
+}
+.input_habitaciones div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.input_habitaciones label {
+  font-size: 19px;
+  font-weight: 600;
+}
+.lista_botones {
+  padding-left: 0;
+  display: grid;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lista_botones button{
+  text-align: center;
+  cursor: pointer;
+  color: rgb(95, 95, 95);
+  background-color: rgb(248, 248, 248);
+  border: 2px solid lightgray;
+  border-radius: 5px;
+  font-family: "Nunito";
+  padding: 5px 10px;
+  font-size: 19px;
+  width: 45px;
+  transition: filter 0.1s ease-in-out;
+}
+.lista_botones button:not(.opcion_activa):hover{ filter: brightness(0.9);}
+.lista_botones  .opcion_activa {
+  color: #0a7273;
+  font-weight: 500;
+  border-color: #0a7273;
+  background-color: #0a717318;
+  box-shadow: 0 0 3px #0a71737c;
+}
+
+/*? IDIOMAS*/
+.input_idioma {
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 25px;
+  row-gap: 15px;
+}
+
+.idioma_opcion {
+  cursor: pointer;
+  font-family: "Nunito";
+  padding: 6px 0;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 22px;
+  background-color: white ;
+  width: 150px;
+  justify-content: center;
+  color: rgb(95, 95, 95);
+  background-color: rgb(248, 248, 248);
+  border: 2px solid lightgray;
+  transition: filter 0.1s ease-in-out;
+}
+.idioma_opcion:hover {filter: brightness(0.9);}
+.idioma_opcion.idioma_active {
+  background-color: #0a7273;
+  color: #0a7273;
+  font-weight: 500;
+  border-color: #0a7273;
+  background-color: #0a717318;
+  box-shadow: 0 0 3px #0a71737c;
+}
+
+@media (min-width: 750px){
+
+  .input_Rango { gap: 30px;}
+  .input_habitaciones {
+    padding: 0 40px;
+  }
+  .input_habitaciones label {
+    font-size: 21px;
+  }
+  .lista_botones button{
+    width: 70px;
+
+  }
+
+  .line_range {
+    margin-top: 28px;
+  }
+  .input_Rango div label { font-size: 21px;}
+  .input_Rango div input{   font-size: 24px; }
+}

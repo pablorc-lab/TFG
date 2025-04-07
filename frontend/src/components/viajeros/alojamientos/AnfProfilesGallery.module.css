@@ -10,7 +10,7 @@
   padding: 50px;
   display: flex;
   align-content: center;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 50px;
 }
@@ -20,6 +20,7 @@
 
 
 .not_found {
+  width: 100%;
   transform: translateY(50px);
   text-align: center;
   font-family: "Nunito";

@@ -14,7 +14,7 @@
 .anf_link {color: black;}
 
 .general_prof:hover { 
-  box-shadow: 0 0 20px #00000088;
+  box-shadow: 0 0 10px #00000062;
 }
 
 .btn_conectar:not(.viaj_prof .btn_conectar) {

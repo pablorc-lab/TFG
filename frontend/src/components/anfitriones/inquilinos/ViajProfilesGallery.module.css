@@ -2,18 +2,28 @@
 /*? PERFILES DE LOS VIAJEROS
 /*?==============================*/
 .card_users {
-  padding: 40px 50px;
+  padding: 40px 40px;
   display: flex;
   align-content: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   column-gap: 20px;
   row-gap: 50px;
 }
 .card_users div { z-index: 0;}
 
+
+.not_found {
+  width: 100%;
+  transform: translateY(50px);
+  text-align: center;
+  font-family: "Nunito";
+  font-size: 45px;
+}
+
 @media (max-width: 770px) {
   .card_users {
+    padding: 40px 40px;
     padding-bottom: 150px;
   }
 }
