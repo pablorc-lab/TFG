@@ -30,8 +30,8 @@ public class Anfitrion extends Usuario<Recomendaciones>{
     super();
   }
 
-  public Anfitrion(String privateID, String email, String nombre, String password, String apellido, LocalDate fecha_nacimiento, String profileImage, BigDecimal valoracion_media, String descripcion, String gusto1, String gusto2, String gusto3, int num_valoraciones) {
-    super(privateID, email, nombre, password, apellido, fecha_nacimiento, profileImage, valoracion_media, descripcion, gusto1, gusto2, gusto3, num_valoraciones);
+  public Anfitrion(String privateID, String email, String nombre, String apellido, LocalDate fecha_nacimiento, String profileImage, BigDecimal valoracion_media, String descripcion, String gusto1, String gusto2, String gusto3, int num_valoraciones) {
+    super(privateID, email, nombre, apellido, fecha_nacimiento, profileImage, valoracion_media, descripcion, gusto1, gusto2, gusto3, num_valoraciones);
   }
 
   // GETTERS and SETTERSs

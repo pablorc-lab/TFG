@@ -29,14 +29,15 @@ public class AuthController {
   @Autowired
   private AuthService authService;
 
+  private static final BCryptPasswordEncoder decoder = new BCryptPasswordEncoder();
+
   /**
    * Obtiene el JSON con el tipo de usuario y un objeto con el mismo
    * @return Un token de inicio de sesión y el tipo de usuario
    */
-  @GetMapping("/login")
+  @PostMapping("/login")
   public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
     Map<String, Object> response = authService.obtenerUsuario(loginRequest.getEmail()).getBody();
-
     // Comprobar primero que el usuario exista
     if(response == null){
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el usuario con el email : " + loginRequest.getEmail());
@@ -44,10 +45,10 @@ public class AuthController {
 
     String tipo = (String) response.get("tipo");
     boolean passwordMatches = false;
-    BCryptPasswordEncoder decoder  = new BCryptPasswordEncoder();
 
     // Si es anfitrión verificar su contraseña
     if(tipo.equals("anfitrion")){
+
       Anfitrion anfitrion = (Anfitrion) response.get("usuario");
       passwordMatches = decoder.matches(loginRequest.getPassword(), anfitrion.getPassword());
 

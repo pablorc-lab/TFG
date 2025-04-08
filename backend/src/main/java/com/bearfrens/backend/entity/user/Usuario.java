@@ -71,12 +71,11 @@ public abstract class Usuario<TC>{
   public Usuario() {}
 
   // Constructor con cifrado de contraseña
-  public Usuario(String privateID, String email, String nombre, String password, String apellido, LocalDate fecha_nacimiento,
+  public Usuario(String privateID, String email, String nombre, String apellido, LocalDate fecha_nacimiento,
                  String profileImage, BigDecimal valoracion_media, String descripcion, String gusto1, String gusto2, String gusto3, int num_valoraciones) {
     this.privateID = privateID;
     this.email = email;
     this.nombre = nombre;
-    setPassword(password); // Ciframos la contraseña
     this.apellido = apellido;
     this.fecha_nacimiento = fecha_nacimiento;
     this.profileImage = (profileImage == null || profileImage.isEmpty()) ? null : profileImage;
@@ -90,7 +89,7 @@ public abstract class Usuario<TC>{
 
   // GETTERS and SETTERS
   // Cifrar la nueva contraseña
-  public void setPassword(String newPassword) {
+  public void setFiltrarPasword(String newPassword) {
     this.password = encoder.encode(newPassword);
   }
 

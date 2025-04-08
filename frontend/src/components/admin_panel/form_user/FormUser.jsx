@@ -61,7 +61,9 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
   // Si todo está bien, proceder a crear/actualizar la cuenta
   function sendUserData(userData) {
     setErrorInput(false);
-    const userAction = userID ? userService.update(userID, userData) : userService.create(userData);
+    const userAction = userID 
+      ? userService.update(userID, Object.fromEntries(Object.entries(userData).filter(([_, value]) => value !== "" && value != null)))
+      : userService.create(userData);
 
     userAction
       .then(response => {

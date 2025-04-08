@@ -189,6 +189,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
       return null;
     }
 
+    user.setFiltrarPasword(user.getPassword());
     return repository.save(user);
   }
 
@@ -225,7 +226,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     // Actualizar los valores de cada campo que no sean null
     Optional.ofNullable(userRequest.getPrivateID()).ifPresent(user::setPrivateID);
     Optional.ofNullable(userRequest.getEmail()).ifPresent(user::setEmail);
-    Optional.ofNullable(userRequest.getPassword()).ifPresent(user::setPassword);
+    Optional.ofNullable(userRequest.getPassword()).ifPresent(user::setFiltrarPasword);
     Optional.ofNullable(userRequest.getNombre()).ifPresent(user::setNombre);
     Optional.ofNullable(userRequest.getApellido()).ifPresent(user::setApellido);
     Optional.ofNullable(userRequest.getFecha_nacimiento()).ifPresent(user::setFecha_nacimiento);
@@ -255,9 +256,8 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
+
     Map<String, Boolean> respuesta = new HashMap<>();
-    repository.delete(user);
-    respuesta.put("User delete ", true);
 
     // Eliminar todo lo asociado al usuario
     String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
@@ -270,6 +270,10 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     if(user instanceof Anfitrion){
       respuesta.put("Vivienda delete ", viviendasService.eliminarVivienda(userID).getBody().get("delete")); // Contenido asociado (Recomendaciones/Experiencias)
     }
+
+    // Eliminar el usuario
+    repository.delete(user);
+    respuesta.put("User delete ", true);
 
     // Devolvemos una respueta JSON ---> "delete" : true
     return ResponseEntity.ok(respuesta);
