@@ -10,9 +10,10 @@
   padding: 50px;
   display: flex;
   align-content: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 50px;
+  gap: 130px;
+  row-gap: 100px;
 }
 .card_users div {
   z-index: 0;

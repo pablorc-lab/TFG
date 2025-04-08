@@ -156,6 +156,7 @@
 .search_form_container:not(.inactive_form) .searcher:focus { outline: none;}
 
 .filters {
+  position: relative;
   user-select: none;
   cursor: pointer;
   padding: 10px 15px;
@@ -168,6 +169,18 @@
 .search_form_container:not(.inactive_form) .filters:hover{ 
   filter: brightness(0.9);
   box-shadow: 0 0 7px gray;
+}
+.filters_active {
+  outline: 3px solid black;
+}
+.filters p {
+  position: absolute;
+  padding: 5px 10px;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+  right: -5px;
+  top: -30px;
 }
 .filters img {width: 30px;}
 .filters span{

@@ -2,9 +2,9 @@ import { useState } from "react";
 import styles from "./FilterMenu.module.css";
 
 
-export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setAnfitrionesFiltrados }) {
+export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setAnfitrionesFiltrados, setFiltrosActivos }) {
   const [mouseEnter, SetMouseEnter] = useState(null);
-
+  
   const [rango, setRango] = useState({ min: filterOptions.min, max: filterOptions.max });
 
   const opcionesVivienda = [
@@ -70,15 +70,17 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
       idiomas: UserIdiomas,
     });
 
-    const isFilterChanged = rango.max !== 0 ||
-      opcionesViviendaEscogida[0] !== -1 ||
-      opcionesViviendaEscogida[1] !== -1 ||
-      opcionesViviendaEscogida[2] !== -1 ||
-      opcionesViviendaEscogida[3] !== -1 ||
-      gustos_actuales.length > 0 ||
-      UserIdiomas.length > 0;
+    let filtros_activos = 0;
+    if (rango.max !== 0) filtros_activos++;
+    if (opcionesViviendaEscogida[0] !== -1) filtros_activos++;
+    if (opcionesViviendaEscogida[1] !== -1) filtros_activos++;
+    if (opcionesViviendaEscogida[2] !== -1) filtros_activos++;
+    if (opcionesViviendaEscogida[3] !== -1) filtros_activos++;
+    if (gustos_actuales.length > 0) filtros_activos += gustos_actuales.length;
+    if (UserIdiomas.length > 0) filtros_activos += UserIdiomas.length;;
 
-    setBuscarFiltrado(isFilterChanged);
+    setFiltrosActivos(filtros_activos);
+    setBuscarFiltrado(filtros_activos > 0);
     setOpenFilterMenu(false);
   }
 
@@ -93,6 +95,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
       banios: -1,
       idiomas: [],
     });
+    setFiltrosActivos(0);
     setOpenFilterMenu(false);
     setBuscarFiltrado(false);
     setAnfitrionesFiltrados([]);

@@ -11,9 +11,10 @@ export default function InquilinosPage() {
   const [viajeros, SetViajeros] = useState([]);
   const [viajerosFiltrados, setViajerosFiltrados] = useState([]);
   const [biografias, setBiografias] = useState([]);
-
+  
   const [conectados_ID, SetConectados_ID] = useState([]);
 
+  const [filtrosActivos, setFiltrosActivos] = useState(0);
   const [openFilterMenu, setOpenFilterMenu] = useState(null)
   const [buscarFiltrado, setBuscarFiltrado] = useState(false);
   const [filterOptions, setFilterOptions] = useState({
@@ -36,7 +37,7 @@ export default function InquilinosPage() {
       opcionesCumplidas &= gustosViajeros.some(gusto => filterOptions.gustos.includes(gusto));
     }
 
-    if(filterOptions.tiempo_estancia !== ""){
+    if(filterOptions.tiempo_estancia.length > 0){
       opcionesCumplidas &= filterOptions.tiempo_estancia.includes(viajero.tiempo_estancia);
     }
     // Si `filterOptions.idiomas` no está vacío
@@ -67,7 +68,7 @@ export default function InquilinosPage() {
         return ViajeroFiltradoCorrecto(viajero, biografia) && viajero;
       }).filter(Boolean)
       setViajerosFiltrados(viajerosFiltrados);
-      //console.log(viajerosFiltrados);
+      console.log(viajerosFiltrados);
     }
 
     else if(!buscarFiltrado && viajerosFiltrados.length > 0){
@@ -91,9 +92,10 @@ export default function InquilinosPage() {
       <AnfitrionFinalHeader />
 
       <article className={styles.filters_container}>
-        <div className={styles.filters} onClick={() => setOpenFilterMenu(true)}>
+        <div className={`${styles.filters} ${filtrosActivos > 0 ? styles.filters_active : ""}`} onClick={() => setOpenFilterMenu(true)}>
           <img src="/images/viajeros/filtros.webp" width="50" alt="icono filtro" />
           <span>Filtros</span>
+          {filtrosActivos > 0 && <p>{filtrosActivos}</p>}
         </div>
       </article>
 
@@ -104,6 +106,7 @@ export default function InquilinosPage() {
           setFilterOptions={setFilterOptions}
           setBuscarFiltrado={setBuscarFiltrado}
           setViajerosFiltrados={setViajerosFiltrados}
+          setFiltrosActivos={setFiltrosActivos}
         />
       }
 

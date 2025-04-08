@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./FilterMenu.module.css";
 
 
-export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setViajerosFiltrados }) {
+export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setViajerosFiltrados, setFiltrosActivos }) {
   const [mouseEnter, SetMouseEnter] = useState(null);
 
   const [tiempoEstanciaEstimado, SetTiempoEstanciaEstimado] = useState(filterOptions.tiempo_estancia);
@@ -40,8 +40,10 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
       tiempo_estancia : tiempoEstanciaEstimado
     });
 
-    const isFilterChanged = gustos_actuales.length > 0 || UserIdiomas.length > 0 || tiempoEstanciaEstimado !== "";
-    setBuscarFiltrado(isFilterChanged);
+    let filtros_activos = gustos_actuales.length + UserIdiomas.length + tiempoEstanciaEstimado.length;
+    
+    setFiltrosActivos(filtros_activos);
+    setBuscarFiltrado(filtros_activos > 0);
     setOpenFilterMenu(false);
   }
 
@@ -51,6 +53,8 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
       idiomas: [],
       tiempo_estancia : []
     });
+
+    setFiltrosActivos(0);
     setOpenFilterMenu(false);
     setBuscarFiltrado(false);
     setViajerosFiltrados([]);

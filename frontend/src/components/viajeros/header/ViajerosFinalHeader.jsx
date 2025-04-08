@@ -19,6 +19,7 @@ export default function ViajerosFinalHeader({
   const inputRef = useRef(null);
   const filteredCitiesListRef = useRef(null);
 
+  const [filtrosActivos, setFiltrosActivos] = useState(0);
   const [openFilterMenu, setOpenFilterMenu] = useState(null)
 
   const [activeSection, setActiveSection] = useState(defaultActive);
@@ -114,6 +115,7 @@ export default function ViajerosFinalHeader({
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           setRealizarBusqueda={setRealizarBusqueda}
+          filtrosActivos={filtrosActivos}
         />
         : <ViajerosMobileHeader
           inputRef={inputRef}
@@ -125,6 +127,7 @@ export default function ViajerosFinalHeader({
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           setRealizarBusqueda={setRealizarBusqueda}
+          filtrosActivos={filtrosActivos}
         />
       }
 
@@ -136,6 +139,7 @@ export default function ViajerosFinalHeader({
           setFilterOptions={setFilterOptions}
           setBuscarFiltrado={setBuscarFiltrado}
           setAnfitrionesFiltrados={setAnfitrionesFiltrados}
+          setFiltrosActivos={setFiltrosActivos}
         />
       }
     </>

@@ -16,6 +16,10 @@ class UsuarioService {
     return axios.get(this.baseUrl, { auth: this.auth });
   }
 
+  getAllPaginación(pagina, tamanio) {
+    return axios.get(`${this.baseUrl}/paginacion/${pagina}/${tamanio}`, { auth: this.auth });
+  }
+
   getAllConDatos() {
     return axios.get(`${this.baseUrl}/datos`, { auth: this.auth });
   }

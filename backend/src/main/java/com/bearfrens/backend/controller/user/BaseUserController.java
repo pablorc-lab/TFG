@@ -17,6 +17,8 @@ import com.bearfrens.backend.service.valoraciones_conexiones.ValoracionesService
 import com.bearfrens.backend.service.viviendas.ViviendasService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +75,27 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return repository.findAll();
   }
 
+  /**
+   * Obtener todo el listado de usuarios con paginación
+   * @return Listado array de usuarios
+   */
+  @GetMapping("/paginacion/{pagina}/{tamanio}")
+  public ResponseEntity<?> listarTodosPaginacion(@PathVariable int pagina, @PathVariable int tamanio) {
+    PageRequest pages = PageRequest.of(pagina, tamanio);
+    Page<T> usuarios = repository.findAll(pages);
+    List<Map<String, Object>> resultado = new ArrayList<>();
+
+    for(T user : usuarios){
+      String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
+      Biografias biografia = biografiasService.obtenerBiografia(tipo_user, user.getId()).orElse(null);
+      resultado.add(Map.of(
+        "usuario", user,
+        "biografia", (biografia != null ? biografia : Map.of())
+      ));
+    }
+
+    return ResponseEntity.ok(resultado);
+  }
 
   /**
    * Listar todos los usuarios pero con sus datos

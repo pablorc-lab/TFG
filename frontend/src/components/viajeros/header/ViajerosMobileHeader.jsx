@@ -3,7 +3,18 @@ import styles_mobile from "./ViajerosMobileHeader.module.css"
 import { Link } from 'react-router-dom';
 const SearchAlojamiento = lazy(() => import("../alojamientos/SearchAlojamiento"));
 
-export default function ViajerosMobileHeader({ inputRef = null, filteredCitiesListRef = null, FilteredCitiesList, setOpenFilterMenu, headerStates = null, updateHeaderStates = null, activeSection = "alojamientos", setActiveSection, setRealizarBusqueda }) {
+export default function ViajerosMobileHeader({
+  inputRef = null,
+  filteredCitiesListRef = null,
+  FilteredCitiesList,
+  setOpenFilterMenu,
+  headerStates = null,
+  updateHeaderStates = null,
+  activeSection = "alojamientos",
+  setActiveSection,
+  setRealizarBusqueda,
+  filtrosActivos
+}) {
   // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
     return (activeSection === nameSection) ? styles_mobile.active_section : undefined;
@@ -22,13 +33,13 @@ export default function ViajerosMobileHeader({ inputRef = null, filteredCitiesLi
           </Link>
 
           <Link to="/viajeros/alojamientos">
-          <div className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>
-            <img
-              src={`/images/viajeros/comunidades_header.webp`}
-              width="50"
-              alt='icono comunidades'
-            />
-            <span>Grupos</span>
+            <div className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>
+              <img
+                src={`/images/viajeros/comunidades_header.webp`}
+                width="50"
+                alt='icono comunidades'
+              />
+              <span>Grupos</span>
             </div>
           </Link>
 
@@ -51,15 +62,16 @@ export default function ViajerosMobileHeader({ inputRef = null, filteredCitiesLi
       </header>
 
       {/*Buscador siempre que estemos en alojamientos*/}
-      {activeSection === 'alojamientos' && 
-        <SearchAlojamiento 
-          inputRef={inputRef} 
+      {activeSection === 'alojamientos' &&
+        <SearchAlojamiento
+          inputRef={inputRef}
           filteredListRef={filteredCitiesListRef}
           setOpenFilterMenu={setOpenFilterMenu}
           FilteredList={FilteredCitiesList}
           headerStates={headerStates}
           updateHeaderStates={updateHeaderStates}
           setRealizarBusqueda={setRealizarBusqueda}
+          filtrosActivos={filtrosActivos}
         />
       }
 

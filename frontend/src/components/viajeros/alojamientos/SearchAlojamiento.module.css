@@ -69,3 +69,20 @@
   filter: brightness(0.9);
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
+
+.filter_container{
+  position: relative;
+}
+.filters_active {
+  outline: 3px solid black;
+}
+.filter_container p {
+  font-family: "Nunito";
+  position: absolute;
+  padding: 5px 10px;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+  right: -5px;
+  top: -30px;
+}
