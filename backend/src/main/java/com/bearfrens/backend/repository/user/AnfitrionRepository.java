@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface AnfitrionRepository extends JpaRepository<Anfitrion, Long> {
   // Spring se encarga de generar el metodo "EXISTS" asociado a encontrar ese campo
   boolean existsByEmail(String email);
+  Optional<Anfitrion> findByEmail(String email);
   Optional<Anfitrion> findByPrivateID(String privateID);
 
 }

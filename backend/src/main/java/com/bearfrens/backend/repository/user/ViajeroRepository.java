@@ -17,6 +17,7 @@ import java.util.Optional;
 public interface ViajeroRepository  extends JpaRepository<Viajero, Long> {
   // Spring se encarga de generar el metodo "EXISTS" asociado a encontrar ese campo
   boolean existsByEmail(String email);
+  Optional<Viajero> findByEmail(String email);
 
   // Encontrar todos los viajeros dado sus id
   List<Viajero> findAllByIdIn(List<Long> ids);

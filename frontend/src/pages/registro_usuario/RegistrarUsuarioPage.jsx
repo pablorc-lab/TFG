@@ -2,7 +2,7 @@ import { useState } from "react"
 import styles from "./accesos.module.css"
 import { validateEmail, validateNames, validateIdUser, validateAge } from "../../components/registro_usuarios/validations";
 import { Link } from "react-router-dom";
-import UsuarioService from "../../services/UsuarioService";
+import UsuarioService from "../../services/users/UsuarioService";
 
 export default function RegistrarUsuarioPage() {
   const [actualStep, setActualStep] = useState(0);
@@ -37,8 +37,8 @@ export default function RegistrarUsuarioPage() {
   // Funcion para crear al usuario según su tipo
   const createUser = async () => {
     const UserService = userValues.userType === "anfitrion"
-      ? (await import("../../services/AnfitrionService")).default
-      : (await import("../../services/ViajeroService")).default;
+      ? (await import("../../services/users/AnfitrionService")).default
+      : (await import("../../services/users/ViajeroService")).default;
 
     const { userType, ...userData } = userValues;
 
@@ -108,9 +108,8 @@ export default function RegistrarUsuarioPage() {
         })
         .catch(error => console.error("Error al buscar el email:", error));
     }
-    else {
-      setActualStep(actualStep + 1);
-    }
+    setActualStep(actualStep + 1);
+
   }
 
   // Formulario del primer paso del registro

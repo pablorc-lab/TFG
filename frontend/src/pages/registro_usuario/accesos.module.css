@@ -101,7 +101,7 @@
 /*? Registro Ultimo paso tipo de cuenta*/
 .input_tipo_cuenta {
   cursor: pointer;
-  border: 2px solid rgb(202, 202, 202);
+  border: 2px solid rgb(165, 165, 165);
   border-radius: 3px;
   padding: 15px;
   display: flex;
@@ -120,11 +120,11 @@
   flex-shrink: 0;
   width: 50px;
   aspect-ratio: 1 / 1;
-  filter:grayscale(1) brightness(1.5);
+  filter:grayscale(1) brightness(1.3);
 }
 
 .input_tipo_cuenta h3 { 
-  color: rgb(177, 177, 177);
+  color: rgb(153, 153, 153);
   margin: 0px;
   font-size: 22px;
   font-weight: 800;
@@ -132,7 +132,7 @@
 .input_tipo_cuenta p{
   font-size: 17px;
   margin: 0px;
-  color: rgb(201, 201, 201);
+  color: rgb(158, 158, 158);
 }
 
 .input_tipo_cuenta.active {

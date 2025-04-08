@@ -10,6 +10,7 @@ import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.repository.user.AnfitrionRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
+import com.bearfrens.backend.service.UsuarioService;
 import com.bearfrens.backend.service.biografias.BiografiasService;
 import com.bearfrens.backend.service.ImgBBservice;
 import com.bearfrens.backend.service.valoraciones_conexiones.LikesService;
@@ -48,6 +49,9 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
   @Autowired
   private ValoracionesService valoracionesService;
+
+  @Autowired
+  private UsuarioService usuarioService;
 
   @Autowired
   private LikesService likesService;
@@ -181,6 +185,10 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   // @RequestBody : convierte el cuerpo de la solicitud HTTP (JSON) en un objeto Java (Usuario) para ser procesado en el metodo.
   @PostMapping("")
   public T crearUsuario(@RequestBody T user){
+    if(usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isEmpty()){
+      return null;
+    }
+
     return repository.save(user);
   }
 

@@ -61,7 +61,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
   // Si todo está bien, proceder a crear/actualizar la cuenta
   function sendUserData(userData) {
     setErrorInput(false);
-    const userAction = userID ? userService.update(userID, userData) : userService.create(updatedUseruserDataData);
+    const userAction = userID ? userService.update(userID, userData) : userService.create(userData);
 
     userAction
       .then(response => {
@@ -112,7 +112,11 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
         .then(response => {
           setEmailExistente(response.data);
           console.log("Email existente : ", response.data);
-          if (response.data) return; // Si el email existe, detenemos la ejecución
+
+          if (response.data) {
+            setUploadingData(false);
+            return; // Si el email existe, detenemos la ejecución
+          }
 
           // Proceder con la subida de imagen y creación/actualización del usuario
           continuarProceso();

@@ -9,12 +9,13 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
 @MappedSuperclass // NO se creará una tabla usuario. Ya que cada tipo de usuario tiene una tabla distinta
 public abstract class Usuario<TC>{
+
+  private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
   @Id // Clase primaria de la entidad
   @GeneratedValue(strategy = GenerationType.IDENTITY) // Su valor se generará automáticamente, normalmente como un número autoincrementable.
@@ -90,7 +91,6 @@ public abstract class Usuario<TC>{
   // GETTERS and SETTERS
   // Cifrar la nueva contraseña
   public void setPassword(String newPassword) {
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     this.password = encoder.encode(newPassword);
   }
 
