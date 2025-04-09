@@ -20,6 +20,8 @@ public class Biografias {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  // tipoUsuario: 1 = Anfitrión, 2 = Viajero.
+  // Este campo se usa para distinguir entre los dos tipos de usuario en el sistema.
   @Column(name = "tipo_usuario", nullable = false)
   private int tipoUsuario; // 1 = Anfitrion, 2 = Viajero
 

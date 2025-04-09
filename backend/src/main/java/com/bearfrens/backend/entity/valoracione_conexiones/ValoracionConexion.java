@@ -17,6 +17,8 @@ public abstract class ValoracionConexion {
   @Column(name = "emisor_id", nullable = false) // ID Usuario que da el like o deja la valoracion
   private Long emisorID;
 
+  // tipoUsuario: 1 = Anfitrión, 2 = Viajero.
+  // Este campo se usa para distinguir entre los dos tipos de usuario en el sistema.
   @Column(name = "tipo_usuario", nullable = false) // Tipo de usuario que recibe el like/valoracion (RECEPTOR)
   private int tipoUsuario; // 1 = Anfitrión, 2 = Viajero
 

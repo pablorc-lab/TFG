@@ -22,7 +22,8 @@ export default function ViajerosHeader({
   const menuLinks = [
     { path: "/viajeros/mi-cuenta", label: <strong>Mi Cuenta</strong> },
     { path: "/inicio/faq", label: "FAQ" },
-    { path: "/", label: "Soporte" }
+    { path: "/", label: "Soporte" },
+    { path: "/", label: <div>Cerrar sesión</div> }
   ];
 
   // Obtener el "classname" del nav actual

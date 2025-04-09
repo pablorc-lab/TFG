@@ -10,6 +10,8 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
+// Clase padre usuario
+// En toras clases el tipo de usuario 1 corresponde al Anfitrión y el 2 al viajero
 @Getter
 @Setter
 @MappedSuperclass // NO se creará una tabla usuario. Ya que cada tipo de usuario tiene una tabla distinta

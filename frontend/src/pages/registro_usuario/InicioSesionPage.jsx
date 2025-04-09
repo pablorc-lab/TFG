@@ -21,7 +21,9 @@ export default function InicioSesionPage() {
         <article className={styles.acceso_container}>
           <h1>Inicio de sesión</h1>
 
-          <form action="pagina.jar" >
+          <form >
+          <p className={styles.error_login}>Email o Contraseña incorrectos</p>
+
             <fieldset className={styles.input_container}>
               <label htmlFor="email">Correo electrónico</label>
               <input type="email" id="email" name="email" spellCheck="false" autoComplete="email" />

@@ -7,6 +7,17 @@
   user-select: none;
 }
 .acceso_section a:hover{ text-decoration: underline;}
+
+.error_login {
+  margin: 0;
+  text-align: center;
+  color: rgb(255, 66, 66);
+  padding: 7px;
+  font-size: 20px;
+  border-radius: 3px;
+  font-weight: 650;
+  background-color: rgba(255, 0, 0, 0.247);
+}
 /*? CABECERA */
 .acceso_header {
   width: 100%;
@@ -14,6 +25,9 @@
   top: 0;
   background-color: #009080;
   cursor: default;
+}
+.acceso_header figure {
+  width: fit-content;
 }
 .acceso_header figure a{
   display: flex;

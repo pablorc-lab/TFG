@@ -41,6 +41,10 @@
 	font-size: 20px;
 	cursor: pointer;
 }
+.dropdown_menu li div {
+	color: red;
+	font-weight: bold;
+}
 .dropdown_menu li:last-child {
 	padding-top: 3.5px;
 	border-top: 1px solid lightgray;

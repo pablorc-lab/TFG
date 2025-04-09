@@ -2,6 +2,7 @@ package com.bearfrens.backend.service.authentication;
 
 import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Viajero;
+import com.bearfrens.backend.repository.token.TokenRepository;
 import com.bearfrens.backend.repository.user.AnfitrionRepository;
 import com.bearfrens.backend.repository.user.ViajeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
