@@ -14,6 +14,7 @@ export default function InqProfilePage() {
 
   const location = useLocation();
   const id = location.state?.id;
+  const conectado = location.state?.conectado;
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const [isColumns, setIsColumns] = useState(window.innerWidth <= 1250);
@@ -82,9 +83,9 @@ export default function InqProfilePage() {
         idiomasUser={idiomasUser}
         isColumns={isColumns}
         recomendaciones={viajeroInfo.usuario?.experiencias}
-        esAnfitrion={false}
+        conectado={true}
+        userID={id}
       />
-
       <Footer />
     </>
   )

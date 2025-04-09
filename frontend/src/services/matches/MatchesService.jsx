@@ -12,8 +12,8 @@ class MatchesService {
     return axios.get(`${this.MATCHES_BASE_REST_API_URL}`, { auth: this.auth });
   }
 
-  static deleteMatch(matchID){
-    return axios.delete(`${this.MATCHES_BASE_REST_API_URL}/eliminar/${matchID}`, { auth: this.auth });
+  static getTwoUsersMatchs(anfitrionID, viajeroID){
+    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/anfitrion/${anfitrionID}/viajero/${viajeroID}`, { auth: this.auth });
   }
 
   static getAllViajeros(anfitrionID){
@@ -22,6 +22,10 @@ class MatchesService {
 
   static getAllAnfitriones(viajeroID){
     return axios.get(`${this.MATCHES_BASE_REST_API_URL}/viajero/${viajeroID}`, { auth: this.auth });
+  }
+
+  static deleteMatch(matchID){
+    return axios.delete(`${this.MATCHES_BASE_REST_API_URL}/eliminar/${matchID}`, { auth: this.auth });
   }
 
 }

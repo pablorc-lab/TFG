@@ -46,6 +46,17 @@ public class MatchesController {
   }
 
   /**
+   * Busca si existe ese match entre dos usuario
+   * @param anfitrionID ID del anfitrión
+   * @param viajeroID ID del viajero
+   * @return Match encontrado (true) o no hay match (false)
+   */
+  @GetMapping("/anfitrion/{anfitrionID}/viajero/{viajeroID}")
+  public Boolean existeMatchEntreAmbos(@PathVariable Long anfitrionID, @PathVariable Long viajeroID) {
+    return matchesRepository.existsByAnfitrionIDAndViajeroID(anfitrionID, viajeroID);
+  }
+
+  /**
    * Obtener matches por ID de viajero
    * @param viajeroId ID del viajero
    * @return Lista de anfitriones del viajero

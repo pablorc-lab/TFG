@@ -231,6 +231,7 @@ export default function RegistrarUsuarioPage() {
           type="date"
           id="edad"
           name="edad"
+          max={new Date().toISOString().split("T")[0]}
           value={userValues.fecha_nacimiento}
           onChange={(e) => handleValuesChange(e, "fecha_nacimiento")}
           onBlur={() => handleErrorChange("fecha_nacimiento", !validateAge(userValues.fecha_nacimiento))}

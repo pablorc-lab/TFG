@@ -1,7 +1,35 @@
 import styles from "./UserPage.module.css"
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
+import { useState } from "react";
 
-export default function UserPage({ usuarioData, valoraciones, Gustos_imgs, idiomasUser, ViviendaInfo, isColumns, recomendaciones = [], esAnfitrion = true }) {
+export default function UserPage({
+  usuarioData,
+  valoraciones,
+  Gustos_imgs,
+  idiomasUser,
+  ViviendaInfo,
+  isColumns,
+  recomendaciones = [],
+  conectado = false,
+  match = true,
+  esAnfitrion = false,
+  userID = null
+}) {
+
+  const [changeConectado, setChangeConectado] = useState(conectado);
+
+  const [llegada, setLlegada] = useState(new Date().toISOString().split("T")[0]);
+  const [salida, setSalida] = useState(new Date().toISOString().split("T")[0]);
+  const [diasReserva, SetDiasReserva] = useState(1);
+
+  function handleLike() {
+    setChangeConectado(true);
+
+    esAnfitrion
+      ? LikesService.crearLike("anfitriones", id_usuario_login, userID)
+      : LikesService.crearLike("viajeros", id_usuario_login, userID);
+  }
+
   const datos_recomendaciones = [
     { key: "recomendacion", label: "Sugerencia", icon: "backpack" },
     { key: "ayuda", label: "Importante", icon: "help" },
@@ -40,8 +68,48 @@ export default function UserPage({ usuarioData, valoraciones, Gustos_imgs, idiom
             />
           ))}
         </div>
-        <button>Conectar</button>
+
+        {!changeConectado
+          ? <button className={styles.btn_conectar} onClick={() => !conectado && handleLike()}> Conectar </button>
+          : <img src="/images/usuarios/heart.svg" className={styles.conectado} />
+        }
+
       </article>
+
+      {match && esAnfitrion && (
+        <section className={styles.reserva_section}>
+          <h2>{diasReserva * 50} &euro; - ({diasReserva} {diasReserva > 1 ? "noches" : "noche"})</h2>
+          <div className={styles.reserva_div}>
+            <label>
+              Llegada
+              <input
+                type="date"
+                min={new Date().toISOString().split("T")[0]}
+                value={llegada}
+                onChange={(e) => {
+                  setLlegada(e.target.value);
+                  e.target.value > salida && setSalida(e.target.value)
+                }}
+              />
+            </label>
+            <div className={styles.border_label}></div>
+            <label>
+              Salida
+              <input
+                type="date"
+                min={llegada}
+                value={salida}
+                onChange={(e) => {
+                  setSalida(e.target.value);
+                  SetDiasReserva((new Date(e.target.value) - new Date(llegada)) /(1000 * 60 * 60 * 24));
+                }}
+              />
+            </label>
+          </div>
+          <button>Reservar</button>
+        </section>
+      )}
+
     </section>
   );
 

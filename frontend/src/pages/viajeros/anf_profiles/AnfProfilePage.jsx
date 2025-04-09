@@ -4,6 +4,8 @@ import ViajerosMobileHeader from "../../../components/viajeros/header/ViajerosMo
 import Footer from "../../../components/footer/footer";
 import UserPage from "../../../components/usuarios/user_page/UserPage";
 import AnfitrionService from "../../../services/users/AnfitrionService";
+import MatchesService from "../../../services/matches/MatchesService";
+
 import styles from "./AnfProfilePage.module.css"
 
 export default function AnfProfilePage() {
@@ -15,9 +17,13 @@ export default function AnfProfilePage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const [isColumns, setIsColumns] = useState(window.innerWidth <= 1250);
   const [actualImage, setActualImage] = useState(0);
+  
+  const [match, SetMatch] = useState(false);
+
 
   const location = useLocation();
   const id = location.state?.id;
+  const conectado = location.state?.conectado;
 
   // Controlar cuando es pantalla pequeña 
   useEffect(() => {
@@ -28,13 +34,13 @@ export default function AnfProfilePage() {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isMobile, isColumns]);
 
   // Obtener datos del usuario si no hay y se tiene su id
   useEffect(() => {
     if (id && anfitrionInfo.length === 0) {
       AnfitrionService.getById(id).then(response => {
-        console.log(response.data);
+        //console.log(response.data);
         SetAnfitrionInfo(response.data);
         setValoraciones(response.data.valoraciones);
         setIdiomasUser(response.data.biografia?.idiomas ? response.data.biografia.idiomas.trim().split(",") : ["Español"]);
@@ -50,7 +56,12 @@ export default function AnfProfilePage() {
           response.data.usuario.gusto2,
           response.data.usuario.gusto3
         ].filter(img => img != null));
-
+        
+        // Ver si se tiene match con el
+        MatchesService.getTwoUsersMatchs(id, 1)
+        .then(match => SetMatch(match.data))
+        .catch(error => console.error("Error al buscar el match " + error));
+       
       }
       ).catch(error => console.error("No se encontró el usuario " + error));
     }
@@ -131,6 +142,10 @@ export default function AnfProfilePage() {
         ViviendaInfo={ViviendaInfo}
         recomendaciones={anfitrionInfo.usuario?.recomendaciones}
         isColumns={isColumns}
+        conectado={conectado}
+        match={match}
+        esAnfitrion={true}
+        userID={id}
       />
       <Footer />
     </>
