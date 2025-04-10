@@ -3,15 +3,18 @@ package com.bearfrens.backend.controller.user;
 import com.bearfrens.backend.entity.biografias.Biografias;
 import com.bearfrens.backend.entity.contenido.Contenido;
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
+import com.bearfrens.backend.entity.token.Token;
 import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
+import com.bearfrens.backend.repository.token.TokenRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
 import com.bearfrens.backend.service.UsuarioService;
 import com.bearfrens.backend.service.biografias.BiografiasService;
 import com.bearfrens.backend.service.ImgBBservice;
+import com.bearfrens.backend.service.reservas.ReservasService;
 import com.bearfrens.backend.service.valoraciones_conexiones.LikesService;
 import com.bearfrens.backend.service.valoraciones_conexiones.ValoracionesService;
 import com.bearfrens.backend.service.viviendas.ViviendasService;
@@ -36,6 +39,8 @@ import java.util.*;
 public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRepository<T, Long>, C extends JpaRepository<TC, Long>, TC extends Contenido> {
   protected final R repository;
   protected final C contenidoRepository;
+  private final String userType;
+  private final String contenidoType;
 
   @Autowired
   private BiografiasService biografiasService;
@@ -55,11 +60,13 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   @Autowired
   private LikesService likesService;
 
-  private final String userType;
-  private final String contenidoType;
+  @Autowired
+  private ReservasService reservasService;
 
   @Autowired
   private ImgBBservice imgBBService;
+
+  private TokenRepository tokenRepository;
 
   // Constructor "protected" para que solo las clases hijas lo usen
   protected BaseUserController(R repository, String userType, C contenidoRepository, String contenidoType) {
@@ -256,7 +263,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
-
     Map<String, Boolean> respuesta = new HashMap<>();
 
     // Eliminar todo lo asociado al usuario
@@ -266,13 +272,19 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     respuesta.put("Valoraciones delete ", valoracionesService.eliminarValoracionesConexiones(userID, tipo_user).getBody().get("delete")); // Valoraciones recibidas y dadas
     respuesta.put("Likes delete ", likesService.eliminarValoracionesConexiones(userID, tipo_user).getBody().get("delete")); // Likes recibidas y dadas
 
-    // Eliminar vivienda si es anfitrion
+    // Eliminar vivienda y reservas que haya con el si es anfitrion
     if(user instanceof Anfitrion){
       respuesta.put("Vivienda delete ", viviendasService.eliminarVivienda(userID).getBody().get("delete")); // Contenido asociado (Recomendaciones/Experiencias)
+
+      respuesta.put("Reservas delelete ", reservasService.eliminarReservasPorAnfitrion(user.getId()).getBody().get("delete"));
     }
 
-    // Eliminar el usuario
+    // Eliminar el usuario y su token creado
+    Optional<Token> token = tokenRepository.findByUserIDTipoUsuario(user.getId(), userType.equals("anfitrion") ? 0 : 1);
+    token.ifPresent(tokenValue -> tokenRepository.delete(tokenValue));
+
     repository.delete(user);
+
     respuesta.put("User delete ", true);
 
     // Devolvemos una respueta JSON ---> "delete" : true

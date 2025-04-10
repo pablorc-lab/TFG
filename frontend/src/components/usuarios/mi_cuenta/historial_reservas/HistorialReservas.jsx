@@ -4,10 +4,10 @@ import ReservaData from "../../../../data/usuarios/mi_cuenta/historial.json"
 const HistorialReservasMiCuenta = () => {
 
   const estadoColores = {
-    "En curso": { color: "#D9A520" },  
-    "Completada": { color: "#009080" }, 
+    "Activa": { color: "#D9A520" },  
+    "Finalizada": { color: "#009080" }, 
     "Cancelada": { color: "#A63D40" },  
-    "Por iniciar": { color: "#215ba4" } 
+    "Pendiente": { color: "#215ba4" } 
   };
   
   return (

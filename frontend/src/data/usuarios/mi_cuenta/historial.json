@@ -7,7 +7,7 @@
     "precio_noche": 75,
     "ubicacion": "Madrid, España",
     "precio_total": 225,
-    "estado": "Completada"
+    "estado": "Finalizada"
   },
   {
     "imagen_perfil": "/images/landing_page/persona_3.webp",
@@ -17,7 +17,7 @@
     "precio_noche": 60,
     "ubicacion": "Barcelona, España",
     "precio_total": 180,
-    "estado": "En curso"
+    "estado": "Activa"
   },
   {
     "imagen_perfil": "/images/landing_page/persona_4.webp",
@@ -27,7 +27,7 @@
     "precio_noche": 50,
     "ubicacion": "Valencia, España",
     "precio_total": 150,
-    "estado": "Por iniciar"
+    "estado": "Pendiente"
   },
   {
     "imagen_perfil": "/images/landing_page/persona_4.webp",
