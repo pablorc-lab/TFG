@@ -39,10 +39,14 @@ public class GestorUsuarioService {
     return viajeroRepository.findAllByIdIn(viajeros_IDs);
   }
 
+  // No es necesario comprobar si ya existe en la BD, ya que solo se usa cuando hay que modificar
+  // campos de un usuario cuya existencia ya ha sido validada previamente.
   public void guardarAnfitrion(Anfitrion anfitrion) {
     anfitrionRepository.save(anfitrion);
   }
 
+  // No es necesario comprobar si ya existe en la BD, ya que solo se usa cuando hay que modificar
+  // campos de un usuario cuya existencia ya ha sido validada previamente.
   public void guardarViajero(Viajero viajero) {
     viajeroRepository.save(viajero);
   }

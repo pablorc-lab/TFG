@@ -17,13 +17,14 @@ export default function AnfProfilePage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const [isColumns, setIsColumns] = useState(window.innerWidth <= 1250);
   const [actualImage, setActualImage] = useState(0);
-  
+
   const [match, SetMatch] = useState(false);
 
+  const [loading, SetLoading] = useState(true);
 
   const location = useLocation();
   const id = location.state?.id;
-  const conectado = location.state?.conectado;
+  const [conectado, setConectado] = useState(location.state?.conectado);
 
   // Controlar cuando es pantalla pequeña 
   useEffect(() => {
@@ -56,27 +57,29 @@ export default function AnfProfilePage() {
           response.data.usuario.gusto2,
           response.data.usuario.gusto3
         ].filter(img => img != null));
-        
+
         // Ver si se tiene match con el
         MatchesService.getTwoUsersMatchs(id, 1)
-        .then(match => SetMatch(match.data))
-        .catch(error => console.error("Error al buscar el match " + error));
-       
+          .then(match => SetMatch(match.data))
+          .catch(error => console.error("Error al buscar el match " + error));
       }
-      ).catch(error => console.error("No se encontró el usuario " + error));
+      )
+      .catch(error => console.error("No se encontró el usuario " + error))
+      .finally(SetLoading(false))
+      ;
     }
   }, [id, anfitrionInfo])
 
   // Información de la vivienda
   const ViviendaInfo = (
     <section className={styles.vivienda_info}>
-      <h1>Vivienda en {anfitrionInfo.usuario?.vivienda.ciudad || "-"}, {anfitrionInfo.usuario?.vivienda.provincia || "-"}</h1>
-      <h1>{anfitrionInfo.usuario?.vivienda.precio_noche || "-"}&euro; / noche</h1>
+      <h1>Vivienda en {anfitrionInfo.usuario?.vivienda?.ciudad || <i>No disponible</i>}, {anfitrionInfo.usuario?.vivienda?.provincia || <i>No disponible</i>}</h1>
+      <h1>{anfitrionInfo.usuario?.vivienda?.precio_noche || "0"} &euro; / noche</h1>
       <p>
-        {(anfitrionInfo.usuario?.vivienda.viajeros || "-") + " viajeros - "}
-        {(anfitrionInfo.usuario?.vivienda.habitaciones || "-") + " habitaciones - "}
-        {(anfitrionInfo.usuario?.vivienda.camas || "-") + " camas - "}
-        {(anfitrionInfo.usuario?.vivienda.banios || "-") + " baños"}
+        {(anfitrionInfo.usuario?.vivienda?.viajeros || "0") + " viajeros - "}
+        {(anfitrionInfo.usuario?.vivienda?.habitaciones || "0") + " habitaciones - "}
+        {(anfitrionInfo.usuario?.vivienda?.camas || "0") + " camas - "}
+        {(anfitrionInfo.usuario?.vivienda?.banios || "0") + " baños"}
       </p>
     </section>
   );
@@ -107,46 +110,53 @@ export default function AnfProfilePage() {
       </header>
       {isMobile && <ViajerosMobileHeader activeSection="" />}
 
-      <section className={styles.vivienda_imgs}>
-        {isMobile ? (
-          <>
-            <img
-              className={styles.arrow_left}
-              src="/images/profiles/arrow.svg"
-              alt="Biografia logo"
-              onClick={() => setActualImage(actualImage === 0 ? Vivienda_imgs.length - 1 : actualImage - 1)}
-            />
-            <img
-              className={styles.arrow_right}
-              src="/images/profiles/arrow.svg"
-              alt="Biografia logo"
-              onClick={() => setActualImage((actualImage + 1) % Vivienda_imgs.length)}
-            />
-            <img src={Vivienda_imgs[actualImage] || "/images/not_found/vivienda.webp"} alt="Vivienda" width={100} />
-            <span>{actualImage + 1}</span>
-          </>
-        ) : (
-          <>
-            {Vivienda_imgs.map((vivienda, index) => (
-              <img key={index} src={vivienda || "/images/not_found/vivienda.webp"} alt="Vivienda imagen" width={100} />
-            ))}
-          </>
-        )}
-      </section>
+      {loading
+        ? <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", margin: "250px 0", transform: "translateX(-50%)" }} />
+        : <>
+          <section className={styles.vivienda_imgs}>
+            {isMobile ? (
+              <>
+                <img
+                  className={styles.arrow_left}
+                  src="/images/profiles/arrow.svg"
+                  alt="Biografia logo"
+                  onClick={() => setActualImage(actualImage === 0 ? Vivienda_imgs.length - 1 : actualImage - 1)}
+                />
+                <img
+                  className={styles.arrow_right}
+                  src="/images/profiles/arrow.svg"
+                  alt="Biografia logo"
+                  onClick={() => setActualImage((actualImage + 1) % Vivienda_imgs.length)}
+                />
+                <img src={Vivienda_imgs[actualImage] || "/images/not_found/vivienda.webp"} alt="Vivienda" width={100} />
+                <span>{actualImage + 1}</span>
+              </>
+            ) : (
+              <>
+                {Vivienda_imgs.map((vivienda, index) => (
+                  <img key={index} src={vivienda || "/images/not_found/vivienda.webp"} alt="Vivienda imagen" width={100} />
+                ))}
+              </>
+            )}
+          </section>
 
-      <UserPage
-        usuarioData={anfitrionInfo}
-        valoraciones={valoraciones}
-        Gustos_imgs={Gustos_imgs}
-        idiomasUser={idiomasUser}
-        ViviendaInfo={ViviendaInfo}
-        recomendaciones={anfitrionInfo.usuario?.recomendaciones}
-        isColumns={isColumns}
-        conectado={conectado}
-        match={match}
-        esAnfitrion={true}
-        userID={id}
-      />
+          <UserPage
+            usuarioData={anfitrionInfo}
+            valoraciones={valoraciones}
+            Gustos_imgs={Gustos_imgs}
+            idiomasUser={idiomasUser}
+            ViviendaInfo={ViviendaInfo}
+            recomendaciones={anfitrionInfo.usuario?.recomendaciones}
+            isColumns={isColumns}
+            conectado={conectado}
+            setConectado={setConectado}
+            match={match}
+            esAnfitrion={true}
+            userID={id}
+          />
+        </>
+      }
+
       <Footer />
     </>
   )

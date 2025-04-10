@@ -1,6 +1,7 @@
 import styles from "./UserPage.module.css"
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
-import { useState } from "react";
+import LikesService from "../../../services/matches/LikesService";
+import { useEffect, useState } from "react";
 
 export default function UserPage({
   usuarioData,
@@ -11,23 +12,23 @@ export default function UserPage({
   isColumns,
   recomendaciones = [],
   conectado = false,
+  setConectado,
   match = true,
   esAnfitrion = false,
   userID = null
 }) {
-
-  const [changeConectado, setChangeConectado] = useState(conectado);
 
   const [llegada, setLlegada] = useState(new Date().toISOString().split("T")[0]);
   const [salida, setSalida] = useState(new Date().toISOString().split("T")[0]);
   const [diasReserva, SetDiasReserva] = useState(1);
 
   function handleLike() {
-    setChangeConectado(true);
+    setConectado(true);
 
+    // TODO: EN VEZ DE "1" USAR EL ID DEL USUARIO LOGEADO
     esAnfitrion
-      ? LikesService.crearLike("anfitriones", id_usuario_login, userID)
-      : LikesService.crearLike("viajeros", id_usuario_login, userID);
+      ? LikesService.crearLike("viajeros", 1, userID)
+      : LikesService.crearLike("anfitriones", 1, userID);
   }
 
   const datos_recomendaciones = [
@@ -69,8 +70,8 @@ export default function UserPage({
           ))}
         </div>
 
-        {!changeConectado
-          ? <button className={styles.btn_conectar} onClick={() => !conectado && handleLike()}> Conectar </button>
+        {!conectado
+          ? <button className={styles.btn_conectar} onClick={() => handleLike()}> Conectar </button>
           : <img src="/images/usuarios/heart.svg" className={styles.conectado} />
         }
 

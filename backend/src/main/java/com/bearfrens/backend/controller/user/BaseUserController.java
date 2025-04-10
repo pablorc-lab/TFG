@@ -8,7 +8,6 @@ import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
-import com.bearfrens.backend.repository.user.AnfitrionRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
 import com.bearfrens.backend.service.UsuarioService;
 import com.bearfrens.backend.service.biografias.BiografiasService;
@@ -189,6 +188,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
       return null;
     }
 
+    // Filtramos su contraseña enviada
     user.setFiltrarPasword(user.getPassword());
     return repository.save(user);
   }

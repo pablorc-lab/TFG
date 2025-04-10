@@ -49,7 +49,7 @@ export default function ViajProfilesGallery({ viajeros, viajerosFiltrados = [], 
             Valoracion={viajero.valoracion_media || "0.0"}
             Num_viajes={viajero.viajes_realizados || 0}
             Edad={calcularEdad(viajero.fecha_nacimiento) || 18}
-            Profesion={viajero.profesion || "Profesional"}
+            Profesion={viajero.profesion || "Sin información"}
             Descripcion={viajero.descripcion}
             Gustos_imgs={[viajero.gusto1, viajero.gusto2, viajero.gusto3].filter(gusto => gusto != null)}
             tiempo_estancia={viajero.tiempo_estancia || "Indefinido"}

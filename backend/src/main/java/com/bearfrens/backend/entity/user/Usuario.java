@@ -90,7 +90,7 @@ public abstract class Usuario<TC>{
   }
 
   // GETTERS and SETTERS
-  // Cifrar la nueva contraseña
+  // Cifrar la nueva contraseña, se llamará manualmenta al crearo o modificar un usuario
   public void setFiltrarPasword(String newPassword) {
     this.password = encoder.encode(newPassword);
   }
@@ -99,6 +99,7 @@ public abstract class Usuario<TC>{
   public void setDeleteValoracion_media(BigDecimal nuevaValoracion){
     this.valoracion_media = nuevaValoracion;
   }
+
   // Calcular la nueva media
   public void setValoracion_media(BigDecimal nuevaValoracion) {
     if (nuevaValoracion == null) return;

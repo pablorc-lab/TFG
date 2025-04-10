@@ -12,9 +12,11 @@ export default function InqProfilePage() {
   const [Gustos_imgs, setGustos_imgs] = useState([]);
   const [idiomasUser, setIdiomasUser] = useState([]);
 
+  const [loading, SetLoading] = useState(true);
+
   const location = useLocation();
   const id = location.state?.id;
-  const conectado = location.state?.conectado;
+  const [conectado, setConectado] = useState(location.state?.conectado);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const [isColumns, setIsColumns] = useState(window.innerWidth <= 1250);
@@ -43,6 +45,8 @@ export default function InqProfilePage() {
           response.data.usuario.gusto2,
           response.data.usuario.gusto3
         ].filter(img => img != null));
+
+        SetLoading(false);
 
       }
       ).catch(error => console.error("No se encontró el usuario " + error));
@@ -76,16 +80,21 @@ export default function InqProfilePage() {
       </header>
       {isMobile && <AnfitrionMobileHeader activeSection="" />}
 
-      <UserPage
-        usuarioData={viajeroInfo}
-        valoraciones={valoraciones}
-        Gustos_imgs={Gustos_imgs}
-        idiomasUser={idiomasUser}
-        isColumns={isColumns}
-        recomendaciones={viajeroInfo.usuario?.experiencias}
-        conectado={true}
-        userID={id}
-      />
+      {loading
+        ? <img src="/images/loading_gif.gif" alt="Cargando..." style={{width:"350px", position: "relative", top: "0", left: "50%", margin:"250px 0", transform: "translateX(-50%)" }} />
+          : <UserPage
+          usuarioData={viajeroInfo}
+          valoraciones={valoraciones}
+          Gustos_imgs={Gustos_imgs}
+          idiomasUser={idiomasUser}
+          isColumns={isColumns}
+          recomendaciones={viajeroInfo.usuario?.experiencias}
+          conectado={conectado}
+          setConectado={setConectado}
+          userID={id}
+        />
+      }
+
       <Footer />
     </>
   )

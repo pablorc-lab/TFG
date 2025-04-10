@@ -67,7 +67,7 @@ export default function Anf_card({
         {/* Dirección */}
         <address className={styles.address}>
           <img src="/images/usuarios/ubicacion.svg" alt="Logo ubicación" width={50} />
-          <span>{`${Ubicacion} (${Precio}\u20ac  / noche)`}</span>
+          <span>{`${Ubicacion} (${Precio} \u20ac  / noche)`}</span>
         </address>
 
         {/* Descripción */}
