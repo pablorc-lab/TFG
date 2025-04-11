@@ -91,7 +91,7 @@ public abstract class Usuario<TC>{
 
   // GETTERS and SETTERS
   // Cifrar la nueva contraseña, se llamará manualmenta al crearo o modificar un usuario
-  public void setFiltrarPasword(String newPassword) {
+  public void setCifrarPasword(String newPassword) {
     this.password = encoder.encode(newPassword);
   }
 

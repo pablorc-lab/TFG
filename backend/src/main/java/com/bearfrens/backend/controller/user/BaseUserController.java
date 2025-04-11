@@ -191,12 +191,12 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   // @RequestBody : convierte el cuerpo de la solicitud HTTP (JSON) en un objeto Java (Usuario) para ser procesado en el metodo.
   @PostMapping("")
   public T crearUsuario(@RequestBody T user){
-    if(usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isEmpty()){
+    if(user == null || usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isEmpty()){
       return null;
     }
 
-    // Filtramos su contraseña enviada
-    user.setFiltrarPasword(user.getPassword());
+    // Ciframos su contraseña enviada
+    user.setCifrarPasword(user.getPassword());
     return repository.save(user);
   }
 
@@ -233,7 +233,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     // Actualizar los valores de cada campo que no sean null
     Optional.ofNullable(userRequest.getPrivateID()).ifPresent(user::setPrivateID);
     Optional.ofNullable(userRequest.getEmail()).ifPresent(user::setEmail);
-    Optional.ofNullable(userRequest.getPassword()).ifPresent(user::setFiltrarPasword);
+    Optional.ofNullable(userRequest.getPassword()).ifPresent(user::setCifrarPasword);
     Optional.ofNullable(userRequest.getNombre()).ifPresent(user::setNombre);
     Optional.ofNullable(userRequest.getApellido()).ifPresent(user::setApellido);
     Optional.ofNullable(userRequest.getFecha_nacimiento()).ifPresent(user::setFecha_nacimiento);
@@ -280,8 +280,10 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     }
 
     // Eliminar el usuario y su token creado
-    Optional<Token> token = tokenRepository.findByUserIDTipoUsuario(user.getId(), userType.equals("anfitrion") ? 0 : 1);
-    token.ifPresent(tokenValue -> tokenRepository.delete(tokenValue));
+    List<Token> token = tokenRepository.findAllByUserIDAndTipoUsuario(user.getId(), userType.equals("anfitrion") ? 0 : 1);
+    if(!token.isEmpty()){
+      tokenRepository.deleteAll(token);
+    }
 
     repository.delete(user);
 

@@ -1,7 +1,7 @@
 package com.bearfrens.backend.service.authentication;
 
-import com.bearfrens.backend.entity.user.Anfitrion;
-import com.bearfrens.backend.entity.user.Viajero;
+import com.bearfrens.backend.entity.user.Usuario;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -25,74 +25,86 @@ public class JwtService {
   private long refreshExpiration;
 
   /**
-   * Crea un token para un anfitrión
-   * @param anfitrion Objeto del Anfitrión
-   * @return Token para el anfitrión
+   * Obtener la caducidad de un token
+   * @param token String del token
+   * @return Caducidad
    */
-  public String generateTokenAnfitrion(Anfitrion anfitrion) {
-    return buildTokenAnfitrion(anfitrion, jwtExpiration);
+  public Date extractExpiration(final String token){
+    final Claims jwtToken = Jwts.parser()
+      .verifyWith(getSignInKey()) // Verificar con la clave
+      .build() // Construir
+      .parseSignedClaims(token) // Parsear el JWT
+      .getPayload(); // Información que contiene el codigo
+
+    return jwtToken.getExpiration();
   }
 
   /**
-   * Crea un token refresh para un anfitrión
-   * @param anfitrion Objeto del Anfitrión
-   * @return Token para el anfitrión
+   * Obtener el email de un token
+   * @param token Token a construir
+   * @return Email
    */
-  public String generateRefreshTokenAnfitrion(Anfitrion anfitrion) {
-    return buildTokenAnfitrion(anfitrion, refreshExpiration);
+  public String extractUsername(final String token){
+    final Claims jwtToken = Jwts.parser()
+      .verifyWith(getSignInKey()) // Verificar con la clave
+      .build() // Construir
+      .parseSignedClaims(token) // Parsear el JWT
+      .getPayload(); // Información que contiene el codigo
+
+    return jwtToken.getSubject();
   }
 
   /**
-   * Genera un token para un Anfitrion
-   * @param anfitrion Objeto del Anfitrión
-   * @param expiration Tiempo de expiracíón desde la emisión
-   * @return Token Jwts
+   * Genera un token
+   * @param usuario Objeto usuario
+   * @param tipo_usuario Int indicando el tipo de usuario (1 o 2)
+   * @return Token generado
    */
-  private String buildTokenAnfitrion(Anfitrion anfitrion, final long expiration) {
+  public String generateToken(Usuario<?> usuario, int tipo_usuario) {
+    return buildToken(usuario, tipo_usuario, jwtExpiration);
+  }
+
+  /**
+   * Genera un refresh token
+   * @param usuario Objeto usuario
+   * @param tipo_usuario Int indicando el tipo de usuario (1 o 2)
+   * @return Token generado
+   */
+  public String generateRefreshToken(Usuario<?> usuario, int tipo_usuario) {
+    return buildToken(usuario, tipo_usuario, refreshExpiration);
+  }
+
+  /**
+   * Comprobar si un Token es valido
+   * @param token String del token
+   * @param usuario Usuario objeto
+   * @return Booleano indicandolo
+   */
+  public boolean isTokenValid(final String token, Usuario<?> usuario){
+    final  String username = extractUsername(token);
+    boolean isTokenExpired = extractExpiration(token).before(new Date());
+    return(username.equals((usuario.getEmail())) && !isTokenExpired);
+  }
+
+  /**
+   * Construye el token de JWT
+   * @param usuario Objeto usuario
+   * @param tipo_usuario Int indicando el tipo de usuario (1 o 2)
+   * @param expiration Tiempo que tarda en caducar el token
+   * @return Token construido
+   */
+  private String buildToken(Usuario<?> usuario, int tipo_usuario, final long expiration) {
     return Jwts.builder()
-      .id("Anfitrión-"+anfitrion.getId()) // ID único para el token
-      .claims(Map.of("nombre", anfitrion.getNombre())) // Agregar el nombre como claim
-      .subject(anfitrion.getEmail()) // El email como el sujeto del token
+      .id(String.valueOf(usuario.getId())) // ID para el token
+      .claims(Map.of("nombre", usuario.getNombre(),"tipo", tipo_usuario == 1 ? "anfitrión" : "viajero")) // Agregar el nombre como claim
+      .subject(usuario.getEmail()) // El email como el sujeto del token
       .issuedAt(new Date(System.currentTimeMillis())) // Fecha de emisión del token
       .expiration(new Date(System.currentTimeMillis() + expiration)) // Fecha de expiración del token
       .signWith(getSignInKey())  // Firmar el token con la clave secreta
       .compact(); // Generar y devolver el token JWT
   }
 
-  /**
-   * Crea un token para un viajero
-   * @param viajero Objeto del viajero
-   * @return Token para el viajero
-   */
-  public String generateTokenViajero(Viajero viajero) {
-    return buildTokenViajero(viajero, jwtExpiration);
-  }
 
-  /**
-   * Crea un token refresh para un viajero
-   * @param viajero Objeto del viajero
-   * @return Token para el viajero
-   */
-  public String generateRefreshTokenViajero(Viajero viajero) {
-    return buildTokenViajero(viajero, refreshExpiration);
-  }
-
-  /**
-   * Genera un token para un Viajero
-   * @param viajero Objeto del Viajero
-   * @param expiration Tiempo de expiracíón desde la emisión
-   * @return Token Jwts
-   */
-  private String buildTokenViajero(Viajero viajero, final long expiration) {
-    return Jwts.builder()
-      .id("Viajero-" + viajero.getId())
-      .claims(Map.of("nombre", viajero.getNombre()))
-      .subject(viajero.getEmail())
-      .issuedAt(new Date(System.currentTimeMillis()))
-      .expiration(new Date(System.currentTimeMillis() + expiration))
-      .signWith(getSignInKey())
-      .compact();
-  }
   /**
    * Este método obtiene la clave secreta para la firma de JWT.
    * La clave secreta se espera que esté en formato base64, y se convierte

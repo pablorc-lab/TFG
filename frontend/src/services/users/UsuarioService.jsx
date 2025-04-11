@@ -5,47 +5,42 @@ class UsuarioService {
 
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
-    this.auth = {
-      username: "pablo",
-      password: "adminpablo"
-    };
-
   }
 
   getAll() {
-    return axios.get(this.baseUrl, { auth: this.auth });
+    return axios.get(this.baseUrl);
   }
 
   getAllPaginación(pagina, tamanio) {
-    return axios.get(`${this.baseUrl}/paginacion/${pagina}/${tamanio}`, { auth: this.auth });
+    return axios.get(`${this.baseUrl}/paginacion/${pagina}/${tamanio}`);
   }
 
   getAllConDatos() {
-    return axios.get(`${this.baseUrl}/datos`, { auth: this.auth });
+    return axios.get(`${this.baseUrl}/datos`);
   }
 
   create(userData) {
-    return axios.post(this.baseUrl, userData, { auth: this.auth });
+    return axios.post(this.baseUrl, userData);
   }
 
   getById(userID) {
-    return axios.get(`${this.baseUrl}/${userID}`, { auth: this.auth });
+    return axios.get(`${this.baseUrl}/${userID}`);
   }
 
   getByPrivateID(privateID){
-    return axios.get(`${this.baseUrl}/private-id/${privateID}`, { auth: this.auth });
+    return axios.get(`${this.baseUrl}/private-id/${privateID}`);
   }
   
   update(userID, userData) {
-    return axios.put(`${this.baseUrl}/${userID}`, userData, { auth: this.auth });
+    return axios.put(`${this.baseUrl}/${userID}`, userData);
   }
 
   delete(userID) {
-    return axios.delete(`${this.baseUrl}/${userID}`, { auth: this.auth });
+    return axios.delete(`${this.baseUrl}/${userID}`);
   }
 
   static existEmail(email) {
-    return axios.get(`${this.USUARIO_BASE_REST_API_URL}/existe/${email}`, { auth: this.auth });
+    return axios.get(`${this.USUARIO_BASE_REST_API_URL}/existe/${email}`);
   }
 
   // Subir imagen a ImgBB y retornar enlace de la misma

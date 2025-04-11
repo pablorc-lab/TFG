@@ -10,11 +10,11 @@ class AnfitrionService extends UsuarioService {
 
   // Métodos específicos de un anfitrion
   getViviendasPorUbicacion(ciudad, provincia) {
-    return axios.get(`${this.baseUrl}/viviendas/${ciudad}-${provincia}`, { auth: this.auth });
+    return axios.get(`${this.baseUrl}/viviendas/${ciudad}-${provincia}`);
   }
 
   eliminarVivienda(anfitrionID){
-    return axios.delete(`${this.baseUrl}/${anfitrionID}/vivienda`, { auth: this.auth });
+    return axios.delete(`${this.baseUrl}/${anfitrionID}/vivienda`);
   }
 }
 

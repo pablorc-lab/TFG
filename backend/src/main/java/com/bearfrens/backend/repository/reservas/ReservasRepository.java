@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface ReservasRepository extends JpaRepository<Reservas, Long> {
   List<Reservas> findAllByAnfitrionID(Long anfitrionID);
-  void deleteAll(List<Reservas> reservas);
 }

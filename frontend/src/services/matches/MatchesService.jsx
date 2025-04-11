@@ -3,29 +3,24 @@ import axios from "axios";
 class MatchesService {
   static MATCHES_BASE_REST_API_URL = "http://localhost:8080/api/matches";
 
-  static auth = {
-    username: "pablo",
-    password: "adminpablo"
-  };
-
   static getAll(){
-    return axios.get(`${this.MATCHES_BASE_REST_API_URL}`, { auth: this.auth });
+    return axios.get(`${this.MATCHES_BASE_REST_API_URL}`);
   }
 
   static getTwoUsersMatchs(anfitrionID, viajeroID){
-    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/anfitrion/${anfitrionID}/viajero/${viajeroID}`, { auth: this.auth });
+    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/anfitrion/${anfitrionID}/viajero/${viajeroID}`);
   }
 
   static getAllViajeros(anfitrionID){
-    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/anfitrion/${anfitrionID}`, { auth: this.auth });
+    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/anfitrion/${anfitrionID}`);
   }
 
   static getAllAnfitriones(viajeroID){
-    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/viajero/${viajeroID}`, { auth: this.auth });
+    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/viajero/${viajeroID}`);
   }
 
   static deleteMatch(matchID){
-    return axios.delete(`${this.MATCHES_BASE_REST_API_URL}/eliminar/${matchID}`, { auth: this.auth });
+    return axios.delete(`${this.MATCHES_BASE_REST_API_URL}/eliminar/${matchID}`);
   }
 
 }

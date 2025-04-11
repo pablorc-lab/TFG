@@ -31,6 +31,6 @@ public class Token {
   @Column(nullable = false)
   public Long userID;
 
-  @Column(nullable = false)
-  public int tipo_usuario; // 0 : Anfitrión, 1 : Viajero
+  @Column(name = "tipo_usuario", nullable = false)
+  public int tipoUsuario; // 0 : Anfitrión, 1 : Viajero
 }

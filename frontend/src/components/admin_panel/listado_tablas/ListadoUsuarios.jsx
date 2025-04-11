@@ -19,6 +19,7 @@ export default function ListadoUsuarios({ styles, userType }) {
 
 
   useEffect(() => {
+    setUsuarios([]);
     if (userService) {
       setTimeout(() => { listarUsuarios(); }, 300);
     }

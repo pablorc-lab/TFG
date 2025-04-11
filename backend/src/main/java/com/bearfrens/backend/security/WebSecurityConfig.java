@@ -1,11 +1,20 @@
 package com.bearfrens.backend.security;
 
+import com.bearfrens.backend.entity.token.Token;
+import com.bearfrens.backend.repository.token.TokenRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,68 +22,57 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
 
-  // @Bean : Indica que un metodo devuelve un objeto que debe ser gestionado y utilizado como un componente dentro del contexto de Spring.
-  // Definimos que solo ciertos usuarios tengan acceso a ciertas rutas de la api
-  /*
+  private final AuthenticationProvider authenticationProvider;
+  private final JwtAuthFilter jwtAuthFilter;
+  private final TokenRepository tokenRepository;
+
+
+  // FILTRO DE SEGURIDAD)
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.cors(cors -> cors.configurationSource(request -> {
-      CorsConfiguration config = new CorsConfiguration();
-      config.setAllowedOrigins(List.of("http://localhost:3000")); // Permitir frontend local
-      config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-      config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-      config.setAllowCredentials(true);
-      return config;
-     }))
-      .authorizeHttpRequests(request -> request.requestMatchers("/api/anfitriones/**").hasRole("ADMIN")) // Solo Admins acceden
-      .csrf(csrf -> csrf.disable()) // Desactiva CSRF si usas JWT
-      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin sesiones
-      .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    http
+      .csrf(AbstractHttpConfigurer::disable) // Desactiva la protección CSRF
+        .authorizeHttpRequests(req -> req
+            .requestMatchers("/auth/**", "/api/admin-panel/**") // Permite el acceso sin autenticación a estas rutas
+            .permitAll()
+            .anyRequest() // El resto de rutas
+            .authenticated() // Requieren autenticación
+        )
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Define que no se usarán sesiones, se trabaja con JWT
+        .authenticationProvider(authenticationProvider) // Usa el proveedor de autenticación definido (donde se carga el usuario y se verifica contraseña)
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)  // Añade el filtro JWT antes del filtro estándar de autenticación por usuario y contraseña
+          .logout(logout -> // Configura el proceso de logout
+            logout.logoutUrl("/auth/logout")  // Ruta para hacer logout
+              .addLogoutHandler((request, response, authentication) -> { // Obtiene el token
+                final var authHeader = request.getHeader(HttpHeaders.AUTHORIZATION); // Llama al método personalizado para invalidar el token
+                logout(authHeader); // Llama al método personalizado para invalidar el token
+              })
+              .logoutSuccessHandler(((request, response, authentication) -> // Limpia el contexto de seguridad tras logout
+                SecurityContextHolder.clearContext()))
+            );
+    return http.build(); // Construye la cadena de filtros
+  }
 
-     return http.build();
+  private void logout(final String token){
+    if (token == null || !token.startsWith("Bearer ")){
+      throw new IllegalArgumentException("Invalid Bearer token");
     }
-    */
 
-  // Versión SIN Seguridad (SOLO PARA DESARROLLO)
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.cors(cors -> cors.configurationSource(request -> {
-      CorsConfiguration config = new CorsConfiguration();
-      config.setAllowedOrigins(List.of("http://localhost:3000")); // Permitir frontend local
-      config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-      config.setAllowedHeaders(List.of("*")); // Permitir todos los headers temporalmente
-      config.setAllowCredentials(true);
-      return config;
-    }))
-      .authorizeHttpRequests(request -> request.anyRequest().permitAll()) // Permitir todas las solicitudes
-      .csrf(AbstractHttpConfigurer::disable) // Desactivar CSRF solo en desarrollo
-      .httpBasic(Customizer.withDefaults()); // Permitir autenticación básica pero sin exigirla
-
-    return http.build();
-  }
-
-
-  // Creamos un usuario en memoria con nombre, password y rol
-  @Bean
-  public UserDetailsService testUser(PasswordEncoder passwordEncoder) {
-    User.UserBuilder user = User.builder();
-    UserDetails user1 = user.username("pablo")
-      .password(passwordEncoder.encode("adminpablo"))
-      .roles("ADMIN")
-      .build();
-    return new InMemoryUserDetailsManager(user1); // gestiona los detalles de los usuarios almacenados temporalmente en memoria.
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+    final String jwtToken = token.substring(7);
+    final Token foundToken = tokenRepository.findByToken(token)
+      .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
+    foundToken.setExpired(true);
+    foundToken.setRevoked(true);
+    tokenRepository.save(foundToken);
   }
 }
