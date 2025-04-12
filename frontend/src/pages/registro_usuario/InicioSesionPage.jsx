@@ -21,7 +21,7 @@ export default function InicioSesionPage() {
         <article className={styles.acceso_container}>
           <h1>Inicio de sesión</h1>
 
-          <form >
+          <form>
           <p className={styles.error_login}>Email o Contraseña incorrectos</p>
 
             <fieldset className={styles.input_container}>

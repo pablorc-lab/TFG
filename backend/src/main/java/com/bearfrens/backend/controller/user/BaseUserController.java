@@ -274,7 +274,8 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
     // Eliminar vivienda y reservas que haya con el si es anfitrion
     if(user instanceof Anfitrion){
-      respuesta.put("Vivienda delete ", viviendasService.eliminarVivienda(userID).getBody().get("delete")); // Contenido asociado (Recomendaciones/Experiencias)
+      ((Anfitrion) user).setVivienda(null);
+      respuesta.put("Vivienda delete ", true); // Contenido asociado (Recomendaciones/Experiencias)
 
       respuesta.put("Reservas delelete ", reservasService.eliminarReservasPorAnfitrion(user.getId()).getBody().get("delete"));
     }

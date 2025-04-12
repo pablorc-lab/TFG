@@ -95,7 +95,10 @@
   width: 400px;
   margin: 20px auto;
 }
-.user_container {margin-top: 40px}
+.user_container {
+  margin-top: 40px;
+  padding-bottom: 20px;
+}
 .user_container h2, .user_container h3, .user_container h4, .user_container p, .user_nav h2 {margin: 0;}
 
 /*? USUARIO E INFORMACIÓN GENERAL*/
@@ -125,6 +128,25 @@
   gap: 30px;
   margin-bottom: 20px;
   width: max-content;
+}
+
+.user_container .cerrar_sesion {
+  display: flex;
+  justify-content: start;
+  margin-top: 20px;
+}
+.user_container .cerrar_sesion h3 {
+  cursor: pointer;
+  width: fit-content;
+  padding: 7px 10px;
+  border-radius: 5px;
+  color: rgb(180, 14, 14);
+  outline: 2px solid rgb(180, 14, 14);
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+.user_container .cerrar_sesion h3:hover { 
+  color: white;
+  background-color: rgb(180, 14, 14);
 }
 
 .user_img{

@@ -133,6 +133,11 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
               <h4>Barcelona (300&euro; / noche)</h4>
               <p>Amante de la aventura y los viajes hacia lugares muy bonitos</p>
             </div>
+
+              <div className={styles.cerrar_sesion}>
+                <h3>Cerrar sesión</h3>
+              </div>
+            
           </section>
         </article>
 

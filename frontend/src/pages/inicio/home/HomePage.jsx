@@ -74,11 +74,7 @@ export default function HomePage() {
               Casa_img="/images/landing_page/casa_1.webp"
               Perfil_img="/images/landing_page/persona_1.webp"
               Nombre="Pablo"
-              Gustos_imgs={[
-                "/images/usuarios/Gustos/baseball.svg",
-                "/images/usuarios/Gustos/pesca.svg",
-                "/images/usuarios/Gustos/poker.svg",
-              ]}
+              Gustos_imgs={["baseball", "pesca", "poker",]}
               Valoracion={4.91}
               Ubicacion="Barcelona"
               Precio="300"
@@ -100,11 +96,8 @@ export default function HomePage() {
               Edad="56"
               Profesion="Mécanico"
               Descripcion="Soy un hombre apasionado por conocer nuevas personas y sitios desconocidos"
-              Gustos_imgs={[
-                "/images/usuarios/Gustos/pesca.svg",
-                "/images/usuarios/Gustos/social.svg",
-                "/images/usuarios/Gustos/baseball.svg",
-              ]}
+              Gustos_imgs={["pesca", "social", "baseball"]}
+              tiempo_estancia={"3 - 6 meses"}
             />
           </article>
 

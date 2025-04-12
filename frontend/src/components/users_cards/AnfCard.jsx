@@ -75,7 +75,7 @@ export default function Anf_card({
 
         {/* Parte inferior (Conectar) */}
         {!changeConectado ? (
-          <button className={styles.btn_conectar} onClick={() => !conectado && handleLike(anf_id)}>
+          <button className={styles.btn_conectar} onClick={() => enlace && handleLike(anf_id)}>
             Conectar
           </button>
         ) : (

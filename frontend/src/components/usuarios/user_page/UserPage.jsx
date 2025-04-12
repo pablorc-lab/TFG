@@ -1,7 +1,7 @@
 import styles from "./UserPage.module.css"
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
 import LikesService from "../../../services/matches/LikesService";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function UserPage({
   usuarioData,

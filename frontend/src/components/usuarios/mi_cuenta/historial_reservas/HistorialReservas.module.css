@@ -16,7 +16,7 @@
 }
 .summary h1 {
   color: #0a7273;
-  font-size: 35px;
+  font-size: 27px;
 }
 
 .summary_div {
@@ -139,7 +139,7 @@
 }
 
 @media (min-width: 780px) {
-  .summary h1 {font-size: 38px;}
+  .summary h1 {font-size: 30px;}
   .summary_div h2 {
     font-size: 27px;
     width: 220px;

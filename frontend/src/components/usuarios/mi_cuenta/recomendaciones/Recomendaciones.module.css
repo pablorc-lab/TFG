@@ -10,7 +10,7 @@
 /*? TITULO*/
 .recomendaciones_main h1 {
   color: #0a7273;
-  font-size: 35px;
+  font-size: 27px;
   padding: 30px 0;
   border-bottom: 2px solid lightgray;
 }
@@ -90,7 +90,7 @@
 }
 
 @media (min-width: 780px) {
-  .recomendaciones_main h1 {font-size: 38px;}
+  .recomendaciones_main h1 {font-size: 30px;}
 
   /*? Recomendacion container*/
   .recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) { font-size: 20px;} 
