@@ -1,6 +1,7 @@
 package com.bearfrens.backend.entity.user;
 
 import com.bearfrens.backend.entity.contenido.Experiencias;
+import com.bearfrens.backend.entity.reservas.Reservas;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,9 @@ public class Viajero extends Usuario<Experiencias>{
 
   @OneToMany(mappedBy = "viajero", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Experiencias> experiencias;
+
+  @OneToMany(mappedBy = "viajero", cascade = CascadeType.ALL, orphanRemoval = false)
+  private List<Reservas> reservas;
 
    // Constructor
   public Viajero() {

@@ -1,23 +1,13 @@
 package com.bearfrens.backend.controller.authentication;
 
-import com.bearfrens.backend.entity.token.Token;
-import com.bearfrens.backend.entity.user.Anfitrion;
-import com.bearfrens.backend.entity.user.Viajero;
-import com.bearfrens.backend.repository.token.TokenRepository;
 import com.bearfrens.backend.request.LoginRequest;
 import com.bearfrens.backend.service.authentication.AuthService;
-import com.bearfrens.backend.service.authentication.JwtService;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 @NoArgsConstructor
@@ -50,5 +40,4 @@ public class AuthController {
   public ResponseEntity<Map<String, Object>> refreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authHeader) {
     return authService.refreshToken(authHeader);
   }
-
 }

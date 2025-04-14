@@ -9,6 +9,7 @@ import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
+import com.bearfrens.backend.repository.reservas.ReservasRepository;
 import com.bearfrens.backend.repository.token.TokenRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
 import com.bearfrens.backend.service.UsuarioService;
@@ -67,6 +68,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   private ImgBBservice imgBBService;
 
   private TokenRepository tokenRepository;
+  private ReservasRepository reservasRepository;
 
   // Constructor "protected" para que solo las clases hijas lo usen
   protected BaseUserController(R repository, String userType, C contenidoRepository, String contenidoType) {
@@ -189,7 +191,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @return Objeto usuario creado
    */
   // @RequestBody : convierte el cuerpo de la solicitud HTTP (JSON) en un objeto Java (Usuario) para ser procesado en el metodo.
-  @PostMapping("")
+  @PostMapping("/auth/register")
   public T crearUsuario(@RequestBody T user){
     if(user == null || usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isEmpty()){
       return null;
@@ -265,20 +267,28 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
     Map<String, Boolean> respuesta = new HashMap<>();
 
+    if(user instanceof Viajero){
+      ((Viajero) user).getReservas().forEach(reserva -> reserva.setViajero_eliminado(true));
+      reservasRepository.saveAll( ((Viajero) user).getReservas());
+    }
+
+    // Eliminar vivienda y reservas que haya con el si es anfitrion
+    else if(user instanceof Anfitrion){
+      ((Anfitrion) user).setVivienda(null);
+      respuesta.put("Vivienda delete ", true); // Contenido asociado (Recomendaciones/Experiencias)
+      ((Anfitrion) user).getReservas().forEach(reserva -> reserva.setAnfitrion_eliminado(true));
+      reservasRepository.saveAll( ((Anfitrion) user).getReservas());
+    }
+
+    repository.save(user); // Guardar los cambios de la reserva
+    respuesta.put("Reservas delelete ", true);
+
     // Eliminar todo lo asociado al usuario
     String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
     respuesta.put("Contenido delete ", this.eliminarTodoContenido(userID).getBody().get("delete")); // Contenido asociado (Recomendaciones/Experiencias)
     respuesta.put("Biografia delete", biografiasService.eliminarBiografia(tipo_usuario, userID)); // Biografia asociada
     respuesta.put("Valoraciones delete ", valoracionesService.eliminarValoracionesConexiones(userID, tipo_user).getBody().get("delete")); // Valoraciones recibidas y dadas
     respuesta.put("Likes delete ", likesService.eliminarValoracionesConexiones(userID, tipo_user).getBody().get("delete")); // Likes recibidas y dadas
-
-    // Eliminar vivienda y reservas que haya con el si es anfitrion
-    if(user instanceof Anfitrion){
-      ((Anfitrion) user).setVivienda(null);
-      respuesta.put("Vivienda delete ", true); // Contenido asociado (Recomendaciones/Experiencias)
-
-      respuesta.put("Reservas delelete ", reservasService.eliminarReservasPorAnfitrion(user.getId()).getBody().get("delete"));
-    }
 
     // Eliminar el usuario y su token creado
     List<Token> token = tokenRepository.findAllByUserIDAndTipoUsuario(user.getId(), userType.equals("anfitrion") ? 0 : 1);

@@ -20,7 +20,7 @@ class UsuarioService {
   }
 
   create(userData) {
-    return axios.post(this.baseUrl, userData);
+    return axios.post(`${this.baseUrl}/auth/register`, userData);
   }
 
   getById(userID) {

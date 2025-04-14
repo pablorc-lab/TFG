@@ -1,5 +1,8 @@
 package com.bearfrens.backend.entity.reservas;
 
+import com.bearfrens.backend.entity.user.Anfitrion;
+import com.bearfrens.backend.entity.user.Viajero;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 // La combinación de las columnas debe ser única en la base de datos (1 reserva a un anfitrión por usuario en esa fecha).
-@Table(name = "reservas", uniqueConstraints = @UniqueConstraint(columnNames = {"viajero_id", "anfitrion_id", "fechaInicio", "fechaFin"}))
+@Table(name = "reservas", uniqueConstraints = @UniqueConstraint(columnNames = {"viajero_id", "anfitrion_id", "fecha_inicio", "fecha_fin"}))
 public class Reservas {
 
   public enum ReservaType {
@@ -28,19 +31,23 @@ public class Reservas {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "anfitrion_id", nullable = false)
-  private Long anfitrionID;
+  @ManyToOne
+  @JoinColumn(name = "anfitrion_id", nullable = false)
+  @JsonIgnore //Evitar que se imprima todo el anfitrión
+  private Anfitrion anfitrion;
 
-  @Column(name = "viajero_id", nullable = false)
-  private Long viajeroID;
+  @ManyToOne
+  @JoinColumn(name = "viajero_id", nullable = false)
+  @JsonIgnore //Evitar que se imprima todo el anfitrión
+  private Viajero viajero;
 
   @Enumerated(EnumType.STRING)
   private ReservaType estado;
 
-  @Column(nullable = false)
+  @Column(name = "fecha_inicio", nullable = false)
   private Date fechaInicio;
 
-  @Column(nullable = false)
+  @Column(name = "fecha_fin", nullable = false)
   private Date fechaFin;
 
   @Column
@@ -51,4 +58,10 @@ public class Reservas {
 
   @Column
   private String ubicacion;
+
+  @Column
+  private boolean viajero_eliminado = false;
+
+  @Column
+  private boolean anfitrion_eliminado = false;
 }

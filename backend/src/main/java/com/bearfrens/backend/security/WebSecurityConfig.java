@@ -43,7 +43,7 @@ public class WebSecurityConfig {
     http
       .csrf(AbstractHttpConfigurer::disable) // Desactiva la protección CSRF
         .authorizeHttpRequests(req -> req
-            .requestMatchers("/auth/**", "/api/admin-panel/**") // Permite el acceso sin autenticación a estas rutas
+            .requestMatchers("/api/auth/login", "/api/anfitriones/auth/register", "/api/viajeros/auth/register") // Permite el acceso sin autenticación a estas rutas
             .permitAll()
             .anyRequest() // El resto de rutas
             .authenticated() // Requieren autenticación

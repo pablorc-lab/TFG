@@ -32,7 +32,7 @@ public class GestorUsuarioService {
   }
 
   public Viajero obtenerViajero(Long viajeroID){
-    return viajeroRepository.findById(viajeroID).get();
+    return viajeroRepository.findById(viajeroID).orElse(null);
   }
 
   public List<Viajero> obtenerListaViajeros(List<Long> viajeros_IDs){

@@ -1,6 +1,7 @@
 package com.bearfrens.backend.entity.user;
 
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
+import com.bearfrens.backend.entity.reservas.Reservas;
 import com.bearfrens.backend.entity.viviendas.Viviendas;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,6 +25,9 @@ public class Anfitrion extends Usuario<Recomendaciones>{
   // Esto significa que para eliminarla simplemente debemos desvincular la recomendacion con el anfitrion
   @OneToMany(mappedBy = "anfitrion", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Recomendaciones> recomendaciones;
+
+  @OneToMany(mappedBy = "anfitrion", cascade = CascadeType.ALL, orphanRemoval = false)
+  private List<Reservas> reservas;
 
   // Constructores
   public Anfitrion() {
