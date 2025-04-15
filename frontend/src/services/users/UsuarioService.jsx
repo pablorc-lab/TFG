@@ -24,7 +24,11 @@ class UsuarioService {
   }
 
   getById(userID) {
-    return axios.get(`${this.baseUrl}/${userID}`);
+    return axios.get(`${this.baseUrl}/id/${userID}`);
+  }
+
+  getByEmail(email) {
+    return axios.get(`${this.baseUrl}/email/${email}`);
   }
 
   getByPrivateID(privateID){

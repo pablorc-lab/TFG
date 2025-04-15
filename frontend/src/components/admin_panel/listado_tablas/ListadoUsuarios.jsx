@@ -28,7 +28,10 @@ export default function ListadoUsuarios({ styles, userType }) {
 
   const listarUsuarios = () => {
     userService.getAll()
-      .then(response => {setUsuarios(response.data); console.log(response.data)})
+      .then(response => {
+        setUsuarios(response.data);
+        console.log(response.data)
+      })
       .catch(error => console.error("Error al listar los usuarios : ", error));
   };
 
@@ -72,7 +75,7 @@ export default function ListadoUsuarios({ styles, userType }) {
             <td>{usuario.email}</td>
             <td>
               <a href={usuario.profileImage} target="_blank" rel="noopener noreferrer">
-                {(usuario.profileImage?.length > 20 ? `${usuario.profileImage.slice(0, 20)}...` : usuario.profileImage) || "-" }
+                {(usuario.profileImage?.length > 20 ? `${usuario.profileImage.slice(0, 20)}...` : usuario.profileImage) || "-"}
               </a>
             </td>
             <td>{usuario.gusto1}</td>
@@ -80,8 +83,8 @@ export default function ListadoUsuarios({ styles, userType }) {
             <td>{usuario.gusto3}</td>
             <td>{usuario.valoracion_media || 0}</td>
             <td>
-              {(usuario.descripcion?.length > 25 ? `${usuario.descripcion.slice(0,25)}...` : usuario.descripcion) || "-"}
-              </td>
+              {(usuario.descripcion?.length > 25 ? `${usuario.descripcion.slice(0, 25)}...` : usuario.descripcion) || "-"}
+            </td>
             <td>
               <div className={styles.img_td}>
                 <Link to={`/admin-panel/${userType}/editar/${usuario.id}`}>

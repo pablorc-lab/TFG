@@ -114,7 +114,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @return Respueta MAP en forma [{usuario, biografia}, {usuario, biografia} ... ]
    */
   @GetMapping("/datos")
-  public ResponseEntity<?> listarTodosConDatos() {
+  public ResponseEntity<List<Map<String, Object>>> listarTodosConDatos() {
     List<T> usuarios = repository.findAll();
     List<Map<String, Object>> resultado = new ArrayList<>();
 
@@ -135,8 +135,8 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @param userID ID del usuario
    * @return ResponseEntity con el usuario encontrado y, si está disponible, su biografía.  Si no existe, lanza una excepción.
    */
-  @GetMapping("/{userID}") // @PathVariable : extrae el valor del parámetro id de la URL de la solicitud HTTP.
-  public ResponseEntity<?> obtenerUsuarioPorId(@PathVariable Long userID){
+  @GetMapping("/id/{userID}") // @PathVariable : extrae el valor del parámetro id de la URL de la solicitud HTTP.
+  public ResponseEntity<Map<String, Object>> obtenerUsuarioPorId(@PathVariable Long userID){
     // findById() que busca un registro por la clave primaria (en este caso, id), que es la columna marcada como clave primaria en la base de datos.
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -155,31 +155,71 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   }
 
   /**
+   * Obtiene un usuario a través de su email y, si existe, también su biografía.
+   * @param email ID del usuario
+   * @return ResponseEntity con el usuario encontrado y, si está disponible, su biografía.  Si no existe, lanza una excepción.
+   */
+  @GetMapping("/email/{email}")
+  public ResponseEntity<Map<String, Object>> obtenerUsuarioPorId(@PathVariable String email){
+    String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
+
+    Map<String, Object> respuesta = new HashMap<>();
+    long userID;
+
+    if(tipo_user.equals("anfitriones")){
+      Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrionPorEmail(email)
+        .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese email no existe : " + email));
+      respuesta.put("usuario", anfitrion);
+      userID = anfitrion.getId();
+    }
+    else{
+      Viajero viajero = gestorUsuarioService.obtenerViajeroPorEmail(email)
+        .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese email no existe : " + email));
+      respuesta.put("usuario", viajero);
+      userID = viajero.getId();
+    }
+
+    Biografias biografia = biografiasService.obtenerBiografia(tipo_user, userID).orElse(null);
+    List<Valoraciones> valoraciones = valoracionesService.obtenerListaValoracionesConexionesRecibidas(userID, tipo_user);
+
+    respuesta.put("biografia", biografia != null ? biografia : new Biografias());
+    respuesta.put("valoraciones" , valoraciones);
+
+    return ResponseEntity.ok(respuesta);
+  }
+
+  /**
    * Obtiene un usuario a través de su ID privado y, si existe, también su biografía.
    * @param privateID ID privado del usuario
    * @return ResponseEntity con el usuario encontrado y, si está disponible, su biografía. Si no existe, lanza una excepción.
    */
   @GetMapping("/private-id/{privateID}")
-  public ResponseEntity<?> obtenerUsuarioPorPrivateID(@PathVariable String privateID) {
-    T user;
+  public ResponseEntity<Map<String, Object>> obtenerUsuarioPorPrivateID(@PathVariable String privateID) {
+    String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
+    Map<String, Object> respuesta = new HashMap<>();
+    long userID;
 
-    if (userType.equals("anfitrion")) {
-      user = (T) gestorUsuarioService.obtenerAnfitrionPorIDPrivado(privateID)
-        .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID Privado no existe : " + privateID));
-    } else {
-      user = (T) gestorUsuarioService.obtenerViajeroPorIDPrivado(privateID)
-        .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID Privado no existe : " + privateID));
+    if(tipo_user.equals("anfitriones")){
+      Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrionPorIDPrivado(privateID)
+        .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese privateID no existe : " + privateID));
+
+      respuesta.put("usuario", anfitrion);
+      userID = anfitrion.getId();
     }
 
-    String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
-    Biografias biografia = biografiasService.obtenerBiografia(tipo_user, user.getId()).orElse(null);
-    List<Valoraciones> valoraciones = valoracionesService.obtenerListaValoracionesConexionesRecibidas(user.getId(), tipo_user);
+    else {
+      Viajero viajero = gestorUsuarioService.obtenerViajeroPorIDPrivado(privateID)
+        .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese privateID no existe : " + privateID));
 
-    Map<String, Object> respuesta = Map.of(
-      "usuario", user,
-      "biografia", biografia != null ? biografia : new Biografias(),
-      "valoraciones", valoraciones
-    );
+      respuesta.put("usuario", viajero);
+      userID = viajero.getId();
+    }
+
+    Biografias biografia = biografiasService.obtenerBiografia(tipo_user, userID).orElse(null);
+    List<Valoraciones> valoraciones = valoracionesService.obtenerListaValoracionesConexionesRecibidas(userID, tipo_user);
+
+    respuesta.put("biografia", biografia != null ? biografia : new Biografias());
+    respuesta.put("valoraciones" , valoraciones);
 
     return ResponseEntity.ok(respuesta);
   }
@@ -366,7 +406,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @param infoContenido Información del contenido a editar
    * @return Objeto editado
    */
-  public ResponseEntity<?> editarContenido(Long userID, String titulo, TC infoContenido) {
+    public ResponseEntity<?> editarContenido(Long userID, String titulo, TC infoContenido) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 

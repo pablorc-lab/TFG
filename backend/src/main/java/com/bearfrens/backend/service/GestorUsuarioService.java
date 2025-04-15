@@ -19,6 +19,7 @@ public class GestorUsuarioService {
   private final AnfitrionRepository anfitrionRepository;
   private final ViajeroRepository viajeroRepository;
 
+  // FUNCIONES PARA AMBOS USUARIOS
   public Anfitrion obtenerAnfitrion(Long anfitrionID){
     return anfitrionRepository.findById(anfitrionID).get();
   }
@@ -29,6 +30,14 @@ public class GestorUsuarioService {
 
   public Optional<Viajero> obtenerViajeroPorIDPrivado(String privateID){
     return viajeroRepository.findByPrivateID(privateID);
+  }
+
+  public Optional<Anfitrion> obtenerAnfitrionPorEmail(String email){
+    return anfitrionRepository.findByEmail(email);
+  }
+
+  public Optional<Viajero> obtenerViajeroPorEmail(String email){
+    return viajeroRepository.findByEmail(email);
   }
 
   public Viajero obtenerViajero(Long viajeroID){
