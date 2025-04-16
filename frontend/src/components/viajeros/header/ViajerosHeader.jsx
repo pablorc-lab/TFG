@@ -18,12 +18,21 @@ export default function ViajerosHeader({
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const userRef = useRef(null);
+  const navigate = useNavigate();
+  
+  const handleLogout = () => {
+    localStorage.clear();
+
+    navigate("/inicio");
+
+    //TODO : HACER LLAMADA A LA API EN LOGOUT PARA ELIMINAR ESE TOKEN
+  }
 
   const menuLinks = [
     { path: "/viajeros/mi-cuenta", label: <strong>Mi Cuenta</strong> },
     { path: "/inicio/faq", label: "FAQ" },
     { path: "/", label: "Soporte" },
-    { path: "/", label: <div>Cerrar sesión</div> }
+    { label: <div onClick={handleLogout}>Cerrar sesión</div> }
   ];
 
   // Obtener el "classname" del nav actual

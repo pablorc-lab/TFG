@@ -66,14 +66,19 @@ public class ReservasService {
   private void actualizarEstadoReservas(List<Reservas> reservas) {
     Date fechaActual = new Date();
     for (Reservas reserva : reservas) {
-      if (reserva.getFechaFin().before(fechaActual)) {
-        reserva.setEstado(Reservas.ReservaType.FINALIZADA);
-      }
+      if(!reserva.getEstado().equals(Reservas.ReservaType.CANCELADA)){
+        // Ver si está finalizada
+        if (reserva.getFechaFin().before(fechaActual)) {
+          reserva.setEstado(Reservas.ReservaType.FINALIZADA);
+        }
 
-      else if (!reserva.getFechaInicio().after(fechaActual) && !reserva.getFechaFin().before(fechaActual)) {
-        reserva.setEstado(Reservas.ReservaType.ACTIVA);
+        // Ver si está activa
+        else if (reserva.getFechaInicio().before(fechaActual) && reserva.getFechaFin().after(fechaActual)) {
+          reserva.setEstado(Reservas.ReservaType.ACTIVA);
+        }
       }
     }
+
     reservasRepository.saveAll(reservas);
   }
 

@@ -8,6 +8,7 @@ import AnfitrionFinalHeader from "../../../components/anfitriones/header/Anfitri
 const ViajProfilesGallery = lazy(() => import("../../../components/anfitriones/inquilinos/ViajProfilesGallery"));
 
 export default function InquilinosPage() {
+
   const [viajeros, SetViajeros] = useState([]);
   const [viajerosFiltrados, setViajerosFiltrados] = useState([]);
   const [biografias, setBiografias] = useState([]);

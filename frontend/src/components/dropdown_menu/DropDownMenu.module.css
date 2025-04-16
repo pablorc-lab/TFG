@@ -59,7 +59,7 @@
 }
 
 .dropdown_menu a {color: #4a4a4a;}
-.dropdown_menu a:hover span {
+.dropdown_menu a:hover span, .dropdown_menu div:hover span {
 	color: #009080;
 	transform: translateX(10px);
 	font-weight: 700;

@@ -1,10 +1,11 @@
 import './App.css';
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom"
 
 // Se mantiene con un import normal porque es la primera vista y se carga inmediatamente,
 import HomePage from './pages/inicio/home/HomePage';
 import ScrollToTop from './components/utilities/ScrollToTop';
+import { jwtDecode } from 'jwt-decode';
 
 const InqProfilePage = lazy(() => import("./pages/anfitriones/inq_profiles/InqProfilePage"));
 const ConexionesAnfPage = lazy(() => import("./pages/anfitriones/conexiones/ConexionesAnfPage"));
@@ -20,29 +21,50 @@ const InquilinosPage = lazy(() => import('./pages/anfitriones/inquilinos/Inquili
 const AnfProfilePage = lazy(() => import('./pages/viajeros/anf_profiles/AnfProfilePage'));
 
 export default function App() {
+
+  // Outlet : Reenderiza las rutas hijas si hay token anfitrión
+  const PrivateAnfitrionRoute = () => {
+    const token = localStorage.getItem("acces_token");
+    const user = localStorage.getItem("user");
+
+    return token && user === "Anfitrion (1)" ? <Outlet /> : <Navigate to="/iniciar-sesion" />;
+  };
+
+  // Outlet : Reenderiza las rutas hijas si hay token anfitrión
+  const PrivateViajeroRoute = () => {
+    const token = localStorage.getItem("acces_token");
+    const user = localStorage.getItem("user");
+
+    return token && user === "Viajero (2)" ? <Outlet /> : <Navigate to="/iniciar-sesion" />;
+  };
+
   return (
     <BrowserRouter>
-      <ScrollToTop/>
-      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{width:"350px", position: "absolute", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
-      <Routes>
+      <ScrollToTop />
+      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "absolute", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
+        <Routes>
           {/* Rutas para INICIO*/}
           <Route path="/" element={<Navigate to="/inicio" />} />
           <Route path="/inicio" element={<HomePage />} />
           <Route path="/inicio/faq" element={<FaqPage />} />
 
           {/* Rutas para VIAJEROS*/}
-          <Route path="/viajeros" element={<Navigate to="/viajeros/alojamientos" />} />
-          <Route path="/viajeros/alojamientos" element={<AlojamientosPage/>} />
-          <Route path="/viajeros/conexiones" element={<ConexionesViajPage/>} />
-          <Route path="/viajeros/mi-cuenta" element={<MiCuenta/>} />
-          <Route path="/viajeros/perfil-anfitrion" element={<AnfProfilePage/>} />
+          <Route element={<PrivateViajeroRoute />}>
+            <Route path="/viajeros" element={<Navigate to="/viajeros/alojamientos" />} />
+            <Route path="/viajeros/alojamientos" element={<AlojamientosPage />} />
+            <Route path="/viajeros/conexiones" element={<ConexionesViajPage />} />
+            <Route path="/viajeros/mi-cuenta" element={<MiCuenta />} />
+            <Route path="/viajeros/perfil-anfitrion" element={<AnfProfilePage />} />
+          </Route>
 
           {/* Rutas para ANFITRIONES*/}
-          <Route path="/anfitriones" element={<Navigate to="/anfitriones/inquilinos" />} />
-          <Route path="/anfitriones/inquilinos" element={<InquilinosPage/>} />
-          <Route path="/anfitriones/conexiones" element={<ConexionesAnfPage/>} />
-          <Route path="/anfitriones/mi-cuenta" element={<MiCuenta esViajero={false}/>} />
-          <Route path="/anfitriones/perfil-viajero" element={<InqProfilePage/>} />
+          <Route element={<PrivateAnfitrionRoute />}>
+            <Route path="/anfitriones" element={<Navigate to="/anfitriones/inquilinos" />} />
+            <Route path="/anfitriones/inquilinos" element={<InquilinosPage />} />
+            <Route path="/anfitriones/conexiones" element={<ConexionesAnfPage />} />
+            <Route path="/anfitriones/mi-cuenta" element={<MiCuenta esViajero={false} />} />
+            <Route path="/anfitriones/perfil-viajero" element={<InqProfilePage />} />
+          </Route>
 
           {/* Rutas para REGISTRO o ACCESO*/}
           <Route path="/registro" element={<RegistrarUsuarioPage />} />

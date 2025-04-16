@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./accesos.module.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../../services/authentication/AuthService";
 
 export default function InicioSesionPage() {
@@ -10,6 +10,8 @@ export default function InicioSesionPage() {
   const [loading, setLoading] = useState(false);
   const [finish, setFinish] = useState(false);
   const [loginRequest, setLoginRequest] = useState({ email: '', password: '' });
+
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -26,6 +28,11 @@ export default function InicioSesionPage() {
         console.log(response.data);
         setLoginError(false);
         setFinish(true);
+
+        localStorage.setItem("acces_token", response.data.acces_token);
+        localStorage.setItem("user", response.data.User);
+
+        navigate(response.data.User === "Anfitrion (1)" ? "/anfitriones/inquilinos" : "/viajeros/alojamientos");
       })
       .catch(error => {
         console.error("Error en el login " + error);

@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import styles from "./MiCuenta.module.css"
 import ScoreMiCuenta from "../../../components/usuarios/mi_cuenta/Score";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const OpinionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/opiniones/Opiniones"));
 const PerfilMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/perfil/Perfil"));
 const SeguridadMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/seguridad/Seguridad"));
@@ -13,6 +13,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
   const [activeMenu, setActiveMenu] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const [perfilImage, setPerfilImage] = useState(null);
+  const navigate = useNavigate();
 
   // Controlar cuando es pantalla pequeña
   useEffect(() => {
@@ -46,6 +47,14 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
     backgroundColor: "white",
     boxShadow: "0 0 5px rgba(65, 65, 65, 0.3)",
   };
+
+  const handleLogout = () => {
+    localStorage.clear();
+
+    navigate("/inicio");
+
+    //TODO : HACER LLAMADA A LA API EN LOGOUT PARA ELIMINAR ESE TOKEN
+  }
 
   return (
     <>
@@ -135,7 +144,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             </div>
 
               <div className={styles.cerrar_sesion}>
-                <h3>Cerrar sesión</h3>
+                <h3 onClick={handleLogout}>Cerrar sesión</h3>
               </div>
             
           </section>

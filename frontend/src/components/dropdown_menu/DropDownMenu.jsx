@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from "./DropDownMenu.module.css"
 import { Link } from "react-router-dom";
 
-const DropDownMenu = ({userRef, setMenuOpen, menuLinks, visibleWidth = 860, activeSection}) => {
+const DropDownMenu = ({ userRef, setMenuOpen, menuLinks, visibleWidth = 860, activeSection }) => {
   const [isNavVisible, setNavVisible] = useState(true);
   const menu_user_Ref = useRef(null);
   const hasHiddenLinks = menuLinks.some(link => link.hiddenWhenNavVisible);
@@ -34,33 +34,39 @@ const DropDownMenu = ({userRef, setMenuOpen, menuLinks, visibleWidth = 860, acti
     };
   }, []);
 
- // Obtener el "classname" del nav actual
+  // Obtener el "classname" del nav actual
   const getClassName = (nameSection) => {
     return (activeSection === String(nameSection).toLocaleLowerCase()) ? styles.active_section : undefined;
   }
 
   return (
     <div className={styles.dropdown_menu} ref={menu_user_Ref}>
-    <ul className={!hasHiddenLinks ? styles.no_hidden : undefined}>
-      {menuLinks.map((link, index) => {
-        if(link.hiddenWhenNavVisible) {
-          return !isNavVisible && (
-            <li key={index} className={`${(index+1 === menuLinks.filter(link => link.hiddenWhenNavVisible).length) ? styles.first_row : undefined} ${getClassName(link.label)}`}>
-              <Link to={link.path}>
-                <span>{link.label}</span>
-              </Link>
+      <ul className={!hasHiddenLinks ? styles.no_hidden : undefined}>
+        {menuLinks.map((link, index) => {
+          if (link.hiddenWhenNavVisible) {
+            return !isNavVisible && (
+              <li key={index} className={`${(index + 1 === menuLinks.filter(link => link.hiddenWhenNavVisible).length) ? styles.first_row : undefined} ${getClassName(link.label)}`}>
+                <Link to={link.path}>
+                  <span>{link.label}</span>
+                </Link>
+              </li>
+            );
+          }
+
+          return (
+            <li key={index} className={(index === menuLinks.length - 1) ? styles.last_row : undefined}>
+              {link.path ? (
+                <Link to={link.path} className={getClassName(link.label)}>
+                  <span>{link.label}</span>
+                </Link>
+              ) : (
+                <div onClick={link.onClick} className={getClassName(link.label)}>
+                  <span>{link.label}</span>
+                </div>
+              )}
             </li>
           );
-        }
-        
-        return (
-          <li key={index} className={(index === menuLinks.length-1) ? styles.last_row : undefined}>
-            <Link to={link.path} className={getClassName(link.label)}>
-              <span>{link.label}</span>
-            </Link>
-          </li>
-        );
-      })}
+        })}
       </ul>
     </div>
   );
