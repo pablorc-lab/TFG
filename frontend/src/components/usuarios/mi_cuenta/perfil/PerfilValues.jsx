@@ -2,12 +2,6 @@ import styles from "./Perfil.module.css";
 
 // Contenido de "Mi cuenta"
 export const ContenidoMiCuenta = ({ usuarioData = [] }) => {
-	const gustosImages = [
-		"/images/usuarios/Gustos/baseball.svg",
-		"/images/usuarios/Gustos/pesca.svg",
-		"/images/usuarios/Gustos/poker.svg",
-	];
-
 	return (
 		<section className={styles.miCuenta_section}>
 			<article>

@@ -117,21 +117,33 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
         <nav>
           {!isMobile ? (
             <>
-              <Link to="/viajeros/alojamientos">Alojamientos</Link>
-              <Link to="/viajeros/alojamientos">Comunidades</Link>
-              <Link to="/viajeros/alojamientos">Soporte</Link>
+              {esViajero ? (
+                <>
+                  <Link to="/viajeros/alojamientos">Alojamientos</Link>
+                  <Link to="/viajeros/conexiones">Conexiones</Link>
+                  <Link to="/viajeros/conexiones">Conexiones</Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/viajeros/">Grupos</Link>
+                  <Link to="/anfitriones/inquilinos">Inquilinos</Link>
+                  <Link to="/anfitriones/conexiones">Conexiones</Link>
+                </>
+              )}
+              <Link to="/inicio">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
             </>
           ) : (
             <>
-              <Link to="/viajeros/alojamientos">Soporte</Link>
+              <Link to="/inicio">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
             </>
           )}
+
         </nav>
       </header>
 
-      {isMobile && esViajero ? <ViajerosMobileHeader activeSection={activeSection} /> : <AnfitrionMobileHeader activeSection={activeSection}/>}
+      {isMobile && (esViajero ? <ViajerosMobileHeader activeSection={activeSection} /> : <AnfitrionMobileHeader activeSection={activeSection} />)}
 
       {!isLoading ? (
         <main className={styles.main}>
@@ -194,8 +206,8 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
 
               <div className={styles.user_bubble}>
                 {!esViajero && <h4>
-                  {usuarioData.usuario?.vivienda?.ciudad + "," || "-"} 
-                  {" " + usuarioData.usuario?.vivienda?.provincia || "-"} 
+                  {usuarioData.usuario?.vivienda?.ciudad + "," || "-"}
+                  {" " + usuarioData.usuario?.vivienda?.provincia || "-"}
                   {" (" + usuarioData.usuario?.vivienda?.precio_noche || "-"}&euro; / noche)
                 </h4>
                 }
@@ -212,12 +224,12 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           {/* Componente de los menús*/}
           <div className={styles.user_component}>
             <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
-              {activeMenu === 0 && <PerfilMiCuenta showValue={0} usuarioData={usuarioData}/>}
+              {activeMenu === 0 && <PerfilMiCuenta showValue={0} usuarioData={usuarioData} />}
               {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} usuarioData={usuarioData} />}
-              {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} usuarioData={usuarioData}/>}
-              {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} />}
+              {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} usuarioData={usuarioData} />}
+              {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} recomendacionesData={usuarioData.usuario?.recomendaciones} />}
               {activeMenu === 4 && <SeguridadMiCuenta />}
-              {activeMenu === 5 && <OpinionesMiCuenta />}
+              {activeMenu === 5 && <OpinionesMiCuenta showSize={true} nota_media={usuarioData.usuario?.valoracion_media} valoraciones={usuarioData?.valoraciones} MiCuenta={true}/>}
               {activeMenu === 6 && <HistorialReservasMiCuenta />}
             </Suspense>
           </div>

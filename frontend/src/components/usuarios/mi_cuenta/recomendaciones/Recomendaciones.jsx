@@ -2,12 +2,20 @@ import { Suspense, useState } from "react";
 import styles from "./Recomendaciones.module.css";
 import EditarPerfil from "../editar_datos/Editar";
 
-const RecomendacionesMiCuenta = ({esViajero}) => {
+const RecomendacionesMiCuenta = ({esViajero, recomendacionesData = []}) => {
   const [isOpen, setIsOpen] = useState(null);
+
+  const datos_recomendaciones = [
+    { key: "recomendacion", label: "Sugerencia", icon: "backpack" },
+    { key: "ayuda", label: "Importante", icon: "help" },
+    { key: "ubicacion", label: "Ubicación", icon: "location" },
+    { key: "horarios", label: "Horarios", icon: "clock" },
+    { key: "telefono", label: "Teléfono", icon: "phone" },
+  ];
 
   return (
     <section className={styles.recomendaciones_main}>
-      <h1>{esViajero ? "Experiencias" : "Recomendaciones"} - 2</h1>
+      <h1>{esViajero ? "Experiencias" : "Recomendaciones"} - {recomendacionesData.length}</h1>
 
       {isOpen &&
         <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} />}>
@@ -20,31 +28,26 @@ const RecomendacionesMiCuenta = ({esViajero}) => {
           <img src="/images/usuarios/account/aniadir_recomendacion.svg" alt="Aniadir recomendacion" />
           <p>Añadir {esViajero ? "experiencia" : "recomendacion"}</p>
         </li>
-        <li>
-          <h3>Restaurante favorito en la ciudad</h3>
-          <p>
-            Si te encanta la comida local, no puedes perderte ‘La Taberna de Juan’. Su especialidad es el pescado fresco y los platos tradicionales. Además, si vas los viernes, hay música en vivo. ¡Te encantará!
-          </p>
-          <div className={styles.logos_recomendations}>
-            <img src="/images/profiles/recomendaciones/location.svg" alt="Aniadir recomendacion" />
-            <p><strong>Ubicación: </strong>Calle Mayor, 23, 18028.</p>
-          </div>
-        </li>
 
-        <li>
-          <h3>Restaurante favorito en la ciudad</h3>
-          <p>
-            Si te encanta la comida local, no puedes perderte ‘La Taberna de Juan’. Su especialidad es el pescado fresco y los platos tradicionales. Además, si vas los viernes, hay música en vivo. ¡Te encantará!
-          </p>
-          <div className={styles.logos_recomendations}>
-            <img src="/images/profiles/recomendaciones/location.svg" alt="Aniadir recomendacion" />
-            <p><strong>Ubicación: </strong>Calle Mayor, 23, 18028.</p>
-          </div>
-          <div className={styles.logos_recomendations}>
-            <img src="/images/profiles/recomendaciones/backpack.svg" alt="Aniadir recomendacion" />
-            <p><strong>Recomendacion: </strong>Si decides ir a este restaurante, te recomiendo que vayas acompañado, ya que las porciones de los platos son bastante grandes. La cantidad de comida en cada plato es más que suficiente para satisfacer a varias personas.</p>
-          </div>
-        </li>
+        {recomendacionesData.length > 0
+          ? (
+            recomendacionesData.map((recomendacion, index) => (
+              <li key={index}>
+                <h3>{recomendacion.titulo}</h3>
+                <p>{recomendacion.descripcion}</p>
+
+                {datos_recomendaciones.map(({ key, label, icon }) =>
+                  recomendacion[key] && (
+                    <div className={styles.logos_recomendations} key={key}>
+                      <img src={`/images/profiles/recomendaciones/${icon}.svg`} alt={`Imagen ${label}`} />
+                      <p><strong>{label}:</strong> {recomendacion[key]}</p>
+                    </div>
+                  )
+                )}
+              </li>
+            ))
+          ) : <h2 style={{textAlign : "center"}}> No se ha creado ningun recomendacion</h2>
+        }
       </ul>
     </section>
   )

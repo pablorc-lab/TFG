@@ -89,7 +89,7 @@
 .comentarios_section {
   padding-bottom: 30px;
   display: grid;
-  gap: 50px;
+  gap: 30px;
   width: 100%;
 }
 
@@ -110,11 +110,12 @@ body:has(.dialog_container[open]) {
 }
 .cerra_menu:hover {
   filter: brightness(0.9);
-  background-color: rgba(255, 5, 5, 0.35);
+  background-color: rgba(255, 5, 5, 0.304);
 }
 .dialog_container:focus, .dialog_main:focus {outline: none;}
 .dialog_container h1 {
   user-select: none;
+  margin: 0;
   padding-bottom: 20px;
   font-size: 22px;
   text-align: center;
@@ -152,10 +153,11 @@ body:has(.dialog_container[open]) {
 .dialog_main {
   display: grid;
   gap: 35px;
-  max-height: calc(80vh - 61px - 30px);
+  max-height: calc(78vh - 61px - 30px);
   overflow-y: auto;
   padding-right: 15px;
 }
+
 .dialog_container::backdrop {
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
@@ -220,4 +222,7 @@ body:has(.dialog_container[open]) {
   .valoraciones_container { 
     gap: 60px;
   }
+}
+.valoraciones_statistics_cuenta {
+  justify-content: space-evenly;
 }

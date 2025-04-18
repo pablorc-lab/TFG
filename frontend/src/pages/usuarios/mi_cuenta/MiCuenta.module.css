@@ -36,7 +36,7 @@
 }
 /*? LOGO*/
 .header figure h1{
-  color: #009080;
+  color: #0a7273;
   font-weight: 800;
   margin: 0;
   font-size: 23px;
@@ -57,8 +57,8 @@
   margin: 0;
 }
 .header .header_logo {
-  width: 60px;
-  height: auto;
+  aspect-ratio: 1 / 1;
+  width: 55px;
 }
 
 .header nav a{
@@ -67,18 +67,19 @@
   font-size: 21px;
   color: #737373;
   cursor: pointer;
-  margin: 0 15px;
-  padding: 0 5px;
+  padding: 10px 11px;
+  border-radius: 30px;
   text-decoration: none;
-  transition: border-bottom 0.1s ease-in-out;
+  transition:  background-color 0.1s ease-in-out;
 }
 .header nav a:last-child {margin-right: 0;}
 
 .header a:hover {
-  color: #0a7273;
+  color: white;
   filter: none;
   margin-bottom: 0px;
-  border-bottom: 4px solid #0a7273;
+  outline-offset: -1px;
+  background-color: #0a7273;
 }
 
 /*? ===================

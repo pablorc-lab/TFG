@@ -4,7 +4,7 @@ import styles from "./Opiniones.module.css"
 import Comentarios from "./Comentarios";
 import ShowAllComentarios from "./ShowAllComentarios";
 
-const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = [] }) => {
+const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = [], MiCuenta = false }) => {
   const [estadisticas_valoraciones, setEstadisticas_valoraciones] = useState([0, 0, 0, 0, 0]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [activeShowMore, setActiveShowMore] = useState(false);
@@ -25,7 +25,7 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
 
   return (
     <main className={styles.valoraciones_main}>
-      <section className={`${styles.valoraciones_container} ${valoraciones ? styles.valoraciones_container_show : undefined}`}>
+      <section className={`${styles.valoraciones_container} ${valoraciones ? styles.valoraciones_container_show : undefined} ${MiCuenta ? styles.valoraciones_statistics_cuenta : ""}`}>
         <article className={styles.valoraciones_info}>
           <div>
             <h2>Opiniones recibidas</h2>
