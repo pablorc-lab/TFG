@@ -5,7 +5,7 @@ const ContenidoMiCuenta = lazy(() => import("./PerfilValues").then(functions => 
 const ContenidoVivienda = lazy(() => import("./PerfilValues").then(functions => ({ default: functions.ContenidoVivienda })));
 const ContenidoBiografia = lazy(() => import("./PerfilValues").then(functions => ({ default: functions.ContenidoBiografia })));
 
-const PerfilMiCuenta = ({ showValue = 0,  esViajero = false}) => {
+const PerfilMiCuenta = ({ showValue = 0,  esViajero = false,  usuarioData=[]}) => {
   const [isOpen, setIsOpen] = useState(null);
 
   // Contenido mostrado al acceder a "Datos personales" o "Vivienda"
@@ -25,9 +25,9 @@ const PerfilMiCuenta = ({ showValue = 0,  esViajero = false}) => {
       </article>
 
       {/* Mostrar datos de "Mi cuenta" , "Biografía" o "Vivienda" respectivamente*/}
-      {showValue === 0 && <ContenidoMiCuenta />}
-      {showValue === 1 && <ContenidoBiografia esViajero={esViajero}/>}
-      {showValue === 2 && <ContenidoVivienda />}
+      {showValue === 0 && <ContenidoMiCuenta usuarioData={usuarioData.usuario} />}
+      {showValue === 1 && <ContenidoBiografia esViajero={esViajero} biografiaData={usuarioData.biografia}/>}
+      {showValue === 2 && <ContenidoVivienda viviendaData={usuarioData.usuario.vivienda} />}
     </>
   );
 }

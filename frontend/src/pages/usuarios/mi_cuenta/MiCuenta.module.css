@@ -209,7 +209,7 @@
 .user_bubble::before {
   content: "";
   position: absolute;
-  top: -15px;
+  top: -14.5px;
   left: 60px;
   transform: translateX(-50%);
   border-width: 0 15px 15px 15px;

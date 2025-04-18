@@ -42,13 +42,16 @@ public class WebSecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
       .csrf(AbstractHttpConfigurer::disable) // Desactiva la protección CSRF
-        .authorizeHttpRequests(req -> req
-            .requestMatchers("/api/auth/login", "/api/anfitriones/auth/register", "/api/viajeros/auth/register") // Permite el acceso sin autenticación a estas rutas
-            .permitAll()
-            .anyRequest() // El resto de rutas
-            .authenticated() // Requieren autenticación
-        )
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Define que no se usarán sesiones, se trabaja con JWT
+//        .authorizeHttpRequests(req -> req
+//            .requestMatchers("/api/auth/login", "/api/anfitriones/auth/register", "/api/viajeros/auth/register") // Permite el acceso sin autenticación a estas rutas
+//            .permitAll()
+//            .anyRequest() // El resto de rutas
+//            .authenticated() // Requieren autenticación
+//        )
+      .authorizeHttpRequests(req -> req
+        .anyRequest().permitAll()
+      )
+      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Define que no se usarán sesiones, se trabaja con JWT
         .authenticationProvider(authenticationProvider) // Usa el proveedor de autenticación definido (donde se carga el usuario y se verifica contraseña)
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)  // Añade el filtro JWT antes del filtro estándar de autenticación por usuario y contraseña
           .logout(logout -> // Configura el proceso de logout

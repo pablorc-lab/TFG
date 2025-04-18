@@ -1,7 +1,7 @@
 import styles from "./Perfil.module.css";
 
 // Contenido de "Mi cuenta"
-export const ContenidoMiCuenta = () => {
+export const ContenidoMiCuenta = ({ usuarioData = [] }) => {
 	const gustosImages = [
 		"/images/usuarios/Gustos/baseball.svg",
 		"/images/usuarios/Gustos/pesca.svg",
@@ -18,19 +18,19 @@ export const ContenidoMiCuenta = () => {
 				<ul className={styles.miCuenta_info} >
 					<li>
 						<h2>Nombre</h2>
-						<p>Pablo</p>
+						<p>{usuarioData.nombre}</p>
 					</li>
 					<li>
 						<h2>Apellido</h2>
-						<p>Ramblado</p>
+						<p>{usuarioData.apellido}</p>
 					</li>
 					<li>
 						<h2>ID privado</h2>
-						<p>PabloID123</p>
+						<p>{usuarioData.privateID}</p>
 					</li>
 					<li>
 						<h2>Fecha de nacimiento</h2>
-						<p>23-11-1998</p>
+						<p>{usuarioData.fecha_nacimiento}</p>
 					</li>
 				</ul>
 			</article>
@@ -43,11 +43,11 @@ export const ContenidoMiCuenta = () => {
 				<ul className={`${styles.miCuenta_info} ${styles.miCuenta_contacto}`}>
 					<li>
 						<h2>Email</h2>
-						<p>pabloramblado@correo.example.es</p>
+						<p>{usuarioData.email}</p>
 					</li>
 					<li>
 						<h2>Teléfono</h2>
-						<p>666777999</p>
+						<p>{usuarioData.telefono}</p>
 					</li>
 				</ul>
 			</article>
@@ -60,13 +60,18 @@ export const ContenidoMiCuenta = () => {
 				<ul className={`${styles.miCuenta_info} ${styles.miCuenta_biografia}`}>
 					<li>
 						<h2>Breve descripción</h2>
-						<p>Amante de la aventura y los viajes hacia lugares muy bonitos, ademas me gusto apasiona ir de pesca con mis hijos</p>
+						<p>{usuarioData.descripcion}</p>
 					</li>
 					<li>
 						<h2>Gustos :</h2>
 						<div className={`${styles.miCuenta_info} ${styles.miCuenta_gustos}`}>
-							{gustosImages.map((path, index) => (
-								<img key={index} src={path} alt="Imagen gusto" />
+							{[usuarioData?.gusto1, usuarioData?.gusto2, usuarioData?.gusto3].map((gusto, index) => (
+								<img
+									key={index}
+									src={`/images/usuarios/Gustos/${String(gusto).toLowerCase()}.svg`}
+									alt={`Logo gusto ${index + 1}`} width={100}
+									onError={(e) => e.target.src = "/images/usuarios/Gustos/default.svg"}
+								/>
 							))}
 						</div>
 					</li>
@@ -78,11 +83,13 @@ export const ContenidoMiCuenta = () => {
 
 
 // Contenido de "Vivienda"
-export const ContenidoVivienda = () => {
+export const ContenidoVivienda = ({ viviendaData = [] }) => {
 	const vivienda_imgs = [
-		"/images/landing_page/casa_1.webp",
-		"/images/landing_page/casa_2.webp"
-	];
+		viviendaData.imagen1,
+		viviendaData.imagen2,
+		viviendaData.imagen3,
+		viviendaData.imagen4
+	].filter(img => img != null);
 
 	return (
 		<section className={styles.miCuenta_section}>
@@ -106,19 +113,19 @@ export const ContenidoVivienda = () => {
 				<ul className={styles.miCuenta_info}>
 					<li>
 						<h2>Viajeros</h2>
-						<p>3</p>
+						<p>{viviendaData.viajeros}</p>
 					</li>
 					<li>
 						<h2>Habitaciones</h2>
-						<p>1</p>
+						<p>{viviendaData.habitaciones}</p>
 					</li>
 					<li>
 						<h2>Camas</h2>
-						<p>2</p>
+						<p>{viviendaData.camas}</p>
 					</li>
 					<li>
 						<h2>Baños</h2>
-						<p>1</p>
+						<p>{viviendaData.banios}</p>
 					</li>
 				</ul>
 			</article>
@@ -131,15 +138,15 @@ export const ContenidoVivienda = () => {
 				<ul className={styles.miCuenta_info}>
 					<li>
 						<h2>Provincia</h2>
-						<p>Granada</p>
+						<p>{viviendaData.provincia}</p>
 					</li>
 					<li>
 						<h2>Ciudad</h2>
-						<p>Armilla</p>
+						<p>{viviendaData.ciudad}</p>
 					</li>
 					<li>
 						<h2>Precio &euro; / noche</h2>
-						<p>300 </p>
+						<p>{viviendaData.precio_noche}</p>
 					</li>
 				</ul>
 			</article>
@@ -149,7 +156,7 @@ export const ContenidoVivienda = () => {
 
 
 // Contenido "Biografia"
-export const ContenidoBiografia = ({esViajero}) => {
+export const ContenidoBiografia = ({ esViajero, biografiaData = [] }) => {
 	const idiomasMap = [
 		"Español",
 		"Inglés",
@@ -163,9 +170,7 @@ export const ContenidoBiografia = ({esViajero}) => {
 					<img src="/images/usuarios/account/sobre_mi.svg" alt="Info vivienda" />
 					<p>SOBRE MI</p>
 				</div>
-				<p className={styles.miCuenta_text_info}>
-					¡Hola! Soy Pablo, un apasionado de los viajes, la gastronomía y mi ciudad. Me encanta conocer gente de todo el mundo y compartir recomendaciones sobre los mejores rincones locales. Como anfitrión, mi objetivo es que disfrutes de una estancia cómoda y te sientas como en casa. Siempre estoy disponible para ayudarte con consejos sobre restaurantes, actividades y lugares secretos que solo los locales conocemos.
-				</p>
+				<p className={styles.miCuenta_text_info}>{biografiaData.sobreMi}</p>
 			</article>
 
 			<article>
@@ -174,7 +179,7 @@ export const ContenidoBiografia = ({esViajero}) => {
 					<p>IDIOMAS</p>
 				</div>
 				<ul>
-					{idiomasMap.map((idioma, index) => (
+					{biografiaData.idiomas.split(",").map((idioma, index) => (
 						<li key={index} className={styles.miCuenta_text_info}>{idioma}</li>
 					))}
 				</ul>
@@ -185,8 +190,7 @@ export const ContenidoBiografia = ({esViajero}) => {
 					<img src="/images/usuarios/account/sobre_necesidad.svg" alt="Localización vivienda" />
 					<p>SOBRE  {esViajero ? "MIS VIAJES" : "EL ALOJAMIENTO"}</p>
 				</div>
-				<p className={styles.miCuenta_text_info}>
-				Te hospedarás en una acogedora vivienda compartida, ideal para viajeros que buscan comodidad y una experiencia auténtica. Ubicada a pocos minutos del centro y cerca de las principales atracciones, ofrece un ambiente tranquilo con vistas impresionantes. ¡Será un placer recibirte!				</p>
+				<p className={styles.miCuenta_text_info}>{biografiaData.descripcionExtra}</p>
 			</article>
 		</section>
 	)
