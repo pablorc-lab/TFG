@@ -24,8 +24,9 @@ export default function AnfProfilePage() {
 
   const location = useLocation();
   const id = location.state?.id;
+  const emisorID = location.state?.emisorID;
   const [conectado, setConectado] = useState(location.state?.conectado);
-
+  
   // Controlar cuando es pantalla pequeña 
   useEffect(() => {
     const handleResize = () => {
@@ -153,6 +154,7 @@ export default function AnfProfilePage() {
             match={match}
             esAnfitrion={true}
             userID={id}
+            emisorID={emisorID}
           />
         </>
       }

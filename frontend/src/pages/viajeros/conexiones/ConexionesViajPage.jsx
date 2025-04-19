@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import MatchesService from "../../../services/matches/MatchesService";
 import ViajerosFinalHeader from "../../../components/viajeros/header/ViajerosFinalHeader";
 import Anf_Profiles_Gallery from "../../../components/viajeros/alojamientos/AnfProfilesGallery";

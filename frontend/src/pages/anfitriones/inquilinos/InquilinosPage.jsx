@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import ViajeroService from "../../../services/users/ViajeroService";
 import styles from "./Filter.module.css"
-import LikesService from "../../../services/matches/LikesService";
 
 import FilterMenu from "../../../components/anfitriones/filter_menu/FilterMenu";
 import AnfitrionFinalHeader from "../../../components/anfitriones/header/AnfitrionFinalHeader"
@@ -13,8 +12,6 @@ export default function InquilinosPage() {
   const [viajerosFiltrados, setViajerosFiltrados] = useState([]);
   const [biografias, setBiografias] = useState([]);
   
-  const [conectados_ID, SetConectados_ID] = useState([]);
-
   const [filtrosActivos, setFiltrosActivos] = useState(0);
   const [openFilterMenu, setOpenFilterMenu] = useState(null)
   const [buscarFiltrado, setBuscarFiltrado] = useState(false);
@@ -76,12 +73,7 @@ export default function InquilinosPage() {
       setViajerosFiltrados([]);
     }
 
-    if (conectados_ID.length === 0) {
-      // Obtener usuarios a los que se ha enviado el ike
-      LikesService.getAllEnviados("anfitriones", 1).then(response => {
-        SetConectados_ID(response.data.map(usuario => usuario.usuarioID));
-      }).catch(error => "Error al obtener los likes " + error)
-    }
+    
   }, [buscarFiltrado, filterOptions]);
 
 
@@ -116,7 +108,7 @@ export default function InquilinosPage() {
         <ViajProfilesGallery 
           viajeros={viajeros} 
           viajerosFiltrados={viajerosFiltrados} 
-          conectados_ID={conectados_ID} 
+          conectados_ID={true} 
           buscarFiltrado={buscarFiltrado}
         />
       </Suspense>

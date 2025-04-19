@@ -15,7 +15,8 @@ export default function UserPage({
   setConectado,
   match = true,
   esAnfitrion = false,
-  userID = null
+  userID = null,
+  emisorID = null
 }) {
 
   const [llegada, setLlegada] = useState(new Date().toISOString().split("T")[0]);
@@ -23,12 +24,17 @@ export default function UserPage({
   const [diasReserva, SetDiasReserva] = useState(1);
 
   function handleLike() {
+    if (!emisorID || !userID) {
+      console.error("No se puede dar like sin IDs válidos");
+      return;
+    }
+
+    // Si se puede dar like es porque aún no se ha dado, mostrado como tal una vez dado
     setConectado(true);
 
-    // TODO: EN VEZ DE "1" USAR EL ID DEL USUARIO LOGEADO
-    esAnfitrion
-      ? LikesService.crearLike("viajeros", 1, userID)
-      : LikesService.crearLike("anfitriones", 1, userID);
+    esAnfitrion 
+      ? LikesService.crearLike("viajeros", emisorID, userID)
+      : LikesService.crearLike("anfitriones", emisorID, userID);
   }
 
   const datos_recomendaciones = [
@@ -102,7 +108,7 @@ export default function UserPage({
                 value={salida}
                 onChange={(e) => {
                   setSalida(e.target.value);
-                  SetDiasReserva((new Date(e.target.value) - new Date(llegada)) /(1000 * 60 * 60 * 24));
+                  SetDiasReserva((new Date(e.target.value) - new Date(llegada)) / (1000 * 60 * 60 * 24));
                 }}
               />
             </label>

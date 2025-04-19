@@ -16,6 +16,7 @@ export default function InqProfilePage() {
 
   const location = useLocation();
   const id = location.state?.id;
+  const emisorID = location.state?.emisorID;
   const [conectado, setConectado] = useState(location.state?.conectado);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
@@ -81,8 +82,8 @@ export default function InqProfilePage() {
       {isMobile && <AnfitrionMobileHeader activeSection="" />}
 
       {loading
-        ? <img src="/images/loading_gif.gif" alt="Cargando..." style={{width:"350px", position: "relative", top: "0", left: "50%", margin:"250px 0", transform: "translateX(-50%)" }} />
-          : <UserPage
+        ? <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", margin: "250px 0", transform: "translateX(-50%)" }} />
+        : <UserPage
           usuarioData={viajeroInfo}
           valoraciones={valoraciones}
           Gustos_imgs={Gustos_imgs}
@@ -92,6 +93,7 @@ export default function InqProfilePage() {
           conectado={conectado}
           setConectado={setConectado}
           userID={id}
+          emisorID={emisorID}
         />
       }
 

@@ -30,7 +30,7 @@ export default function InicioSesionPage() {
         setFinish(true);
 
         localStorage.setItem("acces_token", response.data.acces_token);
-        localStorage.setItem("user", response.data.User);
+        // localStorage.setItem("user", response.data.User);
 
         navigate(response.data.User === "Anfitrion (1)" ? "/anfitriones/inquilinos" : "/viajeros/alojamientos");
       })

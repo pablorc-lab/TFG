@@ -16,7 +16,6 @@ export default function Anf_card({
   enlace = true,
   conectado = false,
   viajero_ID = null
-
 }) {
 
   const [changeConectado, setChangeConectado] = useState(conectado);
@@ -29,13 +28,13 @@ export default function Anf_card({
   return (
     <article className={styles.general_prof}>
       {/* Imagen de la casa */}
-      <Link to="/viajeros/perfil-anfitrion" state={{ id: anf_id, conectado: conectado}} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
+      <Link to="/viajeros/perfil-anfitrion" state={{ id: anf_id,  emisorID : viajero_ID, conectado: conectado}} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
         <img className={styles.house} src={Casa_img} alt="Imagen casa" width={500} />
       </Link>
 
       <div className={styles.anf_info}>
         {/* Perfil y Nombre */}
-        <Link to="/viajeros/perfil-anfitrion" state={{ id: anf_id, conectado: conectado}} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
+        <Link to="/viajeros/perfil-anfitrion" state={{ id: anf_id,   emisorID : viajero_ID, conectado: conectado}} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
           <div className={`${styles.personal_info} ${styles.anf_personal_info}`}>
             <img className={styles.profile_img} src={Perfil_img} alt={`Imagen de ${Nombre}`} width={250} />
             <div className={styles.anf_name}>

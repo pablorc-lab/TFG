@@ -39,7 +39,7 @@ export default function Inq_card({
   return (
     <article className={`${styles.general_prof} ${styles.viaj_prof}`}>
       <div className={styles.personal_info}>
-        <Link to="/anfitriones/perfil-viajero" state={{ id: viaj_ID, conectado: conectado}} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
+        <Link to="/anfitriones/perfil-viajero" state={{ id: viaj_ID, emisorID : anfitrion_ID, conectado: conectado}} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
           <img className={`${styles.profile_img} ${styles.viaj_img}`} src={Perfil_img} alt="Imagen viajero" width={250} />
         </Link>
         <div className={styles.text_column_viaj}>

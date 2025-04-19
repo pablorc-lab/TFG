@@ -3,7 +3,6 @@ const AnfProfilesGallery = lazy(() => import('../../../components/viajeros/aloja
 import Footer from '../../../components/footer/footer';
 import ViajerosFinalHeader from '../../../components/viajeros/header/ViajerosFinalHeader';
 import AnfitrionService from "../../../services/users/AnfitrionService";
-import LikesService from "../../../services/matches/LikesService";
 import { Suspense } from "react";
 
 export default function AlojamientosPage() {
@@ -13,7 +12,6 @@ export default function AlojamientosPage() {
   const [biografias, setBiografias] = useState([]);
 
   const [buscarUsuario, setBuscarUsuario] = useState(false);
-  const [conectados_ID, SetConectados_ID] = useState([]);
 
   const [buscarFiltrado, setBuscarFiltrado] = useState(false);
   const [filterOptions, setFilterOptions] = useState({
@@ -98,12 +96,7 @@ export default function AlojamientosPage() {
       setAnfitrionesFiltrados([]);
     }
 
-    // Obtener usuarios a los que se ha enviado el like
-    if (conectados_ID.length === 0) {
-      LikesService.getAllEnviados("viajeros", 1).then(response => {
-        SetConectados_ID(response.data.map(usuario => usuario.usuarioID));
-      }).catch(error => "Error al obtener los likes " + error)
-    }
+
   }, [filterOptions, buscarUsuario, buscarFiltrado]);
 
 
@@ -135,7 +128,7 @@ export default function AlojamientosPage() {
           anfitrionesFiltrados={anfitrionesFiltrados}
           buscarFiltrado={buscarFiltrado}
           buscarUsuario={buscarUsuario}
-          conectados_ID={conectados_ID}
+          conectados_ID={true}
           eliminarBuscados={eliminarBuscados}
         />
       </Suspense>

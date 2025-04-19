@@ -96,7 +96,7 @@ public class JwtService {
   private String buildToken(Usuario<?> usuario, int tipo_usuario, final long expiration) {
     return Jwts.builder()
       .id(String.valueOf(usuario.getId())) // ID para el token
-      .claims(Map.of("nombre", usuario.getNombre(),"tipo", tipo_usuario == 1 ? "anfitrión" : "viajero")) // Agregar el nombre como claim
+      .claims(Map.of("tipo", tipo_usuario == 1 ? "anfitrión" : "viajero")) // Agregar el nombre como claim
       .subject(usuario.getEmail()) // El email como el sujeto del token
       .issuedAt(new Date(System.currentTimeMillis())) // Fecha de emisión del token
       .expiration(new Date(System.currentTimeMillis() + expiration)) // Fecha de expiración del token
