@@ -5,7 +5,7 @@ const ContenidoMiCuenta = lazy(() => import("./PerfilValues").then(functions => 
 const ContenidoVivienda = lazy(() => import("./PerfilValues").then(functions => ({ default: functions.ContenidoVivienda })));
 const ContenidoBiografia = lazy(() => import("./PerfilValues").then(functions => ({ default: functions.ContenidoBiografia })));
 
-const PerfilMiCuenta = ({ showValue = 0,  esViajero = false,  usuarioData=[]}) => {
+const PerfilMiCuenta = ({ showValue = 0,  esViajero = false,  usuarioData=[], userService, setEditedData}) => {
   const [isOpen, setIsOpen] = useState(null);
 
   // Contenido mostrado al acceder a "Datos personales" o "Vivienda"
@@ -21,7 +21,7 @@ const PerfilMiCuenta = ({ showValue = 0,  esViajero = false,  usuarioData=[]}) =
           <p>Editar</p>
         </button>
 
-        {isOpen && <EditarPerfil setIsOpen={setIsOpen} showValue={showValue}  esViajero={esViajero}/>}
+        {isOpen && <EditarPerfil setIsOpen={setIsOpen} showValue={showValue} usuarioData={usuarioData} esViajero={esViajero} userService={userService} setEditedData={setEditedData}/>}
       </article>
 
       {/* Mostrar datos de "Mi cuenta" , "Biografía" o "Vivienda" respectivamente*/}

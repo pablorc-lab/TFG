@@ -233,7 +233,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   // @RequestBody : convierte el cuerpo de la solicitud HTTP (JSON) en un objeto Java (Usuario) para ser procesado en el metodo.
   @PostMapping("/auth/register")
   public T crearUsuario(@RequestBody T user){
-    if(user == null || usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isEmpty()){
+    if(user == null || usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isBlank() || user.getTelefono() == null || !user.getTelefono().matches("\\d{9}")){
       return null;
     }
 
@@ -260,7 +260,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     }
   }
 
-
   /**
    * Actualiza un usuario existente
    * @param userID ID del usuario a modificar
@@ -275,6 +274,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     // Actualizar los valores de cada campo que no sean null
     Optional.ofNullable(userRequest.getPrivateID()).ifPresent(user::setPrivateID);
     Optional.ofNullable(userRequest.getEmail()).ifPresent(user::setEmail);
+    Optional.ofNullable(userRequest.getTelefono()).filter( t -> t.matches("\\d{9}")).ifPresent(user::setTelefono);
     Optional.ofNullable(userRequest.getPassword()).ifPresent(user::setCifrarPasword);
     Optional.ofNullable(userRequest.getNombre()).ifPresent(user::setNombre);
     Optional.ofNullable(userRequest.getApellido()).ifPresent(user::setApellido);

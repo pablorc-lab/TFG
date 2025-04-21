@@ -6,6 +6,10 @@ class BiografiasService {
   static getAll(tipo_usuario){
     return axios.get(`${this.BIOGRAFIAS_BASE_REST_API_URL}/${tipo_usuario}/biografias/list`);
   }
+
+  static update(tipo_usuario, userID, biografiaData){
+    return axios.put(`${this.BIOGRAFIAS_BASE_REST_API_URL}/${tipo_usuario}/${userID}/biografia`, biografiaData);
+  }
 }
 
 export default BiografiasService;

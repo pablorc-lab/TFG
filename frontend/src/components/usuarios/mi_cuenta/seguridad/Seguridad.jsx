@@ -1,6 +1,6 @@
 import styles from "./Seguridad.module.css"
 
-export default function SeguridadMiCuenta() {
+export default function SeguridadMiCuenta({userService, setEditedData}) {
   return (
     <section className={styles.seguridad_section}>
       <h1>Cambiar contraseña</h1>

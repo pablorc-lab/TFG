@@ -1,7 +1,7 @@
 import styles from "./HistorialReservas.module.css"
 import ReservaData from "../../../../data/usuarios/mi_cuenta/historial.json"
 
-const HistorialReservasMiCuenta = () => {
+const HistorialReservasMiCuenta = ({userService}) => {
 
   const estadoColores = {
     "Activa": { color: "#D9A520" },  

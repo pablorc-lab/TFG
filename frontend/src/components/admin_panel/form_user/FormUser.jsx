@@ -12,6 +12,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
     apellido: "",
     email: "",
     password: "",
+    telefono: "",
     fecha_nacimiento: "",
     privateID: "",
     profileImage: "",
@@ -45,6 +46,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
           nombre: usuario.nombre || "",
           apellido: usuario.apellido || "",
           email: usuario.email || "",
+          telefono: usuario.telefono || "",
           fecha_nacimiento: usuario.fecha_nacimiento || "",
           privateID: usuario.privateID || "",
           profileImage: usuario.profileImage || "",
@@ -61,7 +63,7 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
   // Si todo está bien, proceder a crear/actualizar la cuenta
   function sendUserData(userData) {
     setErrorInput(false);
-    const userAction = userID 
+    const userAction = userID
       ? userService.update(userID, Object.fromEntries(Object.entries(userData).filter(([_, value]) => value !== "" && value != null)))
       : userService.create(userData);
 
@@ -150,9 +152,11 @@ export default function FormUser({ styles, userType, userID, InputField, setUplo
 
         {/* PASSWORD - FECHA NACIMIENTO*/}
         <article className={styles.form_flex}>
-          {InputField({ label: "Password", id: "password", type: "text", placeholder: "", value: userData.password, campoOnChange: "password", setUserData })}
+          {InputField({ label: "Telefono", id: "telefono", type: "text", placeholder: "", value: userData.telefono, campoOnChange: "telefono", setUserData })}
           {InputField({ label: "Fecha de nacimiento", id: "fecha", type: "date", placeholder: "", value: userData.fecha_nacimiento, campoOnChange: "fecha_nacimiento", setUserData })}
         </article>
+
+        {InputField({ label: "Password", id: "password", type: "text", placeholder: "", value: userData.password, campoOnChange: "password", setUserData })}
 
         {/*GUSTOS */}
         <article className={styles.form_flex}>

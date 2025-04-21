@@ -41,7 +41,7 @@ body:has(.dialog[open]) {
 }
 .cerra_menu:hover {
   filter: brightness(0.9);
-  background-color: rgba(255, 5, 5, 0.15);
+  background-color: rgba(255, 5, 5, 0.226);
 }
 
 /*? TITULO*/
@@ -81,14 +81,15 @@ body:has(.dialog[open]) {
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease-in-out;
 }
 .viaj_prof a:last-of-type article {
   margin-bottom: 0;
 }
 
 .viaj_prof article:hover{
-  background-color: #0a717317;
-  box-shadow: 0 0 10px rgba(10, 113, 115, 0.5);
+  background-color: #7ac6c71c;
+  box-shadow: 7px 7px #0a717381;
   outline: 2px solid #0a7173;
 }
 

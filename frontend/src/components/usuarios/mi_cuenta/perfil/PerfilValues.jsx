@@ -151,11 +151,6 @@ export const ContenidoVivienda = ({ viviendaData = [] }) => {
 
 // Contenido "Biografia"
 export const ContenidoBiografia = ({ esViajero, biografiaData = [] }) => {
-	const idiomasMap = [
-		"Español",
-		"Inglés",
-		"Francés",
-	];
 
 	return (
 		<section className={styles.miCuenta_section}>

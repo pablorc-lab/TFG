@@ -3,18 +3,21 @@ import styles from "./MiCuenta.module.css"
 import ScoreMiCuenta from "../../../components/usuarios/mi_cuenta/Score";
 import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import AnfitrionMobileHeader from "../../../components/anfitriones/header/AnfitrionMobileHeader";
+const AnfitrionMobileHeader = lazy(() => import("../../../components/anfitriones/header/AnfitrionMobileHeader"));
+const ViajerosMobileHeader = lazy(() => import("../../../components/viajeros/header/ViajerosMobileHeader"));
+
 const OpinionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/opiniones/Opiniones"));
 const PerfilMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/perfil/Perfil"));
 const SeguridadMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/seguridad/Seguridad"));
 const HistorialReservasMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/historial_reservas/HistorialReservas"));
-const ViajerosMobileHeader = lazy(() => import("../../../components/viajeros/header/ViajerosMobileHeader"));
 const RecomendacionesMiCuenta = lazy(() => import("../../../components/usuarios/mi_cuenta/recomendaciones/Recomendaciones"));
 
 export default function MiCuenta({ activeSection = "perfil", esViajero = true }) {
   const [activeMenu, setActiveMenu] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const navigate = useNavigate();
+
+  const [editedData, setEditedData] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [userService, setUserService] = useState(null);
@@ -28,31 +31,40 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Cargar el servicio actual requerido
+  // Cargar el servicio requerido
   useEffect(() => {
-    const loadService = async () => {
-      const tempService = !esViajero
-        ? (await import("../../../services/users/AnfitrionService")).default
-        : (await import("../../../services/users/ViajeroService")).default;
+    if (!userService) {
+      const loadService = async () => {
+        const tempService = !esViajero
+          ? (await import("../../../services/users/AnfitrionService")).default
+          : (await import("../../../services/users/ViajeroService")).default;
+        setUserService(tempService);
+      };
+      loadService();
+    }
+  }, [userService]);
 
-      setUserService(tempService);
-
-      // Obtener el correo decodificado del localstorage
+  // Cuando el servicio cargue, una vez añadido, se muestra la información del usuario (si se modifica la información también)
+  useEffect(() => {
+    if (userService) {
       const token = localStorage.getItem("acces_token");
       const decoded = jwtDecode(token);
       const email = decoded.sub;
-
-      tempService.getByEmail(email)
+  
+      userService.getByEmail(email)
         .then(response => {
           setUsuarioData(response.data);
           setPerfilImage(response.data.usuario.profileImage);
           console.log(response.data);
         })
-        .catch(error => "Error al mostrar el usuario" + error)
-        .finally(setIsLoading(false));
-    };
-    loadService();
-  }, [])
+        .catch(error => console.error("Error al mostrar el usuario", error))
+        .finally(() => {
+          setIsLoading(false);
+          setEditedData(false);
+        });
+    }
+  }, [userService, editedData]);
+  
 
   const Gustos_imgs = [
     "/images/usuarios/Gustos/baseball.svg",
@@ -224,13 +236,13 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           {/* Componente de los menús*/}
           <div className={styles.user_component}>
             <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
-              {activeMenu === 0 && <PerfilMiCuenta showValue={0} usuarioData={usuarioData} />}
-              {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} usuarioData={usuarioData} />}
-              {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} usuarioData={usuarioData} />}
-              {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} recomendacionesData={usuarioData.usuario?.recomendaciones} />}
-              {activeMenu === 4 && <SeguridadMiCuenta />}
-              {activeMenu === 5 && <OpinionesMiCuenta showSize={true} nota_media={usuarioData.usuario?.valoracion_media} valoraciones={usuarioData?.valoraciones} MiCuenta={true}/>}
-              {activeMenu === 6 && <HistorialReservasMiCuenta />}
+              {activeMenu === 0 && <PerfilMiCuenta showValue={0} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData}/>}
+              {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData}/>}
+              {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData}/>}
+              {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} recomendacionesData={usuarioData.usuario?.recomendaciones} userService={userService} setEditedData={setEditedData}/>}
+              {activeMenu === 4 && <SeguridadMiCuenta userService={userService} setEditedData={setEditedData}/>}
+              {activeMenu === 5 && <OpinionesMiCuenta showSize={true} nota_media={usuarioData.usuario?.valoracion_media} valoraciones={usuarioData?.valoraciones} MiCuenta={true} userService={userService} setEditedData={setEditedData}/>}
+              {activeMenu === 6 && <HistorialReservasMiCuenta userService={userService}/>}
             </Suspense>
           </div>
         </main>

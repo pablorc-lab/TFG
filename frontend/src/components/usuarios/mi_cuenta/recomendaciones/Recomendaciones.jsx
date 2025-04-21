@@ -2,7 +2,7 @@ import { Suspense, useState } from "react";
 import styles from "./Recomendaciones.module.css";
 import EditarPerfil from "../editar_datos/Editar";
 
-const RecomendacionesMiCuenta = ({esViajero, recomendacionesData = []}) => {
+const RecomendacionesMiCuenta = ({esViajero, recomendacionesData = [], userService, setEditedData}) => {
   const [isOpen, setIsOpen] = useState(null);
 
   const datos_recomendaciones = [

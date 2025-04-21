@@ -37,7 +37,7 @@ public class WebSecurityConfig {
   private final TokenRepository tokenRepository;
 
 
-  // FILTRO DE SEGURIDAD)
+  // FILTRO DE SEGURIDAD
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http

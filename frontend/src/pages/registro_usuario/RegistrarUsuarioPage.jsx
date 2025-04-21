@@ -15,6 +15,7 @@ export default function RegistrarUsuarioPage() {
   const [errorStates, setErrorStates] = useState({
     email: false,
     email_existente: false,
+    telefono : false,
     shortPassword: false,
     samePassword: false,
     nombre: false,
@@ -26,6 +27,7 @@ export default function RegistrarUsuarioPage() {
   // Objeto que almacena cada valor
   const [userValues, setUserValues] = useState({
     email: "",
+    telefono : "",
     password: "",
     nombre: "",
     apellido: "",
@@ -84,6 +86,7 @@ export default function RegistrarUsuarioPage() {
         email: !validateEmail(userValues.email),
         shortPassword: userValues.password.length < 8,
         samePassword: userValues.password !== repeatedPassword,
+        telefono : userValues.telefono.length !== 9 || !userValues.telefono.match(/^[0-9]{9}$/)
       } : {
         nombre: !validateNames(userValues.nombre),
         apellido: !validateNames(userValues.apellido),
@@ -119,6 +122,7 @@ export default function RegistrarUsuarioPage() {
         <label htmlFor="email">Correo electrónico</label>
         <input
           type="email"
+          placeholder="correo@example.com"
           id="email"
           name="email"
           autoComplete="email"
@@ -131,46 +135,66 @@ export default function RegistrarUsuarioPage() {
         {errorStates.email && <p>El email no es correcto</p>}
         {errorStates.email_existente && <p>El email ya está en uso</p>}
       </fieldset>
-      <fieldset className={`${styles.input_container} ${errorStates.shortPassword && styles.error_input}`}>
-        <label htmlFor="password">Contraseña</label>
-        <div className={styles.input_password}>
-          <img
-            src={`/images/registro/${showPassword ? "reveal" : "hide"}_password.svg`}
-            alt="Reveal password"
-            onClick={() => setShowPassword(!showPassword)}
-          />
-          <input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            name="password"
-            value={userValues.password}
-            onChange={(e) => handleValuesChange(e, "password")}
-            onBlur={() => userValues.password && handleErrorChange("shortPassword", userValues.password.length < 8)}
-          />
-        </div>
-        {errorStates.shortPassword && <p>La contraseña debe tener mínimo 8 carácteres</p>}
+
+      <div className={styles.password_container}>
+        <fieldset className={`${styles.input_container} ${errorStates.shortPassword && styles.error_input}`}>
+          <label htmlFor="password">Contraseña</label>
+          <div className={styles.input_password}>
+            <img
+              src={`/images/registro/${showPassword ? "reveal" : "hide"}_password.svg`}
+              alt="Reveal password"
+              onClick={() => setShowPassword(!showPassword)}
+            />
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={userValues.password}
+              onChange={(e) => handleValuesChange(e, "password")}
+              onBlur={() => userValues.password && handleErrorChange("shortPassword", userValues.password.length < 8)}
+            />
+          </div>
+          {errorStates.shortPassword && <p>La contraseña debe tener mínimo 8 carácteres</p>}
+        </fieldset>
+        <fieldset className={`${styles.input_container} ${errorStates.samePassword && styles.error_input}`}>
+          <label htmlFor="confirmPassword">Repetir contraseña</label>
+          <div className={styles.input_password}>
+            <img
+              src={`/images/registro/${showRepeatedPassword ? "reveal" : "hide"}_password.svg`}
+              alt="Reveal password"
+              onClick={() => setShowRepeatedPassword(!showRepeatedPassword)}
+            />
+            <input
+              type={showRepeatedPassword ? "text" : "password"}
+              id="confirmPassword"
+              name="confirmPassword"
+              value={repeatedPassword}
+              onChange={(e) => setRepeatedPassword(e.target.value)}
+              onBlur={() => errorStates.samePassword && handleErrorChange("samePassword", userValues.password !== repeatedPassword)}
+            />
+          </div>
+          {errorStates.samePassword && <p>Las contraseñas no coinciden</p>}
+        </fieldset>
+      </div>
+
+      <fieldset className={`${styles.input_container} ${errorStates.telefono ? styles.error_input : undefined}`}>
+        <label htmlFor="telefono">Telefono</label>
+        <input
+          type="tel"
+          id="telefono"
+          name="telefono"
+          placeholder="666777999"
+          spellCheck="false"
+          value={userValues.telefono}
+          onChange={(e) => e.target.value.match(/^[0-9]/) && handleValuesChange(e, "telefono")}
+          onBlur={() => userValues.telefono && handleErrorChange("telefono", userValues.telefono.length !== 9 || !userValues.telefono.match(/^[0-9]{9}$/))}
+          noValidate
+        />
+        {errorStates.telefono && <p>El teléfono debe contener solo 9 números</p>}
       </fieldset>
-      <fieldset className={`${styles.input_container} ${errorStates.samePassword && styles.error_input}`}>
-        <label htmlFor="confirmPassword">Repetir contraseña</label>
-        <div className={styles.input_password}>
-          <img
-            src={`/images/registro/${showRepeatedPassword ? "reveal" : "hide"}_password.svg`}
-            alt="Reveal password"
-            onClick={() => setShowRepeatedPassword(!showRepeatedPassword)}
-          />
-          <input
-            type={showRepeatedPassword ? "text" : "password"}
-            id="confirmPassword"
-            name="confirmPassword"
-            value={repeatedPassword}
-            onChange={(e) => setRepeatedPassword(e.target.value)}
-            onBlur={() => errorStates.samePassword && handleErrorChange("samePassword", userValues.password !== repeatedPassword)}
-          />
-        </div>
-        {errorStates.samePassword && <p>Las contraseñas no coinciden</p>}
-      </fieldset>
+
       <input
-        className={`${styles.submit_input} ${(errorStates.email || errorStates.shortPassword || errorStates.samePassword || errorStates.email_existente) ? styles.error_submit_input : undefined}`}
+        className={`${styles.submit_input} ${(errorStates.email || errorStates.email_existente || errorStates.shortPassword || errorStates.samePassword || errorStates.telefono) ? styles.error_submit_input : undefined}`}
         type="submit"
         name="submit"
         value="Siguiente paso"
@@ -256,7 +280,7 @@ export default function RegistrarUsuarioPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Comprobar estado del tipo de user y creare el usuari
+    // Comprobar estado del tipo de user y creare el usuario
     userValues.userType === ""
       ? handleErrorChange("userType", true)
       : createUser();

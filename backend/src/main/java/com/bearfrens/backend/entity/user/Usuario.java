@@ -30,6 +30,9 @@ public abstract class Usuario<TC>{
   @Column(length = 100, nullable = false, unique = true)
   private String email;
 
+  @Column(length = 9)
+  private String telefono;
+
   @Column(nullable = false)
   private String password;
 
@@ -52,16 +55,16 @@ public abstract class Usuario<TC>{
   @Column(nullable = false)
   private int num_valoraciones = 0;
 
-  @Column(length = 100)
+  @Column(length = 120)
   private String descripcion;
 
-  @Column(length = 50)
+  @Column(length = 25)
   private String gusto1;
 
-  @Column(length = 50)
+  @Column(length = 25)
   private String gusto2;
 
-  @Column(length = 50)
+  @Column(length = 25)
   private String gusto3;
 
   // Método genérico para obtener el contenido (Experiencias o Recomendaciones)

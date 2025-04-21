@@ -55,6 +55,7 @@ export default function ListadoUsuarios({ styles, userType }) {
           <th>Apellido</th>
           <th>Fecha</th>
           <th>Email</th>
+          <th>Teléfono</th>
           <th>Profile_Image</th>
           <th>Gusto1</th>
           <th>Gusto2</th>
@@ -73,6 +74,7 @@ export default function ListadoUsuarios({ styles, userType }) {
             <td>{usuario.apellido}</td>
             <td>{usuario.fecha_nacimiento}</td>
             <td>{usuario.email}</td>
+            <td>{usuario.telefono}</td>
             <td>
               <a href={usuario.profileImage} target="_blank" rel="noopener noreferrer">
                 {(usuario.profileImage?.length > 20 ? `${usuario.profileImage.slice(0, 20)}...` : usuario.profileImage) || "-"}

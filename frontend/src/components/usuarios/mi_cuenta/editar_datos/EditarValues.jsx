@@ -1,9 +1,13 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import styles from "./Editar.module.css"
+const AnfitrionService = lazy(() => import("../../../../services/users/AnfitrionService"));
 const FilteredList = lazy(() => import("../../../utilities/filteresCities/FilteredList"));
 
 // Menu que aparece al editar "Mi Cuenta"
-export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
+export const EditarMiCuenta = ({ usuarioData = [], userData, setUserData }) => {
+
+	const [gustos_actuales, SetGustos_actuales] = useState([usuarioData.gusto1, usuarioData.gusto2, usuarioData.gusto3]);
+
 	const [mouseEnter, SetMouseEnter] = useState(null);
 	const [showDeleteImage, setShowDeleteImage] = useState(null);
 	const gustosImages = [
@@ -12,10 +16,25 @@ export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
 		"animales", "videojuegos", "comer", "cafe",
 		"lectura", "peliculas", "musica", "ajedrez",
 		"pintura", "cocina", "plantas", "camping",
-		"ciclismo", "fotografia", "viajar", "gym"
+		"ciclismo", "fotografia", "viajar", "gimnasio"
 	];
 
-	const [gustos_actuales, SetGustos_actuales] = useState(["baseball", "natacion", "pesca"]);
+	useEffect(() => {
+		if (usuarioData) {
+			setUserData({
+				nombre: usuarioData.nombre || '',
+				apellido: usuarioData.apellido || '',
+				privateID: usuarioData.privateID || '',
+				fecha_nacimiento: usuarioData.fecha_nacimiento || '',
+				email: usuarioData.email || '',
+				telefono: usuarioData.telefono || '',
+				descripcion: usuarioData.descripcion || '',
+				gusto1: gustos_actuales[0] || '',
+				gusto2: gustos_actuales[1] || '',
+				gusto3: gustos_actuales[2] || ''
+			});
+		}
+	}, [usuarioData, gustos_actuales]);
 
 	return (
 		<>
@@ -27,19 +46,47 @@ export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
 					<form className={`${styles.input_container} ${styles.input_MiCuenta}`}>
 						<div className={styles.input_div}>
 							<p>Nombre</p>
-							<input type="text" placeholder="Pablo" spellCheck="false" name="nombre" />
+							<input
+								value={userData?.nombre || ''} onChange={(e) => (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]*$/).test(e.target.value) && setUserData(prev => ({ ...prev, nombre: e.target.value }))}
+								type="text"
+								placeholder="Pablo"
+								spellCheck="false"
+								name="nombre"
+							/>
 						</div>
 						<div className={styles.input_div}>
 							<p>Apellido</p>
-							<input type="text" placeholder="Ramblado" spellCheck="false" name="Apellido" />
+							<input
+								value={userData?.apellido || ''}
+								onChange={(e) => (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]*$/).test(e.target.value) && setUserData(prev => ({ ...prev, apellido: e.target.value }))}
+								type="text"
+								placeholder="Ramblado"
+								spellCheck="false"
+								name="Apellido"
+							/>
 						</div>
 						<div className={styles.input_div}>
 							<p>ID privado</p>
-							<input type="text" placeholder="PabloID123" spellCheck="false" name="ID privado" />
+
+							<input
+								value={userData?.privateID || ''}
+								onChange={(e) => setUserData(prev => ({ ...prev, privateID: e.target.value }))}
+								type="text"
+								placeholder="PabloID123"
+								spellCheck="false"
+								name="ID privado"
+							/>
 						</div>
 						<div className={styles.input_div}>
 							<p>Fecha de nacimiento</p>
-							<input type="date" placeholder="Ramblado" spellCheck="false" name="Edad" />
+							<input
+								value={userData?.fecha_nacimiento || ''}
+								onChange={(e) => setUserData(prev => ({ ...prev, fecha_nacimiento: e.target.value }))}
+								type="date"
+								max={new Date().toISOString().split("T")[0]}
+								spellCheck="false"
+								name="Edad"
+							/>
 						</div>
 					</form>
 				</section>
@@ -49,11 +96,26 @@ export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
 					<form className={`${styles.input_container} ${styles.input_MiCuenta_contacto}`} >
 						<div className={styles.input_div}>
 							<p>Email</p>
-							<input type="email" placeholder="Pablo@example.com" spellCheck="false" name="Email" autoComplete="email" />
+							<input
+								value={userData?.email || ''}
+								onChange={(e) => setUserData(prev => ({ ...prev, email: e.target.value }))}
+								type="email"
+								placeholder="Pablo@example.com"
+								spellCheck="false"
+								name="Email"
+								autoComplete="email"
+							/>
 						</div>
 						<div className={styles.input_div}>
 							<p>Teléfono</p>
-							<input type="number" placeholder="666-777-999" spellCheck="false" name="Teléfono" />
+							<input
+								value={userData?.telefono || ''}
+								onChange={(e) => (/^\d{0,9}$/).test(e.target.value) && setUserData(prev => ({ ...prev, telefono: e.target.value }))}
+								type="number"
+								placeholder="666777999"
+								spellCheck="false"
+								name="Teléfono"
+							/>
 						</div>
 					</form>
 				</section>
@@ -61,15 +123,17 @@ export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
 				<section className={styles.modal_sections}>
 					<h3>INTERESES</h3>
 
-					<form className={`${styles.input_container} ${styles.input_MiCuenta_contacto}`} >
+					<form className={`${styles.input_container} ${styles.input_MiCuenta_intereses}`} >
 						<div className={styles.input_div}>
-							<p>Breve descripción 0 / 100</p>
+							<p>Breve descripción {userData?.descripcion?.length || 0} / 120</p>
 							<textarea
+								value={userData?.descripcion || ''}
+								onChange={(e) => e.target.value.length <= 120 && setUserData(prev => ({ ...prev, descripcion: e.target.value })) && autoResizeTextarea(e)}
 								placeholder="Me gusta los paisajes al aire libre"
 								spellCheck="false"
 								name="biografia"
 								rows="4"
-							></textarea>
+							/>
 						</div>
 
 						<div className={styles.input_div}>
@@ -100,13 +164,12 @@ export const EditarMiCuenta = ({ addImageState, setAddImageState }) => {
 					</form>
 				</section>
 			</main>
-
 		</>
 	)
 };
 
 // Menu que aparece al editar "Vivienda "
-export const EditarVivienda = ({ addImageState, setAddImageState }) => {
+export const EditarVivienda = ({ addImageState, setAddImageState, userData, setUserData }) => {
 	const filteredListRef = useRef(null);
 	const inputRef = useRef(null);
 
@@ -227,11 +290,21 @@ export const EditarVivienda = ({ addImageState, setAddImageState }) => {
 };
 
 // Menu que aparece al editar "Biografia "
-export const EditarBiografia = ({ esViajero = false }) => {
-
-	const [UserIdiomas, setUserIdiomas] = useState(["Español", "Italiano", "Francés"]);
+export const EditarBiografia = ({ esViajero = false, biografiaData = [], userService, userData, setUserData }) => {
+	const [UserIdiomas, setUserIdiomas] = useState(biografiaData.idiomas.split(",").map(idioma => idioma.trim()));
 
 	const inputIdiomas = ["Español", "Inglés", "Francés", "Alemán", "Italiano", "Portugués", "Chino", "Árabe", "Ruso", "Japonés"];
+
+	useEffect(() => {
+		setUserData({
+			sobreMi: biografiaData.sobreMi || '',
+			idiomas: UserIdiomas.join(",") || '',
+			descripcionExtra: biografiaData.descripcionExtra || '',
+		});
+	}, [biografiaData, UserIdiomas]);
+
+
+	console.log(userData);
 
 	const handleChangeIdioma = (idiomaValue) => {
 		UserIdiomas.includes(idiomaValue)
@@ -249,8 +322,10 @@ export const EditarBiografia = ({ esViajero = false }) => {
 
 					<form className={styles.input_container} >
 						<div className={styles.input_div}>
-							<p>Descripción personal 0 / 500</p>
+							<p>Descripción personal {userData?.sobreMi?.length || 0} / 500</p>
 							<textarea
+								value={userData?.sobreMi || ''}
+								onChange={(e) => e.target.value.length <= 500 && setUserData(prev => ({ ...prev, sobreMi: e.target.value })) && autoResizeTextarea(e)}
 								placeholder="Soy una persona muy activa y sociable, me gusta los lugares aislados"
 								spellCheck="false"
 								name="biografia"
@@ -283,8 +358,10 @@ export const EditarBiografia = ({ esViajero = false }) => {
 
 					<form className={styles.input_container} >
 						<div className={styles.input_div}>
-							<p>Descripción  {esViajero ? "de tus viajes" : "del alojamiento"} 0 / 500</p>
+							<p>Descripción  {esViajero ? "de tus viajes" : "del alojamiento"} {userData?.descripcionExtra?.length || 0}  / 500</p>
 							<textarea
+								value={userData?.descripcionExtra || ''}
+								onChange={(e) => e.target.value.length <= 500 && setUserData(prev => ({ ...prev, descripcionExtra: e.target.value })) && autoResizeTextarea(e)}
 								placeholder={esViajero ? "En mis anteriores viajes me hospedé en ciudades grandes" : "Te hospedarás en una acogedora vivienda compartida"}
 								spellCheck="false"
 								name="biografia"
@@ -299,7 +376,7 @@ export const EditarBiografia = ({ esViajero = false }) => {
 };
 
 // Menu que aparece al editar "Recomendaciones "
-export const EditarRecomendaciones = ({ esViajero }) => {
+export const EditarRecomendaciones = ({ esViajero, userService, setUserData }) => {
 	return (
 		<>
 			<h2> AÑADIR {esViajero ? "EXPERIENCIA" : "RECOMENDACION"}</h2>

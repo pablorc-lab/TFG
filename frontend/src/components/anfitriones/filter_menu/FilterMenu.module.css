@@ -76,6 +76,7 @@ body:has(.dialog[open]) {
   row-gap: 10px;
   align-items: center;
   justify-content: center;
+  
 }
 .input_MiCuenta_gustos div {
   position: relative;
@@ -91,9 +92,9 @@ body:has(.dialog[open]) {
 
 .gusto_active {
   cursor: pointer;
-  outline: 2px solid #0a7273;
+  outline: 2px solid #009080;
   background-color: #0a717318;
-  box-shadow: 0 0 9px #0a71737c;
+  box-shadow: 5px 5px #00907f7c;
 }
 
 .gusto_delete:hover {
@@ -207,7 +208,7 @@ body:has(.dialog[open]) {
 .lista_botones button{
   text-align: center;
   cursor: pointer;
-  color: rgb(95, 95, 95);
+  color: rgb(170, 170, 170);
   background-color: rgb(248, 248, 248);
   border: 2px solid lightgray;
   border-radius: 5px;
@@ -246,19 +247,18 @@ body:has(.dialog[open]) {
   background-color: white ;
   width: 150px;
   justify-content: center;
-  color: rgb(95, 95, 95);
+  color: rgb(170, 170, 170);
   background-color: rgb(248, 248, 248);
   border: 2px solid lightgray;
-  transition: filter 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 .idioma_opcion:hover {filter: brightness(0.9);}
 .idioma_opcion.idioma_active {
-  background-color: #0a7273;
   color: #0a7273;
   font-weight: 500;
-  border-color: #0a7273;
+  border-color: #009080;
   background-color: #0a717318;
-  box-shadow: 0 0 3px #0a71737c;
+  box-shadow: 3px 3px #00907f7c;
 }
 
 @media (min-width: 750px){

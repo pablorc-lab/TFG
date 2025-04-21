@@ -212,7 +212,7 @@
 .input_container input::placeholder {color: rgb(165, 165, 165);}
 .input_container input:focus {
   outline: none;
-  box-shadow: none;
+  box-shadow: 5px 5px #009080;
   border-color: #009080;
 }
 .input_container:focus-within label,
@@ -228,6 +228,12 @@
 }
 
 /*? Input contraseña*/
+.password_container {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 30px;
+}
 .input_password {
   display: flex;
   align-items: center;

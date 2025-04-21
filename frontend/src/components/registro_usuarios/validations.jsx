@@ -25,5 +25,3 @@ export const validateAge = (date) => {
   // Verificar que la fecha ingresada no sea futura
   return inputDate <= today;
 }
-
-

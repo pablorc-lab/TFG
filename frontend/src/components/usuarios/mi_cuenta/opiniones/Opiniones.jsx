@@ -4,7 +4,7 @@ import styles from "./Opiniones.module.css"
 import Comentarios from "./Comentarios";
 import ShowAllComentarios from "./ShowAllComentarios";
 
-const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = [], MiCuenta = false }) => {
+const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = [], MiCuenta = false, userService, setEditedData}) => {
   const [estadisticas_valoraciones, setEstadisticas_valoraciones] = useState([0, 0, 0, 0, 0]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [activeShowMore, setActiveShowMore] = useState(false);

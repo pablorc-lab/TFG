@@ -8,6 +8,7 @@
 /*? TITULO DE LA VIVIENDA*/
 .miCuenta_title h1, .miCuenta_title button p, .miCuenta_data p, .miCuenta_info h2, .miCuenta_info p, .miCuenta_text_info {margin: 0;}
 .miCuenta_title {
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -74,6 +75,8 @@
 .vivienda_images img:hover {filter: brightness(0.8);}
 
 /*? Info de cada lista ul*/
+.miCuenta_section ul { margin-bottom: 5px;}
+
 .miCuenta_info {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -84,6 +87,7 @@
   padding: 0 5px;
 }
 .miCuenta_text_info {
+  white-space: pre-line;
   margin-top:  10px;
   padding: 0 5px;
 }
