@@ -9,7 +9,7 @@ const stateMap = new Map(states.map(({ id, ...state }) => [id, state]));
 const countryMap = new Map(countries.map(({ id, ...country }) => [id, country]));
 
 // Ciudades mostradas al buscar
-export default function FilteredList({ filteredListRef, listStates,  updateListStates, menuEdit = false, setRealizarBusqueda}) {
+export default function FilteredList({ filteredListRef, listStates,  updateListStates, menuEdit = false, setRealizarBusqueda = null}) {
   const [filteredCities, setFilteredCities] = useState([]);
 
   const removeAccents = (str) => {
@@ -48,8 +48,8 @@ export default function FilteredList({ filteredListRef, listStates,  updateListS
             key={id} 
             className={styles.filteredList} 
             onClick={() => {
-              updateListStates({ location: `${name},${provincia.name}`, locationFocus: false })
-              setRealizarBusqueda(true);
+              updateListStates({ location: `${name},${provincia.name}`, locationFocus: false });
+              if(setRealizarBusqueda !== null) setRealizarBusqueda(true);
             }}
           >
             <span>{name}</span>

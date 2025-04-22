@@ -6,7 +6,8 @@
   background: white;
   border-radius: 12px;
   margin: 0 auto;
-  transition: box-shadow 0.1s ease-in-out;
+  outline: 2px solid transparent;
+  transition: box-shadow 0.1s ease-in-out, outline 0.1s ease-in-out;
   cursor: default;
   width: 320px;  
 }

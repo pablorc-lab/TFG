@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ViviendaService from '../../../services/viviendas/ViviendasService';
 
-export default function FormVivienda({ styles, userType, userID, InputField, setUploadingData, setErrorInput }) {
+export default function FormVivienda({ styles, userType, userID, InputField, setUploadingData }) {
+  const navigate = useNavigate();
 
   const [viviendaData, setViviendaData] = useState({
-    anfitrion: null,
+    anfitrion_id: null,
     imagen1: "",
     imagen2: "",
     imagen3: "",
@@ -27,7 +28,7 @@ export default function FormVivienda({ styles, userType, userID, InputField, set
           const vivienda = response.data;
           setViviendaData(prev => ({
             ...prev,
-            anfitrion: vivienda.anfitrion || null,
+            anfitrion_id: vivienda.anfitrion_id || null,
             imagen1: vivienda.imagen1 || "",
             imagen2: vivienda.imagen2 || "",
             imagen3: vivienda.imagen3 || "",
@@ -48,10 +49,30 @@ export default function FormVivienda({ styles, userType, userID, InputField, set
     }
   }, [userID]);
 
+  // TODO: Subir imágenes vivienda correctamente
+  // Guardar o Editar vivienda
+  const saveOrUpdateVivienda = (e) => {
+    e.preventDefault();
+    
+    // Realizar la operación correcta
+    // Si no hay valores, es porque se está creando
+    const OperacionViviendaService = userID == null
+      ? ViviendaService.crearVivienda(viviendaData.anfitrion_id, viviendaData)
+      : ViviendaService.updateVivienda(viviendaData.anfitrion_id, viviendaData);
+
+      OperacionViviendaService
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error))
+      .finally(() =>  navigate(`/admin-panel/viviendas`));
+
+    setUploadingData(true);
+  };
 
   return (
     <div className={styles.card_Body}>
       <form>
+      {InputField({ label: "ID anfitrión", id: "anfitrion_id", type: "number", placeholder: "4", value: viviendaData.anfitrion_id, campoOnChange: "anfitrion_id", setUserData: setViviendaData })}
+
         {/* PROPIEDADES NUMÉRICAS */}
         <article className={styles.form_flex}>
           {InputField({ label: "Viajeros", id: "viajeros", type: "number", placeholder: "4", value: viviendaData.viajeros, campoOnChange: "viajeros", setUserData: setViviendaData })}

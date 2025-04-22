@@ -11,7 +11,52 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const [userData, setUserData] = useState(null);
   const [biografiaData, setBiografiaData] = useState(null);
   const [viviendaData, setViviendaData] = useState(null);
-  
+
+  // Función asincrona para crear/editar la biografía
+  const updateBiografia = async () => {
+    const tipo_usuario = esViajero ? "viajeros" : "anfitriones";
+
+    // Cargar dinámica del servicio
+    const BiografiaService = (await import("../../../../services/biografias/BiografiasService")).default;
+
+    // Realizar la operación correcta
+    // Si no hay valores, es porque se está creando
+    const OperacionBiografiaService = usuarioData.biografia == null
+      ? BiografiaService.crear(tipo_usuario, usuarioData.usuario.id, biografiaData)
+      : BiografiaService.update(tipo_usuario, usuarioData.usuario.id, biografiaData)
+
+    OperacionBiografiaService
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error))
+      .finally(() => {
+        setBiografiaData(null);
+        setTimeout(() => setIsOpen(false), 200);
+        setEditedData(true);
+      });
+  };
+
+  // Función asincrona para crear/editar la vivienda
+  const updateVivienda = async () => {
+    // Cargar dinámica del servicio
+    const ViviendasService = (await import("../../../../services/viviendas/ViviendasService")).default;
+
+    // Realizar la operación correcta
+    // Si no hay valores, es porque se está creando
+    const OperacionViviendaService = usuarioData.usuario.vivienda == null
+      ? ViviendasService.crearVivienda(usuarioData.usuario.id, viviendaData)
+      : ViviendasService.updateVivienda(usuarioData.usuario.id, viviendaData);
+
+    OperacionViviendaService
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error))
+      .finally(() => {
+        setViviendaData(null);
+        setTimeout(() => setIsOpen(false), 200);
+        setEditedData(true);
+      });
+  };
+
+  // Función que se ejecutará al guardar los cambios
   const handleSaveChanges = () => {
     // Si se ha editado los datos de usuario
     if (userData !== null) {
@@ -27,25 +72,13 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
 
     // Si se ha editado los datos de biografía
     else if (biografiaData !== null) {
-      const updateBiografia = async () => {
-        const tipo_usuario = esViajero ? "viajeros" : "anfitriones";
-
-        // Cargar dinámica del servicio
-        const BiografiaService = (await import("../../../../services/biografias/BiografiasService")).default;
-
-        // Ahora puedes usar BiografiasService.update
-        BiografiaService.update(tipo_usuario, usuarioData.usuario.id, biografiaData)
-          .then(response => console.log(response.data))
-          .catch(error => console.error(error))
-          .finally(() => {
-            setBiografiaData(null);
-            setTimeout(() => setIsOpen(false), 200);
-            setEditedData(true);
-          });
-      };
       updateBiografia();
     }
 
+    // Si se ha editado los datos de la vivienda
+    else if (viviendaData !== null) {
+      updateVivienda();
+    }
   };
 
   return (
@@ -64,7 +97,6 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
           <EditarBiografia
             esViajero={esViajero}
             biografiaData={usuarioData.biografia}
-            userService={userService}
             userData={biografiaData}
             setUserData={setBiografiaData}
           />}
@@ -73,8 +105,8 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
             addImageState={addImageState}
             viviendaData={usuarioData.usuario.vivienda}
             setAddImageState={setAddImageState}
-            userData={biografiaData}
-            setUserData={setBiografiaData}
+            userData={viviendaData}
+            setUserData={setViviendaData}
           />}
         {showValue === 3 &&
           <EditarRecomendaciones

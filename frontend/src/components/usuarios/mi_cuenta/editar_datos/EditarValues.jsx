@@ -169,7 +169,7 @@ export const EditarMiCuenta = ({ usuarioData = [], userData, setUserData }) => {
 };
 
 // Menu que aparece al editar "Vivienda "
-export const EditarVivienda = ({ addImageState, setAddImageState, userData, setUserData }) => {
+export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageState, userData, setUserData }) => {
 	const filteredListRef = useRef(null);
 	const inputRef = useRef(null);
 
@@ -177,11 +177,14 @@ export const EditarVivienda = ({ addImageState, setAddImageState, userData, setU
 		locationFocus: false,
 		location: ""
 	})
+
+	console.log(userData);
+	
 	// Actualizar objeto de estado
 	const updateEditarStates = (newState) => setEditarStates(prev => ({ ...prev, ...newState }));
 
 	useEffect(() => {
-		import("../../../utilities/filteresCities/FilteredList"); // Importar al cargar el componeten
+		import("../../../utilities/filteresCities/FilteredList"); // Importar al cargar el componente
 
 		// Controlar click fuera del input para cerrar el menú de listas filtradas
 		const handleClickOutside = (event) => {
@@ -193,7 +196,39 @@ export const EditarVivienda = ({ addImageState, setAddImageState, userData, setU
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, []);
 
-	const [viviendasImages, setViviendasImages] = useState([]);
+	// Actualizar los datos del usuario por primera vez
+	useEffect(() => {
+		if (viviendaData) {
+			setUserData({
+				ciudad: viviendaData.ciudad || '',
+				provincia: viviendaData.provincia || '',
+				precio_noche: viviendaData.precio_noche || '',
+				banios: viviendaData.banios || '',
+				habitaciones: viviendaData.habitaciones || '',
+				camas: viviendaData.camas || '',
+				viajeros: viviendaData.viajeros || '',
+				imagen1: viviendaData.imagen1 || null,
+				imagen2: viviendaData.imagen2 || null,
+				imagen3: viviendaData.imagen3 || null,
+				imagen4: viviendaData.imagen4 || null,
+			});
+			updateEditarStates({ location: viviendaData.ciudad + "," + viviendaData.provincia });
+		}
+	}, [viviendaData]);
+
+	// Actualizar ubicación del usuario
+	useEffect(() => {
+		if (editarStates.location) {
+			const ubicacion = editarStates.location.split(",");
+
+			setUserData(prev => ({
+				...prev,
+				ciudad: ubicacion[0],
+				provincia: ubicacion[1] || "",
+			}));
+		}
+	}, [editarStates.location]);
+
 
 	return (
 		<>
@@ -202,34 +237,44 @@ export const EditarVivienda = ({ addImageState, setAddImageState, userData, setU
 			<main className={styles.main}>
 				<section className={styles.modal_sections}>
 					<h3>IMÁGENES <span>(máximo 4)</span></h3>
-					<article className={styles.modal_images}>
-						{viviendasImages.map((img, index) => (
-							<div key={index} className={styles.house_images}>
-								<img src={img instanceof File ? URL.createObjectURL(img) : img} alt={`Imagen ${index}`} />
-								<img
-									src={"/images/usuarios/account/delete_img.svg"}
-									alt="delete img"
-									onClick={() => setViviendasImages(viviendasImages.filter((_, i) => i !== index))}
-								/>
-							</div>
-						))}
 
-						{/* Mostrar el label solo si hay menos de 4 imágenes */}
-						{viviendasImages.length < 4 && (
-							<div className={styles.file_input_wrapper}>
-								<label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)} >
-									<input
-										type="file"
-										accept="image/*"
-										className={styles.file_input}
-										name="archivo"
-										onChange={(e) => setViviendasImages(prev => [...prev, e.target.files[0]])}
-									/>
-									<img src="/images/usuarios/account/add_img.svg" alt="Editar vivienda" />
-								</label>
-								{addImageState && <p className={styles.add_image_tooltip}>Añadir imagen</p>}
-							</div>
-						)}
+					<article className={styles.modal_images}>
+						{userData && ["imagen1", "imagen2", "imagen3", "imagen4"].map((img, index) => {
+							if (userData[img] == null) {
+								// Si NO estamos en el primer índice o la imagen anterior es null, no mostramos nada mas
+								if (index !== 0 && userData[`imagen${index}`] == null) return null; 
+
+									return (
+										<div key={index} className={styles.file_input_wrapper}>
+											<label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)} >
+												<input
+													type="file"
+													accept="image/*"
+													className={styles.file_input}
+													name="archivo"
+													onChange={(e) => setUserData(prev => ({ ...prev, [img]: e.target.files[0] }))}
+												/>
+												<img src="/images/usuarios/account/add_img.svg" alt="Editar vivienda" />
+											</label>
+											{addImageState && <p className={styles.add_image_tooltip}>Añadir imagen</p>}
+										</div>
+									)
+								}
+
+								return (
+									<div key={index} className={styles.house_images}>
+										<img
+											src={userData[img] instanceof File ? URL.createObjectURL(userData[img]) : userData[img]}
+											alt={`Vista previa ${img}`}
+										/>
+										<img
+											src="/images/usuarios/account/delete_img.svg"
+											alt="delete img"
+											onClick={() => setUserData(prev => ({ ...prev, [img]: null }))} // Cambié onChange por onClick y actualicé el valor a null
+										/>
+									</div>
+								);
+							})}
 					</article>
 				</section>
 
@@ -238,19 +283,39 @@ export const EditarVivienda = ({ addImageState, setAddImageState, userData, setU
 					<form className={`${styles.input_container} ${styles.input_detalles}`}>
 						<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 							<p>Viajeros</p>
-							<input type="number" placeholder="1 - 4" min="1" max="4" name="habitaciones" />
+							<input
+								type="number"
+								value={userData?.viajeros || ""}
+								onChange={(e) => setUserData(prev => ({ ...prev, viajeros: e.target.value }))}
+								placeholder="Cantidad"
+							/>
 						</div>
 						<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 							<p>Habitaciones</p>
-							<input type="number" placeholder="1 - 4" min="1" max="4" name="baños" />
+							<input
+								type="number"
+								value={userData?.habitaciones || ""}
+								onChange={(e) => setUserData(prev => ({ ...prev, habitaciones: e.target.value }))}
+								placeholder="Cantidad"
+							/>
 						</div>
 						<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 							<p>Camas</p>
-							<input type="number" placeholder="1 - 4" min="1" max="4" name="habitaciones" />
+							<input
+								type="number"
+								value={userData?.camas || ""}
+								onChange={(e) => setUserData(prev => ({ ...prev, camas: e.target.value }))}
+								placeholder="Cantidad"
+							/>
 						</div>
 						<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 							<p>Baños</p>
-							<input type="number" placeholder="1 - 4" min="1" max="4" name="baños" />
+							<input
+								type="number"
+								value={userData?.banios || ""}
+								onChange={(e) => setUserData(prev => ({ ...prev, banios: e.target.value }))}
+								placeholder="Cantidad"
+							/>
 						</div>
 					</form>
 				</section>
@@ -278,7 +343,12 @@ export const EditarVivienda = ({ addImageState, setAddImageState, userData, setU
 						</div>
 						<div className={styles.input_div}>
 							<p>Precio (&euro; / noche)</p>
-							<input type="number" placeholder="45" name="precio" />
+							<input
+								type="number"
+								value={userData?.precio_noche || ""}
+								onChange={(e) => setUserData(prev => ({ ...prev, precio_noche: e.target.value }))}
+								placeholder="Coste"
+							/>
 							<span> </span>
 						</div>
 					</form>
@@ -290,7 +360,7 @@ export const EditarVivienda = ({ addImageState, setAddImageState, userData, setU
 };
 
 // Menu que aparece al editar "Biografia "
-export const EditarBiografia = ({ esViajero = false, biografiaData = [], userService, userData, setUserData }) => {
+export const EditarBiografia = ({ esViajero = false, biografiaData = [], userData, setUserData }) => {
 	const [UserIdiomas, setUserIdiomas] = useState(biografiaData.idiomas.split(",").map(idioma => idioma.trim()));
 
 	const inputIdiomas = ["Español", "Inglés", "Francés", "Alemán", "Italiano", "Portugués", "Chino", "Árabe", "Ruso", "Japonés"];

@@ -1,8 +1,8 @@
-import{ useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import AnfitrionService from '../../../services/users/AnfitrionService'
 import { Link } from 'react-router-dom';
 
-export default function ListadoViviendas({styles}) {
+export default function ListadoViviendas({ styles }) {
   const [viviendas, setViviendas] = useState([]);
 
   // Obtener las viviendas
@@ -20,14 +20,14 @@ export default function ListadoViviendas({styles}) {
       );
     }).catch(error => console.error("Error al listar los usuarios : ", error))
   );
-  
-  const deleteVivienda = (viviendaID) => {
-    let confirmacion = window.confirm(`¿Eliminar vivienda? con ID : ${viviendaID}`);
+
+  const deleteVivienda = (anfitrionID) => {
+    let confirmacion = window.confirm(`¿Eliminar vivienda? con Anfitrión ID : ${anfitrionID}`);
 
     if (confirmacion) {
-      AnfitrionService.deleteVivienda(viviendaID)
+      AnfitrionService.eliminarVivienda(anfitrionID)
         .then(() => listarViviendas())
-        .catch(error => console.error(`Error al eliminar la vivienda con ID ${viviendaID} : `, error));
+        .catch(error => console.error(`Error al eliminar la vivienda con ID ${anfitrionID} : `, error));
     }
   }
 
@@ -38,6 +38,9 @@ export default function ListadoViviendas({styles}) {
           <th>ID</th>
           <th>Anf_ID</th>
           <th>Imagen 1</th>
+          <th>Imagen 2</th>
+          <th>Imagen 3</th>
+          <th>Imagen 4</th>
           <th>Viajeros</th>
           <th>Habts</th>
           <th>Camas</th>
@@ -54,10 +57,26 @@ export default function ListadoViviendas({styles}) {
             <td>{vivienda.id}</td>
             <td>{vivienda.anfitrion_id}</td>
             <td>
-              <a href={vivienda.imagen1} target="_blank" rel="noopener noreferrer">
-                {vivienda.imagen1.length > 30 ? `${vivienda.imagen1.slice(0, 30)}...` : vivienda.imagen1}
+              <a href={vivienda.imagen1 ||null} target="_blank" rel="noopener noreferrer">
+                {vivienda.imagen1 ? (vivienda.imagen1.length > 25 ? `${vivienda.imagen1.slice(0, 25)}...` : vivienda.imagen1) : "null"}
               </a>
             </td>
+            <td>
+              <a href={vivienda.imagen2 || null} target="_blank" rel="noopener noreferrer">
+                {vivienda.imagen2 ? (vivienda.imagen2.length > 25 ? `${vivienda.imagen2.slice(0, 25)}...` : vivienda.imagen2) : "null"}
+              </a>
+            </td>
+            <td>
+              <a href={vivienda.imagen3 || null} target="_blank" rel="noopener noreferrer">
+                {vivienda.imagen3 ? (vivienda.imagen3.length > 25 ? `${vivienda.imagen3.slice(0, 25)}...` : vivienda.imagen3) : "null"}
+              </a>
+            </td>
+            <td>
+              <a href={vivienda.imagen4 || null} target="_blank" rel="noopener noreferrer">
+                {vivienda.imagen4 ? (vivienda.imagen4.length > 25 ? `${vivienda.imagen4.slice(0, 25)}...` : vivienda.imagen4) : "null"}
+              </a>
+            </td>
+
             <td>{vivienda.viajeros}</td>
             <td>{vivienda.habitaciones}</td>
             <td>{vivienda.camas}</td>
@@ -73,7 +92,7 @@ export default function ListadoViviendas({styles}) {
                 <img
                   src="/images/admin_panel/delete.svg"
                   alt="Eliminar"
-                  onClick={() => deleteVivienda(vivienda.id)}
+                  onClick={() => deleteVivienda(vivienda.anfitrion_id)}
                 />
               </div>
             </td>
