@@ -242,7 +242,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     return repository.save(user);
   }
 
-  // Subir la imagen de enviada y devolver su ruta
+  // Subir la imagen enviada a ImgBB y devolver su ruta de acceso
   @PostMapping("/upload")
   public ResponseEntity<Map<String,Object>> uploadImage(@RequestParam("image") MultipartFile image){
     if(image.isEmpty()){

@@ -13,9 +13,10 @@ class AnfitrionService extends UsuarioService {
     return axios.get(`${this.baseUrl}/viviendas/${ciudad}-${provincia}`);
   }
 
-  eliminarVivienda(anfitrionID){
+  eliminarVivienda(anfitrionID) {
     return axios.delete(`${this.baseUrl}/${anfitrionID}/vivienda`);
   }
+
 }
 
 export default new AnfitrionService();

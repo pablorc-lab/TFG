@@ -49,7 +49,6 @@ public class ViajeroController extends BaseUserController<Viajero, ViajeroReposi
     return editarContenido(userID, titulo, infoExperiencia);
   }
 
-
   @DeleteMapping("/{userID}/experiencias/{titulo}")
   public ResponseEntity<Map<String, Boolean>> eliminarExperiencia(@PathVariable Long userID, @PathVariable String titulo) {
     return eliminarContenido(userID, titulo);

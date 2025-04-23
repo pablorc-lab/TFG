@@ -14,7 +14,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const [userData, setUserData] = useState(null);
   const [biografiaData, setBiografiaData] = useState(null);
   const [viviendaData, setViviendaData] = useState(null);
-  const [recomendacionesData, setRecomendacionesData] = useState(null);
+  const [contenidoData, setContenidoData] = useState(null);
 
   // Comprueba si hay valores vacios, los gustos e imagenes pueden ser null
   const hayCamposNull = (data) => {
@@ -30,10 +30,10 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
 
   // Comprueba si hay valores vacios en el contenido, sin tener en cuenta los opcionales
   const hayCamposNullContenido = (data) => {
-    const valoresNulos = ["titulo", "descripcion"].some( 
+    const valoresNulos = ["titulo", "descripcion"].some(
       key => (data[key] == null || data[key].trim() === '')
     );
-  
+
     setErrorData(valoresNulos);
     console.log(valoresNulos);
     return valoresNulos;
@@ -67,17 +67,68 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
     // Cargar dinámica del servicio
     const ViviendasService = (await import("../../../../services/viviendas/ViviendasService")).default;
 
+    // Subir cada imágen si son archivos
+    let updatedViviendaData = { ...viviendaData };
+    const imagenes = [viviendaData.imagen1, viviendaData.imagen2, viviendaData.imagen3, viviendaData.imagen4];
+    
+    await Promise.all(imagenes.map(async (image, index) => {
+      if (image instanceof File) {
+        try {
+          const imageUrl = await ViviendasService.uploadImage(image);
+          console.log(`Imagen ${index+1} subida con éxito: `, imageUrl);
+          updatedViviendaData[`imagen${index + 1}`] = imageUrl;
+        } 
+        catch (error) {
+          console.error("Error al subir la imagen:", error);
+        }
+      }
+    }));
+
     // Realizar la operación correcta
     // Si no hay valores, es porque se está creando
     const OperacionViviendaService = usuarioData.usuario.vivienda == null
-      ? ViviendasService.crearVivienda(usuarioData.usuario.id, viviendaData)
-      : ViviendasService.updateVivienda(usuarioData.usuario.id, viviendaData);
+      ? ViviendasService.crearVivienda(usuarioData.usuario.id, updatedViviendaData)
+      : ViviendasService.updateVivienda(usuarioData.usuario.id, updatedViviendaData);
 
     OperacionViviendaService
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
       .finally(() => {
         setViviendaData(null);
+        setTimeout(() => setIsOpen(false), 200);
+        setEditedData(true);
+      });
+  };
+
+  // Función asincrona para crear/editar la recomendacion
+  const crearRecomendacion = async () => {
+    // Cargar dinámica del servicio
+    const RecomendacionService = (await import("../../../../services/contenido/RecomendacionService")).default;
+
+    // Realizar la operación correcta
+    // Si no hay valores, es porque se está creando
+    RecomendacionService.crearRecomendacion(usuarioData.usuario.id, contenidoData)
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error))
+      .finally(() => {
+        setContenidoData(null);
+        setTimeout(() => setIsOpen(false), 200);
+        setEditedData(true);
+      });
+  };
+
+  // Función asincrona para crear/editar la experiencia
+  const crearExperiencia = async () => {
+    // Cargar dinámica del servicio
+    const ExperienciaService = (await import("../../../../services/contenido/ExperienciasService")).default;
+
+    // Realizar la operación correcta
+    // Si no hay valores, es porque se está creando
+    ExperienciaService.crearExperiencia(usuarioData.usuario.id, contenidoData)
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error))
+      .finally(() => {
+        setContenidoData(null);
         setTimeout(() => setIsOpen(false), 200);
         setEditedData(true);
       });
@@ -108,12 +159,15 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
     }
 
     // Si se ha editado todos los datos del contenido (recomendación o experiencia)
-    else if (recomendacionesData !== null && !hayCamposNullContenido(recomendacionesData)) {
-      // Si existe una recomendación con ese titulo salirse
-      if(usuarioData.some(value => value.titulo.trim() === recomendacionesData.titulo.trim())){
+    else if (contenidoData !== null && !hayCamposNullContenido(contenidoData)) {
+      // Si existe una recomendación/experiencia con ese titulo salirse
+      if (usuarioData.some(value => value.titulo.trim() === contenidoData.titulo.trim())) {
         setErrorSameTitle(true);
         return;
       }
+
+      // Si es viajero es una experiencia, sino, una recomendacion
+      esViajero ? crearExperiencia() : crearRecomendacion();
       setErrorSameTitle(false);
       console.log("creado con exito");
     }
@@ -151,8 +205,8 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
           <EditarRecomendaciones
             esViajero={esViajero}
             recomendacionesData={usuarioData}
-            userData={recomendacionesData}
-            setUserData={setRecomendacionesData}
+            userData={contenidoData}
+            setUserData={setContenidoData}
           />}
       </Suspense>
 

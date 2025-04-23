@@ -5,11 +5,16 @@ import com.bearfrens.backend.entity.viviendas.Viviendas;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.repository.user.AnfitrionRepository;
 import com.bearfrens.backend.repository.viviendas.ViviendasRepository;
+import com.bearfrens.backend.service.ImgBBservice;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +22,6 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class ViviendasService {
-
   private final ViviendasRepository viviendasRepository;
   private final AnfitrionRepository anfitrionRepository;
 
