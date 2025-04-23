@@ -18,7 +18,7 @@ public abstract class Contenido{
   @Column(nullable = false, length = 500)
   private String descripcion;
 
-  @Column()
+  @Column(nullable = true,  length = 75)
   private String recomendacion;
 
   public abstract void setUsuario(Object user);

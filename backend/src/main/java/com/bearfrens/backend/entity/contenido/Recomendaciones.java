@@ -25,16 +25,16 @@ public class Recomendaciones extends Contenido {
   @JsonIgnore //Evitar que se imprima todo el anfitrión
   private Anfitrion anfitrion;
 
-  @Column(nullable = true) // Opcional
+  @Column(nullable = true,  length = 75) // Opcional
   private String ubicacion;
 
-  @Column(nullable = true) // Opcional
+  @Column(nullable = true,  length = 75) // Opcional
   private int telefono;
 
-  @Column(nullable = true, length = 150) // Opcional
+  @Column(nullable = true, length = 75) // Opcional
   private String horarios;
 
-  @Column(nullable = true) // Opcional
+  @Column(nullable = true,  length = 75) // Opcional
   private String ayuda;
 
   // GETTER y SETTERS

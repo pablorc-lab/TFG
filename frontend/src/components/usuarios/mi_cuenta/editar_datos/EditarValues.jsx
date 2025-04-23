@@ -38,6 +38,7 @@ export const EditarMiCuenta = ({ usuarioData = [], userData, setUserData }) => {
 
 	return (
 		<>
+
 			<h2>EDITAR CUENTA</h2>
 
 			<main className={styles.main}>
@@ -179,7 +180,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 	})
 
 	console.log(userData);
-	
+
 	// Actualizar objeto de estado
 	const updateEditarStates = (newState) => setEditarStates(prev => ({ ...prev, ...newState }));
 
@@ -242,39 +243,39 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 						{userData && ["imagen1", "imagen2", "imagen3", "imagen4"].map((img, index) => {
 							if (userData[img] == null) {
 								// Si NO estamos en el primer índice o la imagen anterior es null, no mostramos nada mas
-								if (index !== 0 && userData[`imagen${index}`] == null) return null; 
-
-									return (
-										<div key={index} className={styles.file_input_wrapper}>
-											<label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)} >
-												<input
-													type="file"
-													accept="image/*"
-													className={styles.file_input}
-													name="archivo"
-													onChange={(e) => setUserData(prev => ({ ...prev, [img]: e.target.files[0] }))}
-												/>
-												<img src="/images/usuarios/account/add_img.svg" alt="Editar vivienda" />
-											</label>
-											{addImageState && <p className={styles.add_image_tooltip}>Añadir imagen</p>}
-										</div>
-									)
-								}
+								if (index !== 0 && userData[`imagen${index}`] == null) return null;
 
 								return (
-									<div key={index} className={styles.house_images}>
-										<img
-											src={userData[img] instanceof File ? URL.createObjectURL(userData[img]) : userData[img]}
-											alt={`Vista previa ${img}`}
-										/>
-										<img
-											src="/images/usuarios/account/delete_img.svg"
-											alt="delete img"
-											onClick={() => setUserData(prev => ({ ...prev, [img]: null }))} // Cambié onChange por onClick y actualicé el valor a null
-										/>
+									<div key={index} className={styles.file_input_wrapper}>
+										<label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)} >
+											<input
+												type="file"
+												accept="image/*"
+												className={styles.file_input}
+												name="archivo"
+												onChange={(e) => setUserData(prev => ({ ...prev, [img]: e.target.files[0] }))}
+											/>
+											<img src="/images/usuarios/account/add_img.svg" alt="Editar vivienda" />
+										</label>
+										{addImageState && <p className={styles.add_image_tooltip}>Añadir imagen</p>}
 									</div>
-								);
-							})}
+								)
+							}
+
+							return (
+								<div key={index} className={styles.house_images}>
+									<img
+										src={userData[img] instanceof File ? URL.createObjectURL(userData[img]) : userData[img]}
+										alt={`Vista previa ${img}`}
+									/>
+									<img
+										src="/images/usuarios/account/delete_img.svg"
+										alt="delete img"
+										onClick={() => setUserData(prev => ({ ...prev, [img]: null }))} // Cambié onChange por onClick y actualicé el valor a null
+									/>
+								</div>
+							);
+						})}
 					</article>
 				</section>
 
@@ -446,7 +447,21 @@ export const EditarBiografia = ({ esViajero = false, biografiaData = [], userDat
 };
 
 // Menu que aparece al editar "Recomendaciones "
-export const EditarRecomendaciones = ({ esViajero, userService, setUserData }) => {
+export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], userData, setUserData }) => {
+
+	useEffect(() => {
+		setUserData({
+			titulo: recomendacionesData.titulo || '',
+			descripcion: recomendacionesData.descripcion || '',
+			ubicacion: recomendacionesData.ubicacion || '',
+			recomendacion: recomendacionesData.recomendacion || '',
+			telefono: recomendacionesData.telefono || '',
+			horarios: recomendacionesData.horario || '',
+			ayuda: recomendacionesData.ayuda || ''
+		});
+	}, []);
+
+
 	return (
 		<>
 			<h2> AÑADIR {esViajero ? "EXPERIENCIA" : "RECOMENDACION"}</h2>
@@ -457,7 +472,14 @@ export const EditarRecomendaciones = ({ esViajero, userService, setUserData }) =
 					<form className={`${styles.input_container} ${styles.input_recomendacion}`}>
 						<div className={`${styles.input_div} ${styles.input_recomendacion_title}`}>
 							<p>Titulo</p>
-							<input type="text" placeholder="Restaurante favorito" spellCheck="false" name="Titulo recomendaciones" />
+							<input
+								type="text"
+								placeholder="Restaurante favorito"
+								spellCheck="false"
+								name="titulo"
+								value={userData?.titulo || ""}
+								onChange={(e) => setUserData(prev => ({ ...prev, titulo: e.target.value }))}
+							/>
 						</div>
 
 						<div className={styles.input_div}>
@@ -465,21 +487,30 @@ export const EditarRecomendaciones = ({ esViajero, userService, setUserData }) =
 							<textarea
 								placeholder="Si te encanta la comida local, no puedes perderte ‘La Taberna de Juan’"
 								spellCheck="false"
-								name="biografia"
+								name="descripcion"
 								rows="4"
+								value={userData?.descripcion || ""}
+								onChange={(e) => setUserData(prev => ({ ...prev, descripcion: e.target.value }))}
 							></textarea>
 						</div>
 					</form>
 				</section>
 
 				<section className={styles.modal_sections}>
-					<h3>DETALLES (opcionales)</h3>
+					<h3>DETALLES OPCIONALES</h3>
 					<form className={`${styles.input_container} ${styles.input_details}`} >
 						{!esViajero && <div className={styles.input_div}>
 							<p>Ubicación</p>
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/location.svg" alt="Ubicación" className={styles.input_image} />
-								<input type="text" placeholder="Dirección del lugar" spellCheck="false" name="Ubicación" />
+								<input
+									type="text"
+									placeholder="Dirección del lugar"
+									spellCheck="false"
+									name="ubicacion"
+									value={userData?.ubicacion || ""}
+									onChange={(e) => e.target.value.length <= 75 && setUserData(prev => ({ ...prev, ubicacion: e.target.value }))}
+								/>
 							</article>
 						</div>}
 
@@ -487,7 +518,14 @@ export const EditarRecomendaciones = ({ esViajero, userService, setUserData }) =
 							<p>Recomendación</p>
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/backpack.svg" alt="Recomendación" className={styles.input_image} />
-								<input type="text" placeholder="Consejos para visitar" spellCheck="false" name="Recomendación" />
+								<input
+									type="text"
+									placeholder="Consejos para visitar"
+									spellCheck="false"
+									name="recomendacion"
+									value={userData?.recomendacion || ""}
+									onChange={(e) => e.target.value.length <= 75 && setUserData(prev => ({ ...prev, recomendacion: e.target.value }))}
+								/>
 							</article>
 						</div>
 
@@ -495,7 +533,14 @@ export const EditarRecomendaciones = ({ esViajero, userService, setUserData }) =
 							<p>Teléfono</p>
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/phone.svg" alt="Teléfono" className={styles.input_image} />
-								<input type="number" placeholder="666-777-999" spellCheck="false" name="Teléfono" />
+								<input
+									type="number"
+									placeholder="666-777-999"
+									spellCheck="false"
+									name="telefono"
+									value={userData?.telefono || ""}
+									onChange={(e) => e.target.value.match(/^\d*$/) && e.target.value.length <= 9 && setUserData(prev => ({ ...prev, telefono: e.target.value }))}
+								/>
 							</article>
 						</div>}
 
@@ -503,7 +548,14 @@ export const EditarRecomendaciones = ({ esViajero, userService, setUserData }) =
 							<p>Horarios</p>
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/clock.svg" alt="Horarios" className={styles.input_image} />
-								<input type="text" placeholder="Horario de apertura y cierre" spellCheck="false" name="Horarios" />
+								<input
+									type="text"
+									placeholder="Horario de apertura y cierre"
+									spellCheck="false"
+									name="horarios"
+									value={userData?.horarios || ""}
+									onChange={(e) => e.target.value.length <= 75 && setUserData(prev => ({ ...prev, horarios: e.target.value }))}
+								/>
 							</article>
 						</div>}
 
@@ -511,7 +563,14 @@ export const EditarRecomendaciones = ({ esViajero, userService, setUserData }) =
 							<p>Ayuda</p>
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/help.svg" alt="Comentarios" className={styles.input_image} />
-								<input type="text" placeholder="Comentarios adicionales" spellCheck="false" name="Comentarios" />
+								<input
+									type="text"
+									placeholder="Comentarios adicionales"
+									spellCheck="false"
+									name="comentarios"
+									value={userData?.ayuda || ""}
+									onChange={(e) => e.target.value.length <= 75 && setUserData(prev => ({ ...prev, ayuda: e.target.value }))}
+								/>
 							</article>
 						</div>}
 					</form>

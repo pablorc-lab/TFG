@@ -19,7 +19,7 @@ const RecomendacionesMiCuenta = ({esViajero, recomendacionesData = [], userServi
 
       {isOpen &&
         <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} />}>
-          <EditarPerfil setIsOpen={setIsOpen} showValue={3} esViajero={esViajero}/>
+          <EditarPerfil setIsOpen={setIsOpen} showValue={3} esViajero={esViajero} usuarioData={recomendacionesData}/>
         </Suspense>
       }
 
