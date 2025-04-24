@@ -6,7 +6,7 @@ export default function FormVivienda({ styles, userType, userID, InputField, set
   const navigate = useNavigate();
 
   const [viviendaData, setViviendaData] = useState({
-    anfitrion_id: null,
+    anfitrion_id: "",
     imagen1: "",
     imagen2: "",
     imagen3: "",
@@ -28,7 +28,7 @@ export default function FormVivienda({ styles, userType, userID, InputField, set
           const vivienda = response.data;
           setViviendaData(prev => ({
             ...prev,
-            anfitrion_id: vivienda.anfitrion_id || null,
+            anfitrion_id: vivienda.anfitrion_id || "",
             imagen1: vivienda.imagen1 || "",
             imagen2: vivienda.imagen2 || "",
             imagen3: vivienda.imagen3 || "",
@@ -49,21 +49,37 @@ export default function FormVivienda({ styles, userType, userID, InputField, set
     }
   }, [userID]);
 
-  // TODO: Subir imágenes vivienda correctamente
   // Guardar o Editar vivienda
-  const saveOrUpdateVivienda = (e) => {
+  const saveOrUpdateVivienda = async (e) => {
     e.preventDefault();
-    
+
+    // Subir cada imágen si son archivos
+    let updatedViviendaData = { ...viviendaData };
+    const imagenes = [viviendaData.imagen1, viviendaData.imagen2, viviendaData.imagen3, viviendaData.imagen4];
+
+    await Promise.all(imagenes.map(async (image, index) => {
+      if (image instanceof File) {
+        try {
+          const imageUrl = await ViviendaService.uploadImage(image);
+          console.log(`Imagen ${index + 1} subida con éxito: `, imageUrl);
+          updatedViviendaData[`imagen${index + 1}`] = imageUrl;
+        }
+        catch (error) {
+          console.error("Error al subir la imagen:", error);
+        }
+      }
+    }));
+
     // Realizar la operación correcta
     // Si no hay valores, es porque se está creando
     const OperacionViviendaService = userID == null
-      ? ViviendaService.crearVivienda(viviendaData.anfitrion_id, viviendaData)
-      : ViviendaService.updateVivienda(viviendaData.anfitrion_id, viviendaData);
+      ? ViviendaService.crearVivienda(viviendaData.anfitrion_id, updatedViviendaData)
+      : ViviendaService.updateVivienda(viviendaData.anfitrion_id, updatedViviendaData);
 
-      OperacionViviendaService
+    OperacionViviendaService
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
-      .finally(() =>  navigate(`/admin-panel/viviendas`));
+      .finally(() => navigate(`/admin-panel/viviendas`));
 
     setUploadingData(true);
   };
@@ -71,7 +87,7 @@ export default function FormVivienda({ styles, userType, userID, InputField, set
   return (
     <div className={styles.card_Body}>
       <form>
-      {InputField({ label: "ID anfitrión", id: "anfitrion_id", type: "number", placeholder: "4", value: viviendaData.anfitrion_id, campoOnChange: "anfitrion_id", setUserData: setViviendaData })}
+        {InputField({ label: "ID anfitrión", id: "anfitrion_id", type: "number", placeholder: "4", value: viviendaData.anfitrion_id, campoOnChange: "anfitrion_id", setUserData: setViviendaData })}
 
         {/* PROPIEDADES NUMÉRICAS */}
         <article className={styles.form_flex}>

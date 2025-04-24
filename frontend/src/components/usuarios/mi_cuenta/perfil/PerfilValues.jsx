@@ -83,7 +83,7 @@ export const ContenidoVivienda = ({ viviendaData = [] }) => {
 		viviendaData.imagen2,
 		viviendaData.imagen3,
 		viviendaData.imagen4
-	].filter(img => img != null);
+	].filter(img => img != null && img !== "");
 
 	return (
 		<section className={styles.miCuenta_section}>

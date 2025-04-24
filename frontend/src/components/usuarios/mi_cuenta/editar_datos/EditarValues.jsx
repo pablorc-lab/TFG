@@ -179,8 +179,6 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 		location: ""
 	})
 
-	console.log(userData);
-
 	// Actualizar objeto de estado
 	const updateEditarStates = (newState) => setEditarStates(prev => ({ ...prev, ...newState }));
 

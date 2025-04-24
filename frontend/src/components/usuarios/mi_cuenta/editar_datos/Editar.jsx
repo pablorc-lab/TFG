@@ -11,6 +11,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const [errorData, setErrorData] = useState(false);
   const [errorSameTitle, setErrorSameTitle] = useState(false);
 
+  const [sendingData, SetSendingData] = useState(false);
   const [userData, setUserData] = useState(null);
   const [biografiaData, setBiografiaData] = useState(null);
   const [viviendaData, setViviendaData] = useState(null);
@@ -20,7 +21,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const hayCamposNull = (data) => {
     // Comprobar datos usuario
     const valoresNulos = Object.entries(data).some(([key, value]) =>
-      !key.startsWith("gusto") && !key.startsWith("imagen") && (value == null || value.trim() === '')
+      !key.startsWith("gusto") && !key.startsWith("imagen") && (value == null || value === '')
     );
 
     setErrorData(valoresNulos);
@@ -31,7 +32,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   // Comprueba si hay valores vacios en el contenido, sin tener en cuenta los opcionales
   const hayCamposNullContenido = (data) => {
     const valoresNulos = ["titulo", "descripcion"].some(
-      key => (data[key] == null || data[key].trim() === '')
+      key => (data[key] == null || data[key] === '')
     );
 
     setErrorData(valoresNulos);
@@ -136,6 +137,8 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
 
   // Función que se ejecutará al guardar los cambios
   const handleSaveChanges = () => {
+    SetSendingData(true);
+    
     // Si se ha editado los datos de usuario
     if (userData !== null && !hayCamposNull(userData)) {
       userService.update(usuarioData.usuario.id, userData)
@@ -214,8 +217,8 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
       {errorData && <h3 className={styles.error_msg}>Rellene todos los campos</h3>}
 
       <div className={styles.modal_buttons}>
-        <button onClick={() => setIsOpen(false)}>CANCELAR</button>
-        <button onClick={() => handleSaveChanges()}>GUARDAR</button>
+        <button disabled={sendingData} onClick={() => setIsOpen(false)}>CANCELAR</button>
+        <button disabled={sendingData} onClick={() => !sendingData && handleSaveChanges()}>GUARDAR</button>
       </div>
     </dialog >
   );
