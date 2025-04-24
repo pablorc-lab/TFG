@@ -65,14 +65,13 @@
   margin-top: 10px;
 }
 .vivienda_images img {
-  cursor: pointer;
   object-fit: cover;
   width: calc(100% - 10px);
   margin: 0 auto;
   aspect-ratio: 2 / 1;
   border-radius: 2px;
 }
-.vivienda_images img:hover {filter: brightness(0.8);}
+.vivienda_images img:hover {filter: brightness(0.7);}
 
 /*? Info de cada lista ul*/
 .miCuenta_section ul { margin-bottom: 5px;}

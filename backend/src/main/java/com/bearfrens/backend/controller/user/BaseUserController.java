@@ -67,7 +67,10 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   @Autowired
   private ImgBBservice imgBBService;
 
+  @Autowired
   private TokenRepository tokenRepository;
+
+  @Autowired
   private ReservasRepository reservasRepository;
 
   // Constructor "protected" para que solo las clases hijas lo usen
@@ -245,6 +248,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   // Subir la imagen enviada a ImgBB y devolver su ruta de acceso
   @PostMapping("/upload")
   public ResponseEntity<Map<String,Object>> uploadImage(@RequestParam("image") MultipartFile image){
+
     if(image.isEmpty()){
       return ResponseEntity.badRequest().body(Collections.singletonMap("error", "No se ha enviado ninguna imagen"));
     }

@@ -17,6 +17,8 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const navigate = useNavigate();
 
+  const [openEditProfileImage, SetOpenEditProfileImage] = useState(false);
+  const [newProfileImage, setNewProfileImage] = useState(null);
   const [editedData, setEditedData] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -50,7 +52,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
       const token = localStorage.getItem("acces_token");
       const decoded = jwtDecode(token);
       const email = decoded.sub;
-  
+
       userService.getByEmail(email)
         .then(response => {
           setUsuarioData(response.data);
@@ -64,13 +66,6 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
         });
     }
   }, [userService, editedData]);
-  
-
-  const Gustos_imgs = [
-    "/images/usuarios/Gustos/baseball.svg",
-    "/images/usuarios/Gustos/pesca.svg",
-    "/images/usuarios/Gustos/poker.svg",
-  ];
 
   const userNavItems = [
     { src: "/images/usuarios/account/edit.svg", alt: "Datos personales", text: "Datos personales" },
@@ -115,6 +110,37 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
     return edad;
   }
 
+  const handleChangePerfil = (e) => {
+    setNewProfileImage(e.target.files[0]);
+    setTimeout(() => SetOpenEditProfileImage(true), 300);
+  }
+
+  const handleSaveProfileImage = async () => {
+    if (newProfileImage instanceof File) {
+      let updatedUserData = { ...usuarioData };
+
+      userService.uploadImage(newProfileImage)
+        .then(imageUrl => {
+          console.log("Imagen subida con éxito:", imageUrl);
+          
+          updatedUserData.profileImage = imageUrl;
+
+          userService.update(usuarioData.usuario.id, updatedUserData)
+            .then(() => setEditedData(true))
+            .catch(error => console.error(`Error al ACTUALIZAR el usuario:`, error));
+        })
+        .catch(error => {
+          console.error("Error al subir la imagen:", error);
+          return; // Detener si hay error en la subida de imagen
+        });
+    } 
+    else {
+      console.log("No es una imagen valida");
+    }
+    setNewProfileImage(null);
+    SetOpenEditProfileImage(false);
+  };
+
   return (
     <>
       <title>Mi cuenta | Viajeros</title>
@@ -157,6 +183,17 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
 
       {isMobile && (esViajero ? <ViajerosMobileHeader activeSection={activeSection} /> : <AnfitrionMobileHeader activeSection={activeSection} />)}
 
+      {openEditProfileImage &&
+        <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
+          <h1>Imagen de perfil modificada</h1>
+          <img className={styles.user_img} src={URL.createObjectURL(newProfileImage)} alt="Imagen de perfil" width={50} />
+          <div>
+            <button onClick={() => SetOpenEditProfileImage(false)}>CANCELAR</button>
+            <button onClick={() => handleSaveProfileImage()}>GUARDAR</button>
+          </div>
+        </dialog>
+      }
+
       {!isLoading ? (
         <main className={styles.main}>
           <article className={styles.main_containers}>
@@ -186,7 +223,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
                       type="file"
                       accept="image/*"
                       style={{ display: "none" }}
-                      onChange={(e) => { setPerfilImage(URL.createObjectURL(e.target.files[0])) }}
+                      onChange={(e) => handleChangePerfil(e)}
                     />
                     <img className={styles.user_img} src={perfilImage || "/images/not_found/user_img.png"} alt="Imagen de perfil" width={50} />
                   </label>
@@ -236,13 +273,13 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           {/* Componente de los menús*/}
           <div className={styles.user_component}>
             <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
-              {activeMenu === 0 && <PerfilMiCuenta showValue={0} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData}/>}
-              {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData}/>}
-              {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData}/>}
-              {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} recomendacionesData={usuarioData.usuario?.recomendaciones} userService={userService} setEditedData={setEditedData}/>}
-              {activeMenu === 4 && <SeguridadMiCuenta userService={userService} setEditedData={setEditedData}/>}
-              {activeMenu === 5 && <OpinionesMiCuenta showSize={true} nota_media={usuarioData.usuario?.valoracion_media} valoraciones={usuarioData?.valoraciones} MiCuenta={true} userService={userService} setEditedData={setEditedData}/>}
-              {activeMenu === 6 && <HistorialReservasMiCuenta userService={userService}/>}
+              {activeMenu === 0 && <PerfilMiCuenta showValue={0} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData} />}
+              {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData} />}
+              {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData} />}
+              {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} recomendacionesData={usuarioData.usuario?.recomendaciones} userService={userService} setEditedData={setEditedData} />}
+              {activeMenu === 4 && <SeguridadMiCuenta userService={userService} setEditedData={setEditedData} />}
+              {activeMenu === 5 && <OpinionesMiCuenta showSize={true} nota_media={usuarioData.usuario?.valoracion_media} valoraciones={usuarioData?.valoraciones} MiCuenta={true} userService={userService} setEditedData={setEditedData} />}
+              {activeMenu === 6 && <HistorialReservasMiCuenta userService={userService} />}
             </Suspense>
           </div>
         </main>

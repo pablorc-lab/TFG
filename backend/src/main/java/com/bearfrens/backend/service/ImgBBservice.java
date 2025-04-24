@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Map;
 
@@ -24,25 +25,18 @@ public class ImgBBservice {
   public Map<String, Object> uploadImage(MultipartFile image) throws IOException {
     String url = "https://api.imgbb.com/1/upload?key=" + imgBB_Api_Key;
 
-    // Crear el recurso de la imagen como un `ByteArrayResource` para enviarlo como
-    // formulario en una solicitud `multipart/form-data`
-    ByteArrayResource imageResource = new ByteArrayResource(image.getBytes()) {
-      @Override
-      public String getFilename() {
-        return image.getOriginalFilename();
-      }
-    };
+    // Convertir la imagen a base64
+    String imageBase64 = Base64.getEncoder().encodeToString(image.getBytes());
 
-    // Configurar el body
+    // Configurar el cuerpo de la solicitud para enviar la imagen en base64
     MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-    body.add("image", imageResource);
+    body.add("image", imageBase64); // Agregar la imagen como cadena base64
 
     // Configurar los headers
     HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.MULTIPART_FORM_DATA); // Indica que se envia un archivo
+    headers.setContentType(MediaType.MULTIPART_FORM_DATA); // El tipo es multipart/form-data
 
     // Crear la solicitud HTTP (combinando body y header)
-    // `MultiValueMap` permite que una clave tenga múltiples valores
     HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
     // Enviar la solicitud HTTP POST a ImgBB
