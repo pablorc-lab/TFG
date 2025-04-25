@@ -19,7 +19,7 @@ body:has(.modal[open]) {
   backdrop-filter: blur(10px);
 }
 
-.modal:focus { outline: none;}
+.modal:focus, .main:focus { outline: none;}
 .modal {
   overflow: none;
   pointer-events: none;
@@ -357,6 +357,8 @@ body:has(.modal[open]) {
   justify-content: end;
   gap: 30px;
 }
+.modal_buttons button:focus {outline: none;}
+
 .modal_buttons button {
   font-family: "Nunito";
   border-radius: 50px;

@@ -1,4 +1,9 @@
-.recomendaciones_main h1, .add_recomendacion p, .recomendaciones_container li h3, .recomendaciones_container li p  {margin: 0;}
+.recomendaciones_main h1,
+.add_recomendacion p,
+.recomendaciones_container li h3,
+.recomendaciones_container li p {
+  margin: 0;
+}
 
 .recomendaciones_main {
   background-color: white;
@@ -16,6 +21,31 @@
 }
 
 /*? CONTENEDOR RECOMENDACIONES*/
+.action_imgs{
+  display: flex;
+  gap: 20px;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+.action_imgs img {
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  width: 30px;
+  padding: 3px;
+  border-radius: 10px;
+}
+.action_imgs img:nth-child(1){
+  box-shadow: 0 0 7px rgba(6, 114, 255, 0.712);
+  background-color: white;
+}
+
+.action_imgs img:nth-child(2){
+  box-shadow: 0 0 7px rgba(255, 0, 0, 0.712);
+  background-color: #ff5757;
+}
+.action_imgs img:hover {filter: brightness(0.7);}
+
 .recomendaciones_container {
   padding: 0;
   margin: 25px 0;
@@ -24,7 +54,8 @@
   font-family: "Nunito";
 }
 
-.recomendaciones_container li:not(.add_recomendacion){
+.recomendaciones_container li { position: relative;}
+.recomendaciones_container li:not(.add_recomendacion) {
   border-radius: 5px;
   list-style: none;
   padding: 15px;
@@ -32,13 +63,14 @@
   box-shadow: 0 0 5px rgba(65, 65, 65, 0.4);
 }
 
-.recomendaciones_container li:nth-child(even):not(.add_recomendacion) { 
-  background-color: rgb(210, 234, 248); 
-  box-shadow: 8px 8px rgb(175, 205, 223) ;
-}  
-.recomendaciones_container li:nth-child(odd):not(.add_recomendacion) { 
-  background-color: rgb(250, 250, 230); 
-  box-shadow: 8px 8px rgb(212, 212, 192) ;
+.recomendaciones_container li:nth-child(even):not(.add_recomendacion) {
+  background-color: rgb(210, 234, 248);
+  box-shadow: 8px 8px rgb(175, 205, 223);
+}
+
+.recomendaciones_container li:nth-child(odd):not(.add_recomendacion) {
+  background-color: rgb(250, 250, 230);
+  box-shadow: 8px 8px rgb(212, 212, 192);
 }
 
 .recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) {
@@ -49,21 +81,29 @@
   margin-bottom: 30px;
 }
 
-.recomendaciones_container li:not(.add_recomendacion) h3 {font-size: 20px;}
+.recomendaciones_container li:not(.add_recomendacion) h3 {
+  font-size: 20px;
+  margin-right: 110px;
+}
 
 .logos_recomendations {
   display: flex;
   align-items: start;
   gap: 10px;
-  
+
 }
-.logos_recomendations:not(:last-child){ margin-bottom: 15px;}
+
+.logos_recomendations:not(:last-child) {
+  margin-bottom: 15px;
+}
+
 .logos_recomendations img {
   user-select: none;
   width: 25px;
   aspect-ratio: 1 / 1;
 }
-.logos_recomendations p{ 
+
+.logos_recomendations p {
   color: black;
   font-size: 18px;
 }
@@ -82,13 +122,20 @@
   box-shadow: 6px 6px rgba(0, 0, 0, 0.251);
   transition: all 0.1s ease-in-out;
 }
-.add_recomendacion:hover { 
+
+.add_recomendacion:hover {
   background-color: #0a7273;
   border-color: #0a7273;
   box-shadow: 8px 8px #0a71734f;
 }
-.add_recomendacion:hover p { color: white;}
-.add_recomendacion:hover img { filter: invert(1) grayscale(1) brightness(2);}
+
+.add_recomendacion:hover p {
+  color: white;
+}
+
+.add_recomendacion:hover img {
+  filter: invert(1) grayscale(1) brightness(2);
+}
 
 .add_recomendacion img {
   width: 35px;
@@ -103,10 +150,20 @@
 }
 
 @media (min-width: 780px) {
-  .recomendaciones_main h1 {font-size: 30px;}
+  .recomendaciones_main h1 {
+    font-size: 30px;
+  }
 
   /*? Recomendacion container*/
-  .recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) { font-size: 20px;} 
-  .recomendaciones_container li:not(.add_recomendacion) h3  {font-size: 21px;}
-  .logos_recomendations p{ font-size: 19px;}
+  .recomendaciones_container li:not(.add_recomendacion) p:not(.logos_recomendations p) {
+    font-size: 20px;
+  }
+
+  .recomendaciones_container li:not(.add_recomendacion) h3 {
+    font-size: 21px;
+  }
+
+  .logos_recomendations p {
+    font-size: 19px;
+  }
 }

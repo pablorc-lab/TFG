@@ -2,8 +2,10 @@ import { Suspense, useState } from "react";
 import styles from "./Recomendaciones.module.css";
 import EditarPerfil from "../editar_datos/Editar";
 
-const RecomendacionesMiCuenta = ({esViajero, recomendacionesData = [], userService, setEditedData}) => {
+const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userService, setEditedData, userID = null }) => {
   const [isOpen, setIsOpen] = useState(null);
+
+  const [editarRecomendacionData, setEditarRecomendacionData] = useState([]);
 
   const datos_recomendaciones = [
     { key: "recomendacion", label: "Sugerencia", icon: "backpack" },
@@ -13,13 +15,38 @@ const RecomendacionesMiCuenta = ({esViajero, recomendacionesData = [], userServi
     { key: "telefono", label: "Teléfono", icon: "phone" },
   ];
 
+  const deleteRecomendacion = async (titulo) => {
+    // Cargar dinámica del servicio
+    const RecomendacionService = (await import("../../../../services/contenido/RecomendacionService")).default;
+    
+    // Realizar la operación correcta
+    // Si no hay valores, es porque se está creando
+    RecomendacionService.deleteRecomendacion(userID, titulo)
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error))
+      .finally(() => setEditedData(true));
+  };
+
+  const editRecomendacion = (recomendacionData) => {
+    setEditarRecomendacionData(recomendacionData);
+    setIsOpen(true);
+  }
+
   return (
     <section className={styles.recomendaciones_main}>
       <h1>{esViajero ? "Experiencias" : "Recomendaciones"} - {recomendacionesData.length}</h1>
 
       {isOpen &&
         <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} />}>
-          <EditarPerfil setIsOpen={setIsOpen} showValue={3} esViajero={esViajero} usuarioData={recomendacionesData}/>
+          <EditarPerfil
+            setIsOpen={setIsOpen}
+            showValue={3}
+            esViajero={esViajero}
+            usuarioData={editarRecomendacionData}
+            setUsuarioData={setEditarRecomendacionData}
+            setEditedData={setEditedData}
+            userID={userID}
+          />
         </Suspense>
       }
 
@@ -33,20 +60,33 @@ const RecomendacionesMiCuenta = ({esViajero, recomendacionesData = [], userServi
           ? (
             recomendacionesData.map((recomendacion, index) => (
               <li key={index}>
+                <div className={styles.action_imgs}>
+                  <img
+                    src="/images/admin_panel/edit.svg"
+                    alt="delete img"
+                    onClick={() => editRecomendacion(recomendacion)}
+                  />
+                  <img
+                    src="/images/usuarios/account/delete_img.svg"
+                    alt="delete img"
+                    onClick={() => deleteRecomendacion(recomendacion.titulo)}
+                  />
+                </div>
+
                 <h3>{recomendacion.titulo}</h3>
                 <p>{recomendacion.descripcion}</p>
 
                 {datos_recomendaciones.map(({ key, label, icon }) =>
-                  recomendacion[key] && (
+                  recomendacion[key] ? (
                     <div className={styles.logos_recomendations} key={key}>
                       <img src={`/images/profiles/recomendaciones/${icon}.svg`} alt={`Imagen ${label}`} />
                       <p><strong>{label}:</strong> {recomendacion[key]}</p>
                     </div>
-                  )
+                  ) : null
                 )}
               </li>
             ))
-          ) : <h2 style={{textAlign : "center"}}> No se ha creado ningun recomendacion</h2>
+          ) : <h2 style={{ textAlign: "center" }}> No se ha creado ningun recomendacion</h2>
         }
       </ul>
     </section>

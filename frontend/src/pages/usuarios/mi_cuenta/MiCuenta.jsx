@@ -276,7 +276,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
               {activeMenu === 0 && <PerfilMiCuenta showValue={0} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData} />}
               {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData} />}
               {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData} />}
-              {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} recomendacionesData={usuarioData.usuario?.recomendaciones} userService={userService} setEditedData={setEditedData} />}
+              {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} recomendacionesData={usuarioData.usuario?.recomendaciones} userService={userService} setEditedData={setEditedData} userID={usuarioData.usuario?.id}/>}
               {activeMenu === 4 && <SeguridadMiCuenta userService={userService} setEditedData={setEditedData} />}
               {activeMenu === 5 && <OpinionesMiCuenta showSize={true} nota_media={usuarioData.usuario?.valoracion_media} valoraciones={usuarioData?.valoraciones} MiCuenta={true} userService={userService} setEditedData={setEditedData} />}
               {activeMenu === 6 && <HistorialReservasMiCuenta userService={userService} />}

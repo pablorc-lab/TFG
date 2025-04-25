@@ -5,7 +5,7 @@ const EditarVivienda = lazy(() => import("./EditarValues").then(functions => ({ 
 const EditarBiografia = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarBiografia })));
 const EditarRecomendaciones = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarRecomendaciones })));
 
-export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [], esViajero = false, userService, setEditedData }) {
+export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [], setUsuarioData = null, esViajero = false, userService, setEditedData, userID = null, tituloRecomendacion = null}) {
   const [addImageState, setAddImageState] = useState(false);
 
   const [errorData, setErrorData] = useState(false);
@@ -16,7 +16,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const [biografiaData, setBiografiaData] = useState(null);
   const [viviendaData, setViviendaData] = useState(null);
   const [contenidoData, setContenidoData] = useState(null);
-
+  
   // Comprueba si hay valores vacios, los gustos e imagenes pueden ser null
   const hayCamposNull = (data) => {
     // Comprobar datos usuario
@@ -95,8 +95,10 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
       .finally(() => {
-        setViviendaData(null);
-        setTimeout(() => setIsOpen(false), 200);
+        setTimeout(() => {
+          setIsOpen(false);
+          setViviendaData(null);
+        }, 200);
         setEditedData(true);
       });
   };
@@ -106,14 +108,22 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
     // Cargar dinámica del servicio
     const RecomendacionService = (await import("../../../../services/contenido/RecomendacionService")).default;
 
-    // Realizar la operación correcta
+    // Si no hay valores, es porque se está creano
+    const OperacionRecomendacionService = usuarioData.length === 0
+      ? RecomendacionService.crearRecomendacion(userID, contenidoData)
+      : RecomendacionService.updateRecomendacion(userID, usuarioData.titulo, contenidoData)
+
+     // Realizar la operación correcta
     // Si no hay valores, es porque se está creando
-    RecomendacionService.crearRecomendacion(usuarioData.usuario.id, contenidoData)
+    OperacionRecomendacionService
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
       .finally(() => {
-        setContenidoData(null);
-        setTimeout(() => setIsOpen(false), 200);
+        setTimeout(() => {
+          setIsOpen(false);
+          setContenidoData(null);
+          setUsuarioData([]);
+        }, 200);
         setEditedData(true);
       });
   };
@@ -145,8 +155,10 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
         .then(response => console.log(response.data))
         .catch(error => console.error(error))
         .finally(() => {
-          setUserData(null);
-          setTimeout(() => setIsOpen(false), 200)
+          setTimeout(() => {
+            setIsOpen(false);
+            setUserData(null);
+          }, 200);
           setEditedData(true);
         });
     }
@@ -164,7 +176,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
     // Si se ha editado todos los datos del contenido (recomendación o experiencia)
     else if (contenidoData !== null && !hayCamposNullContenido(contenidoData)) {
       // Si existe una recomendación/experiencia con ese titulo salirse
-      if (usuarioData.some(value => value.titulo.trim() === contenidoData.titulo.trim())) {
+      if (usuarioData.length > 0 && usuarioData.some(value => value.titulo.trim() === contenidoData.titulo.trim())) {
         setErrorSameTitle(true);
         return;
       }
@@ -172,9 +184,13 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
       // Si es viajero es una experiencia, sino, una recomendacion
       esViajero ? crearExperiencia() : crearRecomendacion();
       setErrorSameTitle(false);
-      console.log("creado con exito");
     }
   };
+
+  const closeEditar = () => {
+    setIsOpen(false);
+    if(setUsuarioData){ setUsuarioData([]);}
+  }
 
   return (
     <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
@@ -210,6 +226,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
             recomendacionesData={usuarioData}
             userData={contenidoData}
             setUserData={setContenidoData}
+            tituloRecomendacion={tituloRecomendacion}
           />}
       </Suspense>
 
@@ -217,7 +234,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
       {errorData && <h3 className={styles.error_msg}>Rellene todos los campos</h3>}
 
       <div className={styles.modal_buttons}>
-        <button disabled={sendingData} onClick={() => setIsOpen(false)}>CANCELAR</button>
+        <button onClick={() => closeEditar()}>CANCELAR</button>
         <button disabled={sendingData} onClick={() => !sendingData && handleSaveChanges()}>GUARDAR</button>
       </div>
     </dialog >

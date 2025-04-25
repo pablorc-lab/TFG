@@ -445,7 +445,7 @@ export const EditarBiografia = ({ esViajero = false, biografiaData = [], userDat
 };
 
 // Menu que aparece al editar "Recomendaciones "
-export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], userData, setUserData }) => {
+export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], userData, setUserData}) => {
 
 	useEffect(() => {
 		setUserData({
@@ -476,19 +476,19 @@ export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], use
 								spellCheck="false"
 								name="titulo"
 								value={userData?.titulo || ""}
-								onChange={(e) => setUserData(prev => ({ ...prev, titulo: e.target.value }))}
+								onChange={(e) => e.target.value.length <= 60 && setUserData(prev => ({ ...prev, titulo: e.target.value }))}
 							/>
 						</div>
 
 						<div className={styles.input_div}>
-							<p>Descripción  0 / 500</p>
+							<p>Descripción  {userData?.descripcion.length || 0} / 500</p>
 							<textarea
 								placeholder="Si te encanta la comida local, no puedes perderte ‘La Taberna de Juan’"
 								spellCheck="false"
 								name="descripcion"
 								rows="4"
 								value={userData?.descripcion || ""}
-								onChange={(e) => setUserData(prev => ({ ...prev, descripcion: e.target.value }))}
+								onChange={(e) => e.target.value.length <= 500 && setUserData(prev => ({ ...prev, descripcion: e.target.value }))}
 							></textarea>
 						</div>
 					</form>

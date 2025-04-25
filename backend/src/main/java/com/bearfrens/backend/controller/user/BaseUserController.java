@@ -429,16 +429,23 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe " + contenidoType + " con ese titulo");
     }
 
-    // El titulo es inmutable
+    // Buscar si hay un cotenido con el nuevo titulo
+    for (TC contenidoUser : user.getContenido()) {
+      if (!contenidoUser.equals(contenido) && contenidoUser.getTitulo().equalsIgnoreCase(infoContenido.getTitulo())) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe una " + contenidoType + " con ese titulo");
+      }
+    }
+
+    // Modificar valores (los importantes deben ser no nulos)
+    Optional.ofNullable(infoContenido.getTitulo()).ifPresent(contenido::setTitulo);
     Optional.ofNullable(infoContenido.getDescripcion()).ifPresent(contenido::setDescripcion);
-    Optional.ofNullable(infoContenido.getRecomendacion()).ifPresent(contenido::setRecomendacion);
+    contenido.setRecomendacion(infoContenido.getRecomendacion());
 
     if(contenido instanceof Recomendaciones){
-      Optional.ofNullable(((Recomendaciones) infoContenido).getUbicacion()).ifPresent(((Recomendaciones) contenido)::setUbicacion);
-      Optional.of(((Recomendaciones) infoContenido).getTelefono()).ifPresent(((Recomendaciones) contenido)::setTelefono);
-      Optional.ofNullable(((Recomendaciones) infoContenido).getHorarios()).ifPresent(((Recomendaciones) contenido)::setHorarios);
-      Optional.ofNullable(((Recomendaciones) infoContenido).getAyuda()).ifPresent(((Recomendaciones) contenido)::setAyuda);
-
+      ((Recomendaciones) contenido).setUbicacion(((Recomendaciones) infoContenido).getUbicacion());
+      ((Recomendaciones) contenido).setTelefono(((Recomendaciones) infoContenido).getTelefono());
+      ((Recomendaciones) contenido).setHorarios(((Recomendaciones) infoContenido).getHorarios());
+      ((Recomendaciones) contenido).setAyuda(((Recomendaciones) infoContenido).getAyuda());
     }
 
     TC contenidoActualizado = contenidoRepository.save(contenido);
