@@ -22,6 +22,7 @@
 
 /*? CONTENEDOR RECOMENDACIONES*/
 .action_imgs{
+  user-select: none;
   display: flex;
   gap: 20px;
   position: absolute;

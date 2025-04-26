@@ -68,7 +68,7 @@ body:has(.modal[open]) {
   padding: 20px 0 40px 0;
   width: calc(100% - 20px);
 }
-.modal_sections:not(:first-child):nth-last-of-type(1), .modal_sections:not(:first-child):nth-last-of-type(2) {
+.modal_sections:not(:first-child) {
   border-top: 2px solid lightgray;
 }
 .modal_sections h3 { 
@@ -294,10 +294,6 @@ body:has(.modal[open]) {
   text-align: center;
   transition: background-color 0.3s ease, box-shadow 0.1s ease-in-out; 
 }
-.input_idioma input{
-  width: 150px;
-  height: 40px;
-}
 
 .input_div input:not(:placeholder-shown), .input_div textarea:not(:placeholder-shown)  { 
   background-color: #0a717317;
@@ -323,7 +319,7 @@ body:has(.modal[open]) {
 .input_div textarea::placeholder{font-weight: 400;}
 
 .input_MiCuenta .input_div input{width: 150px;}
-.input_idioma input { width: 170px;}
+
 .input_idioma button { margin: 0 auto;}
 .input_MiCuenta_contacto div:nth-child(1) input { 
   text-align: start;
@@ -391,6 +387,7 @@ body:has(.modal[open]) {
 
 /*?  Input idiomas*/
 .input_idioma {
+  margin-top: 10px;
   margin-right: 15px;
   user-select: none;
   display: grid;
@@ -399,6 +396,13 @@ body:has(.modal[open]) {
   row-gap: 15px;
 }
 
+.input_tiempo {
+  display: flex !important;
+  flex-wrap: wrap;
+  flex-direction: row;
+  row-gap: 30px;
+  justify-content: space-evenly;
+}
 .idioma_opcion {
   text-align: center;
   font-size: 22px;
@@ -408,6 +412,9 @@ body:has(.modal[open]) {
   justify-content: center;
   border: 2px solid rgb(187, 187, 187) !important;
   transition: all 0.1s ease-in-out;
+}
+.tiempo_opcion {
+  width: 175px;
 }
 .idioma_opcion:hover {filter: brightness(0.9) !important;}
 .idioma_opcion.idioma_active {
@@ -518,7 +525,6 @@ body:has(.modal[open]) {
   
   /*? Campo mi cuenta*/
   .input_MiCuenta .input_div input{width: 270px;}
-  .input_idioma input {width: 200px;}
 
   .input_MiCuenta_contacto div:nth-child(1) input { 
     min-width: 330px;
@@ -526,4 +532,5 @@ body:has(.modal[open]) {
   }
   .input_MiCuenta_contacto div:nth-child(2) input { width: 150px;}
 
+  .tiempo_opcion {margin: 0 !important;}
 }

@@ -25,7 +25,7 @@ const PerfilMiCuenta = ({ showValue = 0,  esViajero = false,  usuarioData=[], us
       </article>
 
       {/* Mostrar datos de "Mi cuenta" , "Biografía" o "Vivienda" respectivamente*/}
-      {showValue === 0 && <ContenidoMiCuenta usuarioData={usuarioData.usuario} />}
+      {showValue === 0 && <ContenidoMiCuenta usuarioData={usuarioData.usuario} esViajero={esViajero}/>}
       {showValue === 1 && <ContenidoBiografia esViajero={esViajero} biografiaData={usuarioData.biografia}/>}
       {showValue === 2 && <ContenidoVivienda viviendaData={usuarioData.usuario.vivienda} />}
     </>

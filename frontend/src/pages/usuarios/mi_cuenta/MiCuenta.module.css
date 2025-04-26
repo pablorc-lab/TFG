@@ -349,6 +349,7 @@ body:has(.modal[open]) {
 }
 .user_nav_ul li:hover:not(.active) h2 { transform: translateX(10px);}
 .user_nav_ul .active h2 { 
+  cursor: default;
   font-weight: 700;
   color: #0a7273;
 }

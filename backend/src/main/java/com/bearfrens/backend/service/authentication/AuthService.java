@@ -168,4 +168,21 @@ public class AuthService {
     revokeAllUserToken(usuario.getId(), tipo_usuario);
     return guardarToken(usuario.getId(), tipo_usuario, accesToken, refreshToken);
   }
+
+  /**
+   * Verifica si una contraseña es correcta dado su email
+   *
+   * @param loginRequest Información del login
+   * @return Booleano
+   */
+  public Boolean verify(LoginRequest loginRequest) {
+    Usuario<?> usuario = usuarioService.findByEmail(loginRequest.getEmail());
+
+    // Comprobar primero que el usuario exista
+    if (usuario == null) {
+      return false;
+    }
+
+    return(decoder.matches(loginRequest.getPassword(), usuario.getPassword()));
+  }
 }

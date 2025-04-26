@@ -29,6 +29,15 @@ public class AuthController {
   }
 
   /**
+   * Verifica si una contrasenia es correcta o no
+   * @return Respueta booleana
+   */
+  @PostMapping("/verify")
+  public Boolean verify(@RequestBody LoginRequest loginRequest) {
+    return authService.verify(loginRequest);
+  }
+
+  /**
    * Endpoint para refrescar el token JWT del usuario.
    * Este método recibe el token actual en la cabecera Authorization, lo valida
    * y, si es válido y no está revocado o expirado, genera un nuevo token JWT.

@@ -1,7 +1,7 @@
 import styles from "./Perfil.module.css";
 
 // Contenido de "Mi cuenta"
-export const ContenidoMiCuenta = ({ usuarioData = [] }) => {
+export const ContenidoMiCuenta = ({ usuarioData = [], esViajero = false }) => {
 	return (
 		<section className={styles.miCuenta_section}>
 			<article>
@@ -26,6 +26,12 @@ export const ContenidoMiCuenta = ({ usuarioData = [] }) => {
 						<h2>Fecha de nacimiento</h2>
 						<p>{usuarioData.fecha_nacimiento}</p>
 					</li>
+					{esViajero &&
+						<li>
+							<h2>Tiempo de estancia</h2>
+							<p>{usuarioData.tiempo_estancia}</p>
+						</li>
+					}
 				</ul>
 			</article>
 

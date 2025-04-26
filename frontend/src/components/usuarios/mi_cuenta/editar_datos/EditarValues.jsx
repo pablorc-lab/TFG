@@ -4,9 +4,10 @@ const AnfitrionService = lazy(() => import("../../../../services/users/Anfitrion
 const FilteredList = lazy(() => import("../../../utilities/filteresCities/FilteredList"));
 
 // Menu que aparece al editar "Mi Cuenta"
-export const EditarMiCuenta = ({ usuarioData = [], userData, setUserData }) => {
+export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, setUserData }) => {
 
 	const [gustos_actuales, SetGustos_actuales] = useState([usuarioData.gusto1, usuarioData.gusto2, usuarioData.gusto3]);
+	const [tiempoActive, setTiempoActive] = useState(usuarioData.tiempo_estancia);
 
 	const [mouseEnter, SetMouseEnter] = useState(null);
 	const [showDeleteImage, setShowDeleteImage] = useState(null);
@@ -28,13 +29,14 @@ export const EditarMiCuenta = ({ usuarioData = [], userData, setUserData }) => {
 				fecha_nacimiento: usuarioData.fecha_nacimiento || '',
 				email: usuarioData.email || '',
 				telefono: usuarioData.telefono || '',
+				tiempo_estancia: tiempoActive,
 				descripcion: usuarioData.descripcion || '',
 				gusto1: gustos_actuales[0] || '',
 				gusto2: gustos_actuales[1] || '',
 				gusto3: gustos_actuales[2] || ''
 			});
 		}
-	}, [usuarioData, gustos_actuales]);
+	}, [usuarioData, gustos_actuales, tiempoActive]);
 
 	return (
 		<>
@@ -91,6 +93,24 @@ export const EditarMiCuenta = ({ usuarioData = [], userData, setUserData }) => {
 						</div>
 					</form>
 				</section>
+
+				{esViajero &&
+					<section className={styles.modal_sections}>
+						<h3>TIEMPO DE ESTANCIA</h3>
+						<form className={styles.input_container}>
+							<div className={`${styles.input_div} ${styles.input_idioma} ${styles.input_tiempo}`}>
+								{["< 1 mes", "1 - 3 meses", "3 - 6 meses", "6 - 12 meses", "> 1 año"].map((tiempo, index) => (
+									<button
+										key={index}
+										type="button"
+										className={`${styles.idioma_opcion} ${styles.tiempo_opcion} ${tiempo === userData?.tiempo_estancia ? styles.idioma_active : ""}`}
+										onClick={() => setTiempoActive(tiempo)}
+									>{tiempo}</button>
+								))}
+							</div>
+						</form>
+					</section>
+				}
 
 				<section className={styles.modal_sections}>
 					<h3>CONTACTO</h3>
@@ -372,9 +392,6 @@ export const EditarBiografia = ({ esViajero = false, biografiaData = [], userDat
 		});
 	}, [biografiaData, UserIdiomas]);
 
-
-	console.log(userData);
-
 	const handleChangeIdioma = (idiomaValue) => {
 		UserIdiomas.includes(idiomaValue)
 			? setUserIdiomas(UserIdiomas.filter(value => value !== idiomaValue))
@@ -413,7 +430,7 @@ export const EditarBiografia = ({ esViajero = false, biografiaData = [], userDat
 								<button
 									key={index}
 									type="button"
-									className={`${styles.idioma_opcion} ${UserIdiomas.includes(idioma) ? styles.idioma_active : undefined}`}
+									className={`${styles.idioma_opcion} ${UserIdiomas.includes(idioma) ? styles.idioma_active : ""}`}
 									onClick={() => handleChangeIdioma(idioma)}
 								>{idioma}</button>
 							))}
@@ -445,7 +462,7 @@ export const EditarBiografia = ({ esViajero = false, biografiaData = [], userDat
 };
 
 // Menu que aparece al editar "Recomendaciones "
-export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], userData, setUserData}) => {
+export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], userData, setUserData }) => {
 
 	useEffect(() => {
 		setUserData({

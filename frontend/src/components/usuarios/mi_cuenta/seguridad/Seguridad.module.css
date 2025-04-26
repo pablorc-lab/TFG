@@ -6,6 +6,17 @@
 }
 .seguridad_section h1,  .seguridad_section p {margin: 0;}
 
+.error_msg {
+  font-family: "Nunito";
+  font-size: 23px;
+  text-align: center;
+  margin-bottom: 15px !important;
+  font-weight: 600;
+  padding: 7px 10px;
+  color: rgb(204, 15, 15);
+  background-color: rgba(255, 0, 0, 0.226);
+}
+
 /*? Titulos*/
 .seguridad_section h1 {
   color: #0a7273;
@@ -43,7 +54,7 @@
 }
 .seguridad_form div input:focus {
   outline: none;
-  box-shadow: 0 0 7px #0a71737c;
+  box-shadow: 5px 5px #0a71737c;
 }
 
 .seguridad_delete button, .seguridad_save {
@@ -56,9 +67,8 @@
 }
 
 .seguridad_save {
-  font-size: 23px;
+  font-size: 25px;
   width: max-content;
-  width: 65%;
   max-width: 500px;
   position: relative;
   left: 50%;

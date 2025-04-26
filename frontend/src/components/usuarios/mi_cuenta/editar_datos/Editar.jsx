@@ -16,7 +16,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const [biografiaData, setBiografiaData] = useState(null);
   const [viviendaData, setViviendaData] = useState(null);
   const [contenidoData, setContenidoData] = useState(null);
-
+    
   // Comprueba si hay valores vacios, los gustos e imagenes pueden ser null
   const hayCamposNull = (data) => {
     // Comprobar datos usuario
@@ -194,9 +194,8 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
         {/* Editar datos de "Mi cuenta" , "Biografía" o "Vivienda"*/}
         {showValue === 0 &&
           <EditarMiCuenta
-            addImageState={addImageState}
+            esViajero={esViajero}
             usuarioData={usuarioData.usuario}
-            setAddImageState={setAddImageState}
             userData={userData}
             setUserData={setUserData}
           />}

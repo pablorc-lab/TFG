@@ -91,7 +91,6 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
     localStorage.clear();
 
     navigate("/inicio");
-
     //TODO : HACER LLAMADA A LA API EN LOGOUT PARA ELIMINAR ESE TOKEN
   }
 
@@ -122,7 +121,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
       userService.uploadImage(newProfileImage)
         .then(imageUrl => {
           console.log("Imagen subida con éxito:", imageUrl);
-          
+
           updatedUserData.profileImage = imageUrl;
 
           userService.update(usuarioData.usuario.id, updatedUserData)
@@ -133,7 +132,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           console.error("Error al subir la imagen:", error);
           return; // Detener si hay error en la subida de imagen
         });
-    } 
+    }
     else {
       console.log("No es una imagen valida");
     }
@@ -273,12 +272,61 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           {/* Componente de los menús*/}
           <div className={styles.user_component}>
             <Suspense fallback={<div style={styleSuspense}><img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "200px", position: "relative", left: "50%", transform: "translateX(-50%)" }} /></div>}>
-              {activeMenu === 0 && <PerfilMiCuenta showValue={0} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData} />}
-              {activeMenu === 1 && <PerfilMiCuenta showValue={1} esViajero={esViajero} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData} />}
-              {activeMenu === 2 && !esViajero && <PerfilMiCuenta showValue={2} usuarioData={usuarioData} userService={userService} setEditedData={setEditedData} />}
-              {activeMenu === 3 && <RecomendacionesMiCuenta esViajero={esViajero} recomendacionesData={esViajero ? usuarioData.usuario?.experiencias : usuarioData.usuario?.recomendaciones} userService={userService} setEditedData={setEditedData} userID={usuarioData.usuario?.id}/>}
-              {activeMenu === 4 && <SeguridadMiCuenta userService={userService} setEditedData={setEditedData} />}
-              {activeMenu === 5 && <OpinionesMiCuenta showSize={true} nota_media={usuarioData.usuario?.valoracion_media} valoraciones={usuarioData?.valoraciones} MiCuenta={true} userService={userService} setEditedData={setEditedData} />}
+              {activeMenu === 0 &&
+                <PerfilMiCuenta
+                  showValue={0}
+                  esViajero={esViajero}
+                  usuarioData={usuarioData}
+                  userService={userService}
+                  setEditedData={setEditedData}
+                />
+              }
+              {activeMenu === 1 &&
+                <PerfilMiCuenta
+                  showValue={1}
+                  esViajero={esViajero}
+                  usuarioData={usuarioData}
+                  userService={userService}
+                  setEditedData={setEditedData}
+                />
+              }
+              {activeMenu === 2 && !esViajero &&
+                <PerfilMiCuenta
+                  showValue={2}
+                  usuarioData={usuarioData}
+                  userService={userService}
+                  setEditedData={setEditedData}
+                />
+              }
+              {activeMenu === 3 &&
+                <RecomendacionesMiCuenta
+                  esViajero={esViajero}
+                  recomendacionesData={esViajero ? usuarioData.usuario?.experiencias : usuarioData.usuario?.recomendaciones}
+                  userService={userService}
+                  setEditedData={setEditedData}
+                  userID={usuarioData.usuario?.id}
+                />
+              }
+              {activeMenu === 4 &&
+                <SeguridadMiCuenta
+                  userService={userService}
+                  usuarioData={usuarioData}
+                  setUsuarioData={setUsuarioData}
+                  handleLogout={handleLogout}
+                  userID={usuarioData.usuario?.id}
+                  userEmail={usuarioData.usuario?.email}
+                />
+              }
+              {activeMenu === 5 &&
+                <OpinionesMiCuenta
+                  showSize={true}
+                  nota_media={usuarioData.usuario?.valoracion_media}
+                  valoraciones={usuarioData?.valoraciones}
+                  MiCuenta={true}
+                  userService={userService}
+                  setEditedData={setEditedData}
+                />
+              }
               {activeMenu === 6 && <HistorialReservasMiCuenta userService={userService} />}
             </Suspense>
           </div>

@@ -17,6 +17,7 @@ import java.util.List;
 @Setter
 @Table(name="viajeros")
 public class Viajero extends Usuario<Experiencias>{
+
   @Column
   private int viajes_realizados = 0;
 
