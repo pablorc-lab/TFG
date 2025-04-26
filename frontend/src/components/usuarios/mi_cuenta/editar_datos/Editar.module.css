@@ -38,7 +38,7 @@ body:has(.modal[open]) {
 
 .main {
   overflow-y: auto;
-  height: calc(85vh - 55px - 100px);
+  max-height: calc(85vh - 55px - 100px);
 }
 @keyframes aparecer {
   0% {opacity: 0; transform: translateY(-120px);}

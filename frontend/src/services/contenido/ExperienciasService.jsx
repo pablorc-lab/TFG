@@ -1,14 +1,17 @@
+import axios from "axios";
+
 class ExperienciaService {
-  static EXPERIENCIAS_BASE_REST_API_URL = "http://localhost:8080/api/viajeros";
-
   static crearExperiencia(viajeroID, experienciaData){
-    return axios.post(`${this.VIVIENDA_BASE_REST_API_URL}/${viajeroID}/experiencias`, experienciaData);
+    return axios.post(`http://localhost:8080/api/viajeros/${viajeroID}/experiencias`, experienciaData);
   }
 
-  static updateExperiencia(viajeroID, experienciaData){
-    return axios.put(`${this.VIVIENDA_BASE_REST_API_URL}/${viajeroID}/experiencias`, experienciaData);
+  static updateExperiencia(viajeroID, titulo, experienciaData){
+    return axios.put(`http://localhost:8080/api/viajeros/${viajeroID}/experiencias/${titulo}`, experienciaData);
   }
 
+  static deleteExperiencia(viajeroID, titulo){
+    return axios.delete(`http://localhost:8080/api/viajeros/${viajeroID}/experiencias/${titulo}`);
+  }
 }
 
 export default ExperienciaService;

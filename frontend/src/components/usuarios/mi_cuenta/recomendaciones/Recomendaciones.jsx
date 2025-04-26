@@ -1,11 +1,19 @@
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import styles from "./Recomendaciones.module.css";
 import EditarPerfil from "../editar_datos/Editar";
 
+// Maneja tanto experiencias como recomendaciones
 const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userService, setEditedData, userID = null }) => {
   const [isOpen, setIsOpen] = useState(null);
 
   const [editarRecomendacionData, setEditarRecomendacionData] = useState([]);
+  const [titulosCreados, SetTitulosCreados] = useState([]);
+
+  useEffect(() => {
+    if(recomendacionesData){
+      SetTitulosCreados(recomendacionesData.map(item => item.titulo));
+    }
+  }, [recomendacionesData]);
 
   const datos_recomendaciones = [
     { key: "recomendacion", label: "Sugerencia", icon: "backpack" },
@@ -16,20 +24,20 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
   ];
 
   const deleteRecomendacion = async (titulo) => {
-    // Cargar dinámica del servicio
-    const RecomendacionService = (await import("../../../../services/contenido/RecomendacionService")).default;
+    const nombre_service = esViajero ? "ExperienciasService" : "RecomendacionService";
+    const service = (await import(`../../../../services/contenido/${nombre_service}.jsx`)).default;
+    const deleteAction = esViajero ? service.deleteExperiencia : service.deleteRecomendacion;
     
-    // Realizar la operación correcta
-    // Si no hay valores, es porque se está creando
-    RecomendacionService.deleteRecomendacion(userID, titulo)
-      .then(response => console.log(response.data))
-      .catch(error => console.error(error))
-      .finally(() => setEditedData(true));
+    deleteAction(userID, titulo)
+    .then(response => console.log(response.data))
+    .catch(error => console.error(error))
+    .finally(() => setEditedData(true));
   };
 
   const editRecomendacion = (recomendacionData) => {
     setEditarRecomendacionData(recomendacionData);
-    setIsOpen(true);
+    SetTitulosCreados(titulosCreados.filter(titulo => titulo !== recomendacionData.titulo))
+    setTimeout(() => setIsOpen(true), 200);
   }
 
   return (
@@ -45,6 +53,7 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
             usuarioData={editarRecomendacionData}
             setUsuarioData={setEditarRecomendacionData}
             setEditedData={setEditedData}
+            titulosCreados={titulosCreados}
             userID={userID}
           />
         </Suspense>

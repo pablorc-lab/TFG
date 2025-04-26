@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import styles from "./ViajerosHeader.module.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DropDownMenu from '../../dropdown_menu/DropDownMenu';
 
 export default function ViajerosHeader({

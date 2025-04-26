@@ -79,6 +79,7 @@
   font-weight: 350;
   color: #696969;
   margin-bottom: 30px;
+  margin-top: 10px;
 }
 
 .recomendaciones_container li:not(.add_recomendacion) h3 {

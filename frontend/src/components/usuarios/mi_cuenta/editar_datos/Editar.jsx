@@ -5,7 +5,7 @@ const EditarVivienda = lazy(() => import("./EditarValues").then(functions => ({ 
 const EditarBiografia = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarBiografia })));
 const EditarRecomendaciones = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarRecomendaciones })));
 
-export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [], setUsuarioData = null, esViajero = false, userService, setEditedData, userID = null, tituloRecomendacion = null}) {
+export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [], setUsuarioData = null, esViajero = false, userService, setEditedData, userID = null, titulosCreados = [] }) {
   const [addImageState, setAddImageState] = useState(false);
 
   const [errorData, setErrorData] = useState(false);
@@ -16,7 +16,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const [biografiaData, setBiografiaData] = useState(null);
   const [viviendaData, setViviendaData] = useState(null);
   const [contenidoData, setContenidoData] = useState(null);
-  
+
   // Comprueba si hay valores vacios, los gustos e imagenes pueden ser null
   const hayCamposNull = (data) => {
     // Comprobar datos usuario
@@ -36,24 +36,18 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
     );
 
     setErrorData(valoresNulos);
-    console.log(valoresNulos);
     return valoresNulos;
   };
 
   // Función asincrona para crear/editar la biografía
   const updateBiografia = async () => {
     const tipo_usuario = esViajero ? "viajeros" : "anfitriones";
+    const BiografiaService = (await import("../../../../services/biografias/BiografiasService.jsx")).default;
 
-    // Cargar dinámica del servicio
-    const BiografiaService = (await import("../../../../services/biografias/BiografiasService")).default;
-
-    // Realizar la operación correcta
     // Si no hay valores, es porque se está creando
-    const OperacionBiografiaService = usuarioData.biografia == null
-      ? BiografiaService.crear(tipo_usuario, usuarioData.usuario.id, biografiaData)
-      : BiografiaService.update(tipo_usuario, usuarioData.usuario.id, biografiaData)
+    const biografiaAction = usuarioData.biografia == null ? BiografiaService.crear : BiografiaService.update;
 
-    OperacionBiografiaService
+    biografiaAction(tipo_usuario, usuarioData.usuario.id, biografiaData)
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
       .finally(() => {
@@ -66,32 +60,29 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   // Función asincrona para crear/editar la vivienda
   const updateVivienda = async () => {
     // Cargar dinámica del servicio
-    const ViviendasService = (await import("../../../../services/viviendas/ViviendasService")).default;
+    const ViviendasService = (await import("../../../../services/viviendas/ViviendasService.jsx")).default;
 
     // Subir cada imágen si son archivos
     let updatedViviendaData = { ...viviendaData };
     const imagenes = [viviendaData.imagen1, viviendaData.imagen2, viviendaData.imagen3, viviendaData.imagen4];
-    
+
     await Promise.all(imagenes.map(async (image, index) => {
       if (image instanceof File) {
         try {
           const imageUrl = await ViviendasService.uploadImage(image);
-          console.log(`Imagen ${index+1} subida con éxito: `, imageUrl);
+          console.log(`Imagen ${index + 1} subida con éxito: `, imageUrl);
           updatedViviendaData[`imagen${index + 1}`] = imageUrl;
-        } 
+        }
         catch (error) {
           console.error("Error al subir la imagen:", error);
         }
       }
     }));
 
-    // Realizar la operación correcta
     // Si no hay valores, es porque se está creando
-    const OperacionViviendaService = usuarioData.usuario.vivienda == null
-      ? ViviendasService.crearVivienda(usuarioData.usuario.id, updatedViviendaData)
-      : ViviendasService.updateVivienda(usuarioData.usuario.id, updatedViviendaData);
+    const viviendaAction = usuarioData.usuario.vivienda == null ? ViviendasService.crearVivienda : ViviendasService.updateVivienda;
 
-    OperacionViviendaService
+    viviendaAction(usuarioData.usuario.id, updatedViviendaData)
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
       .finally(() => {
@@ -103,19 +94,14 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
       });
   };
 
-  // Función asincrona para crear/editar la recomendacion
-  const crearRecomendacion = async () => {
-    // Cargar dinámica del servicio
-    const RecomendacionService = (await import("../../../../services/contenido/RecomendacionService")).default;
+  // Funcion para crear/editar la experiencia
+  const updateExperiencia = async () => {
+    const service = (await import("../../../../services/contenido/ExperienciasService.jsx")).default;
+    const experienciaAction = usuarioData.length === 0
+      ? service.crearExperiencia(userID, contenidoData)
+      : service.updateExperiencia(userID, usuarioData.titulo, contenidoData);
 
-    // Si no hay valores, es porque se está creano
-    const OperacionRecomendacionService = usuarioData.length === 0
-      ? RecomendacionService.crearRecomendacion(userID, contenidoData)
-      : RecomendacionService.updateRecomendacion(userID, usuarioData.titulo, contenidoData)
-
-     // Realizar la operación correcta
-    // Si no hay valores, es porque se está creando
-    OperacionRecomendacionService
+    experienciaAction
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
       .finally(() => {
@@ -128,29 +114,32 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
       });
   };
 
-  // Función asincrona para crear/editar la experiencia
-  const crearExperiencia = async () => {
-    // Cargar dinámica del servicio
-    const ExperienciaService = (await import("../../../../services/contenido/ExperienciasService")).default;
+  // Funcion para crear/editar la recomendacion
+  const updateRecomendacion = async () => {
+    const service = (await import("../../../../services/contenido/RecomendacionService.jsx")).default;
+    const recomendacionAction = usuarioData.length === 0
+      ? service.crearRecomendacion(userID, contenidoData)
+      : service.updateRecomendacion(userID, usuarioData.titulo, contenidoData);
 
-    // Realizar la operación correcta
-    // Si no hay valores, es porque se está creando
-    ExperienciaService.crearExperiencia(usuarioData.usuario.id, contenidoData)
+    recomendacionAction
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
       .finally(() => {
-        setContenidoData(null);
-        setTimeout(() => setIsOpen(false), 200);
+        setTimeout(() => {
+          setIsOpen(false);
+          setContenidoData(null);
+          setUsuarioData([]);
+        }, 200);
         setEditedData(true);
       });
   };
 
+
   // Función que se ejecutará al guardar los cambios
   const handleSaveChanges = () => {
-    SetSendingData(true);
-    
     // Si se ha editado los datos de usuario
     if (userData !== null && !hayCamposNull(userData)) {
+      SetSendingData(true);
       userService.update(usuarioData.usuario.id, userData)
         .then(response => console.log(response.data))
         .catch(error => console.error(error))
@@ -165,31 +154,37 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
 
     // Si se ha editado los datos de biografía
     else if (biografiaData !== null && !hayCamposNull(biografiaData)) {
+      SetSendingData(true);
       updateBiografia();
     }
 
     // Si se ha editado los datos de la vivienda
     else if (viviendaData !== null && !hayCamposNull(viviendaData)) {
+      SetSendingData(true);
       updateVivienda();
     }
 
     // Si se ha editado todos los datos del contenido (recomendación o experiencia)
     else if (contenidoData !== null && !hayCamposNullContenido(contenidoData)) {
       // Si existe una recomendación/experiencia con ese titulo salirse
-      if (usuarioData.length > 0 && usuarioData.some(value => value.titulo.trim() === contenidoData.titulo.trim())) {
+      if (titulosCreados.length > 0 && titulosCreados.includes(contenidoData.titulo.trim())) {
+        setErrorData(false);
         setErrorSameTitle(true);
         return;
       }
 
-      // Si es viajero es una experiencia, sino, una recomendacion
-      esViajero ? crearExperiencia() : crearRecomendacion();
+      SetSendingData(true);
+      // Crear recomendación/experiencia 
+      esViajero ? updateExperiencia() : updateRecomendacion();
       setErrorSameTitle(false);
     }
   };
 
   const closeEditar = () => {
     setIsOpen(false);
-    if(setUsuarioData){ setUsuarioData([]);}
+    if (setUsuarioData) {
+      setUsuarioData([]);
+    }
   }
 
   return (
@@ -226,7 +221,6 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
             recomendacionesData={usuarioData}
             userData={contenidoData}
             setUserData={setContenidoData}
-            tituloRecomendacion={tituloRecomendacion}
           />}
       </Suspense>
 
