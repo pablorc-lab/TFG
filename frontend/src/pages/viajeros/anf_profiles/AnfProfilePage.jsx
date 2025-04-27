@@ -15,7 +15,7 @@ export default function AnfProfilePage() {
   const [idiomasUser, setIdiomasUser] = useState([]);
   const [Vivienda_imgs, setVivienda_imgs] = useState([null, null, null, null]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
-  const [isColumns, setIsColumns] = useState(window.innerWidth <= 1250);
+  const [isColumns, setIsColumns] = useState(window.innerWidth <= 1350);
   const [actualImage, setActualImage] = useState(0);
 
   const [match, SetMatch] = useState(false);
@@ -31,7 +31,7 @@ export default function AnfProfilePage() {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 770);
-      setIsColumns(window.innerWidth <= 1250);
+      setIsColumns(window.innerWidth <= 1350);
     };
 
     window.addEventListener("resize", handleResize);

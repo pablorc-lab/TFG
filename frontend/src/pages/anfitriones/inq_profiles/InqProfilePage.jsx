@@ -20,12 +20,12 @@ export default function InqProfilePage() {
   const [conectado, setConectado] = useState(location.state?.conectado);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
-  const [isColumns, setIsColumns] = useState(window.innerWidth <= 1250);
+  const [isColumns, setIsColumns] = useState(window.innerWidth <= 1350);
   // Controlar cuando es pantalla pequeña 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 770);
-      setIsColumns(window.innerWidth <= 1250);
+      setIsColumns(window.innerWidth <= 1350);
     };
 
     window.addEventListener("resize", handleResize);

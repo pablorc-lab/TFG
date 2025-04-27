@@ -1,7 +1,7 @@
 import styles from "./UserPage.module.css"
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
 import LikesService from "../../../services/matches/LikesService";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function UserPage({
   usuarioData,
@@ -20,7 +20,32 @@ export default function UserPage({
 }) {
 
   const [llegada, setLlegada] = useState(new Date().toISOString().split("T")[0]);
-  const [salida, setSalida] = useState(new Date().toISOString().split("T")[0]);
+  const [salida, setSalida] = useState(() => {
+    const fecha = new Date();
+    fecha.setDate(fecha.getDate() + 1);
+    return fecha.toISOString().split("T")[0];
+  });
+
+  const [fechasReservas, setFechasReservadas] = useState([[]]);
+  useEffect(() => { // Obtener fechas de reservas
+    if (esAnfitrion && match) {
+      const cargarReservas = async () => {
+        const ReservasService = (await import("../../../services/reservas/ReservasService.jsx")).default;
+        ReservasService.getReservasViajero(userID)
+          .then(response => {
+            let fechasReserva = [];
+            response.data.map(reserva =>
+              fechasReserva.push([reserva.fechaInicio, reserva.fechaFin])
+            )
+            setFechasReservadas(fechasReserva);
+          })
+          .catch(error => "Error al obtener las reservas " + error);
+      };
+      cargarReservas();
+    }
+  }, [esAnfitrion, match]);
+
+  const [errorFecha, setErrorFecha] = useState(false);
   const [diasReserva, SetDiasReserva] = useState(1);
   const inputLlegadaRef = useRef(null);
   const inputSalidaRef = useRef(null);
@@ -28,14 +53,41 @@ export default function UserPage({
   const handleLabelClick = () => {
     if (inputLlegadaRef.current && typeof inputLlegadaRef.current.showPicker === 'function') {
       inputLlegadaRef.current.showPicker();
-    } 
+    }
   };
 
   const handleSalidaLabelClick = () => {
     if (inputSalidaRef.current && typeof inputSalidaRef.current.showPicker === 'function') {
       inputSalidaRef.current.showPicker();
-    } 
+    }
   };
+
+  const [mensajeReserva, setMensajeReserva] = useState(false);
+  const handleReserva = async () => {
+    if (salida <= llegada) return;
+
+    // Si la fecha indicada ya se encuentra en el rango de las anteriores reservas, error
+    const reservaExistente = fechasReservas.some(fechas => {
+      const reservaLlegada = new Date(fechas[0]).toISOString().split('T')[0];
+      const reservaSalida = new Date(fechas[1]).toISOString().split('T')[0];
+
+      return (llegada >= reservaLlegada && llegada <= reservaSalida)
+        || (salida >= reservaLlegada && salida <= reservaSalida)
+        || (llegada <= reservaLlegada && salida >= reservaSalida);
+    });
+
+    setErrorFecha(reservaExistente);
+    if(reservaExistente) return;
+    
+    const ReservasService = (await import("../../../services/reservas/ReservasService.jsx")).default;
+    ReservasService.crearReserva(emisorID, userID, llegada, salida)
+      .then(response => {
+        console.log(response.data);
+        setMensajeReserva(true);
+      })
+      .catch(error => console.error(error));
+  }
+
 
   function handleLike() {
     if (!emisorID || !userID) {
@@ -46,7 +98,7 @@ export default function UserPage({
     // Si se puede dar like es porque aún no se ha dado, mostrado como tal una vez dado
     setConectado(true);
 
-    esAnfitrion 
+    esAnfitrion
       ? LikesService.crearLike("viajeros", emisorID, userID)
       : LikesService.crearLike("anfitriones", emisorID, userID);
   }
@@ -110,15 +162,17 @@ export default function UserPage({
                 value={llegada}
                 onChange={(e) => {
                   setLlegada(e.target.value);
-                  if(e.target.value > salida){
-                    setSalida(e.target.value);
-                    SetDiasReserva((new Date(e.target.value) - new Date(llegada)) / (1000 * 60 * 60 * 24));
-                  }  
+                  if (e.target.value >= salida) {
+                    const nuevaFecha = new Date(e.target.value);
+                    nuevaFecha.setDate(nuevaFecha.getDate() + 1);
+                    setSalida(nuevaFecha.toISOString().split('T')[0]);
+                    SetDiasReserva(1); // Solo se adelanta 1 día si es menor o igual
+                  }
                 }}
               />
             </label>
             <div className={styles.border_label}></div>
-            <label  onClick={handleSalidaLabelClick}>
+            <label onClick={handleSalidaLabelClick}>
               Salida
               <input
                 ref={inputSalidaRef}
@@ -132,7 +186,22 @@ export default function UserPage({
               />
             </label>
           </div>
-          <button>Reservar</button>
+
+          {!mensajeReserva && errorFecha &&
+            <p style={{ textAlign: "center", color: "red", backgroundColor: "#ff000048", padding: "5px 0", marginBottom: "15px" }}>
+              <strong>Ya tienes una reserva entre esas dos fechas</strong>
+            </p>
+          }
+
+          {!mensajeReserva
+            ? <button onClick={handleReserva}>Reservar</button>
+            : <p style={{ color: "black", textAlign: "center" }}>
+              <strong>
+                Reserva del {llegada} al {salida}, creada con éxito.
+                Puede ver el seguimiento de la misma en <a href="/viajeros/mi-cuenta" style={{ color: "blue" }}>su perfil</a>.
+              </strong>
+            </p>
+          }
         </section>
       )}
 
@@ -178,12 +247,12 @@ export default function UserPage({
               <p>{recomendacion.descripcion}</p>
 
               {datos_recomendaciones.map(({ key, label, icon }) =>
-                recomendacion[key] && (
+                recomendacion[key] ? (
                   <div className={styles.logos_recomendations} key={key}>
                     <img src={`/images/profiles/recomendaciones/${icon}.svg`} alt={`Imagen ${label}`} />
                     <p><strong>{label}:</strong> {recomendacion[key]}</p>
                   </div>
-                )
+                ) : null
               )}
             </article>
           ))

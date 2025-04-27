@@ -20,7 +20,7 @@ import java.util.Locale;
 @NoArgsConstructor
 @AllArgsConstructor
 // La combinación de las columnas debe ser única en la base de datos (1 reserva a un anfitrión por usuario en esa fecha).
-@Table(name = "reservas", uniqueConstraints = @UniqueConstraint(columnNames = {"viajero_id", "anfitrion_id", "fecha_inicio", "fecha_fin"}))
+@Table(name = "reservas", uniqueConstraints = @UniqueConstraint(columnNames = {"viajero_id", "anfitrion_id", "fecha_inicio", "fecha_fin", "ubicacion"}))
 public class Reservas {
 
   public enum ReservaType {

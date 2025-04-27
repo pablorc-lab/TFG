@@ -55,12 +55,13 @@
   font-family: "Nunito";
   padding: 15px;
   background-color: rgba(238, 238, 238, 0.322);
-  box-shadow:  0 0 7px rgba(0, 0, 0, 0.322);
-  transition: border 0.1s ease-in-out, background-color 0.1s ease-in-out;
+  box-shadow:  0 0 7px rgba(0, 0, 0, 0.4);
+  outline: 2px solid lightgray;
+  transition: outline 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 .historial_user_article:hover {
-  background-color: #0a717318;
-  box-shadow:  0 0 7px #0a7273;
+  outline: 2px solid #0a7273;
+  box-shadow: 8px 8px #0a717398;
 }
 .historial_user_info {
   display: flex;

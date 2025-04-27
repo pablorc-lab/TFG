@@ -81,7 +81,8 @@ body:has(.dialog[open]) {
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.1s ease-in-out;
+  outline: 2px solid lightgray;
+  transition: all 0.2s ease-in-out;
 }
 .viaj_prof a:last-of-type article {
   margin-bottom: 0;
