@@ -30,7 +30,9 @@
   background-color: rgb(82, 82, 82);
 }
 .reserva_div label{
-  color: rgb(90, 90, 90);
+  cursor: pointer;
+
+ color: rgb(90, 90, 90);
  display: grid;
  border-radius: 10px;
  padding: 5px 10px;
@@ -39,9 +41,9 @@
 
 .reserva_div input:focus {outline: none;}
 .reserva_div input{ 
+  cursor: pointer;
   font-family: "Nunito";
   font-size: clamp(16px, 3vw, 20px);
-  cursor: pointer;
   border: none;
 }
 
@@ -71,7 +73,7 @@
 
 .user_info {
   user-select: none;
-  margin: 50px 0;
+  margin: 50px auto;
   margin-bottom: 30px;
   padding-bottom: 30px;
   border-bottom: 2px solid #dadada;
@@ -137,7 +139,7 @@
 }
 
 .user_conectar {
-  margin: 20px 0;
+  margin: 20px 0 15px 0;
   display: flex;
   justify-content: start;
   padding: 0 10px;
@@ -302,7 +304,7 @@
   .user_score img { width: 23px;}
 
   .user_conectar {
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 10px;
     justify-content: center;
     gap: 40px;

@@ -2,15 +2,17 @@ package com.bearfrens.backend.repository.reservas;
 
 
 import com.bearfrens.backend.entity.reservas.Reservas;
+import com.bearfrens.backend.entity.user.Anfitrion;
+import com.bearfrens.backend.entity.user.Viajero;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface ReservasRepository extends JpaRepository<Reservas, Long> {
-  List<Reservas> findByAnfitrionId(Long anfitrionId);
-  List<Reservas> findByViajeroId(Long viajeroId);
-  Reservas findByAnfitrionIdAndViajeroIdAndFechaInicioAndFechaFin(Long anfitrionId, Long viajeroId, Date fechaInicio, Date fechaFin);
+  List<Reservas> findByAnfitrion(Anfitrion anfitrion);
+  List<Reservas> findByViajero(Viajero viajero);
+  Reservas findByAnfitrionAndViajeroAndFechaInicioAndFechaFin(Anfitrion anfitrion, Viajero viajero, LocalDate fechaInicio, LocalDate fechaFin);
 }

@@ -1,7 +1,7 @@
 import styles from "./UserPage.module.css"
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
 import LikesService from "../../../services/matches/LikesService";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function UserPage({
   usuarioData,
@@ -22,6 +22,20 @@ export default function UserPage({
   const [llegada, setLlegada] = useState(new Date().toISOString().split("T")[0]);
   const [salida, setSalida] = useState(new Date().toISOString().split("T")[0]);
   const [diasReserva, SetDiasReserva] = useState(1);
+  const inputLlegadaRef = useRef(null);
+  const inputSalidaRef = useRef(null);
+
+  const handleLabelClick = () => {
+    if (inputLlegadaRef.current && typeof inputLlegadaRef.current.showPicker === 'function') {
+      inputLlegadaRef.current.showPicker();
+    } 
+  };
+
+  const handleSalidaLabelClick = () => {
+    if (inputSalidaRef.current && typeof inputSalidaRef.current.showPicker === 'function') {
+      inputSalidaRef.current.showPicker();
+    } 
+  };
 
   function handleLike() {
     if (!emisorID || !userID) {
@@ -85,24 +99,29 @@ export default function UserPage({
 
       {match && esAnfitrion && (
         <section className={styles.reserva_section}>
-          <h2>{diasReserva * 50} &euro; - ({diasReserva} {diasReserva > 1 ? "noches" : "noche"})</h2>
+          <h2>{diasReserva * usuarioData.usuario?.vivienda?.precio_noche} &euro; - ({diasReserva} {diasReserva > 1 ? "noches" : "noche"})</h2>
           <div className={styles.reserva_div}>
-            <label>
+            <label onClick={handleLabelClick}>
               Llegada
               <input
+                ref={inputLlegadaRef}
                 type="date"
                 min={new Date().toISOString().split("T")[0]}
                 value={llegada}
                 onChange={(e) => {
                   setLlegada(e.target.value);
-                  e.target.value > salida && setSalida(e.target.value)
+                  if(e.target.value > salida){
+                    setSalida(e.target.value);
+                    SetDiasReserva((new Date(e.target.value) - new Date(llegada)) / (1000 * 60 * 60 * 24));
+                  }  
                 }}
               />
             </label>
             <div className={styles.border_label}></div>
-            <label>
+            <label  onClick={handleSalidaLabelClick}>
               Salida
               <input
+                ref={inputSalidaRef}
                 type="date"
                 min={llegada}
                 value={salida}

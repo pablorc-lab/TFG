@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -18,11 +18,6 @@ public class ReservasController {
 
   @Autowired
   private ReservasService reservasService;
-
-  @GetMapping("/crear/{anfitrionID}/{viajeroID}/{fechaInicio}/{fechaFin}")
-  public ResponseEntity<Reservas> crearReserva(@PathVariable Long anfitrionID, @PathVariable Long viajeroID, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaInicio, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaFin){
-    return ResponseEntity.ok(reservasService.crearReserva(anfitrionID, viajeroID, fechaInicio, fechaFin));
-  }
 
   @GetMapping("/anfitrion/{id}")
   public List<Reservas> obtenerReservasPorAnfitrion(@PathVariable Long id) {
@@ -34,12 +29,22 @@ public class ReservasController {
     return reservasService.obtenerReservasPorViajero(id);
   }
 
+  @PostMapping("/crear/{anfitrionID}/{viajeroID}/{fechaInicio}/{fechaFin}")
+  public ResponseEntity<Reservas> crearReserva(@PathVariable Long anfitrionID, @PathVariable Long viajeroID, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin){
+    return ResponseEntity.ok(reservasService.crearReserva(anfitrionID, viajeroID, fechaInicio, fechaFin));
+  }
+
   @PostMapping("/cancelar/{anfitrionID}/{viajeroID}/{fechaInicio}/{fechaFin}")
-  public ResponseEntity<Reservas> cancelarReserva(@PathVariable Long anfitrionID, @PathVariable Long viajeroID, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaInicio, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaFin){
+  public ResponseEntity<Reservas> cancelarReserva(@PathVariable Long anfitrionID, @PathVariable Long viajeroID, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin){
     return reservasService.cancelarReserva(anfitrionID, viajeroID, fechaInicio, fechaFin);
   }
 
-  @GetMapping("/todas")
+  @DeleteMapping("/eliminar/{reservaID}") // SOLO ADMIN PANEL
+  public ResponseEntity<Boolean> eliminarVivienda(@PathVariable Long reservaID){
+    return reservasService.eliminarReserva(reservaID);
+  }
+
+  @GetMapping("/list")
   public List<Reservas> obtenerTodas() {
     return reservasService.obtenerTodasLasReservas();
   }

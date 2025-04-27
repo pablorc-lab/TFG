@@ -12,9 +12,8 @@ export default function ListadoLikes({styles}) {
   const listarLikes = () => {
     LikesService.getAll().then(response => {
       console.log(response.data)
-      // Obtener el id de cada anfitrion y su vivienda
       setLikes(response.data);
-    }).catch(error => console.error("Error al listar los matches : ", error));
+    }).catch(error => console.error("Error al listar los likes : ", error));
   }
 
   const deleteLike = (likeID, tipoUsuario, emisorID, usuarioID) => {

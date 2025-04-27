@@ -429,7 +429,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe " + contenidoType + " con ese titulo");
     }
 
-    // Buscar si hay un cotenido con el nuevo titulo
+    // Buscar si hay un cotenido con el nuevo titulo (en ese caso lanzar excepción)
     for (TC contenidoUser : user.getContenido()) {
       if (!contenidoUser.equals(contenido) && contenidoUser.getTitulo().equalsIgnoreCase(infoContenido.getTitulo())) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe una " + contenidoType + " con ese titulo");

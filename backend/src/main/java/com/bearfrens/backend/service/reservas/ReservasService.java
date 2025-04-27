@@ -10,8 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class ReservasService {
@@ -19,6 +20,7 @@ public class ReservasService {
   @Autowired
   private GestorUsuarioService gestorUsuarioService;
 
+  @Autowired
   private ReservasRepository reservasRepository;
 
   /**
@@ -28,13 +30,13 @@ public class ReservasService {
    * @param viajeroID ID del viajero
    * @return La reserva creada.
    */
-  public Reservas crearReserva(Long anfitrionID, Long viajeroID, Date fecha_inicio, Date fecha_fin) {
+  public Reservas crearReserva(Long anfitrionID, Long viajeroID, LocalDate fecha_inicio, LocalDate fecha_fin) {
 
     Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(anfitrionID);
     Viajero viajero = gestorUsuarioService.obtenerViajero(viajeroID);
 
     // Validar que la fecha de inicio no sea posterior a la de fin
-    if (fecha_inicio.after(fecha_fin)) {
+    if (fecha_inicio.isAfter(fecha_fin)) {
       throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin.");
     }
 
@@ -45,7 +47,7 @@ public class ReservasService {
 
     // Calcular el precio total
     int precio_noche = anfitrion.getVivienda().getPrecio_noche();
-    int dias = (int) TimeUnit.MILLISECONDS.toDays(fecha_fin.getTime() - fecha_inicio.getTime());
+    int dias = (int) ChronoUnit.DAYS.between(fecha_inicio, fecha_fin);
     int precio_total = precio_noche * dias;
 
     reserva.setFechaInicio(fecha_inicio);
@@ -64,16 +66,17 @@ public class ReservasService {
    * @param reservas Lista de reservas
    */
   private void actualizarEstadoReservas(List<Reservas> reservas) {
-    Date fechaActual = new Date();
+    LocalDate fechaActual = LocalDate.now();
+
     for (Reservas reserva : reservas) {
       if(!reserva.getEstado().equals(Reservas.ReservaType.CANCELADA)){
         // Ver si está finalizada
-        if (reserva.getFechaFin().before(fechaActual)) {
+        if (reserva.getFechaFin().isBefore(fechaActual)) {
           reserva.setEstado(Reservas.ReservaType.FINALIZADA);
         }
 
         // Ver si está activa
-        else if (reserva.getFechaInicio().before(fechaActual) && reserva.getFechaFin().after(fechaActual)) {
+        else if (reserva.getFechaInicio().isBefore(fechaActual) && reserva.getFechaFin().isAfter(fechaActual)) {
           reserva.setEstado(Reservas.ReservaType.ACTIVA);
         }
       }
@@ -90,7 +93,8 @@ public class ReservasService {
    * @return Lista de reservas correspondientes al anfitrión.
    */
   public List<Reservas> obtenerReservasPorAnfitrion(Long anfitrionId) {
-    List<Reservas> reservas = reservasRepository.findByAnfitrionId(anfitrionId);
+    Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(anfitrionId);
+    List<Reservas> reservas = reservasRepository.findByAnfitrion(anfitrion);
     this.actualizarEstadoReservas(reservas);
     return reservas;
   }
@@ -102,7 +106,8 @@ public class ReservasService {
    * @return Lista de reservas correspondientes al viajero.
    */
   public List<Reservas> obtenerReservasPorViajero(Long viajeroId) {
-    List<Reservas> reservas = reservasRepository.findByViajeroId(viajeroId);
+    Viajero viajero = gestorUsuarioService.obtenerViajero(viajeroId);
+    List<Reservas> reservas = reservasRepository.findByViajero(viajero);
     this.actualizarEstadoReservas(reservas);
     return reservas;
   }
@@ -117,8 +122,10 @@ public class ReservasService {
    * @param fechaFin Fecha de fin de la reserva.
    * @return La reserva actualizada con estado CANCELADA, o null si no se encuentra o no puede ser cancelada.
    */
-  public ResponseEntity<Reservas> cancelarReserva(Long anfitrionId, Long viajeroId, Date fechaInicio, Date fechaFin) {
-    Reservas reserva = reservasRepository.findByAnfitrionIdAndViajeroIdAndFechaInicioAndFechaFin(anfitrionId, viajeroId, fechaInicio, fechaFin);
+  public ResponseEntity<Reservas> cancelarReserva(Long anfitrionId, Long viajeroId, LocalDate fechaInicio, LocalDate fechaFin) {
+    Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(anfitrionId);
+    Viajero viajero = gestorUsuarioService.obtenerViajero(viajeroId);
+    Reservas reserva = reservasRepository.findByAnfitrionAndViajeroAndFechaInicioAndFechaFin(anfitrion, viajero, fechaInicio, fechaFin);
     if (reserva != null && (reserva.getEstado() == Reservas.ReservaType.PENDIENTE || reserva.getEstado() == Reservas.ReservaType.ACTIVA)) {
       reserva.setEstado(Reservas.ReservaType.CANCELADA);
       return ResponseEntity.ok(reservasRepository.save(reserva));
@@ -135,5 +142,17 @@ public class ReservasService {
     List<Reservas> reservas = reservasRepository.findAll();
     this.actualizarEstadoReservas(reservas);
     return reservas;
+  }
+
+  /**
+   * Elimina una reserva (SOLO ADMIN PANEL, ESTAS NO SE PUEDEN BORRAR SOLO CANCELAR)
+   * @param reservaID ID de la reserva
+   * @return Respuesta indicando que se ha borrado
+   */
+  public ResponseEntity<Boolean> eliminarReserva(Long reservaID){
+    Reservas reserva = reservasRepository.findById(reservaID)
+      .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+    reservasRepository.deleteById(reservaID);
+    return ResponseEntity.ok(true);
   }
 }

@@ -13,6 +13,9 @@ export default function AdminHeader({userType}){
           <Link to="/admin-panel/viviendas" className={`${userType==="viviendas" && styles.active}`}>
             Viviendas
           </Link>
+          <Link to="/admin-panel/reservas" className={`${userType==="reservas" && styles.active}`}>
+            Reservas
+          </Link>
           <Link to="/admin-panel/viajero" className={`${userType==="viajero" && styles.active}`}>
             Viajeros
           </Link>

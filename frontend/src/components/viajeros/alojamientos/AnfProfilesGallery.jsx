@@ -11,6 +11,7 @@ export default function Anf_Profiles_Gallery({ anfitriones = [], anfitrionesEspe
   const [loading, SetLoading] = useState(true);
   const [conexionesID, setConexionesID] = useState([]);
 
+  console.log(anfitriones);
   useEffect(() => {
     // Obtener el id del viajero
     if (viajeroID == null) {
@@ -64,7 +65,7 @@ export default function Anf_Profiles_Gallery({ anfitriones = [], anfitrionesEspe
               Nombre={anfitrion.nombre}
               Gustos_imgs={[anfitrion.gusto1, anfitrion.gusto2, anfitrion.gusto3].filter(gusto => gusto != null)}
               Valoracion={anfitrion.valoracion_media || "0.0"}
-              Ubicacion={`${anfitrion.vivienda?.ciudad || "No disponible"} ${anfitrion.vivienda?.provincia && "," || ""}`}
+              Ubicacion={`${anfitrion.vivienda?.ciudad || "No disponible"}, ${anfitrion.vivienda?.provincia || "No disponible"}`}
               Precio={anfitrion.vivienda?.precio_noche || "0"}
               Descripcion={anfitrion.descripcion || "Este anfitrión aún no se ha descrito."}
               conectado={likeDado(anfitrion.id)}

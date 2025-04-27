@@ -3,13 +3,16 @@ package com.bearfrens.backend.entity.reservas;
 import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -36,19 +39,25 @@ public class Reservas {
   @JsonIgnore //Evitar que se imprima todo el anfitrión
   private Anfitrion anfitrion;
 
+  @JsonProperty("anfitrion_id") // Sólo se imprime el id
+  public Long getAnfitrionId() { return this.anfitrion != null ? this.anfitrion.getId() : null;}
+
   @ManyToOne
   @JoinColumn(name = "viajero_id", nullable = false)
   @JsonIgnore //Evitar que se imprima todo el anfitrión
   private Viajero viajero;
 
+  @JsonProperty("viajero_id") // Sólo se imprime el id
+  public Long getViajeroId() { return this.viajero != null ? this.viajero.getId() : null;}
+
   @Enumerated(EnumType.STRING)
   private ReservaType estado;
 
   @Column(name = "fecha_inicio", nullable = false)
-  private Date fechaInicio;
+  private LocalDate fechaInicio;
 
   @Column(name = "fecha_fin", nullable = false)
-  private Date fechaFin;
+  private LocalDate fechaFin;
 
   @Column
   private int precio_noche;

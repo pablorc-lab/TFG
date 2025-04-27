@@ -21,7 +21,7 @@ public class GestorUsuarioService {
 
   // FUNCIONES PARA AMBOS USUARIOS
   public Anfitrion obtenerAnfitrion(Long anfitrionID){
-    return anfitrionRepository.findById(anfitrionID).get();
+    return anfitrionRepository.findById(anfitrionID).orElse(null);
   }
 
   public Optional<Anfitrion> obtenerAnfitrionPorIDPrivado(String privateID){
