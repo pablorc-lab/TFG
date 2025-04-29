@@ -327,7 +327,12 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
                   setEditedData={setEditedData}
                 />
               }
-              {activeMenu === 6 && <HistorialReservasMiCuenta userService={userService} />}
+              {activeMenu === 6 && 
+                <HistorialReservasMiCuenta 
+                  userService={userService} 
+                  reservasData={usuarioData.usuario?.reservas}
+                  esViajero={esViajero}
+                />}
             </Suspense>
           </div>
         </main>
