@@ -6,8 +6,8 @@ class AuthService {
     return axios.post("http://localhost:8080/api/auth/login", loginRequest);
   }
 
-  static verify(loginRequest){
-    return axios.post("http://localhost:8080/api/auth/verify", loginRequest);
+  static verify(user, loginRequest){
+    return axios.post(`http://localhost:8080/api/auth/verify/${user}`, loginRequest);
   }
 }
 

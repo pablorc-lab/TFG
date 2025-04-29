@@ -4,6 +4,7 @@ import com.bearfrens.backend.entity.biografias.Biografias;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.repository.biografias.BiografiasRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,7 @@ public class BiografiasService {
    * @param biografia Detalles de la biografía a modificar
    * @return El cuerpo de la biografía creadad
    */
+  @Transactional
   public Biografias crearBiografia(String tipo_usuario, Long usuarioID, Biografias biografia) {
     if (!gestorUsuarioService.existeUsuario(tipo_usuario, usuarioID)) {
       throw new IllegalArgumentException("El usuario asociado debe existir");
@@ -67,6 +69,7 @@ public class BiografiasService {
    * @param detallesBiografia Detalles de la biografía a modificar
    * @return El cuerpo de la biografia modificada
    */
+  @Transactional
   public Biografias actualizarBiografia(String tipo_usuario, Long usuarioID, Biografias detallesBiografia) {
     if (!gestorUsuarioService.existeUsuario(tipo_usuario, usuarioID)) {
       throw new IllegalArgumentException("El usuario asociado debe existir");
@@ -89,6 +92,7 @@ public class BiografiasService {
    * @param usuarioID ID del usuario
    * @return Booleano indicando si se ha eliminado o no
    */
+  @Transactional
   public boolean eliminarBiografia(String tipo_usuario, Long usuarioID) {
     if (!gestorUsuarioService.existeUsuario(tipo_usuario, usuarioID)) {
       return false;

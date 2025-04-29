@@ -5,8 +5,9 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom
 // Se mantiene con un import normal porque es la primera vista y se carga inmediatamente,
 import HomePage from './pages/inicio/home/HomePage';
 import ScrollToTop from './components/utilities/ScrollToTop';
-import { jwtDecode } from 'jwt-decode';
 
+const Soporte = lazy(() => import("./pages/inicio/soporte/Soporte"));
+const PoliticasPrivacidad = lazy(() => import("./pages/inicio/politicas_privacidad/PoliticasPrivacidad"));
 const InqProfilePage = lazy(() => import("./pages/anfitriones/inq_profiles/InqProfilePage"));
 const ConexionesAnfPage = lazy(() => import("./pages/anfitriones/conexiones/ConexionesAnfPage"));
 const ConexionesViajPage = lazy(() => import("./pages/viajeros/conexiones/ConexionesViajPage"));
@@ -47,6 +48,8 @@ export default function App() {
           <Route path="/" element={<Navigate to="/inicio" />} />
           <Route path="/inicio" element={<HomePage />} />
           <Route path="/inicio/faq" element={<FaqPage />} />
+          <Route path="/inicio/politicas-privacidad" element={<PoliticasPrivacidad />} />
+          <Route path="/inicio/soporte" element={<Soporte />} />
 
           {/* Rutas para VIAJEROS*/}
           <Route element={<PrivateViajeroRoute />}>

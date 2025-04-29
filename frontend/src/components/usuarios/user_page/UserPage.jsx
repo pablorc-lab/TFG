@@ -195,7 +195,7 @@ export default function UserPage({
 
           {!mensajeReserva
             ? <button onClick={handleReserva}>Reservar</button>
-            : <p style={{ color: "black", textAlign: "center" }}>
+            : <p style={{ color: "black", textAlign: "center", maxWidth : "550px" }}>
               <strong>
                 Reserva del {llegada} al {salida}, creada con éxito.
                 Puede ver el seguimiento de la misma en <a href="/viajeros/mi-cuenta" style={{ color: "blue" }}>su perfil</a>.

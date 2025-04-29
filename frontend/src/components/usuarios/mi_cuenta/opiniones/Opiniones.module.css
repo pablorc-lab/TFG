@@ -1,7 +1,7 @@
 .valoraciones_main{
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 0 30px;
 }
 /*? CONTAINER*/
@@ -134,7 +134,7 @@ body:has(.dialog_container[open]) {
 
   width: 80vw;
   border-radius: 15px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .dialog_main {

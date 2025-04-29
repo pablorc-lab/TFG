@@ -8,7 +8,7 @@
   width: (100%-100px) ;
   padding: 25px 50px 60px 50px;
   background-color: #eddbc8;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   position: relative;
   display: flex;

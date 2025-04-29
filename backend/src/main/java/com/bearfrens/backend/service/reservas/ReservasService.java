@@ -5,6 +5,7 @@ import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.repository.reservas.ReservasRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,8 @@ public class ReservasService {
    * @param viajeroID ID del viajero
    * @return La reserva creada.
    */
+  @Transactional
   public Reservas crearReserva(Long anfitrionID, Long viajeroID, LocalDate fecha_inicio, LocalDate fecha_fin) {
-
     Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(anfitrionID);
     Viajero viajero = gestorUsuarioService.obtenerViajero(viajeroID);
 
@@ -40,7 +41,13 @@ public class ReservasService {
       throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin.");
     }
 
-    // Crear una nueva reserva
+    // Antes de nada, cada usuario debe incrementar en uno el número de reservas / viajes realizados
+    anfitrion.incrementarReservasRealizadas();
+    viajero.incrementarViajesRealizados();
+    gestorUsuarioService.guardarAnfitrion(anfitrion);
+    gestorUsuarioService.guardarViajero(viajero);
+
+    // Crear una nueva reserva entre dos usuarios
     Reservas reserva = new Reservas();
     reserva.setAnfitrion(anfitrion);
     reserva.setViajero(viajero);
@@ -122,14 +129,29 @@ public class ReservasService {
    * @param fechaFin Fecha de fin de la reserva.
    * @return La reserva actualizada con estado CANCELADA, o null si no se encuentra o no puede ser cancelada.
    */
+  @Transactional
   public ResponseEntity<Reservas> cancelarReserva(Long anfitrionId, Long viajeroId, LocalDate fechaInicio, LocalDate fechaFin) {
     Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(anfitrionId);
     Viajero viajero = gestorUsuarioService.obtenerViajero(viajeroId);
+
     Reservas reserva = reservasRepository.findByAnfitrionAndViajeroAndFechaInicioAndFechaFin(anfitrion, viajero, fechaInicio, fechaFin);
-    if (reserva != null && (reserva.getEstado() == Reservas.ReservaType.PENDIENTE || reserva.getEstado() == Reservas.ReservaType.ACTIVA)) {
+
+    // La reserva tiene que tener un estado adecuado
+    if (reserva != null && !reserva.getEstado().equals(Reservas.ReservaType.FINALIZADA) && !reserva.getEstado().equals(Reservas.ReservaType.CANCELADA)) {
       reserva.setEstado(Reservas.ReservaType.CANCELADA);
+
+      // Decrementar los contadores de reservas y viajes
+      anfitrion.decrementarReservasRealizadas();
+      viajero.decrementarViajesRealizados();
+
+      // Guardar los cambios en el anfitrion y el viajero
+      gestorUsuarioService.guardarAnfitrion(anfitrion);
+      gestorUsuarioService.guardarViajero(viajero);
+
+      // Guardar la reserva con el nuevo estado
       return ResponseEntity.ok(reservasRepository.save(reserva));
     }
+
     return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
   }
 
@@ -149,6 +171,7 @@ public class ReservasService {
    * @param reservaID ID de la reserva
    * @return Respuesta indicando que se ha borrado
    */
+  @Transactional
   public ResponseEntity<Boolean> eliminarReserva(Long reservaID){
     Reservas reserva = reservasRepository.findById(reservaID)
       .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));

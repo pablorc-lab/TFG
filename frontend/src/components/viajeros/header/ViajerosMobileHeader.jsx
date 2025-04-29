@@ -26,13 +26,6 @@ export default function ViajerosMobileHeader({
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
           <Link to="/viajeros/alojamientos">
-            <div className={getClassName('alojamientos')} onClick={() => setActiveSection("alojamientos")}>
-              <img src={`/images/viajeros/house_header.webp`} width="50" alt='icono casa' />
-              <span>Alojamientos</span>
-            </div>
-          </Link>
-
-          <Link to="/viajeros/alojamientos">
             <div className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>
               <img
                 src={`/images/viajeros/comunidades_header.webp`}
@@ -40,6 +33,13 @@ export default function ViajerosMobileHeader({
                 alt='icono comunidades'
               />
               <span>Grupos</span>
+            </div>
+          </Link>
+
+          <Link to="/viajeros/alojamientos">
+            <div className={getClassName('alojamientos')} onClick={() => setActiveSection("alojamientos")}>
+              <img src={`/images/viajeros/house_header.webp`} width="50" alt='icono casa' />
+              <span>Alojamientos</span>
             </div>
           </Link>
 

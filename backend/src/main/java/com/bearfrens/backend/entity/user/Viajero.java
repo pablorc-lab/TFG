@@ -43,7 +43,12 @@ public class Viajero extends Usuario<Experiencias>{
   }
 
   // GETTERS and SETTERS
-  public void setViajes_realizados() {this.viajes_realizados += 1;} // Se incrementa la cantidad de viajes realizados
+  public void incrementarViajesRealizados() {this.viajes_realizados += 1;} // Se incrementa la cantidad de viajes realizados
+  public void decrementarViajesRealizados() { // Se decrementa la cantidad de viajes realizados (RESERVA CANCELADA)
+    if (this.viajes_realizados > 0) {
+      this.viajes_realizados -= 1;
+    }
+  }
 
   @Override
   public String toString() {

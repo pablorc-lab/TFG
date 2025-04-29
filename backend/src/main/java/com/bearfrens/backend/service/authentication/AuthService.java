@@ -1,8 +1,10 @@
 package com.bearfrens.backend.service.authentication;
 
+import com.bearfrens.backend.entity.contenido.Contenido;
 import com.bearfrens.backend.entity.token.Token;
 import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Usuario;
+import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.repository.token.TokenRepository;
 import com.bearfrens.backend.repository.user.AnfitrionRepository;
 import com.bearfrens.backend.repository.user.ViajeroRepository;
@@ -16,10 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 
@@ -172,17 +171,17 @@ public class AuthService {
   /**
    * Verifica si una contraseña es correcta dado su email
    *
+   * @param userType Tipo de usuario que devuelve el token
    * @param loginRequest Información del login
    * @return Booleano
    */
-  public Boolean verify(LoginRequest loginRequest) {
-    Usuario<?> usuario = usuarioService.findByEmail(loginRequest.getEmail());
-
-    // Comprobar primero que el usuario exista
-    if (usuario == null) {
-      return false;
+  public Boolean verify(String userType, LoginRequest loginRequest) {
+    if(userType.equals("Anfitrion (1)")){
+      Optional<Anfitrion> anfitrion = anfitrionRepository.findByEmail(loginRequest.getEmail());
+      return anfitrion.filter(user -> decoder.matches(loginRequest.getPassword(), user.getPassword())).isPresent();
     }
 
-    return(decoder.matches(loginRequest.getPassword(), usuario.getPassword()));
+    Optional<Viajero> viajero = viajeroRepository.findByEmail(loginRequest.getEmail());
+    return viajero.filter(user -> decoder.matches(loginRequest.getPassword(), user.getPassword())).isPresent();
   }
 }

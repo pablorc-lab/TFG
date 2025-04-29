@@ -113,12 +113,12 @@
 .btn_alojamientos p, .btn_inquilinos p {margin: 0;}
 
 .btn_alojamientos:hover{
-  filter: brightness(1.15);
+  filter: brightness(0.75);
   box-shadow: 0 0 13px #23898a;
 }
 
 .btn_inquilinos:hover {
-  filter: brightness(1.2);
+  filter: brightness(0.7);
   box-shadow: 0 0 13px #5f4a40;
 }
 

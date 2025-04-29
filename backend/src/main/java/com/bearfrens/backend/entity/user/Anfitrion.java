@@ -39,7 +39,12 @@ public class Anfitrion extends Usuario<Recomendaciones>{
   }
 
   // GETTERS and SETTERSs
-  public void setReservas_realizadas() {this.reservas_realizadas += 1;} // Se incrementa la cantidad de reservas realizadas
+  public void incrementarReservasRealizadas() {this.reservas_realizadas += 1;} // Se incrementa la cantidad de reservas realizadas
+  public void decrementarReservasRealizadas() {// Se decrementa la cantidad de reservas realizadas (Reserva cancelada)
+    if (this.reservas_realizadas > 0) {
+      this.reservas_realizadas -= 1;
+    }
+  }
 
   @Override
   public String toString() {

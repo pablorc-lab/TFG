@@ -98,8 +98,7 @@
 }
 .freq_questions button:hover {
   transition: 0.2s;
-  background-color: #23898a;
-  box-shadow: 0 0 10px #23898a;
+  filter: brightness(0.75);
 }
 
 @media (max-width: 769px) {

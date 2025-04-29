@@ -10,6 +10,7 @@ import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
 import com.bearfrens.backend.repository.matches.MatchesRepository;
 import com.bearfrens.backend.repository.valoraciones_conexiones.ValoracionesConexionesRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -105,6 +106,7 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
    * @param receptorID ID del usuario receptor
    * @return <T> creado o mensaje de error si ya existe
    */
+  @Transactional
   public ResponseEntity<?> crearValoracionesConexiones(String tipo_usuario, Long usuarioID, Long receptorID, T nuevoElemento) {
     if(gestorUsuarioService.NoExisteAmbosUsuario(tipo_usuario, usuarioID, receptorID)) {
       return ResponseEntity.badRequest().body("Los usuarios asociados debe existir");
@@ -160,6 +162,7 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
    * @param usuarioID ID del usuario receptor
    * @return Respuesta con el resultado de la operación
    */
+  @Transactional
   public ResponseEntity<Map<String, Boolean>> eliminarValoracionesConexiones(Long usuarioID, String tipo_usuario) {
     if (!gestorUsuarioService.existeUsuario(tipo_usuario, usuarioID)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("deleted", false));

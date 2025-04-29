@@ -1,13 +1,12 @@
 .general_prof {
   cursor: pointer;
   position: relative;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: "Nunito";
   background: white;
   border-radius: 12px;
   margin: 0 auto;
-  outline: 2px solid transparent;
-  transition: box-shadow 0.1s ease-in-out, outline 0.1s ease-in-out;
+  transition: box-shadow 0.1s ease-in-out;
   cursor: default;
   width: 320px;  
 }
@@ -15,8 +14,7 @@
 .anf_link {color: black;}
 
 .general_prof:hover {
-  outline: 2px solid #00000062; 
-  box-shadow: 7px 7px 0px #0000004d;
+  box-shadow: 0px 6px 18px #0000004d;
 }
 
 .btn_conectar:not(.viaj_prof .btn_conectar) {

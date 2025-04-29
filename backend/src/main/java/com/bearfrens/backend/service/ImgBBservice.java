@@ -1,5 +1,6 @@
 package com.bearfrens.backend.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
@@ -22,6 +23,7 @@ public class ImgBBservice {
   @Value("${IMGBB_API_KEY}")
   private String imgBB_Api_Key;
 
+  @Transactional
   public Map<String, Object> uploadImage(MultipartFile image) throws IOException {
     String url = "https://api.imgbb.com/1/upload?key=" + imgBB_Api_Key;
 

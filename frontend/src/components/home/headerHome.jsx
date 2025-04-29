@@ -13,7 +13,7 @@ export default function HeaderHome({ isHome = false }) {
     { path: "/inicio/faq", label: "FAQ", hiddenWhenNavVisible: true },
     { path: "/iniciar-sesion", label: "Iniciar sesión" },
     { path: "/registro", label: "Registrarse" },
-    { path: "/", label: "Soporte" }
+    { path: "/inicio/soporte", label: "Soporte" }
   ];
 
   return (

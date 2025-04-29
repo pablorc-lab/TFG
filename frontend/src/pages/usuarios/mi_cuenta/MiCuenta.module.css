@@ -127,7 +127,7 @@ body:has(.modal[open]) {
   width: (100%-100px) ;
   padding: 20px 40px;
   background-color: #eddbc8;
-  box-shadow: 0 0 5px rgba(65, 65, 65, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 /*? LOGO*/
 .header figure h1{
@@ -184,7 +184,7 @@ body:has(.modal[open]) {
   user-select: none;
   position: relative;
   background-color: white;
-  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   font-family: "Nunito";
   padding: 30px;

@@ -4,6 +4,7 @@ import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.repository.user.AnfitrionRepository;
 import com.bearfrens.backend.repository.user.ViajeroRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -50,12 +51,14 @@ public class GestorUsuarioService {
 
   // No es necesario comprobar si ya existe en la BD, ya que solo se usa cuando hay que modificar
   // campos de un usuario cuya existencia ya ha sido validada previamente.
+  @Transactional
   public void guardarAnfitrion(Anfitrion anfitrion) {
     anfitrionRepository.save(anfitrion);
   }
 
   // No es necesario comprobar si ya existe en la BD, ya que solo se usa cuando hay que modificar
   // campos de un usuario cuya existencia ya ha sido validada previamente.
+  @Transactional
   public void guardarViajero(Viajero viajero) {
     viajeroRepository.save(viajero);
   }

@@ -16,7 +16,9 @@ export default function SeguridadMiCuenta({ userService, handleLogout, userID, u
     setSamePassword(newPassword === actualPassword);
     if (newPassword.length < 8 || newPassword === actualPassword) return;
 
-    AuthService.verify({ email: userEmail, password: actualPassword })
+    const user = localStorage.getItem("user");
+
+    AuthService.verify(user, {email: userEmail, password: actualPassword})
       .then(response => {
         setCorrectPassword(response.data);
 

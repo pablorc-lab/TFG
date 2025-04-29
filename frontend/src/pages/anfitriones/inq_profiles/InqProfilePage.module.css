@@ -22,16 +22,17 @@
   font-size: 21px;
   color: #737373;
   cursor: pointer;
-  margin: 0 15px;
-  padding: 0 5px;
+  padding: 10px 14px;
+  border-radius: 30px;
   text-decoration: none;
-  transition: border-bottom 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 .header nav a:last-child {margin-right: 0;}
 
 .header nav a:hover {
-  color: #0a7273;
+  color: white;
   filter: none;
   margin-bottom: 0px;
-  border-bottom: 4px solid #0a7273;
+  outline-offset: -1px;
+  background-color: #0a7273;
 }

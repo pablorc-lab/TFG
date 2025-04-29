@@ -1,6 +1,5 @@
 package com.bearfrens.backend.service;
 
-import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.exception.ResourceNotFoundException;

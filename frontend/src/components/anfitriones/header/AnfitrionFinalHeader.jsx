@@ -27,7 +27,7 @@ export default function AnfitrionFinalHeader({ activeSectionDefecto = "inquilino
   const menuLinks = [
     { path: "/anfitriones/mi-cuenta", label: <strong>Mi Cuenta</strong> },
     { path: "/inicio/faq", label: "FAQ" },
-    { path: "/", label: "Soporte" },
+    { path: "/inicio/soporte", label: "Soporte" },
     { label: <div onClick={handleLogout}>Cerrar sesión</div> }
   ];
 

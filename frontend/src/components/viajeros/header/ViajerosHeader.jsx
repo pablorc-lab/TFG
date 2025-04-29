@@ -31,7 +31,7 @@ export default function ViajerosHeader({
   const menuLinks = [
     { path: "/viajeros/mi-cuenta", label: <strong>Mi Cuenta</strong> },
     { path: "/inicio/faq", label: "FAQ" },
-    { path: "/", label: "Soporte" },
+    { path: "/inicio/soporte", label: "Soporte" },
     { label: <div onClick={handleLogout}>Cerrar sesión</div> }
   ];
 

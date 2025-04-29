@@ -32,9 +32,9 @@ public class AuthController {
    * Verifica si una contrasenia es correcta o no
    * @return Respueta booleana
    */
-  @PostMapping("/verify")
-  public Boolean verify(@RequestBody LoginRequest loginRequest) {
-    return authService.verify(loginRequest);
+  @PostMapping("/verify/{userType}")
+  public Boolean verify(@PathVariable String userType, @RequestBody LoginRequest loginRequest) {
+    return authService.verify(userType, loginRequest);
   }
 
   /**

@@ -68,12 +68,13 @@ export default function InqProfilePage() {
             <>
               <Link to="/viajeros/alojamientos">Inquilinos</Link>
               <Link to="/viajeros/alojamientos">Comunidades</Link>
-              <Link to="/viajeros/alojamientos">Soporte</Link>
+              <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
+              <Link to="/viajeros/alojamientos">Mi Cuenta</Link>
             </>
           ) : (
             <>
-              <Link to="/viajeros/alojamientos">Soporte</Link>
+              <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
             </>
           )}

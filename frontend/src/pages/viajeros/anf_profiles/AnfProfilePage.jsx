@@ -98,12 +98,13 @@ export default function AnfProfilePage() {
             <>
               <Link to="/viajeros/alojamientos">Alojamientos</Link>
               <Link to="/viajeros/alojamientos">Comunidades</Link>
-              <Link to="/viajeros/alojamientos">Soporte</Link>
+              <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
+              <Link to="/viajeros/mi-cuenta">Mi Cuenta</Link>
             </>
           ) : (
             <>
-              <Link to="/viajeros/alojamientos">Soporte</Link>
+              <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
             </>
           )}

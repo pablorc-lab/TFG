@@ -3,7 +3,7 @@
 .historial_main {
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 0 30px;
 }
 
@@ -55,7 +55,7 @@
   font-family: "Nunito";
   padding: 15px;
   background-color: rgba(238, 238, 238, 0.322);
-  box-shadow:  0 0 7px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   outline: 2px solid lightgray;
   transition: outline 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }

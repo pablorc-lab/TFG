@@ -156,8 +156,8 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             <>
               {esViajero ? (
                 <>
+                  <Link to="/viajeros/grupos">Grupos</Link>
                   <Link to="/viajeros/alojamientos">Alojamientos</Link>
-                  <Link to="/viajeros/conexiones">Conexiones</Link>
                   <Link to="/viajeros/conexiones">Conexiones</Link>
                 </>
               ) : (
@@ -167,12 +167,12 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
                   <Link to="/anfitriones/conexiones">Conexiones</Link>
                 </>
               )}
-              <Link to="/inicio">Soporte</Link>
+              <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
             </>
           ) : (
             <>
-              <Link to="/inicio">Soporte</Link>
+              <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
             </>
           )}

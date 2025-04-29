@@ -19,6 +19,7 @@ import com.bearfrens.backend.service.reservas.ReservasService;
 import com.bearfrens.backend.service.valoraciones_conexiones.LikesService;
 import com.bearfrens.backend.service.valoraciones_conexiones.ValoracionesService;
 import com.bearfrens.backend.service.viviendas.ViviendasService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -235,6 +236,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    */
   // @RequestBody : convierte el cuerpo de la solicitud HTTP (JSON) en un objeto Java (Usuario) para ser procesado en el metodo.
   @PostMapping("/auth/register")
+  @Transactional
   public T crearUsuario(@RequestBody T user){
     if(user == null || usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isBlank() || user.getTelefono() == null || !user.getTelefono().matches("\\d{9}")){
       return null;
@@ -271,6 +273,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @return Response Entity, en caso de ser ok, devuelve el usuario modificado
    */
   @PutMapping("/{userID}")
+  @Transactional
   public ResponseEntity<T> actualizarUsuario(@PathVariable Long userID, @RequestBody T userRequest){
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -305,6 +308,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @param userID ID del usuario a eliminar
    * @return Mensaje deleted, indicando con booleano si se ha borrado o no
    */
+  @Transactional
   public ResponseEntity<Map<String,Boolean>> eliminarUsuario(Long userID, String tipo_usuario){
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -389,6 +393,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @param contenido Objeto con el contenido de la recomendacion/experiencia
    * @return Objeto creado
    */
+  @Transactional
   public ResponseEntity<?> crearContenido(Long userID, TC contenido) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -458,6 +463,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @param titulo Titulo del contenido
    * @return Booleanos indicando si se ha eliminado no
    */
+  @Transactional
   public ResponseEntity<Map<String, Boolean>> eliminarContenido(Long userID, String titulo) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
@@ -485,6 +491,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @param userID ID del usuario
    * @return Booleano indicando si se han eliminado
    */
+  @Transactional
   public ResponseEntity<Map<String, Boolean>> eliminarTodoContenido(Long userID) {
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe: " + userID));
