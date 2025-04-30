@@ -47,12 +47,32 @@
   gap: 30px;
 }
 
+
 .historial_user_section h3{
   margin: 0;
   color: #0a7273;
   text-align: center;
   font-size: 30px;
 }
+
+
+.historial_user_section label{
+  cursor: pointer;
+ color: rgb(90, 90, 90);
+ display: grid;
+ border-radius: 5px;
+ padding: 5px 10px;
+ border: 2px solid rgb(82, 82, 82);
+}
+
+.historial_user_section input:focus {outline: none;}
+.historial_user_section input{ 
+  cursor: pointer;
+  font-family: "Nunito";
+  font-size: clamp(16px, 3vw, 20px);
+  border: none;
+}
+
 .historial_user_article {
   border-radius: 10px;
   font-family: "Nunito";
@@ -95,9 +115,10 @@
   width: 20px;
   aspect-ratio: 1 / 1;
 }
-.score {
+.score h2 {
   color: rgb(63, 63, 63);
   font-size: 17px;
+  font-weight: normal;
 }
 
 /*? DETALLES DE LA RESERVA*/
@@ -133,6 +154,8 @@
 
   .historial_user_info {margin-bottom: 17px;}
   .historial_user_info h2 {font-size: 28px;}
+
+  .score h2 { font-size: 26px;}
 
   .score img { width: 25px;}
   .score { font-size: 22px;}

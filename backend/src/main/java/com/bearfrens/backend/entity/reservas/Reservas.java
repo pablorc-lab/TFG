@@ -12,7 +12,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -39,16 +41,34 @@ public class Reservas {
   @JsonIgnore //Evitar que se imprima todo el anfitrión
   private Anfitrion anfitrion;
 
-  @JsonProperty("anfitrion_id") // Sólo se imprime el id
-  public Long getAnfitrionId() { return this.anfitrion != null ? this.anfitrion.getId() : null;}
+  // Obtener el ID, Nombre, Imagen de perfil y Valoración
+  @JsonProperty("anfitrion")
+  public Map<String, Object> getAnfitrion() {
+    Map<String, Object> anfitrionData = new HashMap<>();
+    // Solo añadir los campos que necesitas
+    anfitrionData.put("id", this.anfitrion.getId());
+    anfitrionData.put("profile_image", this.anfitrion.getProfileImage());
+    anfitrionData.put("nombre", this.anfitrion.getNombre());
+    anfitrionData.put("valoracion", this.anfitrion.getValoracion_media());
+    return anfitrionData;
+  }
 
   @ManyToOne
   @JoinColumn(name = "viajero_id", nullable = false)
   @JsonIgnore //Evitar que se imprima todo el anfitrión
   private Viajero viajero;
 
-  @JsonProperty("viajero_id") // Sólo se imprime el id
-  public Long getViajeroId() { return this.viajero != null ? this.viajero.getId() : null;}
+  // Obtener el ID, Nombre, Imagen de perfil y Valoración
+  @JsonProperty("viajero")
+  public Map<String, Object> getViajero() {
+    Map<String, Object> anfitrionData = new HashMap<>();
+    // Solo añadir los campos que necesitas
+    anfitrionData.put("id", this.viajero.getId());
+    anfitrionData.put("profile_image", this.viajero.getProfileImage());
+    anfitrionData.put("nombre", this.viajero.getNombre());
+    anfitrionData.put("valoracion", this.viajero.getValoracion_media());
+    return anfitrionData;
+  }
 
   @Enumerated(EnumType.STRING)
   private ReservaType estado;
