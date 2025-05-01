@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from "./FilterMenu.module.css";
 
-
 export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setAnfitrionesFiltrados, setFiltrosActivos }) {
   const [mouseEnter, SetMouseEnter] = useState(null);
   
@@ -28,7 +27,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
     "animales", "videojuegos", "comer", "cafe",
     "lectura", "peliculas", "musica", "ajedrez",
     "pintura", "cocina", "plantas", "camping",
-    "ciclismo", "fotografia", "viajar", "gym"
+    "ciclismo", "fotografia", "viajar", "gimnasio"
   ];
 
   const [UserIdiomas, setUserIdiomas] = useState(filterOptions.idiomas);
@@ -167,9 +166,9 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
                   {[1, 2, 3, "4+"].map((item) => (
                     <li key={item}>
                       <button
-                        onClick={() => handleChangeViviendaValue(index, item)}
+                        onClick={() => handleChangeViviendaValue(index, item === "4+" ? 4 : item)}
                         className={opcionesViviendaEscogida[index] === item ? styles.opcion_activa : ""}
-                      >
+                      > 
                         {item}
                       </button>
                     </li>

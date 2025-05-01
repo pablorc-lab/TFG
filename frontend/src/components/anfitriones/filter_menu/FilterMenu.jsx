@@ -15,7 +15,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
     "animales", "videojuegos", "comer", "cafe",
     "lectura", "peliculas", "musica", "ajedrez",
     "pintura", "cocina", "plantas", "camping",
-    "ciclismo", "fotografia", "viajar", "gym"
+    "ciclismo", "fotografia", "viajar", "gimnasio"
   ];
 
   const [UserIdiomas, setUserIdiomas] = useState(filterOptions.idiomas);

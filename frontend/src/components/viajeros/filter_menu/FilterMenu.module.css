@@ -253,11 +253,12 @@ color: rgb(170, 170, 170);
 }
 .lista_botones button:not(.opcion_activa):hover{ filter: brightness(0.9);}
 .lista_botones  .opcion_activa {
+  background-color: #0a7273;
   color: #0a7273;
   font-weight: 500;
   border-color: #0a7273;
   background-color: #0a717318;
-  box-shadow: 0 0 3px #0a71737c;
+  box-shadow: 3px 3px #00907f7c;
 }
 
 /*? IDIOMAS*/
