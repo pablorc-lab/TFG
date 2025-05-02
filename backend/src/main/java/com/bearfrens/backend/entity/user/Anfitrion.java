@@ -3,6 +3,7 @@ package com.bearfrens.backend.entity.user;
 import com.bearfrens.backend.entity.contenido.Recomendaciones;
 import com.bearfrens.backend.entity.reservas.Reservas;
 import com.bearfrens.backend.entity.viviendas.Viviendas;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class Anfitrion extends Usuario<Recomendaciones>{
   private List<Recomendaciones> recomendaciones;
 
   @OneToMany(mappedBy = "anfitrion", cascade = CascadeType.ALL, orphanRemoval = false)
+  @JsonIgnore
   private List<Reservas> reservas;
 
   // Constructores

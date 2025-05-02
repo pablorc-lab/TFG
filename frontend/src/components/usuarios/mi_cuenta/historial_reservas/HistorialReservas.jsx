@@ -1,27 +1,46 @@
 import styles from "./HistorialReservas.module.css"
-import ReservaData from "../../../../data/usuarios/mi_cuenta/historial.json"
 import { useEffect, useRef, useState } from "react";
+import ReservasService from "../../../../services/reservas/ReservasService.jsx";
 
-const HistorialReservasMiCuenta = ({ userService, reservasData = [], esViajero = false }) => {
+const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, reservasViajesTotales = 0 }) => {
+  const [reservasData, setReservasData] = useState([]);
+  const [gastoIngreso, setGastoIngreso] = useState(0); // Estado para guardar el total
+
+  const [editedData, setEditedData] = useState(false);
+  const [openModal, setOpenModal] = useState(false); // Modal para cancelar reserva
 
   const [fechaHistorial, setFechaHistorial] = useState(new Date().toISOString().slice(0, 7));
   const inputReservaRef = useRef(null);
+
+  // Obtener las reservas en ese mes
+  useEffect(() => {
+    if (fechaHistorial) {
+      setEditedData(false);
+      const obtenerReservas = esViajero
+        ? ReservasService.getReservasViajero(userID, fechaHistorial)
+        : ReservasService.getReservasAnfitrion(userID, fechaHistorial);
+
+      obtenerReservas
+        .then(response => setReservasData(response.data))
+        .catch(error => "Error al obtener reservas para esa fecha " + error);
+    }
+  }, [editedData, fechaHistorial]);
+
+
+  // Obtener los ingresos/gastos totales
+  useEffect(() => {
+    const obtenerGastoIngreso = esViajero ? ReservasService.gestGastosViajero(userID) : ReservasService.gestGastosViajero(userID)
+    obtenerGastoIngreso
+      .then(response => setGastoIngreso(response.data))
+      .catch(error => console.error("Error al calcular el ingreso costo " + error))
+  }, [userID, esViajero]);
+
 
   const handleLabelClick = () => {
     if (inputReservaRef.current && typeof inputReservaRef.current.showPicker === 'function') {
       inputReservaRef.current.showPicker();
     }
   };
-
-  const [reservasFiltradas, setReservasFiltradas] = useState([]);
-  useEffect(() => {
-    setReservasFiltradas(
-      reservasData.filter(reserva => 
-        new Date(reserva.fechaInicio).toISOString().slice(0, 7) === fechaHistorial || 
-        new Date(reserva.fechaFin).toISOString().slice(0, 7) === fechaHistorial
-      )
-    )
-  }, [fechaHistorial]);
 
   const estadoColores = {
     "ACTIVA": { color: "#D9A520" },
@@ -77,11 +96,11 @@ const HistorialReservasMiCuenta = ({ userService, reservasData = [], esViajero =
   const obtenerDiasReservados = (fechaInicio, fechaFin) => {
     const inicio = new Date(fechaInicio);
     const fin = new Date(fechaFin);
-    
+
     // Calculamos la diferencia en milisegundos y la convertimos a días
     const diferencia = (fin.getTime() - inicio.getTime()) / (1000 * 60 * 60 * 24);
-    
-    return diferencia; 
+
+    return diferencia;
   };
 
   const getUserInfo = (user) => [
@@ -91,13 +110,23 @@ const HistorialReservasMiCuenta = ({ userService, reservasData = [], esViajero =
     { img: "/images/usuarios/account/historial_estado.svg", alt: "Estado", value: "Estado : ", strong: user.estado }
   ];
 
+  const cancelarReserva = (anfitrionID, viajeroID, fechaInicio, fechaFin) => {
+    ReservasService.cancelarReserva(anfitrionID, viajeroID, fechaInicio, fechaFin)
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error))
+      .finally(() => {
+        setEditedData(true)
+        setOpenModal(false);
+      });
+  }
+
   return (
     <section className={styles.historial_main}>
       <article className={styles.summary}>
         <h1>Visión general</h1>
         <div className={styles.summary_div}>
           <h2>{esViajero ? "Viajes" : "Reservas"} totales</h2>
-          <p>{reservasData.length}</p>
+          <p>{reservasViajesTotales}</p>
         </div>
 
         <div className={styles.summary_div}>
@@ -107,7 +136,7 @@ const HistorialReservasMiCuenta = ({ userService, reservasData = [], esViajero =
 
         <div className={styles.summary_div}>
           <h2>{esViajero ? "Gastos" : "Ingresos"} totales</h2>
-          <p>{reservasData.reduce((sum, reserva) => sum + reserva.precio_total, 0)} &euro;</p>
+          <p>{gastoIngreso} &euro;</p>
         </div>
       </article>
 
@@ -123,19 +152,46 @@ const HistorialReservasMiCuenta = ({ userService, reservasData = [], esViajero =
           />
         </label>
 
-        {reservasFiltradas.length === 0 && <h2 style={{textAlign : "center", margin : "30px 0"}}>No existen reservas en este mes</h2>}
-        {reservasFiltradas.map((user, index) => {
+        {reservasData.length === 0 && <h2 style={{ textAlign: "center", margin: "30px 0" }}>No existen reservas en este mes</h2>}
+
+        {reservasData.map((user, index) => {
           const userInfo = getUserInfo(user);
 
           return (
             <article key={index} className={styles.historial_user_article}>
+              {openModal &&
+                <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
+                  <h1>¿Anular reserva?</h1>
+                  <div>
+                    <img src={esViajero ? user.anfitrion.profile_image : user.viajero.profile_image} alt="Imagen perfil" className={styles.user_profile_img} style={{ width: "100px" }} />
+                  </div>
+
+                  <h2 style={{ textAlign: "center", marginBottom: "5px", fontWeight: "600" }}>{esViajero ? user.anfitrion.nombre : user.viajero.nombre}, {user.precio_total} €</h2>
+                  <h2 style={{ textAlign: "center", marginBottom: "25px", fontWeight: "600" }}>{printFechasLegible(user.fechaInicio, user.fechaFin)}</h2>
+                  <div>
+                    <button onClick={() => setOpenModal(false)}>CANCELAR</button>
+                    <button onClick={() => cancelarReserva(user.anfitrion.id, user.viajero.id, user.fechaInicio, user.fechaFin)}>ANULAR</button>
+                  </div>
+                </dialog>
+              }
+
+              {user.estado !== "CANCELADA" && user.estado !== "FINALIZADA" &&
+                <div className={styles.action_imgs}>
+                  <img
+                    src="/images/usuarios/account/delete_img.svg"
+                    alt="delete img"
+                    onClick={() => setOpenModal(true)}
+                  />
+                </div>
+              }
+
               <div className={styles.historial_user_info}>
                 <img src={esViajero ? user.anfitrion.profile_image : user.viajero.profile_image} alt="Imagen perfil" className={styles.user_profile_img} />
                 <h2>{esViajero ? user.anfitrion.nombre : user.viajero.nombre}</h2>
                 <div className={styles.score}>
                   <img src="/images/usuarios/estrella.webp" alt="Logo estrella" />
                   <h2>{esViajero ? user.anfitrion.valoracion : user.viajero.valoracion}</h2>
-                  </div>
+                </div>
               </div>
 
               {userInfo.map((item, index) => (

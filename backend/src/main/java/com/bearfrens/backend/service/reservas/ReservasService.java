@@ -25,6 +25,26 @@ public class ReservasService {
   private ReservasRepository reservasRepository;
 
   /**
+   * Devuelve los ingresos totales de un anfitrión
+   * @param id ID del anfitrión
+   * @return Sumatoria de los ingresos
+   */
+  public int obtenerIngresosTotalesAnfitrion(Long id){
+    Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(id);
+    return anfitrion.getReservas().stream().mapToInt(Reservas::getPrecio_total).sum();
+  }
+
+  /**
+   * Devuelve los gastos totales de un viajero
+   * @param id ID del viajero
+   * @return Sumatoria de los gastos
+   */
+  public int obtenerGastosTotalesViajero(Long id){
+    Viajero viajero = gestorUsuarioService.obtenerViajero(id);
+    return viajero.getReservas().stream().mapToInt(Reservas::getPrecio_total).sum();
+  }
+
+  /**
    * Crear una nueva reserva.
    *
    * @param anfitrionID ID del anfitrión
@@ -83,9 +103,10 @@ public class ReservasService {
         }
 
         // Ver si está activa
-        else if (reserva.getFechaInicio().isBefore(fechaActual) && reserva.getFechaFin().isAfter(fechaActual)) {
+        else if ((reserva.getFechaInicio().isBefore(fechaActual) || reserva.getFechaInicio().isEqual(fechaActual)) && (reserva.getFechaFin().isAfter(fechaActual) || reserva.getFechaFin().isEqual(fechaActual))) {
           reserva.setEstado(Reservas.ReservaType.ACTIVA);
         }
+
       }
     }
 
@@ -97,11 +118,17 @@ public class ReservasService {
    * Obtener todas las reservas asociadas a un anfitrión.
    *
    * @param anfitrionId ID del anfitrión.
+   * @param fecha Fecha de la reserva estilo YYYY-MM
    * @return Lista de reservas correspondientes al anfitrión.
    */
-  public List<Reservas> obtenerReservasPorAnfitrion(Long anfitrionId) {
+  public List<Reservas> obtenerReservasPorAnfitrion(Long anfitrionId, String fecha) {
     Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(anfitrionId);
-    List<Reservas> reservas = reservasRepository.findByAnfitrion(anfitrion);
+    LocalDate inicioMes = LocalDate.parse(fecha + "-01"); // Convierte la cadena YYYY-MM en formato YYYY-MM-01
+    LocalDate finMes = inicioMes.withDayOfMonth(inicioMes.lengthOfMonth()); // Trasnforma al último dia del mes
+
+    List<Reservas> reservas = reservasRepository
+      .findByAnfitrionAndFechaInicioLessThanEqualAndFechaFinGreaterThanEqual(anfitrion, finMes, inicioMes);
+
     this.actualizarEstadoReservas(reservas);
     return reservas;
   }
@@ -110,11 +137,17 @@ public class ReservasService {
    * Obtener todas las reservas asociadas a un viajero.
    *
    * @param viajeroId ID del viajero.
+   * @param fecha Fecha de la reserva estilo YYYY-MM
    * @return Lista de reservas correspondientes al viajero.
    */
-  public List<Reservas> obtenerReservasPorViajero(Long viajeroId) {
+  public List<Reservas> obtenerReservasPorViajero(Long viajeroId, String fecha) {
     Viajero viajero = gestorUsuarioService.obtenerViajero(viajeroId);
-    List<Reservas> reservas = reservasRepository.findByViajero(viajero);
+    LocalDate inicioMes = LocalDate.parse(fecha + "-01"); // Convierte la cadena YYYY-MM en formato YYYY-MM-01
+    LocalDate finMes = inicioMes.withDayOfMonth(inicioMes.lengthOfMonth()); // Trasnforma al último dia del mes
+
+    List<Reservas> reservas = reservasRepository
+      .findByViajeroAndFechaInicioLessThanEqualAndFechaFinGreaterThanEqual(viajero, finMes, inicioMes);
+
     this.actualizarEstadoReservas(reservas);
     return reservas;
   }

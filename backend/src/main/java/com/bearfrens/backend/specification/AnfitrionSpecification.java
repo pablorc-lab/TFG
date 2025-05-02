@@ -22,6 +22,8 @@ public class AnfitrionSpecification implements Specification<Anfitrion> {
   private Integer habitaciones;
   private Integer camas;
   private Integer banios;
+  private String ciudad;
+  private String provincia;
 
   @Override
   public Predicate toPredicate(Root<Anfitrion> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -44,6 +46,18 @@ public class AnfitrionSpecification implements Specification<Anfitrion> {
       predicates.add(cb.between(root.get("vivienda").get("precio_noche"), min, max));
     }
 
+    // Filtro de ubicación
+    if(ciudad != null && !ciudad.isEmpty()){
+      if(provincia != null && !provincia.isEmpty()){
+        predicates.add(cb.and(
+          cb.equal(root.get("vivienda").get("ciudad"), ciudad),
+          cb.equal(root.get("vivienda").get("provincia"), provincia)
+        ));
+      }
+      else{
+        predicates.add(cb.equal(root.get("vivienda").get("ciudad"), ciudad));
+      }
+    }
 
     // Filtro de número de viajeros
     if (viajeros != null) {

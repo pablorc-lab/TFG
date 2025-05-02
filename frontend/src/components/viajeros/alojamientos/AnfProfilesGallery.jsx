@@ -5,8 +5,7 @@ import styles from "./AnfProfilesGallery.module.css";
 import LikesService from '../../../services/matches/LikesService';
 import { jwtDecode } from 'jwt-decode';
 
-export default function Anf_Profiles_Gallery({ anfitriones = [], anfitrionesEspecificos = [], buscarUsuario = false, anfitrionesFiltrados = [], buscarFiltrado = false, match = false, conectados_ID = false, eliminarBuscados }) {
-  const [ListaAnfitriones, setListaAnfitriones] = useState([]);
+export default function Anf_Profiles_Gallery({ anfitriones = [], buscarUsuario = false, anfitrionesFiltrados = [], buscarFiltrado = false, match = false, conectados_ID = false, eliminarBuscados }) {
   const [viajeroID, setViajeroID] = useState(null);
   const [loading, SetLoading] = useState(true);
   const [conexionesID, setConexionesID] = useState([]);
@@ -27,24 +26,8 @@ export default function Anf_Profiles_Gallery({ anfitriones = [], anfitrionesEspe
         }).catch(error => "Error al obtener los likes " + error)
       }
     }
-
-    if (buscarFiltrado) {
-      setListaAnfitriones(anfitrionesFiltrados);
-    }
-
-    else if (anfitrionesEspecificos.length > 0 || buscarUsuario) {
-      setListaAnfitriones(anfitrionesEspecificos);
-    }
-
-    else if (ListaAnfitriones !== anfitriones) {
-      setListaAnfitriones(anfitriones);
-      if (anfitrionesEspecificos.length > 0 || anfitrionesFiltrados.length > 0) {
-        eliminarBuscados();
-      }
-    }
-
     SetLoading(false);
-  }, [anfitrionesEspecificos, anfitrionesFiltrados, anfitriones, buscarFiltrado, buscarUsuario])
+  }, [anfitrionesFiltrados, anfitriones, buscarFiltrado, buscarUsuario])
 
   // Comprueba si se dio like
   function likeDado(AnfitrionID) {
@@ -55,7 +38,7 @@ export default function Anf_Profiles_Gallery({ anfitriones = [], anfitrionesEspe
   return (
     <section className={styles.card_users_container}>
       <article className={styles.card_users}>
-        {!loading && viajeroID != null && ListaAnfitriones.map((anfitrion, index) => (
+        {!loading && viajeroID != null && (buscarFiltrado || buscarUsuario ? anfitrionesFiltrados : anfitriones).map((anfitrion, index) => (
           <div key={index} className={styles.user_card}>
             <AnfCard
               styles={anf_card_styles}
@@ -76,9 +59,7 @@ export default function Anf_Profiles_Gallery({ anfitriones = [], anfitrionesEspe
 
         {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "50%", left: "0%", margin: "150px 0", transform: "translateY(-50%)" }} />}
 
-        {ListaAnfitriones.length === 0 && ListaAnfitriones === anfitrionesEspecificos && <h1 className={styles.not_found}>No hay anfitriones para esa ubicación o identificador.</h1>}
-        {ListaAnfitriones.length === 0 && ListaAnfitriones === anfitrionesFiltrados && <h1 className={styles.not_found}>No existen anfitriones con esos filtros.</h1>}
-
+        {buscarFiltrado && anfitrionesFiltrados.length === 0 && <h1 className={styles.not_found}>No existen anfitriones con esos filtros.</h1>}
       </article>
     </section>
   )

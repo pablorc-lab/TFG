@@ -10,70 +10,43 @@ export default function InquilinosPage() {
 
   const [viajeros, SetViajeros] = useState([]);
   const [viajerosFiltrados, setViajerosFiltrados] = useState([]);
-  const [biografias, setBiografias] = useState([]);
-  
+
+  const [loading, setLoading] = useState(true);
+
   const [filtrosActivos, setFiltrosActivos] = useState(0);
   const [openFilterMenu, setOpenFilterMenu] = useState(null)
   const [buscarFiltrado, setBuscarFiltrado] = useState(false);
   const [filterOptions, setFilterOptions] = useState({
     gustos: [],
     idiomas: [],
-    tiempo_estancia : []
+    tiempo_estancia: []
   });
 
-  /**
-   * Comprueba si el vajero pasado cumple los requisitos del filtrado
-   * @param viajero Objeto del viajero con su información
-   * @returns True si cumple el filtrado
-   */
-  function ViajeroFiltradoCorrecto(viajero, biografia) {
-    let opcionesCumplidas = true; // Indica si el anfitrion cumple todo
-
-    // Verificamos si `filterOptions.gustos` no está vacío
-    if (filterOptions.gustos.length > 0) {
-      const gustosViajeros = [viajero.gusto1.toLowerCase(), , viajero.gusto2.toLowerCase(), viajero.gusto3.toLowerCase()];
-      opcionesCumplidas &= gustosViajeros.some(gusto => filterOptions.gustos.includes(gusto));
-    }
-
-    if(filterOptions.tiempo_estancia.length > 0){
-      opcionesCumplidas &= filterOptions.tiempo_estancia.includes(viajero.tiempo_estancia);
-    }
-    // Si `filterOptions.idiomas` no está vacío
-    if (filterOptions.idiomas.length > 0) {
-      if (biografia == null) return false;
-      const idiomas = biografia.idiomas.split(",");
-      opcionesCumplidas &= idiomas.some(idioma => filterOptions.idiomas.some(filtro => filtro === idioma))
-    }
-
-    return opcionesCumplidas;
-  }
 
   // Obtener los viajeros
   useEffect(() => {
     if (viajeros.length === 0) {
-      // Obtener anfitriones
-      ViajeroService.getAllConDatos().then(response => {
-        // Obtener el id de cada anfitrion y su vivienda
-        SetViajeros(response.data.map(item => item.usuario));
-        setBiografias(response.data.map(item => item.biografia));
-        //console.log(response.data)
-      }).catch(error => console.error("Error al listar los usuarios : ", error));
-    }
-  
-    if (buscarFiltrado && biografias.length > 0){
-      const viajerosFiltrados = viajeros.map(viajero => {
-        const biografia = biografias.find(bio => bio.usuarioID === viajero.id) || null;
-        return ViajeroFiltradoCorrecto(viajero, biografia) && viajero;
-      }).filter(Boolean)
-      setViajerosFiltrados(viajerosFiltrados);
-      console.log(viajerosFiltrados);
+      setLoading(true);
+      // Obtener viajeros
+      ViajeroService.getAll()
+        .then(response => SetViajeros(response.data))
+        .catch(error => console.error("Error al listar los usuarios : ", error))
+        .finally(setLoading(false));
     }
 
-    else if(!buscarFiltrado && viajerosFiltrados.length > 0){
+    if (buscarFiltrado) {
+      setLoading(true);
+      ViajeroService.getViajerosFiltrados(filterOptions)
+        .then(response => setViajerosFiltrados(response.data))
+        .catch(error => "Error al obtener los usuarios " + error)
+        .finally(setLoading(false));
+    }
+
+    else if (!buscarFiltrado && viajerosFiltrados.length > 0) {
       setViajerosFiltrados([]);
     }
 
-    
+
   }, [buscarFiltrado, filterOptions]);
 
 
@@ -104,13 +77,17 @@ export default function InquilinosPage() {
       }
 
       {/* PERFILES DE VIAJEROS  */}
-      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "300px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
-        <ViajProfilesGallery 
-          viajeros={viajeros} 
-          viajerosFiltrados={viajerosFiltrados} 
-          conectados_ID={true} 
-          buscarFiltrado={buscarFiltrado}
-        />
+      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}>
+        {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}
+
+        {!loading &&
+          <ViajProfilesGallery
+            viajeros={viajeros}
+            viajerosFiltrados={viajerosFiltrados}
+            conectados_ID={true}
+            buscarFiltrado={buscarFiltrado}
+          />
+        }
       </Suspense>
     </>
   )

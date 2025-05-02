@@ -7,12 +7,28 @@ class ReservasService {
     return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/list`);
   }
 
-  static getReservasViajero(viajeroID){
-    return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/viajero/${viajeroID}`);
+  static getIngresoAnfitrion(anfitrioID){
+    return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/anfitrion/${anfitrioID}/ingreso`);
+  }
+
+  static gestGastosViajero(viajeroID){
+    return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/viajero/${viajeroID}/gasto`);
+  }
+
+  static getReservasViajero(viajeroID, fechaMes){
+    return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/viajero/${viajeroID}/${fechaMes}`);
   }
   
+  static getReservasAnfitrion(anfitrionID, fechaMes){
+    return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/anfitrion/${anfitrionID}/${fechaMes}`);
+  }
+
   static crearReserva(anfitrionID, viajeroID, fechaInicio, fechaFin){
     return axios.post(`${this.RESERVAS_BASE_REST_API_URL}/crear/${anfitrionID}/${viajeroID}/${fechaInicio}/${fechaFin}`);
+  }
+
+  static cancelarReserva(anfitrionID, viajeroID, fechaInicio, fechaFin){
+    return axios.post(`${this.RESERVAS_BASE_REST_API_URL}/cancelar/${anfitrionID}/${viajeroID}/${fechaInicio}/${fechaFin}`);
   }
 
   static deleteReserva(reservaID){

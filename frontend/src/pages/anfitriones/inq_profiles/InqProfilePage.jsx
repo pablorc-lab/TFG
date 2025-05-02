@@ -48,7 +48,6 @@ export default function InqProfilePage() {
         ].filter(img => img != null));
 
         SetLoading(false);
-
       }
       ).catch(error => console.error("No se encontró el usuario " + error));
     }

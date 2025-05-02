@@ -19,14 +19,24 @@ public class ReservasController {
   @Autowired
   private ReservasService reservasService;
 
-  @GetMapping("/anfitrion/{id}")
-  public List<Reservas> obtenerReservasPorAnfitrion(@PathVariable Long id) {
-    return reservasService.obtenerReservasPorAnfitrion(id);
+  @GetMapping("/anfitrion/{id}/ingreso")
+  public int obtenerIngresosTotalesAnfitrion(@PathVariable Long id) {
+    return reservasService.obtenerIngresosTotalesAnfitrion(id);
   }
 
-  @GetMapping("/viajero/{id}")
-  public List<Reservas> obtenerReservasPorViajero(@PathVariable Long id) {
-    return reservasService.obtenerReservasPorViajero(id);
+  @GetMapping("/viajero/{id}/gasto")
+  public int obtenerGastosTotalesViajero(@PathVariable Long id) {
+    return reservasService.obtenerGastosTotalesViajero(id);
+  }
+
+  @GetMapping("/anfitrion/{id}/{fecha}")
+  public List<Reservas> obtenerReservasPorAnfitrion(@PathVariable Long id, @PathVariable String fecha) {
+    return reservasService.obtenerReservasPorAnfitrion(id, fecha);
+  }
+
+  @GetMapping("/viajero/{id}/{fecha}")
+  public List<Reservas> obtenerReservasPorViajero(@PathVariable Long id, @PathVariable String fecha) {
+    return reservasService.obtenerReservasPorViajero(id, fecha);
   }
 
   @PostMapping("/crear/{anfitrionID}/{viajeroID}/{fechaInicio}/{fechaFin}")

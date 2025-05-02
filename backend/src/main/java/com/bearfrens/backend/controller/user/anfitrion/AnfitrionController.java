@@ -67,7 +67,9 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
       filtros.getViajeros(),
       filtros.getHabitaciones(),
       filtros.getCamas(),
-      filtros.getBanios()
+      filtros.getBanios(),
+      filtros.getCiudad(),
+      filtros.getProvincia()
     );
 
     // Una vez obtenidos todos los anfitriones, filtrar por sus idiomas que se encuentra en la biografia de cada uno

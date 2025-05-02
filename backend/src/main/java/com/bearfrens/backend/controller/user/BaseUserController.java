@@ -15,10 +15,8 @@ import com.bearfrens.backend.service.GestorUsuarioService;
 import com.bearfrens.backend.service.UsuarioService;
 import com.bearfrens.backend.service.biografias.BiografiasService;
 import com.bearfrens.backend.service.ImgBBservice;
-import com.bearfrens.backend.service.reservas.ReservasService;
 import com.bearfrens.backend.service.valoraciones_conexiones.LikesService;
 import com.bearfrens.backend.service.valoraciones_conexiones.ValoracionesService;
-import com.bearfrens.backend.service.viviendas.ViviendasService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +49,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   private GestorUsuarioService gestorUsuarioService;
 
   @Autowired
-  private ViviendasService viviendasService;
-
-  @Autowired
   private ValoracionesService valoracionesService;
 
   @Autowired
@@ -61,9 +56,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
 
   @Autowired
   private LikesService likesService;
-
-  @Autowired
-  private ReservasService reservasService;
 
   @Autowired
   private ImgBBservice imgBBService;

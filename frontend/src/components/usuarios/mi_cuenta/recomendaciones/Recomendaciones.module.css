@@ -1,3 +1,99 @@
+/*? DIALOG PARA ELIMINAR UNA RECOMENDACION O EXPERIENCIA*/
+body:has(.modal[open]) {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.modal::-webkit-scrollbar { width: 15px;}
+.modal::-webkit-scrollbar-button { padding: 5px;}
+.modal::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.35);
+	border-radius: 15px;
+}
+.modal::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0.15);
+	border-radius: 15px;
+}
+
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+}
+
+.modal:focus { outline: none;}
+.modal {
+  overflow: none;
+  pointer-events: none;
+  user-select: none;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 30px;
+  background: white;
+  width: fit-content;
+  pointer-events: auto;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  animation: aparecer 0.25s ease-in-out forwards;
+}
+
+@keyframes aparecer {
+  0% {opacity: 0; transform: translateY(-120px);}
+  100% {opacity: 1; transform: translateY(0px);}
+}
+
+.modal h1 {
+  margin: 20px !important;
+  padding: 0 !important;
+  text-align: center;
+  font-family: "Nunito";
+  border-bottom: none !important;
+}
+
+.modal .user_img {
+  width: 130px;
+  cursor: default !important;
+  margin: 30px auto !important;
+  display: flex;
+  align-items: center;
+}
+
+.modal div {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal button:focus{
+  outline: none;
+}
+.modal button {
+  font-family: "Nunito";
+  border-radius: 50px;
+  cursor: pointer;
+
+  border: 2px solid;
+  width: 170px;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 12px;
+  transition: all 0.1s ease-in-out;
+}
+.modal button:nth-child(2):hover {filter: brightness(0.7);}
+.modal button:nth-child(1) {
+  background-color: transparent;
+  border-color: #d12e2e;
+  color: #d12e2e;
+}
+.modal button:nth-child(1):hover{ 
+  filter: none;
+  color: white;
+  background-color: #d12e2e;
+}
+.modal button:nth-child(2) {
+  border-color: #0a7273;
+  background-color: #0a7273;
+  color: white;
+}
+
+
 .recomendaciones_main h1,
 .add_recomendacion p,
 .recomendaciones_container li h3,

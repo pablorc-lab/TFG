@@ -5,12 +5,13 @@ import EditarPerfil from "../editar_datos/Editar";
 // Maneja tanto experiencias como recomendaciones
 const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userService, setEditedData, userID = null }) => {
   const [isOpen, setIsOpen] = useState(null);
+  const [openModal, setOpenModal] = useState(false); 
 
   const [editarRecomendacionData, setEditarRecomendacionData] = useState([]);
   const [titulosCreados, SetTitulosCreados] = useState([]);
 
   useEffect(() => {
-    if(recomendacionesData){
+    if (recomendacionesData) {
       SetTitulosCreados(recomendacionesData.map(item => item.titulo));
     }
   }, [recomendacionesData]);
@@ -23,15 +24,18 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
     { key: "telefono", label: "Teléfono", icon: "phone" },
   ];
 
-  const deleteRecomendacion = async (titulo) => {
+  const deleteRecomendacion = async () => {
     const nombre_service = esViajero ? "ExperienciasService" : "RecomendacionService";
     const service = (await import(`../../../../services/contenido/${nombre_service}.jsx`)).default;
     const deleteAction = esViajero ? service.deleteExperiencia : service.deleteRecomendacion;
-    
-    deleteAction(userID, titulo)
-    .then(response => console.log(response.data))
-    .catch(error => console.error(error))
-    .finally(() => setEditedData(true));
+
+    deleteAction(userID, openModal)
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error))
+      .finally(() => {
+        setEditedData(true)
+        setOpenModal(false);
+      });
   };
 
   const editRecomendacion = (recomendacionData) => {
@@ -59,6 +63,8 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
         </Suspense>
       }
 
+
+
       <ul className={styles.recomendaciones_container}>
         <li className={styles.add_recomendacion} onClick={() => setIsOpen(true)}>
           <img src="/images/usuarios/account/aniadir_recomendacion.svg" alt="Aniadir recomendacion" />
@@ -69,6 +75,18 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
           ? (
             recomendacionesData.map((recomendacion, index) => (
               <li key={index}>
+
+                {openModal &&
+                  <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
+                    <h1>¿Eliminar {esViajero ? "experiencia" : "recomendacion"}?</h1>
+                    <h2 style={{ textAlign: "center", marginBottom: "25px" }}>{recomendacion.titulo}</h2>
+                    <div>
+                      <button onClick={() => setOpenModal(false)}>CANCELAR</button>
+                      <button onClick={() => deleteRecomendacion()}>ELIMINAR</button>
+                    </div>
+                  </dialog>
+                }
+
                 <div className={styles.action_imgs}>
                   <img
                     src="/images/admin_panel/edit.svg"
@@ -78,7 +96,7 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
                   <img
                     src="/images/usuarios/account/delete_img.svg"
                     alt="delete img"
-                    onClick={() => deleteRecomendacion(recomendacion.titulo)}
+                    onClick={() => setOpenModal(true)}
                   />
                 </div>
 

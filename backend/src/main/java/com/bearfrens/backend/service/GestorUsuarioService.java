@@ -24,6 +24,9 @@ public class GestorUsuarioService {
   public Anfitrion obtenerAnfitrion(Long anfitrionID){
     return anfitrionRepository.findById(anfitrionID).orElse(null);
   }
+  public Viajero obtenerViajero(Long viajeroID){
+    return viajeroRepository.findById(viajeroID).orElse(null);
+  }
 
   public Optional<Anfitrion> obtenerAnfitrionPorIDPrivado(String privateID){
     return anfitrionRepository.findByPrivateID(privateID);
@@ -39,10 +42,6 @@ public class GestorUsuarioService {
 
   public Optional<Viajero> obtenerViajeroPorEmail(String email){
     return viajeroRepository.findByEmail(email);
-  }
-
-  public Viajero obtenerViajero(Long viajeroID){
-    return viajeroRepository.findById(viajeroID).orElse(null);
   }
 
   public List<Viajero> obtenerListaViajeros(List<Long> viajeros_IDs){

@@ -31,9 +31,10 @@ export default function UserPage({
     if (esAnfitrion && match) {
       const cargarReservas = async () => {
         const ReservasService = (await import("../../../services/reservas/ReservasService.jsx")).default;
-        ReservasService.getReservasViajero(userID)
+        ReservasService.getReservasViajero(userID, new Date().toISOString().slice(0, 7))
           .then(response => {
             let fechasReserva = [];
+            console.log(response.data)
             response.data.map(reserva =>
               fechasReserva.push([reserva.fechaInicio, reserva.fechaFin])
             )
@@ -188,7 +189,7 @@ export default function UserPage({
           </div>
 
           {!mensajeReserva && errorFecha &&
-            <p style={{ textAlign: "center", color: "red", backgroundColor: "#ff000048", padding: "5px 0", marginBottom: "15px" }}>
+            <p style={{ textAlign: "center", color: "red", backgroundColor: "#ff00002c", padding: "5px 0", marginBottom: "15px" }}>
               <strong>Ya tienes una reserva entre esas dos fechas</strong>
             </p>
           }

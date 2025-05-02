@@ -6,10 +6,9 @@ import FilteredCitiesList from '../../utilities/filteresCities/FilteredList';
 import FilterMenu from '../filter_menu/FilterMenu';
 
 export default function ViajerosFinalHeader({
+  buscarFiltrado = false,
   defaultActive = "alojamientos",
   setBuscarUsuario = null,
-  buscarUsuario = false,
-  setAnfitrionesEspecificos,
   setBuscarFiltrado,
   filterOptions,
   setFilterOptions,
@@ -64,23 +63,26 @@ export default function ViajerosFinalHeader({
    * Realizar búsqueda de usuario por ciudad o identificador
    */
   useEffect(() => {
-    if (headerStates.location.length === 0 && setBuscarUsuario != null) {
+    // Si no hay nada escrito
+    if (headerStates.location.length === 0) {
       setBuscarUsuario(false);
-      setAnfitrionesEspecificos([]);
+      setFilterOptions(prev => ({
+        ...prev,
+        ciudad: "",
+        provincia: ""
+      }));
     }
 
     else if (realizarBusqueda) {
       // Comprobamos si se está buscando por identificador
       if (headerStates.location.charAt(0) === "@") {
+
         AnfitrionService.getByPrivateID(headerStates.location.slice(1))
-          .then(response => setAnfitrionesEspecificos([response.data.usuario]))
+          .then(response => setAnfitrionesFiltrados([response.data.usuario]))
           .catch(error => {
-            console.error("Error obteniendo anfitriones:", error);
-            setAnfitrionesEspecificos([]);
+            console.error("Error obteniendo anfitriones:", error)
           })
-          .finally(() => {
-            setBuscarUsuario(true);
-          });
+          .finally(setBuscarUsuario(true));
       }
 
       // Se busca por ciudad
@@ -89,17 +91,17 @@ export default function ViajerosFinalHeader({
           .split(",")
           .map(word => word.replace(/\s*\(.*?\)\s*/g, "").trim().charAt(0).toLowerCase() + word.replace(/\s*\(.*?\)\s*/g, "").trim().slice(1));
 
-        AnfitrionService.getViviendasPorUbicacion(ciudad, provincia)
-          .then(response => setAnfitrionesEspecificos(response.data))
-          .catch(error => console.error("Error obteniendo anfitriones:", error))
-          .finally(() => {
-            setBuscarUsuario(true);
-          });
+        setFilterOptions(prev => ({
+          ...prev,
+          ciudad: ciudad,
+          provincia: provincia
+        }));
+        setBuscarFiltrado(true);
       }
     }
 
     setRealizarBusqueda(false);
-  }, [realizarBusqueda, headerStates.location])
+  }, [realizarBusqueda, headerStates.location, buscarFiltrado])
 
 
   return (

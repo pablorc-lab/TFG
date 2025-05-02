@@ -14,4 +14,22 @@ public class FiltroAnfitrionDTO {
   private Integer camas;
   private Integer banios;
   private List<String> idiomas;
+  private String ciudad;
+  private String provincia;
+
+  @Override
+  public String toString() {
+    return "FiltroAnfitrionDTO{" +
+      "gustos=" + gustos +
+      ", max=" + max +
+      ", min=" + min +
+      ", viajeros=" + viajeros +
+      ", habitaciones=" + habitaciones +
+      ", camas=" + camas +
+      ", banios=" + banios +
+      ", idiomas=" + idiomas +
+      ", ciudad=" + ciudad +
+      ", provincia=" + provincia +
+      '}';
+  }
 }

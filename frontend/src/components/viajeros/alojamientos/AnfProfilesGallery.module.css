@@ -13,7 +13,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 130px;
-  row-gap: 100px;
+  row-gap: 80px;
 }
 .card_users div {
   z-index: 0;

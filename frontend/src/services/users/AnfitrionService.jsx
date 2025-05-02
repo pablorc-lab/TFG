@@ -8,9 +8,9 @@ class AnfitrionService extends UsuarioService {
     super(AnfitrionService.ANFITRION_BASE_REST_API_URL);
   }
 
-  // Métodos específicos de un anfitrion
-  getViviendasPorUbicacion(ciudad, provincia) {
-    return axios.get(`${this.baseUrl}/viviendas/${ciudad}-${provincia}`);
+  // Obtener anfitriones según ciertos filtros
+  getAnfitrionesFiltrados(filtros){
+    return axios.post(`${this.baseUrl}/filtrar`, filtros);
   }
 
   eliminarVivienda(anfitrionID) {

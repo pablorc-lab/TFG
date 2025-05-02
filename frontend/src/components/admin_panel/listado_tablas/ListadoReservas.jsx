@@ -46,8 +46,8 @@ const ListadoReservas = ({ styles }) => {
         {reservas.map(reserva => (
           <tr key={reserva.id}>
             <td>{reserva.id}</td>
-            <td>{reserva.anfitrion_id}</td>
-            <td>{reserva.viajero_id}</td>
+            <td>{reserva.anfitrion.id}</td>
+            <td>{reserva.viajero.id}</td>
             <td>{reserva.fechaInicio}</td>
             <td>{reserva.fechaFin}</td>
             <td>{reserva.precio_noche} &euro;</td>

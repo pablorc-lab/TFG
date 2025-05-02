@@ -1,3 +1,104 @@
+/*? DIALOG PARA CANCELAR RESERVA*/
+body:has(.modal[open]) {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.modal::-webkit-scrollbar { width: 15px;}
+.modal::-webkit-scrollbar-button { padding: 5px;}
+.modal::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.35);
+	border-radius: 15px;
+}
+.modal::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0.15);
+	border-radius: 15px;
+}
+
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+.modal:focus { outline: none;}
+.modal {
+  overflow: none;
+  pointer-events: none;
+  user-select: none;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 30px;
+  background: white;
+  width: fit-content;
+  pointer-events: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  animation: aparecer 0.25s ease-in-out forwards;
+}
+
+@keyframes aparecer {
+  0% {opacity: 0; transform: translateY(-120px);}
+  100% {opacity: 1; transform: translateY(0px);}
+}
+
+.modal h1 {
+  color: #0a7273;
+  font-size: 33px;
+  margin: 20px !important;
+  padding: 0 !important;
+  text-align: center;
+  font-family: "Nunito";
+}
+
+.modal .user_img {
+  width: 130px;
+  cursor: default !important;
+  margin: 30px auto !important;
+  display: flex;
+  align-items: center;
+}
+
+.modal div {
+  display: flex;
+  justify-content: space-around;
+  gap: 40px;
+}
+.modal div:last-child {
+  padding-top: 25px;
+  border-top: 2px solid lightgray;
+}
+.modal button:focus{
+  outline: none;
+}
+.modal button {
+  font-family: "Nunito";
+  border-radius: 50px;
+  cursor: pointer;
+
+  border: 2px solid;
+  width: 170px;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 12px;
+  transition: all 0.1s ease-in-out;
+}
+.modal button:nth-child(2):hover {filter: brightness(0.7);}
+.modal button:nth-child(1) {
+  background-color: transparent;
+  border-color: #d12e2e;
+  color: #d12e2e;
+}
+.modal button:nth-child(1):hover{ 
+  filter: none;
+  color: white;
+  background-color: #d12e2e;
+}
+.modal button:nth-child(2) {
+  border-color: #0a7273;
+  background-color: #0a7273;
+  color: white;
+}
+
+
 .historial_main h2, .historial_main p, .historial_main h1 {margin: 0;}
 
 .historial_main {
@@ -6,6 +107,27 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 0 30px;
 }
+
+/*? CANCELAR RESERVA RECOMENDACIONES*/
+.action_imgs{
+  user-select: none;
+  display: flex;
+  gap: 20px;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+.action_imgs img {
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  width: 30px;
+  padding: 3px;
+  border-radius: 10px;
+  box-shadow: 0 0 7px rgba(255, 0, 0, 0.712);
+  background-color: #ff5757;
+}
+
+.action_imgs img:hover {filter: brightness(0.7);}
 
 /*? RESUMEN GENERAL*/
 .summary {
@@ -74,6 +196,7 @@
 }
 
 .historial_user_article {
+  position: relative;
   border-radius: 10px;
   font-family: "Nunito";
   padding: 15px;

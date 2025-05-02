@@ -17,7 +17,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const [viviendaData, setViviendaData] = useState(null);
   const [contenidoData, setContenidoData] = useState(null);
     
-  // Comprueba si hay valores vacios, los gustos e imagenes pueden ser null
+  // Comprueba si hay valores vacios, los gustos e imágenes pueden ser null
   const hayCamposNull = (data) => {
     // Comprobar datos usuario
     const valoresNulos = Object.entries(data).some(([key, value]) =>

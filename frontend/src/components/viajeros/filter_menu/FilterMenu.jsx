@@ -39,6 +39,11 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
       setRango({ min: Number(valor), max: Number(valor) });
 
     }
+
+    else if(tipo == "max" && Number(valor) < rango.min){
+      setRango({ min: Number(valor), max: Number(valor) });
+    }
+
     else {
       setRango({ ...rango, [tipo]: Number(valor) });
     }
@@ -53,12 +58,13 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
   const handleChangeViviendaValue = (index, item) => {
     SetOpcionesViviendaEscogida(prev => ({
       ...prev,
-      [index]: prev[index] === item ? -1 : item
+      [index]: prev[index] === item ? null : item
     }))
   }
 
   const saveFilter = () => {
-    setFilterOptions({
+    setFilterOptions(prev => ({
+      ...prev,
       gustos: gustos_actuales,
       max: rango.max,
       min: rango.min,
@@ -67,14 +73,14 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
       camas: opcionesViviendaEscogida[2],
       banios: opcionesViviendaEscogida[3],
       idiomas: UserIdiomas,
-    });
+    }));   
 
     let filtros_activos = 0;
     if (rango.max !== 0) filtros_activos++;
-    if (opcionesViviendaEscogida[0] !== -1) filtros_activos++;
-    if (opcionesViviendaEscogida[1] !== -1) filtros_activos++;
-    if (opcionesViviendaEscogida[2] !== -1) filtros_activos++;
-    if (opcionesViviendaEscogida[3] !== -1) filtros_activos++;
+    if (opcionesViviendaEscogida[0] !== null) filtros_activos++;
+    if (opcionesViviendaEscogida[1] !== null) filtros_activos++;
+    if (opcionesViviendaEscogida[2] !== null) filtros_activos++;
+    if (opcionesViviendaEscogida[3] !== null) filtros_activos++;
     if (gustos_actuales.length > 0) filtros_activos += gustos_actuales.length;
     if (UserIdiomas.length > 0) filtros_activos += UserIdiomas.length;;
 
@@ -84,20 +90,21 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
   }
 
   const deleteFilters = () => {
-    setFilterOptions({
+    setFilterOptions(prev => ({
+      ...prev,
       gustos: [],
       max: 0,
       min: 0,
-      viajeros: -1,
-      habitaciones: -1,
-      camas: -1,
-      banios: -1,
+      viajeros: null,
+      habitaciones: null,
+      camas: null,
+      banios: null,
       idiomas: [],
-    });
+    }));
+    
     setFiltrosActivos(0);
     setOpenFilterMenu(false);
     setBuscarFiltrado(false);
-    setAnfitrionesFiltrados([]);
   }
 
   return (
@@ -139,7 +146,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
               <input
                 id="min"
                 type="text"
-                value={"€ " + rango.min}
+                value={rango.min}
                 onChange={(e) => handleChangeRango(e, "min")}
               />
             </div>
@@ -149,7 +156,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
               <input
                 id="max"
                 type="text"
-                value={"€ " + rango.max}
+                value={rango.max}
                 onChange={(e) => handleChangeRango(e, "max")}
               />
             </div>
@@ -163,13 +170,13 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
               <div key={index}>
                 <label>{opcion.label}</label>
                 <ul className={styles.lista_botones}>
-                  {[1, 2, 3, "4+"].map((item) => (
+                  {[1, 2, 3, 4].map((item) => (
                     <li key={item}>
                       <button
-                        onClick={() => handleChangeViviendaValue(index, item === "4+" ? 4 : item)}
-                        className={opcionesViviendaEscogida[index] === item ? styles.opcion_activa : ""}
+                        onClick={() => handleChangeViviendaValue(index, item)}
+                        className={opcionesViviendaEscogida[index] === item  ? styles.opcion_activa : ""}
                       > 
-                        {item}
+                        {item === 4 ? "4+" : item}
                       </button>
                     </li>
                   ))}
