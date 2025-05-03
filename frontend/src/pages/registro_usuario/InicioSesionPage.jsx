@@ -88,7 +88,7 @@ export default function InicioSesionPage() {
                     onChange={(e) => setLoginRequest(prev => ({ ...prev, password: e.target.value }))}
                   />
                 </div>
-                <Link style={{ textAlign: "right" }} to="/">¿Contraseña olvidada?</Link>
+                <Link style={{ textAlign: "right", marginTop : "3px" }} to="/">¿Contraseña olvidada?</Link>
               </fieldset>
 
               <input

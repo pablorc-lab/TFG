@@ -1,6 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import styles from "./Editar.module.css"
-const AnfitrionService = lazy(() => import("../../../../services/users/AnfitrionService"));
 const FilteredList = lazy(() => import("../../../utilities/filteresCities/FilteredList"));
 
 // Menu que aparece al editar "Mi Cuenta"

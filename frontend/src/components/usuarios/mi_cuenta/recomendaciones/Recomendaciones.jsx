@@ -5,7 +5,8 @@ import EditarPerfil from "../editar_datos/Editar";
 // Maneja tanto experiencias como recomendaciones
 const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userService, setEditedData, userID = null }) => {
   const [isOpen, setIsOpen] = useState(null);
-  const [openModal, setOpenModal] = useState(false); 
+  const [openModal, setOpenModal] = useState(false);
+  const [tituloABorrar, setTituloABorrar] = useState("");
 
   const [editarRecomendacionData, setEditarRecomendacionData] = useState([]);
   const [titulosCreados, SetTitulosCreados] = useState([]);
@@ -29,11 +30,12 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
     const service = (await import(`../../../../services/contenido/${nombre_service}.jsx`)).default;
     const deleteAction = esViajero ? service.deleteExperiencia : service.deleteRecomendacion;
 
-    deleteAction(userID, openModal)
+    deleteAction(userID, tituloABorrar)
       .then(response => console.log(response.data))
       .catch(error => console.error(error))
       .finally(() => {
-        setEditedData(true)
+        setEditedData(true);
+        setTituloABorrar("");
         setOpenModal(false);
       });
   };
@@ -63,7 +65,16 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
         </Suspense>
       }
 
-
+      {openModal &&
+        <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
+          <h1>¿Eliminar {esViajero ? "experiencia" : "recomendacion"}?</h1>
+          <h2 style={{ textAlign: "center", marginBottom: "25px" }}>{tituloABorrar}</h2>
+          <div>
+            <button onClick={() => {setOpenModal(false); setTituloABorrar("")}}>CANCELAR</button>
+            <button onClick={() => deleteRecomendacion()}>ELIMINAR</button>
+          </div>
+        </dialog>
+      }
 
       <ul className={styles.recomendaciones_container}>
         <li className={styles.add_recomendacion} onClick={() => setIsOpen(true)}>
@@ -75,18 +86,6 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
           ? (
             recomendacionesData.map((recomendacion, index) => (
               <li key={index}>
-
-                {openModal &&
-                  <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
-                    <h1>¿Eliminar {esViajero ? "experiencia" : "recomendacion"}?</h1>
-                    <h2 style={{ textAlign: "center", marginBottom: "25px" }}>{recomendacion.titulo}</h2>
-                    <div>
-                      <button onClick={() => setOpenModal(false)}>CANCELAR</button>
-                      <button onClick={() => deleteRecomendacion()}>ELIMINAR</button>
-                    </div>
-                  </dialog>
-                }
-
                 <div className={styles.action_imgs}>
                   <img
                     src="/images/admin_panel/edit.svg"
@@ -96,7 +95,10 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
                   <img
                     src="/images/usuarios/account/delete_img.svg"
                     alt="delete img"
-                    onClick={() => setOpenModal(true)}
+                    onClick={() => {
+                      setTituloABorrar(recomendacion.titulo);
+                      setOpenModal(true);
+                    }}
                   />
                 </div>
 
@@ -113,7 +115,7 @@ const RecomendacionesMiCuenta = ({ esViajero, recomendacionesData = [], userServ
                 )}
               </li>
             ))
-          ) : <h2 style={{ textAlign: "center" }}> No se ha creado ningun recomendacion</h2>
+          ) : <h2 style={{ textAlign: "center" }}> No se ha creado ninguna {esViajero ? "experiencia" : "recomendacion"}</h2>
         }
       </ul>
     </section>

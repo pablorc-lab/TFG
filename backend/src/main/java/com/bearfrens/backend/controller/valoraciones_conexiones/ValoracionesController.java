@@ -15,8 +15,25 @@ import java.util.*;
 public class ValoracionesController {
   private final ValoracionesService valoracionesService;
 
+  @GetMapping("valoraciones/all")
+  public List<Valoraciones> obtenerTodasValoraciones() {
+    return valoracionesService.obtenerTodo();
+  }
+
   /**
-   * Obtener todas las valoraciones de un usuario RECEPTOR
+   * Obtener las valoraciones enviadas a los usuarios especificados.
+   * @param tipo_usuario Tipo de usuario (ej. "viajero" o "anfitrion")
+   * @param usuarioID ID del usuario emisor
+   * @param receptores Lista de IDs de los usuarios receptores
+   * @return Mapa de IDs de usuarios con booleano indicando si han sido valorados o no
+   */
+  @PostMapping("/{tipo_usuario}/{usuarioID}/valoraciones/estado")
+  public Map<Long, Boolean> obtenerValoracionEnviadasAUsuarios( @PathVariable String tipo_usuario, @PathVariable Long usuarioID,  @RequestBody List<Long> receptores) {
+    return valoracionesService.obtenerValoracionEnviadasAUsuarios(usuarioID, tipo_usuario, receptores);
+  }
+
+  /**
+   * Obtener todas las valoraciones ENVIADAS de un usuario
    * @param tipo_usuario Tipo de usuario emisor
    * @param usuarioID ID del usuario emisor
    * @return Listado con las valoraciones

@@ -31,7 +31,7 @@ export default function UserPage({
     if (esAnfitrion && match) {
       const cargarReservas = async () => {
         const ReservasService = (await import("../../../services/reservas/ReservasService.jsx")).default;
-        ReservasService.getReservasViajero(userID, new Date().toISOString().slice(0, 7))
+        ReservasService.getReservasViajero(emisorID, new Date().toISOString().slice(0, 7))
           .then(response => {
             let fechasReserva = [];
             console.log(response.data)
@@ -81,7 +81,7 @@ export default function UserPage({
     if(reservaExistente) return;
     
     const ReservasService = (await import("../../../services/reservas/ReservasService.jsx")).default;
-    ReservasService.crearReserva(emisorID, userID, llegada, salida)
+    ReservasService.crearReserva(userID, emisorID, llegada, salida)
       .then(response => {
         console.log(response.data);
         setMensajeReserva(true);

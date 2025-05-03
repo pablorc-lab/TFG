@@ -25,6 +25,9 @@ export default function AdminHeader({ userType }) {
           <Link to="/admin-panel/matches" className={`${userType === "matches" && styles.active}`}>
             Matches
           </Link>
+          <Link to="/admin-panel/valoraciones" className={`${userType === "valoraciones" && styles.active}`}>
+            Valoraciones
+          </Link>
         </nav>
       </header>
     </>

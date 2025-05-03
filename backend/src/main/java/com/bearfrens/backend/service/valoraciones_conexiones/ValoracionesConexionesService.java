@@ -31,6 +31,29 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
   private final MatchesRepository matchesRepository;
 
 
+  public List<T> obtenerTodo(){
+    List<T> lista = repository.findAll();
+
+    // SI es una valoración, hay que obtener la imagen de perfil y nombre del usuario
+    if(!lista.isEmpty() && lista.getFirst() instanceof Valoraciones){
+
+
+      for(Valoraciones valoracion : (List<Valoraciones>) lista){
+        int tipo_emisor = valoracion.getTipoUsuario() == 1 ? 2 : 1;
+        Usuario emisor;
+
+        if(tipo_emisor == 1){
+          emisor = gestorUsuarioService.obtenerAnfitrion(valoracion.getEmisorID());
+        } else{
+          emisor = gestorUsuarioService.obtenerViajero(valoracion.getEmisorID());
+        }
+
+        valoracion.setEmisor_profile_img(emisor.getProfileImage());
+        valoracion.setEmisor_nombre(emisor.getNombre() + " " + emisor.getApellido().charAt(0));
+      }
+    }
+    return lista;
+  }
   /**
    * Devuelve una lista de viajeros, dado el ID del anfitrión receptor
    * @param receptorID ID del anfitrión receptor

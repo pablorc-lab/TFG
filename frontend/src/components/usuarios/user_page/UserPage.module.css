@@ -270,6 +270,7 @@
 }
 
 .valoraciones {
+  margin-top: 70px;
   position: relative;
 }
 
@@ -277,6 +278,7 @@
 
 @media (min-width:1351px) {
   .main {
+    padding-top: 50px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 7vw;
@@ -327,4 +329,8 @@
 
   .user_recomendations p { font-size: 20px;} 
   .user_recomendations h3 {font-size: 21px;}
+
+  .valoraciones {
+    margin-top: 20px;
+  }
 }

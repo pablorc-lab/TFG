@@ -40,7 +40,7 @@ export default function AnfProfilePage() {
 
   // Obtener datos del usuario si no hay y se tiene su id
   useEffect(() => {
-    if (id && anfitrionInfo.length === 0) {
+    if (emisorID && anfitrionInfo.length === 0) {
       AnfitrionService.getById(id).then(response => {
         //console.log(response.data);
         SetAnfitrionInfo(response.data);

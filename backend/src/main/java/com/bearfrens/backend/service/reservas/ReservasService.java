@@ -170,7 +170,7 @@ public class ReservasService {
     Reservas reserva = reservasRepository.findByAnfitrionAndViajeroAndFechaInicioAndFechaFin(anfitrion, viajero, fechaInicio, fechaFin);
 
     // La reserva tiene que tener un estado adecuado
-    if (reserva != null && !reserva.getEstado().equals(Reservas.ReservaType.FINALIZADA) && !reserva.getEstado().equals(Reservas.ReservaType.CANCELADA)) {
+    if (reserva != null && reserva.getEstado().equals(Reservas.ReservaType.PENDIENTE)) {
       reserva.setEstado(Reservas.ReservaType.CANCELADA);
 
       // Decrementar los contadores de reservas y viajes

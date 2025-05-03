@@ -6,6 +6,7 @@ import ListadoViviendas from "../../components/admin_panel/listado_tablas/Listad
 import ListadoMatches from "../../components/admin_panel/listado_tablas/ListadoMatches";
 import ListadoLikes from "../../components/admin_panel/listado_tablas/ListadoLikes";
 import ListadoReservas from "../../components/admin_panel/listado_tablas/ListadoReservas";
+import ListadoValoraciones from "../../components/admin_panel/listado_tablas/ListadoValoraciones";
 
 export default function ListTablasPage() {
   const { userType } = useParams();
@@ -18,7 +19,7 @@ export default function ListTablasPage() {
       <article className={styles.container}>
         <h2><span>{userType}</span></h2>
 
-        {userType !== "matches" && userType !== "likes" && userType !== "reservas" &&
+        {userType !== "matches" && userType !== "likes" && userType !== "reservas" && userType !== "valoraciones" &&
           <div className={styles.button_list}>
             <Link to={`/admin-panel/${userType}/crear`} className={styles.link_list}>
               Agregar {userType}
@@ -32,6 +33,7 @@ export default function ListTablasPage() {
           {userType === "reservas" && <ListadoReservas styles={styles} />}
           {userType === "likes" && <ListadoLikes styles={styles} />}
           {userType === "matches" && <ListadoMatches styles={styles} />}
+          {userType === "valoraciones" && <ListadoValoraciones styles={styles} />}
         </section>
       </article>
     </>

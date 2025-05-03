@@ -64,7 +64,7 @@ export default function ViajerosFinalHeader({
    */
   useEffect(() => {
     // Si no hay nada escrito
-    if (headerStates.location.length === 0) {
+    if (headerStates.location.length === 0 && setBuscarUsuario) {
       setBuscarUsuario(false);
       setFilterOptions(prev => ({
         ...prev,

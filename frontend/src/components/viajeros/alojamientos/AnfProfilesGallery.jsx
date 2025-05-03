@@ -20,11 +20,11 @@ export default function Anf_Profiles_Gallery({ anfitriones = [], buscarUsuario =
       const id_viajero = decoded.jti;
       setViajeroID(id_viajero); // JTI : Id del token (almacena el id del usuario viajero)
 
-      if (conectados_ID && conexionesID.length === 0) {
-        LikesService.getAllEnviados("viajeros", id_viajero).then(response => {
-          setConexionesID(response.data.map(usuario => usuario.usuarioID));
-        }).catch(error => "Error al obtener los likes " + error)
-      }
+
+      LikesService.getAllEnviados("viajeros", id_viajero).then(response => {
+        setConexionesID(response.data.map(usuario => usuario.usuarioID));
+      }).catch(error => "Error al obtener los likes " + error)
+
     }
     SetLoading(false);
   }, [anfitrionesFiltrados, anfitriones, buscarFiltrado, buscarUsuario])

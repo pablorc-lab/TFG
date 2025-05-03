@@ -1,13 +1,21 @@
 import styles from "./HistorialReservas.module.css"
 import { useEffect, useRef, useState } from "react";
 import ReservasService from "../../../../services/reservas/ReservasService.jsx";
+import ValoracionesService from "../../../../services/valoraciones/ValoracionesService.jsx";
 
 const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, reservasViajesTotales = 0 }) => {
   const [reservasData, setReservasData] = useState([]);
+  const [estadoValoraciones, setEstadoValoraciones] = useState({});
+
   const [gastoIngreso, setGastoIngreso] = useState(0); // Estado para guardar el total
 
   const [editedData, setEditedData] = useState(false);
   const [openModal, setOpenModal] = useState(false); // Modal para cancelar reserva
+
+  const [openValorar, setOpenValorar] = useState(false);
+  const [hoveredStar, setHoveredStar] = useState(0);
+  const [valueStar, setValueStar] = useState(0);
+  const [opinionValue, setOpinionValue] = useState("");
 
   const [fechaHistorial, setFechaHistorial] = useState(new Date().toISOString().slice(0, 7));
   const inputReservaRef = useRef(null);
@@ -21,7 +29,16 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
         : ReservasService.getReservasAnfitrion(userID, fechaHistorial);
 
       obtenerReservas
-        .then(response => setReservasData(response.data))
+        .then(response => {
+          setReservasData(response.data);
+          
+          const receptoresIDs = new Set(response.data.map(reserva => esViajero ? reserva.anfitrion.id : reserva.viajero.id));
+
+          // Ahora guardamos el estado de esas reservas para ver si se ha dejado valoración o no
+          ValoracionesService.obtenerValoracionEstado(esViajero ? "viajeros" : "anfitriones", userID, [...receptoresIDs])
+          .then(response => setEstadoValoraciones(response.data))
+          .catch(error => "Error al obtener el estado " + error);
+        })
         .catch(error => "Error al obtener reservas para esa fecha " + error);
     }
   }, [editedData, fechaHistorial]);
@@ -119,6 +136,16 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
         setOpenModal(false);
       });
   }
+  
+  const crearValoracion = (receptorID) => {
+    ValoracionesService.crearValoracion(esViajero ? "viajeros" : "anfitriones", userID, receptorID)
+    .then(response => console.log("Valoración creada con éxito"))
+    .catch(error => "Error al crear la valoración " + error)
+    .finally(() => {
+      setEditedData(true);
+      setOpenValorar(false);
+    });
+  };
 
   return (
     <section className={styles.historial_main}>
@@ -159,7 +186,8 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
 
           return (
             <article key={index} className={styles.historial_user_article}>
-              {openModal &&
+
+              {openModal && user.estado === "PENDIENTE" &&
                 <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
                   <h1>¿Anular reserva?</h1>
                   <div>
@@ -175,13 +203,52 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
                 </dialog>
               }
 
-              {user.estado !== "CANCELADA" && user.estado !== "FINALIZADA" &&
-                <div className={styles.action_imgs}>
-                  <img
-                    src="/images/usuarios/account/delete_img.svg"
-                    alt="delete img"
-                    onClick={() => setOpenModal(true)}
-                  />
+              {user.estado === "PENDIENTE" &&
+                <div className={styles.action_imgs_1} onClick={() => setOpenModal(true)}>
+                  <p>Anular</p>
+                  <img src="/images/usuarios/account/anular.svg" alt="delete img" />
+                </div>
+              }
+
+              {openValorar && !estadoValoraciones[esViajero ? user.anfitrion.id : user.viajero.id] &&
+                <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
+                  <h1>Valorar {esViajero ? "viajero" : "anfitrión"}</h1>
+                  <div>
+                    <img src={esViajero ? user.anfitrion.profile_image : user.viajero.profile_image} alt="Imagen perfil" className={styles.user_profile_img} style={{ width: "100px" }} />
+                  </div>
+
+                  <div className={styles.modal_valorar}>
+                    {[1, 2, 3, 4, 5].map((index) => (
+                      <img
+                        key={index}
+                        src={`/images/usuarios/account/valorar_star${(valueStar >= index) || index <= hoveredStar ? "_full" : ""}.svg`}
+                        alt="star"
+                        onMouseEnter={() => setHoveredStar(index)}
+                        onMouseLeave={() => setHoveredStar(0)}
+                        onClick={() => setValueStar(index)}
+                      />
+                    ))}
+                  </div>
+
+                  <textarea
+                    value={opinionValue}
+                    onChange={(e) => setOpinionValue(e.target.value)}
+                    spellCheck="false"
+                    name="opinión"
+                    placeholder="Deja una opinión al usuario"
+                  >
+                  </textarea>
+                  <div>
+                    <button onClick={() => { setOpenValorar(false); setValueStar(0); setHoveredStar(0); setOpinionValue(""); }}>CANCELAR</button>
+                    <button disabled={valueStar === 0 || opinionValue === ""} onClick={() => crearValoracion(esViajero ? user.anfitrion.id : user.viajero.id)}>GUARDAR</button>
+                  </div>
+                </dialog>
+              }
+
+              {user.estado === "FINALIZADA" && !estadoValoraciones[esViajero ? user.anfitrion.id : user.viajero.id] &&
+                <div className={styles.action_imgs_2} onClick={() => setOpenValorar(true)}>
+                  <p>Valorar</p>
+                  <img src="/images/usuarios/account/valorar.svg" alt="delete img" />
                 </div>
               }
 

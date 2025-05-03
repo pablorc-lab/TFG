@@ -31,7 +31,7 @@ body:has(.modal[open]) {
   background: white;
   width: fit-content;
   pointer-events: auto;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   animation: aparecer 0.25s ease-in-out forwards;
 }
 
@@ -57,7 +57,7 @@ body:has(.modal[open]) {
   align-items: center;
 }
 
-.modal div {
+.modal div:not(.modal_valorar){
   display: flex;
   justify-content: space-around;
   gap: 40px;
@@ -66,6 +66,34 @@ body:has(.modal[open]) {
   padding-top: 25px;
   border-top: 2px solid lightgray;
 }
+
+.modal_valorar {
+  display: flex;
+  margin: 10px 0;
+  gap: 0px;
+  justify-content: center;
+}
+.modal_valorar img {
+  width: 60px;
+}
+
+.modal textarea {
+  min-height: 120px;
+  max-height: 400px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 2px solid #0a7273;
+  padding: 10px;
+  font-family: "Nunito";
+  font-size: 18px;
+  resize: vertical; 
+  width: 390px;
+}
+.modal textarea:focus {
+  box-shadow: 5px 5px #0a7173b2;
+  outline: none;
+}
+
 .modal button:focus{
   outline: none;
 }
@@ -109,25 +137,42 @@ body:has(.modal[open]) {
 }
 
 /*? CANCELAR RESERVA RECOMENDACIONES*/
-.action_imgs{
+.action_imgs_1, .action_imgs_2{
+  cursor: pointer;
   user-select: none;
   display: flex;
   gap: 20px;
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 15px;
 }
-.action_imgs img {
+.action_imgs_1 img, .action_imgs_2 img{
   aspect-ratio: 1 / 1;
-  cursor: pointer;
+  border-radius: 10px;
   width: 30px;
   padding: 3px;
+}
+
+.action_imgs_2, .action_imgs_1{
+  padding: 3px 5px 3px 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
   border-radius: 10px;
+  gap: 0;
+  justify-content: right;
+  align-items: center;
+}
+
+.action_imgs_2 {  
+  box-shadow: 0 0 7px rgba(6, 114, 255, 0.712);
+  background-color: rgba(6, 114, 255, 0.712);
+}
+.action_imgs_1 {
   box-shadow: 0 0 7px rgba(255, 0, 0, 0.712);
   background-color: #ff5757;
 }
-
-.action_imgs img:hover {filter: brightness(0.7);}
+.action_imgs_1:hover, .action_imgs_2:hover {filter: brightness(0.7);}
 
 /*? RESUMEN GENERAL*/
 .summary {
@@ -202,12 +247,14 @@ body:has(.modal[open]) {
   padding: 15px;
   background-color: rgba(238, 238, 238, 0.322);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  outline: 2px solid lightgray;
-  transition: outline 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  outline: 1px solid rgba(211, 211, 211, 0.712);
+  box-shadow: 4px 4px 10px rgba(211, 211, 211, 0.767);
+
+  transition: outline 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
 }
 .historial_user_article:hover {
   outline: 2px solid #0a7273;
-  box-shadow: 8px 8px #0a717398;
+  box-shadow: 6px 6px #0a717398;
 }
 .historial_user_info {
   display: flex;
@@ -261,6 +308,10 @@ body:has(.modal[open]) {
 .details p { 
   font-size: 18px;
   color:rgb(65, 65, 65);
+  font-weight: 550;
+}
+.details p strong {
+  font-weight: 700;
 }
 .details span {
   color: #737373;
