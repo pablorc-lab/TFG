@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 // Permitir que nuestra aplicación deje que react desde es enlace acceda a los datos
 @CrossOrigin(origins = "http://localhost:3000")
@@ -36,17 +33,25 @@ public class ViajeroController extends BaseUserController<Viajero, ViajeroReposi
   }
 
   /**
-   * Devuelve la lista de viajeros dado distintos filtros que debe seguir
-   * @param filtros Lista de viajeros
-   * @return Lista de viajeros filtrados
+   * Devuelve una lista de viajeros que cumplen con los filtros especificados.
+   *
+   * @param filtros Objeto con los criterios de filtrado
+   * @param pagina Número de página solicitada para la paginación.
+   * @param tamanio Cantidad de elementos por página.
+   * @return Un mapa con la lista de viajeros filtrados y un indicador de si hay más resultados.
    */
-  @PostMapping("/filtrar")
-  public List<Viajero> obtenerAnfitrionesFiltrados(@RequestBody FiltroViajeroDTO filtros){
+  @PostMapping("/filtrar/{pagina}/{tamanio}")
+  public Map<String, Object> obtenerAnfitrionesFiltrados(@RequestBody FiltroViajeroDTO filtros, @PathVariable int pagina, @PathVariable int tamanio){
     // Crear la especificación de búsqueda con los parámetros recibidos
     ViajeroSpecification spec = new ViajeroSpecification(filtros.getGustos(), filtros.getTiempo_estancia());
 
     // Una vez obtenidos todos los anfitriones, filtrar por sus idiomas que se encuentra en la biografia de cada uno
     List<Viajero> viajeros = viajeroSpecificationRepository.findAll(spec);
+
+    int start = pagina * tamanio;
+    int end = Math.min(start + tamanio, viajeros.size());
+    boolean hasMore = end < viajeros.size();
+    viajeros = viajeros.subList(start, end);
 
     if(filtros.getIdiomas() != null && !filtros.getIdiomas().isEmpty()){
       viajeros = viajeros.stream().filter(viajero -> {
@@ -62,8 +67,11 @@ public class ViajeroController extends BaseUserController<Viajero, ViajeroReposi
       }).toList();
     }
 
-    // Usar la especificación para realizar la consulta
-    return viajeros;
+    Map<String, Object> response = new HashMap<>();
+    response.put("data", viajeros);
+    response.put("hasMore", hasMore);
+
+    return response;
   }
 
   // Eliminar un viajero

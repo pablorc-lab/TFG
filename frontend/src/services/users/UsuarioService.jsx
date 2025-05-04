@@ -11,7 +11,7 @@ class UsuarioService {
     return axios.get(this.baseUrl);
   }
 
-  getAllPaginación(pagina, tamanio) {
+  getAllPaginacion(pagina, tamanio) {
     return axios.get(`${this.baseUrl}/paginacion/${pagina}/${tamanio}`);
   }
 

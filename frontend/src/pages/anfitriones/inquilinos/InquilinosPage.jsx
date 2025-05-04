@@ -11,6 +11,12 @@ export default function InquilinosPage() {
   const [viajeros, SetViajeros] = useState([]);
   const [viajerosFiltrados, setViajerosFiltrados] = useState([]);
 
+  const [viajerosObtenidos, setViajerosObtenidos] = useState(0);
+  const [hasMore, setHasMore] = useState(true); // Comprueba si hay mas viajeros por buscar
+
+  const [hasMoreFiltrados, setHasMoreFiltrados] = useState(true); // Comprueba si hay mas viajeros por buscar filtrados
+  const [filtradosObtenidos, setFiltradosObtenidos] = useState(0);
+
   const [loading, setLoading] = useState(true);
 
   const [filtrosActivos, setFiltrosActivos] = useState(0);
@@ -22,32 +28,45 @@ export default function InquilinosPage() {
     tiempo_estancia: []
   });
 
-
   // Obtener los viajeros
   useEffect(() => {
-    if (viajeros.length === 0) {
+    if (hasMore && !buscarFiltrado) {
       setLoading(true);
       // Obtener viajeros
-      ViajeroService.getAll()
-        .then(response => SetViajeros(response.data))
+      ViajeroService.getAllPaginacion(viajerosObtenidos, 6)
+        .then(response => {
+          SetViajeros(prev => [...prev, ...response.data.data])
+          setHasMore(response.data.hasMore);
+        })        
         .catch(error => console.error("Error al listar los usuarios : ", error))
         .finally(setLoading(false));
     }
+  }, [viajerosObtenidos, buscarFiltrado]);
 
+  // Obtener los filtrados
+  useEffect(() => {
     if (buscarFiltrado) {
+       // Limpiar los usuarios anteriores buscados
+       if(viajeros.length > 0){
+        SetViajeros([]);
+        setViajerosObtenidos(0);
+        setHasMore(true);
+      }
+
       setLoading(true);
-      ViajeroService.getViajerosFiltrados(filterOptions)
-        .then(response => setViajerosFiltrados(response.data))
+      ViajeroService.getViajerosFiltrados(filterOptions, filtradosObtenidos, 3)
+        .then(response => {
+          if(viajerosFiltrados.length === 0){
+            setViajerosFiltrados(response.data.data)
+          } else{
+            setViajerosFiltrados(prev => [...prev, ...response.data.data])
+          }
+          setHasMoreFiltrados(response.data.hasMore);
+        })
         .catch(error => "Error al obtener los usuarios " + error)
         .finally(setLoading(false));
     }
-
-    else if (!buscarFiltrado && viajerosFiltrados.length > 0) {
-      setViajerosFiltrados([]);
-    }
-
-
-  }, [buscarFiltrado, filterOptions]);
+  }, [buscarFiltrado, filtradosObtenidos, filterOptions]);
 
 
   return (
@@ -73,6 +92,8 @@ export default function InquilinosPage() {
           setBuscarFiltrado={setBuscarFiltrado}
           setViajerosFiltrados={setViajerosFiltrados}
           setFiltrosActivos={setFiltrosActivos}
+          setFiltradosObtenidos={setFiltradosObtenidos}
+          setHasMoreFiltrados={setHasMoreFiltrados}
         />
       }
 
@@ -84,8 +105,11 @@ export default function InquilinosPage() {
           <ViajProfilesGallery
             viajeros={viajeros}
             viajerosFiltrados={viajerosFiltrados}
-            conectados_ID={true}
             buscarFiltrado={buscarFiltrado}
+            hasMore={hasMore}
+            hasMoreFiltrados={hasMoreFiltrados}
+            setViajerosObtenidos={setViajerosObtenidos}
+            setFiltradosObtenidos={setFiltradosObtenidos}
           />
         }
       </Suspense>

@@ -5,7 +5,7 @@ body:has(.dialog[open]) {
 .dialog:focus, .main:focus{outline: none;}
 .dialog::backdrop {
   background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
 }
 
 .dialog h1 {margin: 0;}
@@ -21,7 +21,7 @@ body:has(.dialog[open]) {
   width: 85%;
   max-width: 750px;
   pointer-events: auto;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   animation: aparecer 0.25s ease-in-out forwards;
   overflow: none;
 }

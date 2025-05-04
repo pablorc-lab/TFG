@@ -45,10 +45,36 @@ public class ReservasService {
   }
 
   /**
+   * Verifica si un anfitrión tiene hueco en su vivienda
+   *
+   * @param anfitrion Anfitrión que tiene la vivienda
+   * @param fechaInicio Fecha de inicio
+   * @param fechaFin Fecha de fin
+   * @return La reserva creada.
+   */
+  public boolean hayHuecoDisponible(Anfitrion anfitrion, LocalDate fechaInicio, LocalDate fechaFin) {
+    List<Reservas> reservas = reservasRepository.findByAnfitrionAndEstado(anfitrion, Reservas.ReservaType.ACTIVA);
+    int maxViajeros = anfitrion.getVivienda().getViajeros();
+    int reservasSolapadas = 0;
+
+    for (Reservas reserva : reservas) {
+      boolean seSolapan = !(fechaFin.isBefore(reserva.getFechaInicio()) || fechaInicio.isAfter(reserva.getFechaFin()));
+      if (seSolapan) {
+        reservasSolapadas++;
+      }
+    }
+
+    return reservasSolapadas < maxViajeros;
+  }
+
+
+  /**
    * Crear una nueva reserva.
    *
    * @param anfitrionID ID del anfitrión
    * @param viajeroID ID del viajero
+   * @param fecha_inicio Fecha de inicio
+   * @param fecha_fin Fecha de fin
    * @return La reserva creada.
    */
   @Transactional
@@ -59,6 +85,10 @@ public class ReservasService {
     // Validar que la fecha de inicio no sea posterior a la de fin
     if (fecha_inicio.isAfter(fecha_fin)) {
       throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin.");
+    }
+
+    if (!hayHuecoDisponible(anfitrion, fecha_inicio, fecha_fin)) {
+      throw new IllegalArgumentException("No hay disponibilidad en las fechas seleccionadas.");
     }
 
     // Antes de nada, cada usuario debe incrementar en uno el número de reservas / viajes realizados

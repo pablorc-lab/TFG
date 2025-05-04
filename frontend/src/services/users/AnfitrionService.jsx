@@ -9,8 +9,8 @@ class AnfitrionService extends UsuarioService {
   }
 
   // Obtener anfitriones según ciertos filtros
-  getAnfitrionesFiltrados(filtros){
-    return axios.post(`${this.baseUrl}/filtrar`, filtros);
+  getAnfitrionesFiltrados(filtros, pagina, tamanio){
+    return axios.post(`${this.baseUrl}/filtrar/${pagina}/${tamanio}`, filtros);
   }
 
   eliminarVivienda(anfitrionID) {

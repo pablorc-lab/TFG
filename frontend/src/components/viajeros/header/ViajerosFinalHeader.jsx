@@ -12,7 +12,10 @@ export default function ViajerosFinalHeader({
   setBuscarFiltrado,
   filterOptions,
   setFilterOptions,
-  setAnfitrionesFiltrados
+  setAnfitrionesFiltrados,
+  setHasMoreFiltrados,
+  setFiltradosObtenidos,
+  setBuscandoFiltrado
 }) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const inputRef = useRef(null);
@@ -66,6 +69,7 @@ export default function ViajerosFinalHeader({
     // Si no hay nada escrito
     if (headerStates.location.length === 0 && setBuscarUsuario) {
       setBuscarUsuario(false);
+      setBuscarFiltrado(false);
       setFilterOptions(prev => ({
         ...prev,
         ciudad: "",
@@ -78,7 +82,22 @@ export default function ViajerosFinalHeader({
       if (headerStates.location.charAt(0) === "@") {
 
         AnfitrionService.getByPrivateID(headerStates.location.slice(1))
-          .then(response => setAnfitrionesFiltrados([response.data.usuario]))
+          .then(response => {
+            setFilterOptions(prev => ({
+              ...prev,
+              gustos: [],
+              max: 0,
+              min: 0,
+              viajeros: null,
+              habitaciones: null,
+              camas: null,
+              banios: null,
+              idiomas: [],
+            }));
+            setAnfitrionesFiltrados([response.data.usuario]);
+            setHasMoreFiltrados(false);
+            setFiltrosActivos(0);
+          })
           .catch(error => {
             console.error("Error obteniendo anfitriones:", error)
           })
@@ -142,6 +161,9 @@ export default function ViajerosFinalHeader({
           setBuscarFiltrado={setBuscarFiltrado}
           setAnfitrionesFiltrados={setAnfitrionesFiltrados}
           setFiltrosActivos={setFiltrosActivos}
+          setHasMoreFiltrados={setHasMoreFiltrados}
+          setFiltradosObtenidos={setFiltradosObtenidos}
+          setBuscandoFiltrado={setBuscandoFiltrado}
         />
       }
     </>

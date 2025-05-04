@@ -8,6 +8,12 @@ import { Suspense } from "react";
 export default function AlojamientosPage() {
   const [anfitriones, setAnfitriones] = useState([]);
   const [anfitrionesFiltrados, setAnfitrionesFiltrados] = useState([]);
+  
+  const [anfitrionesObtenidos, setAnfitrionObtenidos] = useState(0); 
+  const [hasMore, setHasMore] = useState(true); // Comprueba si hay mas anfitriones por buscar
+
+  const [hasMoreFiltrados, setHasMoreFiltrados] = useState(true); // Comprueba si hay mas anfitriones por buscar filtrados
+  const [filtradosObtenidos, setFiltradosObtenidos] = useState(0); 
 
   const [loading, setLoading] = useState(true);
 
@@ -23,38 +29,49 @@ export default function AlojamientosPage() {
     camas: null,
     banios: null,
     idiomas: [],
-    ciudad : "",
-    provincia : "",
+    ciudad: "",
+    provincia: "",
   });
-
-  // Obtener los anfitriones
+ 
   useEffect(() => {
-    // Obtener anfitriones 
-    if (!buscarFiltrado && anfitriones.length === 0) {
+    if(hasMore && !buscarFiltrado && !buscarUsuario){
       setLoading(true);
-      AnfitrionService.getAll()
-        .then(response => setAnfitriones(response.data))
+      AnfitrionService.getAllPaginacion(anfitrionesObtenidos, 6)
+        .then(response => {
+          setAnfitriones(prev => [...prev, ...response.data.data])
+          setHasMore(response.data.hasMore);
+        })
         .catch(error => console.error("Error al listar los anfitriones : ", error))
-        .finally(setLoading(false));
+        .finally(() => setLoading(false));
     }
+  }, [anfitrionesObtenidos, buscarFiltrado, buscarUsuario]);
 
-    // Si se hace un buscado por filtrado
-    else if (buscarFiltrado) {
+  // Si se activa un nuevo filtro llamar desde 0
+  useEffect(() => {
+    if (buscarFiltrado && hasMoreFiltrados) {
+      // Limpiar los usuarios anteriores buscados
+      if(anfitriones.length > 0){
+        setAnfitriones([]);
+        setAnfitrionObtenidos(0);
+        setHasMore(true);
+      }
+
       setLoading(true);
       setBuscarUsuario(false);
-      
-      AnfitrionService.getAnfitrionesFiltrados(filterOptions)
-        .then(response => setAnfitrionesFiltrados(response.data))
-        .catch(error => "Error al obtener los usuarios " + error)
-        .finally(setLoading(false));
+
+      AnfitrionService.getAnfitrionesFiltrados(filterOptions, filtradosObtenidos, 6)
+        .then(response => {
+          if(anfitrionesFiltrados.length === 0){
+            setAnfitrionesFiltrados(response.data.data)
+          } else{
+            setAnfitrionesFiltrados(prev => [...prev, ...response.data.data])
+          }
+          setHasMoreFiltrados(response.data.hasMore);
+        })
+        .catch(error => console.error("Error al obtener los usuarios ", error))
+        .finally(() => setLoading(false));
     }
-
-  }, [filterOptions,buscarFiltrado]);
-
-
-  const eliminarBuscados = () => {
-    setAnfitrionesFiltrados([]);
-  }
+  }, [buscarFiltrado, filtradosObtenidos, filterOptions]);
 
 
   return (
@@ -68,10 +85,12 @@ export default function AlojamientosPage() {
         setBuscarFiltrado={setBuscarFiltrado}
         filterOptions={filterOptions}
         setFilterOptions={setFilterOptions}
+        setHasMoreFiltrados={setHasMoreFiltrados}
+        setFiltradosObtenidos={setFiltradosObtenidos}
       />}
 
       {/* PERFILES DE ANFITRIONES*/}
-      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto"}} />}>
+      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}>
 
         {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}
         {!loading &&
@@ -80,8 +99,10 @@ export default function AlojamientosPage() {
             anfitrionesFiltrados={anfitrionesFiltrados}
             buscarFiltrado={buscarFiltrado}
             buscarUsuario={buscarUsuario}
-            conectados_ID={true}
-            eliminarBuscados={eliminarBuscados}
+            setAnfitrionObtenidos={setAnfitrionObtenidos}
+            setFiltradosObtenidos={setFiltradosObtenidos}
+            hasMore={hasMore}
+            hasMoreFiltrados={hasMoreFiltrados}
           />}
       </Suspense>
 

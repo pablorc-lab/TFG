@@ -1,33 +1,50 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AnfCard from '../../users_cards/AnfCard';
 import anf_card_styles from "../../users_cards/UserCard.module.css";
 import styles from "./AnfProfilesGallery.module.css";
 import LikesService from '../../../services/matches/LikesService';
 import { jwtDecode } from 'jwt-decode';
 
-export default function Anf_Profiles_Gallery({ anfitriones = [], buscarUsuario = false, anfitrionesFiltrados = [], buscarFiltrado = false, match = false, conectados_ID = false, eliminarBuscados }) {
+export default function Anf_Profiles_Gallery({
+  anfitriones = [],
+  buscarUsuario = false,
+  anfitrionesFiltrados = [],
+  buscarFiltrado = false,
+  match = false,
+  setAnfitrionObtenidos = null,
+  hasMore = false,
+  hasMoreFiltrados = false,
+  setFiltradosObtenidos = null
+}) {
   const [viajeroID, setViajeroID] = useState(null);
   const [loading, SetLoading] = useState(true);
   const [conexionesID, setConexionesID] = useState([]);
 
-  console.log(anfitriones);
+  const verMasRef = useRef(null);
+
   useEffect(() => {
-    // Obtener el id del viajero
-    if (viajeroID == null) {
-      // Obtener el correo decodificado del localstorage
-      const token = localStorage.getItem("acces_token");
+    if (verMasRef.current && (anfitriones.length > 0 || anfitrionesFiltrados.length > 0)) {
+      verMasRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [anfitriones, anfitrionesFiltrados]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("acces_token");
+    if (token) {
       const decoded = jwtDecode(token);
       const id_viajero = decoded.jti;
-      setViajeroID(id_viajero); // JTI : Id del token (almacena el id del usuario viajero)
-
-
-      LikesService.getAllEnviados("viajeros", id_viajero).then(response => {
-        setConexionesID(response.data.map(usuario => usuario.usuarioID));
-      }).catch(error => "Error al obtener los likes " + error)
-
+      setViajeroID(id_viajero);
     }
-    SetLoading(false);
-  }, [anfitrionesFiltrados, anfitriones, buscarFiltrado, buscarUsuario])
+  }, []);
+
+  useEffect(() => {
+    if (viajeroID != null && conexionesID.length == 0) {
+      LikesService.getAllEnviados("viajeros", viajeroID)
+        .then(response => setConexionesID(response.data.map(usuario => usuario.usuarioID)))
+        .catch(error => console.error("Error al obtener los likes", error))
+        .finally(() => SetLoading(false));
+    }
+  }, [viajeroID]);
 
   // Comprueba si se dio like
   function likeDado(AnfitrionID) {
@@ -56,6 +73,18 @@ export default function Anf_Profiles_Gallery({ anfitriones = [], buscarUsuario =
             />
           </div>
         ))}
+
+        {((hasMore && !buscarFiltrado) || (buscarFiltrado && hasMoreFiltrados)) && !buscarUsuario &&
+          <div className={styles.ver_mas}>
+            <button ref={verMasRef} onClick={() => {
+              if (buscarFiltrado) setFiltradosObtenidos(prev => prev + 1);
+              else setAnfitrionObtenidos(prev => prev + 1)
+            }
+            }>
+              Ver más
+            </button>
+          </div>
+        }
 
         {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "50%", left: "0%", margin: "150px 0", transform: "translateY(-50%)" }} />}
 

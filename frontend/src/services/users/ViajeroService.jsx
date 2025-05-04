@@ -9,8 +9,8 @@ class ViajeroService extends UsuarioService {
   }
 
   // Métodos específicos de un viajero
-  getViajerosFiltrados(filtros){
-    return axios.post(`${this.baseUrl}/filtrar`, filtros);
+  getViajerosFiltrados(filtros, pagina, tamanio){
+    return axios.post(`${this.baseUrl}/filtrar/${pagina}/${tamanio}`, filtros);
   }
 }
 

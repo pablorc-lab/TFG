@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./FilterMenu.module.css";
 
-export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setAnfitrionesFiltrados, setFiltrosActivos }) {
+export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setFiltrosActivos, setHasMoreFiltrados, setAnfitrionesFiltrados, setFiltradosObtenidos}) {
   const [mouseEnter, SetMouseEnter] = useState(null);
   
   const [rango, setRango] = useState({ min: filterOptions.min, max: filterOptions.max });
@@ -84,8 +84,14 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
     if (gustos_actuales.length > 0) filtros_activos += gustos_actuales.length;
     if (UserIdiomas.length > 0) filtros_activos += UserIdiomas.length;;
 
+    if(filtros_activos > 0) {
+      setAnfitrionesFiltrados([]);
+      setFiltradosObtenidos(0);
+    }
+    
     setFiltrosActivos(filtros_activos);
     setBuscarFiltrado(filtros_activos > 0);
+    setHasMoreFiltrados(filtros_activos > 0);
     setOpenFilterMenu(false);
   }
 
@@ -103,6 +109,8 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
     }));
     
     setFiltrosActivos(0);
+    setAnfitrionesFiltrados([]);
+    setFiltradosObtenidos(0);
     setOpenFilterMenu(false);
     setBuscarFiltrado(false);
   }

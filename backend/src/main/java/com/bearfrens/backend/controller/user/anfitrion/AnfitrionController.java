@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 // Permitir que nuestra aplicación deje que react desde es enlace acceda a los datos
@@ -53,12 +50,15 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
   }
 
   /**
-   * Devuelve la lista de anfitriones dado distintos filtros que debe seguir
-   * @param filtros Lista de filtros
-   * @return Lista de anfitriones filtrados
+   * Devuelve una lista de anfitriones que cumplen con los filtros especificados.
+   *
+   * @param filtros Objeto con los criterios de filtrado (gustos, ciudad, idiomas, etc.).
+   * @param pagina Número de página solicitada para la paginación.
+   * @param tamanio Cantidad de elementos por página.
+   * @return Un mapa con la lista de anfitriones filtrados y un indicador de si hay más resultados.
    */
-  @PostMapping("/filtrar")
-  public List<Anfitrion> obtenerAnfitrionesFiltrados(@RequestBody FiltroAnfitrionDTO filtros){
+  @PostMapping("/filtrar/{pagina}/{tamanio}")
+  public Map<String, Object> obtenerAnfitrionesFiltrados(@RequestBody FiltroAnfitrionDTO filtros, @PathVariable int pagina, @PathVariable int tamanio){
     // Crear la especificación de búsqueda con los parámetros recibidos
     AnfitrionSpecification spec = new AnfitrionSpecification(
       filtros.getGustos(),
@@ -75,6 +75,11 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
     // Una vez obtenidos todos los anfitriones, filtrar por sus idiomas que se encuentra en la biografia de cada uno
     List<Anfitrion> anfitriones = anfitrionSpecificationRepository.findAll(spec);
 
+    int start = pagina * tamanio;
+    int end = Math.min(start + tamanio, anfitriones.size());
+    boolean hasMore = end < anfitriones.size();
+    anfitriones = anfitriones.subList(start, end);
+
     if(filtros.getIdiomas() != null && !filtros.getIdiomas().isEmpty()){
       anfitriones = anfitriones.stream().filter(anfitrion -> {
         Optional<Biografias> biografia = biografiasService.obtenerBiografia("anfitriones", anfitrion.getId());
@@ -89,8 +94,11 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
       }).toList();
     }
 
-    // Usar la especificación para realizar la consulta
-    return anfitriones;
+    Map<String, Object> response = new HashMap<>();
+    response.put("data", anfitriones);
+    response.put("hasMore", hasMore);
+
+    return response;
   }
 
   // ========================

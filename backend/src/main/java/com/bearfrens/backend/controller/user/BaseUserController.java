@@ -84,25 +84,21 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   }
 
   /**
-   * Obtener todo el listado de usuarios con paginación
+   * Obtener todo el listado de usuarios con paginación e indica si hay posteriores a él
+   * @param pagina Número de página donde se empieza a obtener
+   * @param tamanio Cantidad de elementos a obtener
    * @return Listado array de usuarios
    */
   @GetMapping("/paginacion/{pagina}/{tamanio}")
-  public ResponseEntity<?> listarTodosPaginacion(@PathVariable int pagina, @PathVariable int tamanio) {
+  public Map<String, Object> listarTodosPaginacion(@PathVariable int pagina, @PathVariable int tamanio) {
     PageRequest pages = PageRequest.of(pagina, tamanio);
-    Page<T> usuarios = repository.findAll(pages);
-    List<Map<String, Object>> resultado = new ArrayList<>();
+    Page<T> result = repository.findAll(pages);
 
-    for(T user : usuarios){
-      String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
-      Biografias biografia = biografiasService.obtenerBiografia(tipo_user, user.getId()).orElse(null);
-      resultado.add(Map.of(
-        "usuario", user,
-        "biografia", (biografia != null ? biografia : Map.of())
-      ));
-    }
+    Map<String, Object> response = new HashMap<>();
+    response.put("data", result.getContent());  // Datos de la página actual
+    response.put("hasMore", result.hasNext());  // Si hay más elementos en la base de datos
 
-    return ResponseEntity.ok(resultado);
+    return response;
   }
 
   /**
