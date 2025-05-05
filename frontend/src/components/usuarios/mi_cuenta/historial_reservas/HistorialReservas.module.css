@@ -23,7 +23,6 @@ body:has(.modal[open]) {
 .modal:focus { outline: none;}
 .modal {
   overflow: none;
-  pointer-events: none;
   user-select: none;
   border: none;
   border-radius: 5px;
@@ -141,19 +140,10 @@ body:has(.modal[open]) {
   cursor: pointer;
   user-select: none;
   display: flex;
-  gap: 20px;
   position: absolute;
   top: 15px;
   right: 15px;
-}
-.action_imgs_1 img, .action_imgs_2 img{
-  aspect-ratio: 1 / 1;
-  border-radius: 10px;
-  width: 30px;
-  padding: 3px;
-}
 
-.action_imgs_2, .action_imgs_1{
   padding: 3px 5px 3px 10px;
   color: white;
   font-weight: 600;
@@ -163,6 +153,13 @@ body:has(.modal[open]) {
   justify-content: right;
   align-items: center;
 }
+.action_imgs_1 img, .action_imgs_2 img{
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  width: 30px;
+  padding: 3px;
+}
+
 
 .action_imgs_2 {  
   box-shadow: 0 0 7px rgba(6, 114, 255, 0.712);
@@ -217,27 +214,62 @@ body:has(.modal[open]) {
 
 .historial_user_section h3{
   margin: 0;
-  color: #0a7273;
+  color: black;
   text-align: center;
   font-size: 30px;
 }
 
-
-.historial_user_section label{
-  cursor: pointer;
- color: rgb(90, 90, 90);
- display: grid;
- border-radius: 5px;
- padding: 5px 10px;
- border: 2px solid rgb(82, 82, 82);
+.div_label img {
+  filter: brightness(0);
+  width: 60px;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
+.historial_user_section .div_label:hover {
+  background-color: #0a7273;
+  border-color: #0a7273;
+  box-shadow: 8px 8px #0a71734f;
+}
+.historial_user_section .div_label:hover img {  filter: invert(1) grayscale(1) brightness(2);}
+.historial_user_section .div_label:hover h3 {color: white;}
+.historial_user_section .div_label:hover input{ 
+  color: white;
+  background-color: #0a7273;
+}
+.historial_user_section .div_label{
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: white;
+  border: 2px solid black;
+  gap: 0;
+  box-shadow: 6px 6px rgba(0, 0, 0, 0.251);
+  transition: all 0.1s ease-in-out;
+}
+
+.historial_user_section label {
+  flex: 1;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .historial_user_section input:focus {outline: none;}
 .historial_user_section input{ 
+  transition: all 0.1s ease-in-out;
+  text-align: end;
   cursor: pointer;
   font-family: "Nunito";
-  font-size: clamp(16px, 3vw, 20px);
+  font-size: 20px;
   border: none;
+  width: 80px;
 }
 
 .historial_user_article {
@@ -248,8 +280,6 @@ body:has(.modal[open]) {
   background-color: rgba(238, 238, 238, 0.322);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   outline: 1px solid rgba(211, 211, 211, 0.712);
-  box-shadow: 4px 4px 10px rgba(211, 211, 211, 0.767);
-
   transition: outline 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
 }
 .historial_user_article:hover {
@@ -273,7 +303,6 @@ body:has(.modal[open]) {
 
 /*? VALORACION*/
 .score {
-  border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 4px;

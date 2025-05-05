@@ -1,7 +1,10 @@
 import styles from "./UserPage.module.css"
 import OpinionesMiCuenta from "../../../components/usuarios/mi_cuenta/opiniones/Opiniones";
 import LikesService from "../../../services/matches/LikesService";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import { es } from 'date-fns/locale';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function UserPage({
   usuarioData,
@@ -19,76 +22,74 @@ export default function UserPage({
   emisorID = null
 }) {
 
-  const [llegada, setLlegada] = useState(new Date().toISOString().split("T")[0]);
-  const [salida, setSalida] = useState(() => {
-    const fecha = new Date();
-    fecha.setDate(fecha.getDate() + 1);
-    return fecha.toISOString().split("T")[0];
-  });
+  const [llegada, setLlegada] = useState(new Date());
+  const [salida, setSalida] = useState(new Date());
 
-  const [fechasReservas, setFechasReservadas] = useState([[]]);
-  useEffect(() => { // Obtener fechas de reservas
+  const [loadingFechas, setLoadingFechas] = useState(true);
+  const [fechasExcluidas, setFechasExcluidas] = useState(["2025-05-08"]);
+
+  // Obtener fechas de reservas excluidas
+  useEffect(() => {
     if (esAnfitrion && match) {
       const cargarReservas = async () => {
+        // Fechas del usuario
         const ReservasService = (await import("../../../services/reservas/ReservasService.jsx")).default;
-        ReservasService.getReservasViajero(emisorID, new Date().toISOString().slice(0, 7))
-          .then(response => {
-            let fechasReserva = [];
-            console.log(response.data)
-            response.data.map(reserva =>
-              fechasReserva.push([reserva.fechaInicio, reserva.fechaFin])
-            )
-            setFechasReservadas(fechasReserva);
-          })
+
+        ReservasService.getFechasReservadasViajero(emisorID)
+          .then(response => setFechasExcluidas(prev => [...prev, ...response.data]))
           .catch(error => "Error al obtener las reservas " + error);
+
+        // Fechas del anfitrión
+        ReservasService.getFechasYaReservadasAnfitrion(userID)
+          .then(response => setFechasExcluidas(prev => [...prev, ...response.data]))
+          .catch(error => "Error al obtener las fechas ya reservas " + error)
+          .finally(() => setLoadingFechas(false));
       };
+
+      // Del usuarios y yá excluidas
       cargarReservas();
     }
   }, [esAnfitrion, match]);
 
-  const [errorFecha, setErrorFecha] = useState(false);
-  const [diasReserva, SetDiasReserva] = useState(1);
-  const inputLlegadaRef = useRef(null);
-  const inputSalidaRef = useRef(null);
+  // Actualizar fecha inicio y final
+  useEffect(() => {
+    if (fechasExcluidas.length === 0) return;
 
-  const handleLabelClick = () => {
-    if (inputLlegadaRef.current && typeof inputLlegadaRef.current.showPicker === 'function') {
-      inputLlegadaRef.current.showPicker();
+    let hoy = new Date();
+    for (const fecha of fechasExcluidas) {
+      const fechaExcluida = new Date(fecha);
+      // Compara solo el día (sin horas, minutos, etc.), avanzamos a la siguiente fecha si coincide
+      while (hoy.toDateString() === fechaExcluida.toDateString()) {
+        hoy.setDate(hoy.getDate() + 1);
+      }
     }
-  };
 
-  const handleSalidaLabelClick = () => {
-    if (inputSalidaRef.current && typeof inputSalidaRef.current.showPicker === 'function') {
-      inputSalidaRef.current.showPicker();
-    }
-  };
+    setLlegada(hoy.toISOString().split("T")[0]);
+    setSalida(hoy.toISOString().split("T")[0]);
+  }, [fechasExcluidas]);
+
+
+  const [diasReserva, setDiasReserva] = useState(1);
 
   const [mensajeReserva, setMensajeReserva] = useState(false);
+
   const handleReserva = async () => {
-    if (salida <= llegada) return;
+    if (salida < llegada) return;
+    // Convertir las fechas de llegada y salida al formato esperado : yyyy-MM-dd
+    const llegadaFormatted = new Date(llegada).toISOString().split('T')[0];
+    const salidaFormatted = new Date(salida).toISOString().split('T')[0];
 
-    // Si la fecha indicada ya se encuentra en el rango de las anteriores reservas, error
-    const reservaExistente = fechasReservas.some(fechas => {
-      const reservaLlegada = new Date(fechas[0]).toISOString().split('T')[0];
-      const reservaSalida = new Date(fechas[1]).toISOString().split('T')[0];
-
-      return (llegada >= reservaLlegada && llegada <= reservaSalida)
-        || (salida >= reservaLlegada && salida <= reservaSalida)
-        || (llegada <= reservaLlegada && salida >= reservaSalida);
-    });
-
-    setErrorFecha(reservaExistente);
-    if(reservaExistente) return;
-    
+    // Enviar las fechas ya en formato yyyy-MM-dd
     const ReservasService = (await import("../../../services/reservas/ReservasService.jsx")).default;
-    ReservasService.crearReserva(userID, emisorID, llegada, salida)
+    setMensajeReserva(true);
+    
+    ReservasService.crearReserva(userID, emisorID, llegadaFormatted, salidaFormatted)
       .then(response => {
         console.log(response.data);
         setMensajeReserva(true);
       })
       .catch(error => console.error(error));
   }
-
 
   function handleLike() {
     if (!emisorID || !userID) {
@@ -112,6 +113,62 @@ export default function UserPage({
     { key: "telefono", label: "Teléfono", icon: "phone" },
   ];
 
+
+  const changeFechaLlegada = (date) => {
+    let fechaActual = new Date(date);
+    let nuevaLlegada = new Date(date);
+    let nuevaSalida = new Date(salida);
+
+    let hayFechaExcluida = false;
+
+    while (fechaActual <= nuevaSalida) {
+      if (fechasExcluidas.some(fecha => new Date(fecha).toDateString() === fechaActual.toDateString())) {
+        hayFechaExcluida = true;
+        break;
+      }
+      fechaActual.setDate(fechaActual.getDate() + 1); // Avanzamos al siguiente día
+    }
+
+    if (hayFechaExcluida) {
+      nuevaLlegada = new Date(date);
+      nuevaSalida = new Date(date);
+    }
+
+    else if (nuevaLlegada > nuevaSalida) {
+      nuevaSalida = nuevaLlegada;
+    }
+
+    setLlegada(nuevaLlegada);
+    setSalida(nuevaSalida);
+
+    setDiasReserva(Math.round((new Date(nuevaSalida) - new Date(nuevaLlegada)) / (1000 * 60 * 60 * 24)) + 1);
+  };
+
+  const changeFechaSalida = (date) => {
+    let fechaActual = new Date(llegada);
+    let nuevaSalida = new Date(date);
+    let nuevaLlegada = new Date(llegada);
+
+    let hayFechaExcluida = false;
+
+    while (fechaActual <= nuevaSalida) {
+      if (fechasExcluidas.some(fecha => new Date(fecha).toDateString() === fechaActual.toDateString())) {
+        hayFechaExcluida = true;
+        break;
+      }
+      fechaActual.setDate(fechaActual.getDate() + 1); // Avanzamos al siguiente día
+    }
+
+    if (hayFechaExcluida) {
+      nuevaLlegada = new Date(date);
+      nuevaSalida = new Date(date);
+    }
+
+    setLlegada(nuevaLlegada);
+    setSalida(nuevaSalida);
+    setDiasReserva(Math.round((new Date(nuevaSalida) - new Date(nuevaLlegada)) / (1000 * 60 * 60 * 24)) + 1);
+  }
+
   const PerfilUsuario = (
     <section className={styles.user_info}>
       <article className={styles.user_article}>
@@ -132,11 +189,11 @@ export default function UserPage({
 
       <article className={styles.user_conectar}>
         <div className={styles.user_likes}>
-          {Gustos_imgs.map((gusto, index) => (
+          {Gustos_imgs.map((gusto) => (
             <img
-              key={index}
+              key={gusto}
               src={`/images/usuarios/Gustos/${String(gusto).toLowerCase()}.svg`}
-              alt={`Logo gusto ${index + 1}`}
+              alt={`Logo gusto ${gusto}`}
               width={100}
               onError={(e) => e.target.src = "/images/usuarios/Gustos/default.svg"}
             />
@@ -145,60 +202,49 @@ export default function UserPage({
 
         {!conectado
           ? <button className={styles.btn_conectar} onClick={() => handleLike()}> Conectar </button>
-          : <img src="/images/usuarios/heart.svg" className={styles.conectado} />
+          : <img src="/images/usuarios/heart.svg" className={styles.conectado} alt="heart" />
         }
 
       </article>
 
-      {match && esAnfitrion && (
+      {match && esAnfitrion && !loadingFechas && (
         <section className={styles.reserva_section}>
-          <h2>{diasReserva * usuarioData.usuario?.vivienda?.precio_noche} &euro; - ({diasReserva} {diasReserva > 1 ? "noches" : "noche"})</h2>
+          <h2 className={styles.titulo_reserva}>{diasReserva * usuarioData.usuario?.vivienda?.precio_noche} &euro; - ({diasReserva} {diasReserva > 1 ? "noches" : "noche"})</h2>
           <div className={styles.reserva_div}>
-            <label onClick={handleLabelClick}>
+            <label>
               Llegada
-              <input
-                ref={inputLlegadaRef}
-                type="date"
-                min={new Date().toISOString().split("T")[0]}
-                value={llegada}
-                onChange={(e) => {
-                  setLlegada(e.target.value);
-                  if (e.target.value >= salida) {
-                    const nuevaFecha = new Date(e.target.value);
-                    nuevaFecha.setDate(nuevaFecha.getDate() + 1);
-                    setSalida(nuevaFecha.toISOString().split('T')[0]);
-                    SetDiasReserva(1); // Solo se adelanta 1 día si es menor o igual
-                  }
-                }}
+              <DatePicker
+                readOnly={mensajeReserva}
+                name="llegada"
+                selected={llegada}
+                locale={es}
+                minDate={new Date()} // No permite fechas pasadas
+                excludeDates={fechasExcluidas.map(fecha => new Date(fecha))} // Deshabilita las fechas reservadas
+                dateFormat="dd-MM-yyyy"
+                onChange={date => changeFechaLlegada(date)}
               />
             </label>
             <div className={styles.border_label}></div>
-            <label onClick={handleSalidaLabelClick}>
+            <label>
               Salida
-              <input
-                ref={inputSalidaRef}
-                type="date"
-                min={llegada}
-                value={salida}
-                onChange={(e) => {
-                  setSalida(e.target.value);
-                  SetDiasReserva((new Date(e.target.value) - new Date(llegada)) / (1000 * 60 * 60 * 24));
-                }}
+              <DatePicker
+                readOnly={mensajeReserva}
+                name="salida"
+                selected={salida}
+                locale={es}
+                minDate={llegada} // No permite fechas anteriores al de llegada
+                excludeDates={fechasExcluidas.map(fecha => new Date(fecha))} // Deshabilita las fechas reservadas
+                dateFormat="dd-MM-yyyy"
+                onChange={date => changeFechaSalida(date)}
               />
             </label>
           </div>
 
-          {!mensajeReserva && errorFecha &&
-            <p style={{ textAlign: "center", color: "red", backgroundColor: "#ff00002c", padding: "5px 0", marginBottom: "15px" }}>
-              <strong>Ya tienes una reserva entre esas dos fechas</strong>
-            </p>
-          }
-
           {!mensajeReserva
-            ? <button onClick={handleReserva}>Reservar</button>
-            : <p style={{ color: "black", textAlign: "center", maxWidth : "550px" }}>
+            ? <button className={styles.reservar_btn} onClick={handleReserva}>Reservar</button>
+            : <p style={{ color: "black", textAlign: "center", maxWidth: "550px" }}>
               <strong>
-                Reserva del {llegada} al {salida}, creada con éxito.
+                Reserva del {new Date(llegada).toLocaleDateString()} al {new Date(salida).toLocaleDateString()}, creada con éxito.
                 Puede ver el seguimiento de la misma en <a href="/viajeros/mi-cuenta" style={{ color: "blue" }}>su perfil</a>.
               </strong>
             </p>
@@ -222,8 +268,8 @@ export default function UserPage({
 
         <h2>Idiomas que hablo</h2>
         <ul>
-          {idiomasUser?.map((idioma, index) => (
-            <li key={index}>{idioma}</li>
+          {idiomasUser?.map((idioma) => (
+            <li key={idioma}>{idioma}</li>
           ))}
         </ul>
 
@@ -242,8 +288,8 @@ export default function UserPage({
 
       {recomendaciones.length > 0
         ? (
-          recomendaciones.map((recomendacion, index) => (
-            <article key={index} className={styles.user_recomendations}>
+          recomendaciones.map((recomendacion) => (
+            <article key={recomendacion.titulo} className={styles.user_recomendations}>
               <h3>{recomendacion.titulo}</h3>
               <p>{recomendacion.descripcion}</p>
 
@@ -273,32 +319,29 @@ export default function UserPage({
   );
 
   return (
-    <>
-      <main className={styles.main}>
-        {isColumns ? (
-          <>
+    <main className={styles.main}>
+      {isColumns ? (
+        <>
+          {ViviendaInfo}
+          {PerfilUsuario /* PERFIL DEL USUARIO*/}
+          {Biografia /* BIOGRAFÍA*/}
+          {Recomendaciones /* RECOMENDACIONES*/}
+          {Valoraciones}
+        </>
+      ) : (
+        <>
+          <div className={styles.columna_izquierda}>
             {ViviendaInfo}
-            {PerfilUsuario /* PERFIL DEL USUARIO*/}
             {Biografia /* BIOGRAFÍA*/}
             {Recomendaciones /* RECOMENDACIONES*/}
+          </div>
+
+          <div className={styles.columna_derecha}>
+            {PerfilUsuario /* PERFIL DEL USUARIO*/}
             {Valoraciones}
-          </>
-        ) : (
-          <>
-            <div className={styles.columna_izquierda}>
-              {ViviendaInfo}
-              {Biografia /* BIOGRAFÍA*/}
-              {Recomendaciones /* RECOMENDACIONES*/}
-            </div>
-
-            <div className={styles.columna_derecha}>
-              {PerfilUsuario /* PERFIL DEL USUARIO*/}
-              {Valoraciones}
-            </div>
-          </>
-        )}
-      </main>
-    </>
-
+          </div>
+        </>
+      )}
+    </main>
   )
 }

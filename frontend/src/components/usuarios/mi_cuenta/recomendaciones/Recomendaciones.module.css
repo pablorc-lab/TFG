@@ -23,7 +23,6 @@ body:has(.modal[open]) {
 .modal:focus { outline: none;}
 .modal {
   overflow: none;
-  pointer-events: none;
   user-select: none;
   border: none;
   border-radius: 5px;

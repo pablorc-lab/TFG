@@ -1,14 +1,23 @@
 import axios from "axios";
 
 class ReservasService {
+
   static RESERVAS_BASE_REST_API_URL = "http://localhost:8080/api/reservas";
 
   static getAllReservas(){
     return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/list`);
   }
 
-  static getIngresoAnfitrion(anfitrioID){
-    return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/anfitrion/${anfitrioID}/ingreso`);
+  static getFechasYaReservadasAnfitrion(anfitrionID){
+    return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/fechas/${anfitrionID}`);
+  }
+  
+  static getFechasReservadasViajero(viajeroID){
+    return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/fechas/viajero/${viajeroID}`);
+  }
+
+  static getIngresoAnfitrion(anfitrionID){
+    return axios.get(`${this.RESERVAS_BASE_REST_API_URL}/anfitrion/${anfitrionID}/ingreso`);
   }
 
   static gestGastosViajero(viajeroID){

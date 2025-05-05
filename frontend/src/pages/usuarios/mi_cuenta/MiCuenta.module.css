@@ -23,7 +23,6 @@ body:has(.modal[open]) {
 .modal:focus { outline: none;}
 .modal {
   overflow: none;
-  pointer-events: none;
   user-select: none;
   border: none;
   border-radius: 5px;
@@ -55,7 +54,6 @@ body:has(.modal[open]) {
 }
 
 .modal div {
-  display: flex;
   display: flex;
   justify-content: space-around;
 }
@@ -296,9 +294,7 @@ body:has(.modal[open]) {
 .user_bubble {
   position: relative;
   background-color: #a6a6a63f; 
-  padding: 15px;
   border-radius: 3px;
-  text-align: center;
   width: calc(100% - 40px);
   text-align: left;
   padding: 10px 20px;

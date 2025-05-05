@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -44,7 +45,78 @@ public class ReservasService {
     return viajero.getReservas().stream().mapToInt(Reservas::getPrecio_total).sum();
   }
 
+  // Dado un listado de reservas devuelve las reservadas
+  private static List<LocalDate> getFechasReservadas(int num_viajeros, List<Reservas> reservas) {
+    List<LocalDate> fechasReservadas = new ArrayList<>();
+    Map<LocalDate, Integer> conteoFechas = new HashMap<>(); // Está reservada si el num es >= al num de viajeros
+
+    for (Reservas reserva : reservas) {
+      if(reserva.getEstado().equals(Reservas.ReservaType.ACTIVA) || reserva.getEstado().equals(Reservas.ReservaType.PENDIENTE)){
+        LocalDate fecha = reserva.getFechaInicio();
+        // Mientras la fecha actual no sea mayor que la fecha fin, se añade a la lista
+        while (!fecha.isAfter(reserva.getFechaFin())) {
+          conteoFechas.put(fecha, conteoFechas.getOrDefault(fecha, 0) + 1);
+          fecha = fecha.plusDays(1);
+        }
+      }
+    }
+
+    // Devolver todas las fechas QUE NO PASAN EL NÚMERO DE VIAJEROS
+    for(Map.Entry<LocalDate, Integer> entrada : conteoFechas.entrySet()){
+      if(entrada.getValue() >= num_viajeros){
+        fechasReservadas.add(entrada.getKey());
+      }
+    }
+    return fechasReservadas;
+  }
+
   /**
+   * Devulve un listado de fechas ya reservadas
+   * @param anfitrionId ID del anfitrión
+   * @return Lista de fechas
+   */
+  public List<LocalDate> obtenerFechasYaReservadas(Long anfitrionId) {
+    Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(anfitrionId);
+
+    LocalDate actual = LocalDate.now();
+    List<Reservas> reservas = reservasRepository.findByAnfitrionAndEstadoAndFechaFinGreaterThanEqual(anfitrion, Reservas.ReservaType.ACTIVA,actual);
+    reservas.addAll(reservasRepository.findByAnfitrionAndEstadoAndFechaFinGreaterThanEqual(anfitrion, Reservas.ReservaType.PENDIENTE, actual));
+
+    actualizarEstadoReservas(reservas); // Actualizar por si a alguna no se le ha actualizado la fecha
+
+    return getFechasReservadas(anfitrion.getVivienda().getViajeros(), reservas);
+  }
+
+  /**
+   * Devulve un listado de fechas ya reservadas de un viajero
+   * @param viajeroID ID del viajero
+   * @return Lista de fechas
+   */
+  public List<LocalDate> obtenerFechasReservadasViajero(Long viajeroID) {
+    Viajero viajero = gestorUsuarioService.obtenerViajero(viajeroID);
+
+    LocalDate actual = LocalDate.now();
+    List<Reservas> reservas = reservasRepository.findByViajeroAndEstadoAndFechaFinGreaterThanEqual(viajero, Reservas.ReservaType.ACTIVA, actual);
+    reservas.addAll(reservasRepository.findByViajeroAndEstadoAndFechaFinGreaterThanEqual(viajero, Reservas.ReservaType.PENDIENTE, actual));
+
+    actualizarEstadoReservas(reservas); // Actualizar por si a alguna no se le ha actualizado la fecha
+
+    List<LocalDate> fechasReservadas = new ArrayList<>();
+    for (Reservas reserva : reservas) {
+      if(reserva.getEstado().equals(Reservas.ReservaType.ACTIVA) || reserva.getEstado().equals(Reservas.ReservaType.PENDIENTE)){
+        LocalDate fecha = reserva.getFechaInicio();
+        // Mientras la fecha actual no sea mayor que la fecha fin, se añade a la lista
+        while (!fecha.isAfter(reserva.getFechaFin())) {
+          fechasReservadas.add(fecha);
+          fecha = fecha.plusDays(1);
+        }
+      }
+    }
+
+    return fechasReservadas;
+  }
+
+   /**
    * Verifica si un anfitrión tiene hueco en su vivienda
    *
    * @param anfitrion Anfitrión que tiene la vivienda
@@ -53,18 +125,37 @@ public class ReservasService {
    * @return La reserva creada.
    */
   public boolean hayHuecoDisponible(Anfitrion anfitrion, LocalDate fechaInicio, LocalDate fechaFin) {
-    List<Reservas> reservas = reservasRepository.findByAnfitrionAndEstado(anfitrion, Reservas.ReservaType.ACTIVA);
-    int maxViajeros = anfitrion.getVivienda().getViajeros();
-    int reservasSolapadas = 0;
+    LocalDate actual = LocalDate.now();
+    List<Reservas> reservas = reservasRepository.findByAnfitrionAndEstadoAndFechaFinGreaterThanEqual(anfitrion, Reservas.ReservaType.ACTIVA,actual);
+    reservas.addAll(reservasRepository.findByAnfitrionAndEstadoAndFechaFinGreaterThanEqual(anfitrion, Reservas.ReservaType.PENDIENTE, actual));
 
+    Map<LocalDate, Integer> conteoFechas = new HashMap<>(); // Mapa para contar las reservas por fecha
+
+    // Iteramos sobre las reservas activas y pendientes
     for (Reservas reserva : reservas) {
-      boolean seSolapan = !(fechaFin.isBefore(reserva.getFechaInicio()) || fechaInicio.isAfter(reserva.getFechaFin()));
-      if (seSolapan) {
-        reservasSolapadas++;
+      if (reserva.getEstado().equals(Reservas.ReservaType.ACTIVA) || reserva.getEstado().equals(Reservas.ReservaType.PENDIENTE)) {
+        LocalDate fecha = reserva.getFechaInicio();
+
+        // Solo consideramos las reservas dentro del rango de fechas proporcionado
+        while (!fecha.isAfter(reserva.getFechaFin()) && !fecha.isBefore(fechaInicio)) {
+          // Si la fecha está dentro del rango entre fechaInicio y fechaFin, incrementamos el conteo
+          if (!fecha.isBefore(fechaInicio) && !fecha.isAfter(fechaFin)) {
+            conteoFechas.put(fecha, conteoFechas.getOrDefault(fecha, 0) + 1);
+          }
+          fecha = fecha.plusDays(1);
+        }
       }
     }
 
-    return reservasSolapadas < maxViajeros;
+    // Comprobamos si alguna fecha en el rango tiene un número de reservas mayor o igual al número de viajeros
+    int max_viajeros = anfitrion.getVivienda().getViajeros();
+    for (Map.Entry<LocalDate, Integer> entrada : conteoFechas.entrySet()) {
+      if (entrada.getValue() >= max_viajeros) {
+        return false; // Si alguna fecha tiene suficientes reservas, no hay hueco
+      }
+    }
+
+    return true; // Si no hay ninguna fecha con el número de reservas suficiente, hay hueco disponible
   }
 
 

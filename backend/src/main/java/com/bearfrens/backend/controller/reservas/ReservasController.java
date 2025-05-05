@@ -58,5 +58,15 @@ public class ReservasController {
   public List<Reservas> obtenerTodas() {
     return reservasService.obtenerTodasLasReservas();
   }
+
+  @GetMapping("/fechas/{anfitrionID}")
+  public List<LocalDate> obtenerFechasYaReservadas(@PathVariable Long anfitrionID) {
+    return reservasService.obtenerFechasYaReservadas(anfitrionID);
+  }
+
+  @GetMapping("/fechas/viajero/{viajeroID}")
+  public List<LocalDate> obtenerFechasReservadasViajero(@PathVariable Long viajeroID) {
+    return reservasService.obtenerFechasReservadasViajero(viajeroID);
+  }
 }
 

@@ -17,7 +17,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const navigate = useNavigate();
 
-  const [openEditProfileImage, SetOpenEditProfileImage] = useState(false);
+  const [openEditProfileImage, setOpenEditProfileImage] = useState(false);
   const [newProfileImage, setNewProfileImage] = useState(null);
   const [editedData, setEditedData] = useState(false);
 
@@ -74,7 +74,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
     { src: "/images/usuarios/account/recomendaciones.svg", alt: "Recomendaciones", text: esViajero ? "Experiencias" : "Recomendaciones" },
     { src: "/images/usuarios/account/security.svg", alt: "Seguridad", text: "Seguridad" },
     { src: "/images/usuarios/account/star.svg", alt: "Opiniones", text: "Opiniones" },
-    { src: "/images/usuarios/account/history.svg", alt: "Historial de reservas", text: "Historial de reservas" }
+    { src: "/images/usuarios/account/history2.svg", alt: "Historial de reservas", text: "Historial de reservas" }
   ];
 
   const styleSuspense = {
@@ -111,7 +111,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
 
   const handleChangePerfil = (e) => {
     setNewProfileImage(e.target.files[0]);
-    setTimeout(() => SetOpenEditProfileImage(true), 300);
+    setTimeout(() => setOpenEditProfileImage(true), 300);
   }
 
   const handleSaveProfileImage = async () => {
@@ -128,16 +128,13 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             .then(() => setEditedData(true))
             .catch(error => console.error(`Error al ACTUALIZAR el usuario:`, error));
         })
-        .catch(error => {
-          console.error("Error al subir la imagen:", error);
-          return; // Detener si hay error en la subida de imagen
-        });
+        .catch(error => console.error("Error al subir la imagen:", error));
     }
     else {
       console.log("No es una imagen valida");
     }
     setNewProfileImage(null);
-    SetOpenEditProfileImage(false);
+    setOpenEditProfileImage(false);
   };
 
   return (
@@ -187,7 +184,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           <h1>Imagen de perfil modificada</h1>
           <img className={styles.user_img} src={URL.createObjectURL(newProfileImage)} alt="Imagen de perfil" width={50} />
           <div>
-            <button onClick={() => SetOpenEditProfileImage(false)}>CANCELAR</button>
+            <button onClick={() => setOpenEditProfileImage(false)}>CANCELAR</button>
             <button onClick={() => handleSaveProfileImage()}>GUARDAR</button>
           </div>
         </dialog>
@@ -204,7 +201,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
                   if (index == 2 && esViajero) return null;
 
                   return (
-                    <li key={index} className={activeMenu === index ? styles.active : undefined} onClick={() => setActiveMenu(index)}>
+                    <li key={item.src} className={activeMenu === index ? styles.active : undefined} onClick={() => setActiveMenu(index)}>
                       <img src={item.src} alt={item.text} />
                       <h2>{item.text}</h2>
                     </li>
