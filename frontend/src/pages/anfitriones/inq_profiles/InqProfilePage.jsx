@@ -66,7 +66,7 @@ export default function InqProfilePage() {
           {!isMobile ? (
             <>
               <Link to="/viajeros/alojamientos">Inquilinos</Link>
-              <Link to="/viajeros/alojamientos">Comunidades</Link>
+              <Link to="/viajeros/alojamientos">Foros</Link>
               <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
               <Link to="/viajeros/alojamientos">Mi Cuenta</Link>

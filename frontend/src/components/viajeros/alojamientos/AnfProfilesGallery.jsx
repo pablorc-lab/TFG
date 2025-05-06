@@ -5,19 +5,19 @@ import styles from "./AnfProfilesGallery.module.css";
 import LikesService from '../../../services/matches/LikesService';
 import { jwtDecode } from 'jwt-decode';
 
-export default function Anf_Profiles_Gallery({
+export default function AnfProfilesGallery({
   anfitriones = [],
   buscarUsuario = false,
   anfitrionesFiltrados = [],
   buscarFiltrado = false,
   match = false,
-  setAnfitrionObtenidos = null,
+  setAnfitrionesObtenidos = null,
   hasMore = false,
   hasMoreFiltrados = false,
   setFiltradosObtenidos = null
 }) {
   const [viajeroID, setViajeroID] = useState(null);
-  const [loading, SetLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [conexionesID, setConexionesID] = useState([]);
 
   const verMasRef = useRef(null);
@@ -42,7 +42,7 @@ export default function Anf_Profiles_Gallery({
       LikesService.getAllEnviados("viajeros", viajeroID)
         .then(response => setConexionesID(response.data.map(usuario => usuario.usuarioID)))
         .catch(error => console.error("Error al obtener los likes", error))
-        .finally(() => SetLoading(false));
+        .finally(() => setLoading(false));
     }
   }, [viajeroID]);
 
@@ -55,8 +55,8 @@ export default function Anf_Profiles_Gallery({
   return (
     <section className={styles.card_users_container}>
       <article className={styles.card_users}>
-        {!loading && viajeroID != null && (buscarFiltrado || buscarUsuario ? anfitrionesFiltrados : anfitriones).map((anfitrion, index) => (
-          <div key={index} className={styles.user_card}>
+        {!loading && viajeroID != null && (buscarFiltrado || buscarUsuario ? anfitrionesFiltrados : anfitriones).map(anfitrion => (
+          <div key={anfitrion.id} className={styles.user_card}>
             <AnfCard
               styles={anf_card_styles}
               anf_id={anfitrion.id}
@@ -76,11 +76,7 @@ export default function Anf_Profiles_Gallery({
 
         {((hasMore && !buscarFiltrado) || (buscarFiltrado && hasMoreFiltrados)) && !buscarUsuario &&
           <div className={styles.ver_mas}>
-            <button ref={verMasRef} onClick={() => {
-              if (buscarFiltrado) setFiltradosObtenidos(prev => prev + 1);
-              else setAnfitrionObtenidos(prev => prev + 1)
-            }
-            }>
+            <button ref={verMasRef} onClick={() => buscarFiltrado ? setFiltradosObtenidos(prev => prev + 1) : setAnfitrionesObtenidos(prev => prev + 1)}>
               Ver más
             </button>
           </div>

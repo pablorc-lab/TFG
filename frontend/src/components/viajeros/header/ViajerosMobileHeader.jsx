@@ -25,14 +25,14 @@ export default function ViajerosMobileHeader({
       {/*Cabecera*/}
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
-          <Link to="/viajeros/alojamientos">
-            <div className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>
+          <Link to="/viajeros/foros">
+            <div className={getClassName('foros')} onClick={() => setActiveSection("foros")}>
               <img
                 src={`/images/viajeros/comunidades_header.webp`}
                 width="50"
-                alt='icono comunidades'
+                alt='icono foros'
               />
-              <span>Grupos</span>
+              <span>Foros</span>
             </div>
           </Link>
 

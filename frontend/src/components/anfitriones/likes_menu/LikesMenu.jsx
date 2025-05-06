@@ -4,13 +4,19 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 
 export default function LikesMenu({ SetOpenLikesMenu, anfitrionID }) {
-  const [viajeros, SetViajeros] = useState([]);
+  const [viajeros, setViajeros] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    LikesService.getAllViajerosRecibidos(anfitrionID)
-      .then(response => SetViajeros(response.data))
-      .catch(error => "Error al listar la lista de likes de los viajeros " + error);
-  }, []);
+    if (anfitrionID != null) {
+      setLoading(true);
+      LikesService.getAllViajerosRecibidos(anfitrionID)
+        .then(response => setViajeros(response.data))
+        .catch(error => console.error("Error al listar los likes: " + error))
+        .finally(() => setLoading(false));
+    }
+  }, [anfitrionID]);
+
 
   return (
     <dialog className={styles.dialog} ref={(el) => el && el.showModal()}>
@@ -20,17 +26,12 @@ export default function LikesMenu({ SetOpenLikesMenu, anfitrionID }) {
       </section>
 
       <section className={styles.viaj_prof}>
-        {viajeros.length === 0 ? (
-          <img
-            src="/images/loading_gif.gif"
-            alt="Cargando..."
-            style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }}
-          />
-        ) : (
-          viajeros.sort((v1, v2) => new Date(v2.fecha) - new Date(v1.fecha)).map((viajero, index) => (
-            <Link to="/anfitriones/perfil-viajero" state={{ id: viajero.id }}>
-              <article key={index}>
-                <p className={styles.fecha}>{viajero.fecha}</p>
+        {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}
+        {!loading &&
+          viajeros.sort((v1, v2) => new Date(v2.fecha) - new Date(v1.fecha)).map(viajero => (
+            <Link to="/anfitriones/perfil-viajero" state={{ id: viajero.id }} key={viajero.id}>
+              <article >
+                <p className={styles.fecha}>{new Date(viajero.fecha).toLocaleDateString('es-ES')}</p>
                 <div className={styles.info_profile}>
                   <img src={viajero.profileImage} alt="Imagen perfil" className={styles.profile_image} />
                   <div className={styles.gustos}>
@@ -50,7 +51,8 @@ export default function LikesMenu({ SetOpenLikesMenu, anfitrionID }) {
               </article>
             </Link>
           ))
-        )}
+        }
+        {!loading && viajeros.length === 0 && <h2 style={{textAlign : "center"}}>No tienes aún ningun like</h2>}
       </section>
     </dialog>
   )

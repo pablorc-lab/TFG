@@ -35,12 +35,11 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
 
         <article className={styles.valoraciones_statistics}>
           {estadisticas_valoraciones.slice().reverse().map((aparicion_valoracion, index) => (
-            <div key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
+            <div key={aparicion_valoracion} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
               <p>{estadisticas_valoraciones.length - index}</p>
               <progress
                 max="100"
                 value={(aparicion_valoracion / Math.max(...estadisticas_valoraciones)) * 100}
-                key={index}
               />
               {hoveredIndex === index && (
                 <span>{aparicion_valoracion} valoraciones</span>
@@ -51,9 +50,9 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
       </section>
 
       <section className={`${styles.comentarios_section} ${activeShowMore && styles.show_more}`}>
-        {valoraciones.slice(0, 3).map((valoracion, index) => (
+        {valoraciones.slice(0, 3).map(valoracion => (
           <Comentarios
-            key={index}
+            key={valoracion.id}
             profileImg={valoracion.emisor_profile_img}
             nombre={`${valoracion.emisor_nombre}`}
             fecha={valoracion.fecha}

@@ -11,7 +11,6 @@ body:has(.dialog[open]) {
 .dialog h1 {margin: 0;}
 .dialog{
   font-family: "Nunito";
-  pointer-events: none;
   user-select: none;
   border: none;
   border-radius: 5px;
@@ -21,7 +20,7 @@ body:has(.dialog[open]) {
   width: 85%;
   max-width: 750px;
   pointer-events: auto;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 5 5 15px rgba(0, 0, 0, 1);
   animation: aparecer 0.25s ease-in-out forwards;
   overflow: none;
 }
@@ -37,7 +36,7 @@ body:has(.dialog[open]) {
   left: 30px;
   border-radius: 50px;
   cursor: pointer;
-  transition: background-color 0.1s ease-in-out;
+  transition: background-color 0.05s ease-in-out;
 }
 .cerra_menu:hover {
   filter: brightness(0.9);
@@ -80,8 +79,8 @@ body:has(.dialog[open]) {
   cursor: pointer;
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  outline: 2px solid lightgray;
+  outline: 2px solid rgb(226, 226, 226);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease-in-out;
 }
 .viaj_prof a:last-of-type article {

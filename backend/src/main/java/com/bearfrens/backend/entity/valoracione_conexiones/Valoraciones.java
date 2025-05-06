@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -25,8 +24,10 @@ import java.time.LocalDate;
   }
 )
 public class Valoraciones extends ValoracionConexion {
+  @Transient // Se obtiene dinámicamente
   private String emisor_profile_img; // Imagen de perfil del emisor
 
+  @Transient // Se obtiene dinámicamente
   private String emisor_nombre;
 
   // 3 digitos, con 2 decimales (Ej : 4.7)

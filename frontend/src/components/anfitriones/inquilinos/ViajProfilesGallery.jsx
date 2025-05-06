@@ -16,7 +16,7 @@ export default function ViajProfilesGallery({
   setFiltradosObtenidos
 }) {
   const [anfitrionID, setAnfitrionID] = useState(null);
-  const [loading, SetLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [conexionesID, setConexionesID] = useState([]);
   
   const verMasRef = useRef(null);
@@ -42,7 +42,7 @@ export default function ViajProfilesGallery({
       LikesService.getAllEnviados("anfitriones", anfitrionID)
         .then(response => setConexionesID(response.data.map(usuario => usuario.usuarioID)))
         .catch(error => "Error al obtener los likes " + error)
-        .finally(() => SetLoading(false));
+        .finally(() => setLoading(false));
     }
   }, [anfitrionID]);
 

@@ -5,13 +5,13 @@ import DropDownMenu from "../../dropdown_menu/DropDownMenu";
 
 
 export default function AnfitrionHeader({ activeSection, setActiveSection, menuLinks, SetOpenLikesMenu }) {
-  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showHeaderNav, setShowHeaderNav] = useState(window.innerWidth > 1050);
   const userRef = useRef(null);
 
   // Añadimos al menu de anfitriones los nuevos de navegación para escritorio
   const anfMenuLinks = [
-    { path: "/inicio/", label: "Grupos", hiddenWhenNavVisible: true },
+    { path: "/inicio/", label: "Foros", hiddenWhenNavVisible: true },
     { path: "/anfitriones/inquilinos", label: "Inquilinos", hiddenWhenNavVisible: true },
     { path: "/anfitriones/conexiones", label: "Conexiones", hiddenWhenNavVisible: true },
   ].concat(menuLinks);
@@ -40,7 +40,7 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
       {showHeaderNav && (
         <section className={styles.search_container}>
           <nav className={styles.search_nav}>
-            <Link to="/anfitriones/inicio" className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>Grupos</Link>
+            <Link to="/anfitriones/foros" className={getClassName('foros')} onClick={() => setActiveSection("foros")}>Foros</Link>
             <Link to="/anfitriones/inquilinos" className={getClassName('inquilinos')} onClick={() => setActiveSection("inquilinos")}> Inquilinos </Link>
             <Link to="/anfitriones/conexiones" className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>Conexiones</Link>
           </nav>
@@ -49,11 +49,11 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
 
       <section className={styles.user_section}>
         <div className={styles.conectado_container} onClick={() => SetOpenLikesMenu(true)}>
-          <img src="/images/usuarios/heart_green.svg" className={styles.conectado} />
+          <img src="/images/usuarios/heart_green.svg" className={styles.conectado} alt="likes"/>
         </div>
 
         <div className={styles.header_user_section}>
-          <button className={`${styles.header_prof_user}  ${isMenuOpen && styles.open}`} onClick={() => setMenuOpen(!isMenuOpen)} ref={userRef}>
+          <button className={`${styles.header_prof_user}  ${isMenuOpen && styles.open}`} onClick={() => setIsMenuOpen(!isMenuOpen)} ref={userRef}>
             <img src="/images/logos/logo_usuario_blanco.png" width="40" alt="logo user vacio" />
             <article>
               <div></div>
@@ -64,7 +64,7 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
           {isMenuOpen && (
             <DropDownMenu
               userRef={userRef}
-              setMenuOpen={setMenuOpen}
+              setIsMenuOpen={setIsMenuOpen}
               menuLinks={anfMenuLinks}
               visibleWidth={1050}
               activeSection={activeSection}

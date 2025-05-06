@@ -1,20 +1,34 @@
-import { lazy, Suspense, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import AnfitrionHeader from "./AnfitrionHeader"
 import AnfitrionMobileHeader from "./AnfitrionMobileHeader";
 import { useNavigate } from "react-router-dom";
-const LikesMenu = lazy(() => import("../likes_menu/LikesMenu"));
+import LikesMenu from "../likes_menu/LikesMenu";
+import { jwtDecode } from "jwt-decode";
 
-export default function AnfitrionFinalHeader({ activeSectionDefecto = "inquilinos", anfitrionID = null }) {
+export default function AnfitrionFinalHeader({ activeSectionDefecto = "inquilinos" }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
+  const [userID, setUserID] = useState(null);
   const [activeSection, setActiveSection] = useState(activeSectionDefecto);
   const [OpenLikesMenu, SetOpenLikesMenu] = useState(false);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 770);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
+
+  // Obtener el ID
+  useEffect(() => {
+    if (userID === null) {
+      // Obtener el ID del usuario
+      const token = localStorage.getItem("acces_token");
+      if (token) {
+        const decoded = jwtDecode(token);
+        setUserID(decoded.jti);
+      }
+    }
+  });
 
   const handleLogout = () => {
     localStorage.clear();
@@ -34,14 +48,12 @@ export default function AnfitrionFinalHeader({ activeSectionDefecto = "inquilino
   return (
     <>
       {isMobile
-        ? <AnfitrionMobileHeader activeSection={activeSection} setActiveSection={setActiveSection} SetOpenLikesMenu={SetOpenLikesMenu}/>
-        : <AnfitrionHeader activeSection={activeSection} setActiveSection={setActiveSection} menuLinks={menuLinks} SetOpenLikesMenu={SetOpenLikesMenu}/>
+        ? <AnfitrionMobileHeader activeSection={activeSection} setActiveSection={setActiveSection} SetOpenLikesMenu={SetOpenLikesMenu} />
+        : <AnfitrionHeader activeSection={activeSection} setActiveSection={setActiveSection} menuLinks={menuLinks} SetOpenLikesMenu={SetOpenLikesMenu} />
       }
 
       {OpenLikesMenu &&
-        <Suspense>
-          <LikesMenu SetOpenLikesMenu={SetOpenLikesMenu} anfitrionID={1}/>
-        </Suspense>
+        <LikesMenu SetOpenLikesMenu={SetOpenLikesMenu} anfitrionID={OpenLikesMenu ? userID : null} />
       }
     </>
   )

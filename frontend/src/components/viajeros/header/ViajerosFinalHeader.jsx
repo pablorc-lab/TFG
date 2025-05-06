@@ -39,8 +39,7 @@ export default function ViajerosFinalHeader({
    */
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if ((!inputRef.current || !inputRef.current.contains(event.target))
-        && (!filteredCitiesListRef.current || !filteredCitiesListRef.current.contains(event.target))) {
+      if ((!inputRef.current || !inputRef.current.contains(event.target))&& (!filteredCitiesListRef.current || !filteredCitiesListRef.current.contains(event.target))) {
         updateHeaderStates({ locationFocus: false });
       }
     };
@@ -79,8 +78,7 @@ export default function ViajerosFinalHeader({
 
     else if (realizarBusqueda) {
       // Comprobamos si se está buscando por identificador
-      if (headerStates.location.charAt(0) === "@") {
-
+      if (headerStates.location.startsWith("@")) {
         AnfitrionService.getByPrivateID(headerStates.location.slice(1))
           .then(response => {
             setFilterOptions(prev => ({

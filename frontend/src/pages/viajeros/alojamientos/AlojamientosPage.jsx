@@ -1,15 +1,14 @@
-import { useState, useEffect, lazy } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 const AnfProfilesGallery = lazy(() => import('../../../components/viajeros/alojamientos/AnfProfilesGallery'));
 import Footer from '../../../components/footer/footer';
 import ViajerosFinalHeader from '../../../components/viajeros/header/ViajerosFinalHeader';
 import AnfitrionService from "../../../services/users/AnfitrionService";
-import { Suspense } from "react";
 
 export default function AlojamientosPage() {
   const [anfitriones, setAnfitriones] = useState([]);
   const [anfitrionesFiltrados, setAnfitrionesFiltrados] = useState([]);
   
-  const [anfitrionesObtenidos, setAnfitrionObtenidos] = useState(0); 
+  const [anfitrionesObtenidos, setAnfitrionesObtenidos] = useState(0); 
   const [hasMore, setHasMore] = useState(true); // Comprueba si hay mas anfitriones por buscar
 
   const [hasMoreFiltrados, setHasMoreFiltrados] = useState(true); // Comprueba si hay mas anfitriones por buscar filtrados
@@ -52,7 +51,7 @@ export default function AlojamientosPage() {
       // Limpiar los usuarios anteriores buscados
       if(anfitriones.length > 0){
         setAnfitriones([]);
-        setAnfitrionObtenidos(0);
+        setAnfitrionesObtenidos(0);
         setHasMore(true);
       }
 
@@ -99,7 +98,7 @@ export default function AlojamientosPage() {
             anfitrionesFiltrados={anfitrionesFiltrados}
             buscarFiltrado={buscarFiltrado}
             buscarUsuario={buscarUsuario}
-            setAnfitrionObtenidos={setAnfitrionObtenidos}
+            setAnfitrionesObtenidos={setAnfitrionesObtenidos}
             setFiltradosObtenidos={setFiltradosObtenidos}
             hasMore={hasMore}
             hasMoreFiltrados={hasMoreFiltrados}

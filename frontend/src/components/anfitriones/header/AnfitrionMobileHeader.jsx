@@ -14,9 +14,9 @@ export default function AnfitrionMobileHeader({ activeSection, setActiveSection,
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
           <Link>
-            <div className={getClassName('grupos')} onClick={() => setActiveSection("grupos")}>
+            <div className={getClassName('foros')} onClick={() => setActiveSection("foros")}>
               <img src="/images/viajeros/comunidades_header.webp" width="50" alt='icono comunidades' />
-              <span>Grupos</span>
+              <span>Foros</span>
             </div>
           </Link>
 

@@ -3,6 +3,7 @@ import styles from "./MiCuenta.module.css"
 import ScoreMiCuenta from "../../../components/usuarios/mi_cuenta/Score";
 import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import Footer from "../../../components/footer/footer";
 const AnfitrionMobileHeader = lazy(() => import("../../../components/anfitriones/header/AnfitrionMobileHeader"));
 const ViajerosMobileHeader = lazy(() => import("../../../components/viajeros/header/ViajerosMobileHeader"));
 
@@ -153,13 +154,13 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             <>
               {esViajero ? (
                 <>
-                  <Link to="/viajeros/grupos">Grupos</Link>
+                  <Link to="/viajeros/foros">Foros</Link>
                   <Link to="/viajeros/alojamientos">Alojamientos</Link>
                   <Link to="/viajeros/conexiones">Conexiones</Link>
                 </>
               ) : (
                 <>
-                  <Link to="/viajeros/">Grupos</Link>
+                  <Link to="/viajeros/">Foros</Link>
                   <Link to="/anfitriones/inquilinos">Inquilinos</Link>
                   <Link to="/anfitriones/conexiones">Conexiones</Link>
                 </>
@@ -337,6 +338,8 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
       ) : (
         <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
       )}
+
+      <Footer/>
     </>
   )
 }

@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom
 import HomePage from './pages/inicio/home/HomePage';
 import ScrollToTop from './components/utilities/ScrollToTop';
 
+const ForosViajPage = lazy(() => import('./pages/viajeros/foros/ForosViajPage'));
+const ForosAnfPage = lazy(() => import('./pages/anfitriones/foros/ForosAnfPage'));
 const Soporte = lazy(() => import("./pages/inicio/soporte/Soporte"));
 const PoliticasPrivacidad = lazy(() => import("./pages/inicio/politicas_privacidad/PoliticasPrivacidad"));
 const InqProfilePage = lazy(() => import("./pages/anfitriones/inq_profiles/InqProfilePage"));
@@ -42,7 +44,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "absolute", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
+      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "300px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />}>
         <Routes>
           {/* Rutas para INICIO*/}
           <Route path="/" element={<Navigate to="/inicio" />} />
@@ -54,6 +56,7 @@ export default function App() {
           {/* Rutas para VIAJEROS*/}
           <Route element={<PrivateViajeroRoute />}>
             <Route path="/viajeros" element={<Navigate to="/viajeros/alojamientos" />} />
+            <Route path="/viajeros/foros" element={<ForosViajPage />} />
             <Route path="/viajeros/alojamientos" element={<AlojamientosPage />} />
             <Route path="/viajeros/conexiones" element={<ConexionesViajPage />} />
             <Route path="/viajeros/mi-cuenta" element={<MiCuenta />} />
@@ -63,6 +66,7 @@ export default function App() {
           {/* Rutas para ANFITRIONES*/}
           <Route element={<PrivateAnfitrionRoute />}>
             <Route path="/anfitriones" element={<Navigate to="/anfitriones/inquilinos" />} />
+            <Route path="/anfitriones/foros" element={<ForosAnfPage />} />
             <Route path="/anfitriones/inquilinos" element={<InquilinosPage />} />
             <Route path="/anfitriones/conexiones" element={<ConexionesAnfPage />} />
             <Route path="/anfitriones/mi-cuenta" element={<MiCuenta esViajero={false} />} />

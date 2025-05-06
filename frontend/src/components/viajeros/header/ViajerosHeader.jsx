@@ -52,7 +52,7 @@ export default function ViajerosHeader({
 
       <section className={styles.search_container}>
         <nav className={styles.search_nav}>
-          <Link to="/viajeros/alojamientos" className={getClassName('comunidades')} onClick={() => setActiveSection("comunidades")}>Grupos</Link>
+          <Link to="/viajeros/foros" className={getClassName('foros')} onClick={() => setActiveSection("foros")}>Foros</Link>
           <Link to="/viajeros/alojamientos" className={getClassName('alojamientos')} onClick={() => setActiveSection("alojamientos")}> Alojamientos </Link>
           <Link to="/viajeros/conexiones" className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>Conexiones</Link>
 

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "tipoUsuario": 1,
+    "usuarioID": 101,
+    "descripcion": "He tenido una experiencia muy interesante con mis últimos huéspedes. Me gustaría compartir algunos consejos sobre cómo manejar ciertas situaciones incómodas que pueden surgir y cómo mantener siempre una comunicación clara. Además, creo que sería útil discutir cómo establecer reglas claras desde el principio para evitar malentendidos.",
+    "fecha": "2025-05-06",
+    "usuario_profile_img": "/images/landing_page/persona_4.webp",
+    "usuario_nombre": "Juan P",
+    "usuario_private_id": "anfitrion_123"
+  },
+  {
+    "id": 2,
+    "tipoUsuario": 2,
+    "usuarioID": 102,
+    "descripcion": "Durante mi último viaje, me encontré con algunas dificultades para comunicarme con el anfitrión debido a diferencias culturales. Me gustaría saber si otros viajeros han pasado por algo similar y cómo lo han gestionado. También sería útil hablar sobre la importancia de la empatía y la paciencia en este tipo de situaciones.",
+    "fecha": "2025-05-05",
+    "usuario_profile_img": "/images/landing_page/persona_1.webp",
+    "usuario_nombre": "Laura G",
+    "usuario_private_id": "viajero_456"
+  },
+  {
+    "id": 3,
+    "tipoUsuario": 1,
+    "usuarioID": 103,
+    "descripcion": "Estoy considerando hacer mejoras en mi propiedad para atraer a más huéspedes, pero no estoy seguro por dónde empezar. ¿Alguien ha tenido éxito con ciertas renovaciones o cambios en la decoración? ¿Qué tipo de detalles suelen valorar más los viajeros cuando llegan a una vivienda?",
+    "fecha": "2025-05-04",
+    "usuario_profile_img": "/images/landing_page/persona_2.webp",
+    "usuario_nombre": "Carlos S",
+    "usuario_private_id": "anfitrion_789"
+  },
+  {
+    "id": 4,
+    "tipoUsuario": 2,
+    "usuarioID": 104,
+    "descripcion": "Quisiera compartir una anécdota de mi última estadía, donde conocí a una familia local maravillosa que me enseñó mucho sobre la cultura del lugar. Este tipo de experiencias me hacen valorar aún más los viajes. ¿Alguien más ha tenido momentos memorables que quiera compartir?",
+    "fecha": "2025-05-03",
+    "usuario_profile_img": "/images/landing_page/persona_3.webp",
+    "usuario_nombre": "Ana L",
+    "usuario_private_id": "viajero_101"
+  }
+]
