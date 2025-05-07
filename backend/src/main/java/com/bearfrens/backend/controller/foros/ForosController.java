@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -17,17 +18,33 @@ public class ForosController {
   @Autowired
   private ForosService forosService;
 
-  @PostMapping("/crear/tipo/{tipoUsuario}/id/{usuarioID}")
-  public ResponseEntity<Foros> crearForo(@PathVariable int tipoUsuario, @PathVariable Long usuarioID, @RequestBody String descripcion) {
-    return forosService.crearForo(tipoUsuario, usuarioID, descripcion);
+  // Crear foro
+  @PostMapping("/crear")
+  public ResponseEntity<Foros> crearForo(@RequestBody Foros foroData) {
+    return forosService.crearForo(foroData);
   }
 
+  // Crear respuesta
+  @PostMapping("/crear/respuesta/padre/{foroPadreID}")
+  public ResponseEntity<Foros> crearRespuesta(@PathVariable Long foroPadreID, @RequestBody Foros foroData) {
+    return forosService.crearRespuesta(foroPadreID, foroData);
+  }
+
+
+  // Obtener foros por paginación
   @GetMapping("/paginacion/{tamanio}")
   public Map<String, Object> obtenerForosPorCursor(@PathVariable int tamanio, @RequestParam(required = false) String ultimaFecha) {
     LocalDate fecha = ultimaFecha == null ? null : LocalDate.parse(ultimaFecha);
     return forosService.obtenerForosPorCursor(tamanio, fecha);
   }
 
+  // Obtener respuestas
+  @GetMapping("/respuestas/{foroPadreID}")
+  public ResponseEntity<List<Foros>> obtenerRespuestas(@PathVariable Long foroPadreID) {
+    return forosService.obtenerRespuestas(foroPadreID);
+  }
+
+  // Borrar un foro
   @DeleteMapping("/{id}")
   public boolean eliminarForo(@PathVariable Long id) {
     return forosService.eliminarForo(id);

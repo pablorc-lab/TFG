@@ -13,6 +13,27 @@ const Foros = ({ tipoUsuario }) => {
   const [forosData, setForosData] = useState([]);
   const [lastFecha, setLastFecha] = useState(null);
   const [descripcion, setDescripcion] = useState("");
+  const [foroCreado, setForoCreado] = useState(false);
+
+  const [mostrarRespuestas, setMostrarRespuestas] = useState({});
+  const [loadingRespuestas, setLoadingRespuestas] = useState({});
+  const [respuestaData, setRespuestaData] = useState({});
+  const [descripcionRespuesta, setDescripcionRespuesta] = useState({});
+
+  // Función para manejar el clic en "Responder"
+  const toggleRespuestas = (foroID) => {
+    setMostrarRespuestas(prevState => ({ ...prevState, [foroID]: !prevState[foroID] }));
+
+    // Si las respuestas no están visibles, cargarlas
+    if (!mostrarRespuestas[foroID] && !respuestaData[foroID]) {
+      setLoadingRespuestas(prevState => ({ ...prevState, [foroID]: true }));
+
+      ForosService.getRespuestas(foroID)
+        .then(response => setRespuestaData(prevState => ({ ...prevState, [foroID]: response.data })))
+        .catch(error => console.error("Error al obtener los foros:", error))
+        .finally(() => setLoadingRespuestas(prevState => ({ ...prevState, [foroID]: false })));
+    }
+  };
 
   useEffect(() => {
     if (verMasRef.current && forosData.length > 0) {
@@ -52,29 +73,33 @@ const Foros = ({ tipoUsuario }) => {
 
   const crearForo = () => {
     ForosService.crearForo(tipoUsuario, userID, descripcion)
-      .then(response => setForosData(prev => [response.data, ...prev]))
-      .catch(error => console.error("Error al CREAR el foro:", error))
+      .then(response => {
+        setForoCreado(true);
+        setDescripcion("");
+    }).catch(error => console.error("Error al CREAR el foro:", error))
   }
 
   return (
     <main className={styles.forosContainer}>
       <section className={styles.add_foro}>
+        {foroCreado && <h2 style={{marginTop : "15px", textAlign : "center", fontSize : "30px"}}>¡Foro creado con éxito!</h2>}
+
         <textarea
+          name='descripcion foro'
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
           className={styles.textarea}
           placeholder="Comparte algo con la comunidad..."
           rows="4"
+          spellCheck="false"
         />
         <button
-          disabled={descripcion === "" && userID !== null}
+          disabled={descripcion === "" && userID === null}
           className={styles.button}
           onClick={() => crearForo()}
-        >
-          Publicar
-        </button>
+        > Publicar </button>
       </section>
-      {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "50%", left: "0%", margin: "150px 0", transform: "translateY(-50%)" }} />}
+      {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "50%", left: "50%", margin: "150px 0", transform: "translate(-50%, -50%)" }} />}
 
       {!loading && forosData.map(foro => (
         <section key={foro.id} className={styles.foroSection}>
@@ -89,7 +114,7 @@ const Foros = ({ tipoUsuario }) => {
               <div className={styles.userInfo}>
                 <div className={styles.userName}>
                   <h4>{foro.usuario_nombre}</h4>
-                  <p style={{color : "black"}}>@{foro.usuario_private_id}</p>
+                  <p style={{ color: "black" }}>@{foro.usuario_private_id}</p>
                 </div>
 
                 <div>
@@ -102,22 +127,71 @@ const Foros = ({ tipoUsuario }) => {
             <p className={styles.descripcion}>{foro.descripcion}</p>
           </article>
 
-          <div className={styles.responder}>
-            <img src="/images/usuarios/responder.svg" className={styles.conectado} alt="likes" />
-            <p>Responder - 2</p>
-          </div>
+          {
+            <div className={`${styles.responder} ${mostrarRespuestas[foro.id] ? styles.activa : ""}`} onClick={() => toggleRespuestas(foro.id)}>
+              <img src="/images/usuarios/responder.svg" className={styles.conectado} alt="likes" />
+              <p>{!mostrarRespuestas[foro.id] ? "Responder" : "Ocultar"} - {foro.num_respuestas}</p>
+            </div>
+          }
 
+          {mostrarRespuestas[foro.id] && loadingRespuestas[foro.id] && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}
+
+          {/* Si las respuestas están visibles, mostrar las respuestas y el campo de respuesta */}
+          {mostrarRespuestas[foro.id] && respuestaData[foro.id] && (
+            <div className={styles.respuestasContainer}>
+              <div className={styles.respuestaInput}>
+                <textarea
+                  value={descripcionRespuesta[foro.id]}
+                  onChange={(e) => setDescripcionRespuesta(prevState => ({ ...prevState, [foro.id]: e.target.value }))}
+                  placeholder="Escribe tu respuesta..."
+                  className={styles.textarea}
+                  rows="3"
+                  name={`descripcion_respuesta_${foro.id}`}
+                  spellCheck="false"
+                >
+                </textarea>
+                <button className={styles.button}>Responder</button>
+              </div>
+              <div className={styles.respuestas}>
+                {respuestaData[foro.id] && respuestaData[foro.id].map(respuesta => (
+                  <article key={respuesta.id}>
+                    <div className={styles.userDetails}>
+                      <img
+                        src={respuesta.usuario_profile_img}
+                        alt={`${respuesta.usuario_nombre} profile`}
+                        className={styles.userProfileImg}
+                        onError={(e) => e.target.src = "/images/usuarios/Gustos/default.svg"}
+                      />
+                      <div className={styles.userInfo}>
+                        <div className={styles.userName}>
+                          <h4>{respuesta.usuario_nombre}</h4>
+                          <p style={{ color: "black" }}>@{respuesta.usuario_private_id}</p>
+                        </div>
+
+                        <div>
+                          <p>{respuesta.tipoUsuario === 1 ? "Anfitrión" : "Viajero"}</p>
+                          <p className={styles.fecha}>{new Date(respuesta.fecha).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className={styles.descripcion}>{respuesta.descripcion}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
       ))}
 
-      {hasMore &&
+      {hasMore && !loading &&
         <div className={styles.ver_mas} onClick={() => lastFecha != null && obtenerForos(lastFecha)}>
           <button ref={verMasRef}>
             Ver más
           </button>
         </div>
       }
-    </main>
+    </main >
   );
 };
 

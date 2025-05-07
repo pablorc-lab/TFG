@@ -21,7 +21,7 @@
 }
 
 .textarea {
-  min-height: 100px;
+  min-height: 150px;
   font-family: "Nunito";
   width: calc(100% - 18px);
   resize: vertical;
@@ -29,11 +29,26 @@
   font-size: 18px;
   border-radius: 2px;
   border: 1px solid #bbb;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
   outline: none;
 }
 
+.respuestasContainer {
+  background-color: #b3f2f32d;
+  padding: 0px 60px;
+}
+
+.respuestaInput { 
+  margin: 40px 0;
+}
+.respuestaInput textarea {
+  margin-bottom: 5px;
+  min-height: 80px;
+  width: calc(100% - 22px);
+}
+
 .button {
+  user-select: none;
   font-family: "Nunito";
   padding: 8px 16px;
   font-size: 18px;
@@ -75,7 +90,7 @@
 .userDetails{
   margin: 20px;
   margin-bottom: 0;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   display: flex;
   gap: 20px;
   align-items: center;
@@ -99,12 +114,15 @@
 }
 
 .descripcion {
+  white-space: pre-wrap;
   padding: 20px;
+  padding-top: 10px;
   font-size: 18px;
 }
 
 /*?  Respuetas */
 .responder {
+  user-select: none;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   cursor: pointer;
@@ -113,6 +131,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.activa {
+  border-radius: 0;
 }
 .responder:hover {
   background-color: #0d777954;
@@ -127,7 +148,6 @@
   margin: 0;
   font-weight: 600;
 }
-
 
 /*? Ver más foros*/
 .ver_mas {

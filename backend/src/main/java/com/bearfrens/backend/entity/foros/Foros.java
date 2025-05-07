@@ -1,5 +1,6 @@
 package com.bearfrens.backend.entity.foros;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +28,17 @@ public class Foros {
 
   @Column(name = "usuario_id", nullable = false) // ID Usuario
   private Long usuarioID;
+
+  @Column
+  private Integer num_respuestas = 0;
+
+  @ManyToOne
+  @JoinColumn(name = "foro_padre_id", nullable = true)
+  private Foros foroPadre;
+
+  @OneToMany(mappedBy = "foroPadre", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
+  private List<Foros> respuestas = new ArrayList<>();
 
   @Lob // Large Object
   @Column(columnDefinition = "TEXT", nullable = false)

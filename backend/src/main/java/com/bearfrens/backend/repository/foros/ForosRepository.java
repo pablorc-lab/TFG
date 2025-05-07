@@ -13,4 +13,5 @@ public interface ForosRepository extends JpaRepository<Foros, Long> {
   List<Foros> findAllByOrderByFechaDesc(Pageable pageable);
   List<Foros> findByFechaLessThanEqualOrderByFechaDesc(LocalDate fecha, Pageable pageable);
   boolean existsByFechaLessThanEqual(LocalDate fecha);
+  List<Foros> findByForoPadreId(Long foroPadreID);
 }

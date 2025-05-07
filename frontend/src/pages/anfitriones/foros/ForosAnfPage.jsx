@@ -8,9 +8,9 @@ export default function ForosAnfPage() {
       <title>Foros</title>
 
       {/* CABECERA */}
-      <AnfitrionFinalHeader defaultActive={"foros"} />
+      <AnfitrionFinalHeader activeSectionDefecto={"foros"} />
 
-      <Foros tipoUsuario={2}/>
+      <Foros tipoUsuario={1}/>
 
       <Footer />
     </>

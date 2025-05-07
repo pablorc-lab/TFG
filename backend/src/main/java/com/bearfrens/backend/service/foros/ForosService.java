@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -29,25 +30,50 @@ public class ForosService {
   /**
    * Crea un nuevo foro con los parámetros proporcionados y lo guarda en la base de datos.
    *
-   * @param tipoUsuario el tipo de usuario que crea el foro (1 para anfitrión, 2 para viajero)
-   * @param usuarioID el ID del usuario que crea el foro
-   * @param descripcion el contenido del foro
+   * @param foroData Objeto foro con la informacion
    * @return una respuesta con el foro creado
    */
-  public ResponseEntity<Foros> crearForo(int tipoUsuario, Long usuarioID, String descripcion) {
+  public ResponseEntity<Foros> crearForo(Foros foroData) {
     Foros foro = new Foros();
-    foro.setTipoUsuario(tipoUsuario);
-    foro.setUsuarioID(usuarioID);
-    foro.setDescripcion(descripcion);
+    foro.setForoPadre(null);
+    foro.setNum_respuestas(0); // Cuando se crea el número de respuesta es 0
+    foro.setTipoUsuario(foroData.getTipoUsuario());
+    foro.setUsuarioID(foroData.getUsuarioID());
+    foro.setDescripcion(foroData.getDescripcion());
     foro.setFecha(LocalDate.now()); // La fecha se estab
 
     return ResponseEntity.ok(forosRepository.save(foro));
   }
 
   /**
+   * Crea una respuesta a un foro existente usando los datos proporcionados.
+   *
+   * @param foroPadreID el ID del foro al que se responde
+   * @param foroData objeto que contiene la información del usuario y la descripción de la respuesta
+   * @return una respuesta con la entidad Foros creada como respuesta
+   */
+  public ResponseEntity<Foros> crearRespuesta(Long foroPadreID, Foros foroData) {
+    Foros foroPadre = forosRepository.findById(foroPadreID)
+      .orElseThrow(() -> new RuntimeException("Foro no encontrado"));
+
+    Foros respuesta = new Foros();
+    respuesta.setForoPadre(foroPadre);
+    respuesta.setNum_respuestas(null);
+    respuesta.setTipoUsuario(foroData.getTipoUsuario());
+    respuesta.setUsuarioID(foroData.getUsuarioID());
+    respuesta.setDescripcion(foroData.getDescripcion());
+    respuesta.setFecha(LocalDate.now());
+
+    foroPadre.setNum_respuestas(foroPadre.getNum_respuestas() + 1);
+    forosRepository.save(foroPadre);
+
+    return ResponseEntity.ok(forosRepository.save(respuesta));
+  }
+
+  /**
    * Obtiene una lista de foros anteriores a una fecha dada, ordenados de más reciente a más antiguo.
    *
-   * @param tamanio    cantidad de elementos a devolver
+   * @param tamanio  cantidad de elementos a devolver
    * @param ultimaFecha fecha del último foro cargado (puede ser null para la primera carga)
    * @return un mapa con la lista de foros y un booleano indicando si hay más
    */
@@ -78,8 +104,8 @@ public class ForosService {
     boolean hasMore = false;
     LocalDate lastFecha = foros.getLast().getFecha();
 
-    if (foros.size() == tamanio) {
-      hasMore = forosRepository.existsByFechaLessThanEqual(lastFecha); // Verifica si hay más foros con fecha igual o anterior
+    if (foros.size() == tamanio) { // Verifica si hay más foros con fecha igual o anterior
+      hasMore = forosRepository.existsByFechaLessThanEqual(lastFecha);
     }
 
     Map<String, Object> response = new HashMap<>();
@@ -88,6 +114,13 @@ public class ForosService {
     response.put("lastFecha", lastFecha);
 
     return response;
+  }
+
+
+  // Suponiendo que usas Spring para tu API
+  public ResponseEntity<List<Foros>> obtenerRespuestas(Long foroPadreID) {
+    List<Foros> respuestas = forosRepository.findByForoPadreId(foroPadreID);
+    return ResponseEntity.ok(respuestas);
   }
 
   /**
