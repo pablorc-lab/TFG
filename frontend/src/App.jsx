@@ -41,6 +41,22 @@ export default function App() {
     return token && user === "Viajero (2)" ? <Outlet /> : <Navigate to="/iniciar-sesion" />;
   };
 
+  const InicioSesionRedirect = () => {
+    const token = localStorage.getItem("acces_token");
+    const user = localStorage.getItem("user");
+    
+    if (token && user === "Anfitrion (1)") {
+      return <Navigate to="/anfitriones" />;
+    }
+
+    else if (token && user === "Viajero (2)") {
+      return <Navigate to="/viajeros" />;
+    } 
+    
+    return <InicioSesionPage />;
+  };
+
+  
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -75,7 +91,7 @@ export default function App() {
 
           {/* Rutas para REGISTRO o ACCESO*/}
           <Route path="/registro" element={<RegistrarUsuarioPage />} />
-          <Route path="/iniciar-sesion" element={<InicioSesionPage />} />
+          <Route path="/iniciar-sesion" element={<InicioSesionRedirect  />} />
 
           {/* Rutas para PANEL ADMIN con rutas anidadas */}
           <Route path="/admin-panel" element={<Navigate to="/admin-panel/anfitrion" />} />

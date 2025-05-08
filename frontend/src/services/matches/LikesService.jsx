@@ -15,6 +15,10 @@ class LikesService {
     return axios.get(`${this.LIKES_BASE_REST_API_URL}/anfitriones/${receptorID}/likes/recibidos`);
   }
 
+  static haDadoLike(tipoUsuario, emisorID, receptorID) {
+    return axios.get(`${this.LIKES_BASE_REST_API_URL}/${tipoUsuario}/${emisorID}/likes/${receptorID}/existe`)
+  };
+
   static crearLike(tipoUsuario, emisorID, usuarioID){
     return axios.post(`${this.LIKES_BASE_REST_API_URL}/${tipoUsuario}/${emisorID}/likes/${usuarioID}`);
   }

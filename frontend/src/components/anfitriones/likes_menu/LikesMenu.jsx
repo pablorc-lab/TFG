@@ -28,8 +28,8 @@ export default function LikesMenu({ SetOpenLikesMenu, anfitrionID }) {
       <section className={styles.viaj_prof}>
         {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}
         {!loading &&
-          viajeros.sort((v1, v2) => new Date(v2.fecha) - new Date(v1.fecha)).map(viajero => (
-            <Link to="/anfitriones/perfil-viajero" state={{ id: viajero.id }} key={viajero.id}>
+          viajeros.map(viajero => (
+            <Link to="/anfitriones/perfil-viajero" state={{ emisorID: anfitrionID, id: viajero.id }} key={viajero.id}>
               <article >
                 <p className={styles.fecha}>{new Date(viajero.fecha).toLocaleDateString('es-ES')}</p>
                 <div className={styles.info_profile}>

@@ -7,6 +7,7 @@ import AnfitrionService from "../../../services/users/AnfitrionService";
 import MatchesService from "../../../services/matches/MatchesService";
 
 import styles from "./AnfProfilePage.module.css"
+import LikesService from "../../../services/matches/LikesService";
 
 export default function AnfProfilePage() {
   const [anfitrionInfo, SetAnfitrionInfo] = useState([]);
@@ -25,8 +26,8 @@ export default function AnfProfilePage() {
   const location = useLocation();
   const id = location.state?.id;
   const emisorID = location.state?.emisorID;
-  const [conectado, setConectado] = useState(location.state?.conectado);
-  
+  const [conectado, setConectado] = useState(false);
+
   // Controlar cuando es pantalla pequeña 
   useEffect(() => {
     const handleResize = () => {
@@ -40,9 +41,8 @@ export default function AnfProfilePage() {
 
   // Obtener datos del usuario si no hay y se tiene su id
   useEffect(() => {
-    if (emisorID && anfitrionInfo.length === 0) {
+    if (id && anfitrionInfo.length === 0) {
       AnfitrionService.getById(id).then(response => {
-        //console.log(response.data);
         SetAnfitrionInfo(response.data);
         setValoraciones(response.data.valoraciones);
         setIdiomasUser(response.data.biografia?.idiomas ? response.data.biografia.idiomas.trim().split(",") : ["Español"]);
@@ -59,15 +59,18 @@ export default function AnfProfilePage() {
           response.data.usuario.gusto3
         ].filter(img => img != null));
 
+        // Ver si se ha dado like
+        LikesService.haDadoLike("viajeros", emisorID, id)
+          .then(likeDado => setConectado(likeDado))
+          .catch(error => console.error("Error al buscar el match " + error));
+
         // Ver si se tiene match con el
         MatchesService.getTwoUsersMatchs(id, 1)
           .then(match => SetMatch(match.data))
           .catch(error => console.error("Error al buscar el match " + error));
-      }
-      )
-      .catch(error => console.error("No se encontró el usuario " + error))
-      .finally(SetLoading(false))
-      ;
+      })
+        .catch(error => console.error("No se encontró el usuario " + error))
+        .finally(SetLoading(false));
     }
   }, [id, anfitrionInfo])
 
@@ -97,7 +100,7 @@ export default function AnfProfilePage() {
           {!isMobile ? (
             <>
               <Link to="/viajeros/alojamientos">Alojamientos</Link>
-              <Link to="/viajeros/alojamientos">Comunidades</Link>
+              <Link to="/viajeros/foros">Foros</Link>
               <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
               <Link to="/viajeros/mi-cuenta">Mi Cuenta</Link>

@@ -2,6 +2,7 @@ import styles from './foros.module.css';
 import { useEffect, useRef, useState } from 'react';
 import ForosService from '../../services/foros/ForosService';
 import { jwtDecode } from 'jwt-decode';
+import { Link } from 'react-router-dom';
 
 const Foros = ({ tipoUsuario }) => {
   const [loading, setLoading] = useState(true);
@@ -12,9 +13,10 @@ const Foros = ({ tipoUsuario }) => {
   const [hasMore, setHasMore] = useState(true);
   const [forosData, setForosData] = useState([]);
   const [lastFecha, setLastFecha] = useState(null);
+  const [ordenPaginacion, setOrdenPaginacion] = useState(0);
   const [descripcion, setDescripcion] = useState("");
   const [foroCreado, setForoCreado] = useState(false);
-
+  
   const [mostrarRespuestas, setMostrarRespuestas] = useState({});
   const [loadingRespuestas, setLoadingRespuestas] = useState({});
   const [respuestaData, setRespuestaData] = useState({});
@@ -44,11 +46,13 @@ const Foros = ({ tipoUsuario }) => {
   // Función para obtener los foros con paginación
   const obtenerForos = (fecha) => {
     setLoading(true);
-    ForosService.getForosPorCursor(10, fecha)
+    ForosService.getForosPorCursor(ordenPaginacion ,1, fecha)
       .then(response => {
+        console.log(response.data)
         setForosData(prev => [...prev, ...response.data.data]);
         setLastFecha(response.data.lastFecha);
         setHasMore(response.data.hasMore);
+        setOrdenPaginacion(prev => prev + 1);
       })
       .catch(error => console.error("Error al obtener los foros:", error))
       .finally(() => setLoading(false));
@@ -62,7 +66,7 @@ const Foros = ({ tipoUsuario }) => {
       const token = localStorage.getItem("acces_token");
       if (token) {
         const decoded = jwtDecode(token);
-        setUserID(decoded.jti);
+        setUserID(parseInt(decoded.jti));
       }
     }
 
@@ -76,13 +80,37 @@ const Foros = ({ tipoUsuario }) => {
       .then(response => {
         setForoCreado(true);
         setDescripcion("");
-    }).catch(error => console.error("Error al CREAR el foro:", error))
+      }).catch(error => console.error("Error al CREAR el foro:", error))
+  }
+
+  const actualizarRespuesta = (foroID) => {
+    setLoadingRespuestas(prev => ({ ...prev, [foroID]: true }));
+    
+    ForosService.getRespuestas(foroID)
+      .then(response => setRespuestaData(prev => ({ ...prev, [foroID]: response.data })))
+      .catch(error => console.error("Error al actualizar respuestas:", error))
+      .finally(() => setLoadingRespuestas(prev => ({ ...prev, [foroID]: false })));
+  };
+
+
+  const crearRespuesta = (foroID) => {
+    ForosService.crearRespuesta(foroID, tipoUsuario, userID, descripcionRespuesta[foroID])
+      .then(response => {
+        actualizarRespuesta(foroID);
+        setDescripcionRespuesta(prevState => ({ ...prevState, [foroID]: "" }));
+
+        // Actualizar el contador de respuestas en forosData
+        setForosData(prevData =>
+          prevData.map(foro => foro.id === foroID ? { ...foro, num_respuestas: foro.num_respuestas + 1 } : foro)
+        );
+
+      }).catch(error => console.error("Error al CREAR el foro:", error))
   }
 
   return (
     <main className={styles.forosContainer}>
       <section className={styles.add_foro}>
-        {foroCreado && <h2 style={{marginTop : "15px", textAlign : "center", fontSize : "30px"}}>¡Foro creado con éxito!</h2>}
+        {foroCreado && <h2 style={{ marginTop: "15px", textAlign: "center", fontSize: "30px" }}>¡Foro creado con éxito!</h2>}
 
         <textarea
           name='descripcion foro'
@@ -92,6 +120,7 @@ const Foros = ({ tipoUsuario }) => {
           placeholder="Comparte algo con la comunidad..."
           rows="4"
           spellCheck="false"
+          autoComplete='false'
         />
         <button
           disabled={descripcion === "" && userID === null}
@@ -105,12 +134,23 @@ const Foros = ({ tipoUsuario }) => {
         <section key={foro.id} className={styles.foroSection}>
           <article>
             <div className={styles.userDetails}>
-              <img
-                src={foro.usuario_profile_img}
-                alt={`${foro.usuario_nombre} profile`}
-                className={styles.userProfileImg}
-                onError={(e) => e.target.src = "/images/usuarios/Gustos/default.svg"}
-              />
+              {foro.tipoUsuario !== tipoUsuario ? (
+                <Link to={tipoUsuario === 1 ? "/anfitriones/perfil-viajero" : "/viajeros/perfil-anfitrion"} state={{ emisorID: userID, id: foro.usuarioID }} key={foro.id} className={styles.userProfileLink}>
+                  <img
+                    src={foro.usuario_profile_img}
+                    alt={`${foro.usuario_nombre} profile`}
+                    className={styles.userProfileImg}
+                    onError={(e) => e.target.src = "/images/not_found/user_img.png"}
+                  />
+                </Link>
+              ) : (
+                <img
+                  src={foro.usuario_profile_img}
+                  alt={`${foro.usuario_nombre} profile`}
+                  className={styles.userProfileImg}
+                  onError={(e) => e.target.src = "/images/not_found/user_img.png"}
+                />
+              )}
               <div className={styles.userInfo}>
                 <div className={styles.userName}>
                   <h4>{foro.usuario_nombre}</h4>
@@ -148,20 +188,35 @@ const Foros = ({ tipoUsuario }) => {
                   rows="3"
                   name={`descripcion_respuesta_${foro.id}`}
                   spellCheck="false"
+                  autoComplete='false'
                 >
                 </textarea>
-                <button className={styles.button}>Responder</button>
+                <button className={styles.button} onClick={() => crearRespuesta(foro.id)}>Responder</button>
               </div>
               <div className={styles.respuestas}>
                 {respuestaData[foro.id] && respuestaData[foro.id].map(respuesta => (
                   <article key={respuesta.id}>
                     <div className={styles.userDetails}>
-                      <img
-                        src={respuesta.usuario_profile_img}
-                        alt={`${respuesta.usuario_nombre} profile`}
-                        className={styles.userProfileImg}
-                        onError={(e) => e.target.src = "/images/usuarios/Gustos/default.svg"}
-                      />
+                      {respuesta.tipoUsuario !== tipoUsuario ? (
+                        <Link to={tipoUsuario === 1 ? "/anfitriones/perfil-viajero" : "/viajeros/perfil-anfitrion"} state={{ emisorID: userID, id: respuesta.usuarioID }} key={respuesta.id} className={styles.userProfileLink}>
+                          <img
+                            src={respuesta.usuario_profile_img}
+                            alt={`${respuesta.usuario_nombre} profile`}
+                            className={styles.userProfileImg}
+                            onMouseEnter={() => console.log(respuesta.usuario_id)}
+                            onError={(e) => e.target.src = "/images/not_found/user_img.png"}
+                          />
+                        </Link>
+                      ) : (
+                        <img
+                          src={respuesta.usuario_profile_img}
+                          alt={`${respuesta.usuario_nombre} profile`}
+                          className={styles.userProfileImg}
+                          onError={(e) => e.target.src = "/images/not_found/user_img.png"}
+                          onMouseEnter={() => console.log(respuesta.usuario_id)}
+                        />
+                      )}
+
                       <div className={styles.userInfo}>
                         <div className={styles.userName}>
                           <h4>{respuesta.usuario_nombre}</h4>

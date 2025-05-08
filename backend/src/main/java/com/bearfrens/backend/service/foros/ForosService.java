@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -75,18 +72,20 @@ public class ForosService {
    *
    * @param tamanio  cantidad de elementos a devolver
    * @param ultimaFecha fecha del último foro cargado (puede ser null para la primera carga)
+   * @param paginaInicial Número de página donde se empiezan a cargar los datos
    * @return un mapa con la lista de foros y un booleano indicando si hay más
    */
-  public Map<String, Object> obtenerForosPorCursor(int tamanio, LocalDate ultimaFecha) {
-    PageRequest page = PageRequest.of(0, tamanio);
+  public Map<String, Object> obtenerForosPorCursor(int tamanio, LocalDate ultimaFecha, int paginaInicial) {
+    PageRequest page = PageRequest.of(paginaInicial, tamanio);
     List<Foros> foros;
 
     if (ultimaFecha != null) {
-      foros = forosRepository.findByFechaLessThanEqualOrderByFechaDesc(ultimaFecha, page);
+      foros = forosRepository.findAllByForoPadreIsNullAndFechaLessThanEqualOrderByFechaDesc(ultimaFecha, page);
     }
     else {
-      foros = forosRepository.findAllByOrderByFechaDesc(page);
+      foros = forosRepository.findAllByForoPadreIsNullOrderByFechaDesc(page);
     }
+
 
     // Obtener información de cada usuario
     for(Foros foro : foros){
@@ -94,7 +93,11 @@ public class ForosService {
         ? gestorUsuarioService.obtenerAnfitrion(foro.getUsuarioID())
         : gestorUsuarioService.obtenerViajero(foro.getUsuarioID());
 
-      if(usuario != null){
+      if(usuario == null){
+        foro.setUsuario_nombre("Usuario eliminado");
+        foro.setUsuario_private_id("undefined");
+      }
+      else {
         foro.setUsuario_nombre(usuario.getNombre() + " " + usuario.getApellido().charAt(0));
         foro.setUsuario_profile_img(usuario.getProfileImage());
         foro.setUsuario_private_id(usuario.getPrivateID());
@@ -105,7 +108,7 @@ public class ForosService {
     LocalDate lastFecha = foros.getLast().getFecha();
 
     if (foros.size() == tamanio) { // Verifica si hay más foros con fecha igual o anterior
-      hasMore = forosRepository.existsByFechaLessThanEqual(lastFecha);
+      hasMore = forosRepository.existsByFechaLessThanEqualAndIdNot(lastFecha, foros.getLast().getId());
     }
 
     Map<String, Object> response = new HashMap<>();
@@ -120,6 +123,25 @@ public class ForosService {
   // Suponiendo que usas Spring para tu API
   public ResponseEntity<List<Foros>> obtenerRespuestas(Long foroPadreID) {
     List<Foros> respuestas = forosRepository.findByForoPadreId(foroPadreID);
+
+    // Obtener información de cada usuario de la respuesta
+    for(Foros respuesta : respuestas){
+      Usuario usuario = respuesta.getTipoUsuario() == 1
+        ? gestorUsuarioService.obtenerAnfitrion(respuesta.getUsuarioID())
+        : gestorUsuarioService.obtenerViajero(respuesta.getUsuarioID());
+
+      if(usuario == null){
+        respuesta.setUsuario_nombre("Usuario eliminado");
+        respuesta.setUsuario_private_id("undefined");
+      }
+
+      else {
+        respuesta.setUsuario_nombre(usuario.getNombre() + " " + usuario.getApellido().charAt(0));
+        respuesta.setUsuario_profile_img(usuario.getProfileImage());
+        respuesta.setUsuario_private_id(usuario.getPrivateID());
+      }
+    }
+
     return ResponseEntity.ok(respuestas);
   }
 

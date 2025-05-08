@@ -4,8 +4,8 @@ class ForosService {
   static FOROS_BASE_REST_API_URL = "http://localhost:8080/api/foros";
 
   // Obtener los foros por cursor (de acuerdo con la última fecha cargada, la primera null)
-  static getForosPorCursor(tamanio, ultimaFecha) {
-    return axios.get(`${this.FOROS_BASE_REST_API_URL}/paginacion/${tamanio}`, ultimaFecha);
+  static getForosPorCursor(paginacion, tamanio, ultimaFecha) {
+    return axios.get(`${this.FOROS_BASE_REST_API_URL}/paginacion/${paginacion}/${tamanio}`, ultimaFecha);
   }
 
   // Obtener las respuestas de un foro padre

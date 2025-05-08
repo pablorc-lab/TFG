@@ -53,7 +53,7 @@ export default function Anf_card({
         <div className={styles.anf_rating}>
           <div className={`${styles.score} ${styles.anf_score}`}>
             <img src="/images/usuarios/estrella.webp" alt="Logo estrella" />
-            <p>{Valoracion}</p>
+            <p>{parseInt(Valoracion).toFixed(1)}</p>
           </div>
           <div className={styles.anf_likes}>
             {/* Mapeamos las imágenes de gustos */}
@@ -85,7 +85,7 @@ export default function Anf_card({
           </button>
         ) : (
           <div className={styles.anf_conectado}>
-            <img src="/images/usuarios/heart.svg" className={styles.conectado} />
+            <img src="/images/usuarios/heart.svg" className={styles.conectado} alt="Conectado"/>
           </div>
         )}
       </div>

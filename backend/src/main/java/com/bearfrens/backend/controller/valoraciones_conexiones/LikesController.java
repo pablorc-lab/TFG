@@ -35,6 +35,14 @@ public class LikesController{
     return likesRepository.findAll();
   }
 
+  // Devuelve si se ha dado like a ese usuario
+  @GetMapping("/{tipo_usuario}/{emisorID}/likes/{receptorID}/existe")
+  public ResponseEntity<Boolean> haDadoLike(@PathVariable String tipo_usuario, @PathVariable Long emisorID, @PathVariable Long receptorID) {
+    boolean existe = likesService.haDadoLike(tipo_usuario, emisorID, receptorID);
+    return ResponseEntity.ok(existe);
+  }
+
+
   // Obtener la LISTA de VIAJEROS que han dado like a un RECEPTOR ANFITRIÓN id
   @GetMapping("/anfitriones/{receptorID}/likes/recibidos")
   public List<Map<String, Object>> obtenerListaLikes(@PathVariable Long receptorID) {

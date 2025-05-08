@@ -26,27 +26,27 @@ export default function Inq_card({
     LikesService.crearLike("anfitriones", anfitrion_ID, viaj_ID);
   }
 
-  function returnTiempoValue(tiempo_estancia){
-    switch (tiempo_estancia){
-      case "< 1 mes" : return 20;
-      case "1 - 3 meses" : return 35;
-      case "3 - 6 meses" : return 55;
-      case "6 - 12 meses" : return 75;
-      case "> 1 año" : return 95;
+  function returnTiempoValue(tiempo_estancia) {
+    switch (tiempo_estancia) {
+      case "< 1 mes": return 20;
+      case "1 - 3 meses": return 35;
+      case "3 - 6 meses": return 55;
+      case "6 - 12 meses": return 75;
+      case "> 1 año": return 95;
     }
   }
 
   return (
     <article className={`${styles.general_prof} ${styles.viaj_prof}`}>
       <div className={styles.personal_info}>
-        <Link to="/anfitriones/perfil-viajero" state={{ id: viaj_ID, emisorID : anfitrion_ID, conectado: conectado}} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
+        <Link to="/anfitriones/perfil-viajero" state={{ id: viaj_ID, emisorID: anfitrion_ID }} className={styles.anf_link} style={{ pointerEvents: !enlace ? 'none' : 'auto' }}>
           <img className={`${styles.profile_img} ${styles.viaj_img}`} src={Perfil_img} alt="Imagen viajero" width={250} />
         </Link>
         <div className={styles.text_column_viaj}>
           <h3>{Nombre}</h3>
           <p>{Num_viajes} viajes</p>
           <div className={`${styles.score} ${styles.score_viajero}`}>
-            <p>{Valoracion}</p>
+            <p>{parseInt(Valoracion).toFixed(1)}</p>
             <img src="/images/usuarios/estrella.webp" alt="Logo estrella" />
           </div>
         </div>
@@ -85,7 +85,7 @@ export default function Inq_card({
             Conectar
           </button>
         ) : (
-          <img src="/images/usuarios/heart.svg" className={styles.conectado} />
+          <img src="/images/usuarios/heart.svg" className={styles.conectado} alt="Conectado" />
         )}
       </section>
     </article>

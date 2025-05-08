@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import viaj_card_styles from "../../users_cards/UserCard.module.css"
 import ViajCard from "../../users_cards/ViajCard";
 import styles from "./ViajProfilesGallery.module.css"
@@ -19,14 +19,6 @@ export default function ViajProfilesGallery({
   const [loading, setLoading] = useState(true);
   const [conexionesID, setConexionesID] = useState([]);
   
-  const verMasRef = useRef(null);
-
-  useEffect(() => {
-    if (verMasRef.current && (viajeros.length > 0 || viajerosFiltrados.length > 0)) {
-      verMasRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }, [viajeros, viajerosFiltrados]);
-
   useEffect(() => {
     // Obtener el correo decodificado del localstorage
     const token = localStorage.getItem("acces_token");
@@ -75,7 +67,7 @@ export default function ViajProfilesGallery({
             viaj_ID={viajero.id}
             Perfil_img={viajero.profileImage || "/images/not_found/user_img.png"}
             Nombre={viajero.nombre}
-            Valoracion={viajero.valoracion_media || "0.0"}
+            Valoracion={viajero.valoracion_media || 0}
             Num_viajes={viajero.viajes_realizados || 0}
             Edad={calcularEdad(viajero.fecha_nacimiento) || 18}
             Profesion={viajero.profesion || "Sin información"}
@@ -90,7 +82,7 @@ export default function ViajProfilesGallery({
 
       {((hasMore && !buscarFiltrado) || (buscarFiltrado && hasMoreFiltrados)) &&
         <div className={styles.ver_mas}>
-          <button ref={verMasRef} onClick={() => {
+          <button onClick={() => {
             if (buscarFiltrado) setFiltradosObtenidos(prev => prev + 1);
             else setViajerosObtenidos(prev => prev + 1)
           }

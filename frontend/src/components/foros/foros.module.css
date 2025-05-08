@@ -1,7 +1,4 @@
-
-
-
-.forosContainer{
+.forosContainer {
   font-family: "Nunito";
   margin: 50px 40px;
   display: grid;
@@ -9,7 +6,10 @@
   padding-bottom: 150px;
 }
 
-.forosContainer p, h4 {margin: 0;}
+.forosContainer p,
+h4 {
+  margin: 0;
+}
 
 /*? Añadir comentario*/
 .add_foro {
@@ -34,13 +34,17 @@
 }
 
 .respuestasContainer {
-  background-color: #b3f2f32d;
   padding: 0px 60px;
 }
 
-.respuestaInput { 
+.respuestas article:last-child {
+  margin-bottom: 20px;
+}
+
+.respuestaInput {
   margin: 40px 0;
 }
+
 .respuestaInput textarea {
   margin-bottom: 5px;
   min-height: 80px;
@@ -67,7 +71,7 @@
 /*? Foro de cada usuario*/
 .foroSection {
   background-color: white;
-  box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
   height: fit-content;
   margin: 0 auto;
   border-radius: 5px;
@@ -82,12 +86,21 @@
   object-fit: cover;
 }
 
+.userProfileLink img {
+  cursor: pointer;
+}
+.userProfileLink img:hover {
+  outline: 2px solid lightgray;
+  filter: brightness(0.8);
+}
+
 /*? Detalles del usuario*/
 .userInfo {
   display: grid;
   gap: 0;
 }
-.userDetails{
+
+.userDetails {
   margin: 20px;
   margin-bottom: 0;
   padding-bottom: 10px;
@@ -96,7 +109,11 @@
   align-items: center;
   border-bottom: 2px solid rgb(214, 214, 214);
 }
-.userDetails h4 {font-size: 25px;}
+
+.userDetails h4 {
+  font-size: 25px;
+}
+
 .userDetails p {
   font-size: 21px;
   color: rgb(150, 150, 150);
@@ -107,6 +124,7 @@
   align-items: center;
   gap: 10px;
 }
+
 .userInfo img {
   margin-top: 20px;
   width: 300px;
@@ -132,19 +150,23 @@
   align-items: center;
   gap: 10px;
 }
+
 .activa {
   border-radius: 0;
 }
+
 .responder:hover {
   background-color: #0d777954;
 
   filter: brightness(0.9);
 }
+
 .responder img {
   width: 26px;
   aspect-ratio: 1 / 1;
 }
-.responder p{
+
+.responder p {
   margin: 0;
   font-weight: 600;
 }
@@ -163,7 +185,7 @@
   border-radius: 5px;
   background-color: white;
   border: 2px solid black;
-  box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
   color: black;
   font-weight: 700;
   cursor: pointer;
@@ -196,7 +218,8 @@
   .responder img {
     width: 28px;
   }
-  .responder p{
+
+  .responder p {
     font-size: 18px;
   }
 }

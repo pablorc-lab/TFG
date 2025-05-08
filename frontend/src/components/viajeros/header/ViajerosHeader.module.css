@@ -114,7 +114,7 @@
   transition: box-shadow 0.1s ease-in-out;
 }
 /*Aplica estilos al contenedor cuando cualquier elemento hijo dentro de él tiene el foco.*/
-.search_form_container:not(.inactive_form) .search_form:focus-within { box-shadow: 0 0 5px rgba(0, 144, 128, 0.5); }
+.search_form_container:not(.inactive_form) .search_form:focus-within { box-shadow: 0 0 10px rgba(0, 144, 128, 0.4); }
 .search_form img{
   cursor: pointer;
   padding: 11px 2px 11px 10px;

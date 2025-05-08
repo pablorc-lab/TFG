@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AnfCard from '../../users_cards/AnfCard';
 import anf_card_styles from "../../users_cards/UserCard.module.css";
 import styles from "./AnfProfilesGallery.module.css";
@@ -19,14 +19,6 @@ export default function AnfProfilesGallery({
   const [viajeroID, setViajeroID] = useState(null);
   const [loading, setLoading] = useState(true);
   const [conexionesID, setConexionesID] = useState([]);
-
-  const verMasRef = useRef(null);
-
-  useEffect(() => {
-    if (verMasRef.current && (anfitriones.length > 0 || anfitrionesFiltrados.length > 0)) {
-      verMasRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }, [anfitriones, anfitrionesFiltrados]);
 
   useEffect(() => {
     const token = localStorage.getItem("acces_token");
@@ -64,7 +56,7 @@ export default function AnfProfilesGallery({
               Perfil_img={anfitrion.profileImage || "/images/not_found/user_img.png"}
               Nombre={anfitrion.nombre}
               Gustos_imgs={[anfitrion.gusto1, anfitrion.gusto2, anfitrion.gusto3].filter(gusto => gusto != null)}
-              Valoracion={anfitrion.valoracion_media || "0.0"}
+              Valoracion={anfitrion.valoracion_media || 0}
               Ubicacion={`${anfitrion.vivienda?.ciudad || "No disponible"}, ${anfitrion.vivienda?.provincia || "No disponible"}`}
               Precio={anfitrion.vivienda?.precio_noche || "0"}
               Descripcion={anfitrion.descripcion || "Este anfitrión aún no se ha descrito."}
@@ -76,7 +68,7 @@ export default function AnfProfilesGallery({
 
         {((hasMore && !buscarFiltrado) || (buscarFiltrado && hasMoreFiltrados)) && !buscarUsuario &&
           <div className={styles.ver_mas}>
-            <button ref={verMasRef} onClick={() => buscarFiltrado ? setFiltradosObtenidos(prev => prev + 1) : setAnfitrionesObtenidos(prev => prev + 1)}>
+            <button onClick={() => buscarFiltrado ? setFiltradosObtenidos(prev => prev + 1) : setAnfitrionesObtenidos(prev => prev + 1)}>
               Ver más
             </button>
           </div>

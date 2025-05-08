@@ -4,6 +4,7 @@ import Footer from "../../../components/footer/footer";
 import UserPage from "../../../components/usuarios/user_page/UserPage";
 import AnfitrionMobileHeader from "../../../components/anfitriones/header/AnfitrionMobileHeader";
 import ViajeroService from "../../../services/users/ViajeroService";
+import LikesService from "../../../services/matches/LikesService";
 import styles from "./InqProfilePage.module.css";
 
 export default function InqProfilePage() {
@@ -17,7 +18,7 @@ export default function InqProfilePage() {
   const location = useLocation();
   const id = location.state?.id;
   const emisorID = location.state?.emisorID;
-  const [conectado, setConectado] = useState(location.state?.conectado);
+  const [conectado, setConectado] = useState(false);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const [isColumns, setIsColumns] = useState(window.innerWidth <= 1350);
@@ -47,6 +48,11 @@ export default function InqProfilePage() {
           response.data.usuario.gusto3
         ].filter(img => img != null));
 
+        // Ver si se ha dado like
+        LikesService.haDadoLike("anfitriones", emisorID, id)
+          .then(likeDado => setConectado(likeDado))
+          .catch(error => console.error("Error al buscar el match " + error));
+
         SetLoading(false);
       }
       ).catch(error => console.error("No se encontró el usuario " + error));
@@ -65,11 +71,11 @@ export default function InqProfilePage() {
         <nav>
           {!isMobile ? (
             <>
-              <Link to="/viajeros/alojamientos">Inquilinos</Link>
-              <Link to="/viajeros/alojamientos">Foros</Link>
+              <Link to="/anfitriones/inquilinos">Inquilinos</Link>
+              <Link to="/anfitriones/foros">Foros</Link>
               <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
-              <Link to="/viajeros/alojamientos">Mi Cuenta</Link>
+              <Link to="/anfitriones/mi-cuenta">Mi Cuenta</Link>
             </>
           ) : (
             <>

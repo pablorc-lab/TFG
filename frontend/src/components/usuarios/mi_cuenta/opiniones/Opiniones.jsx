@@ -8,7 +8,6 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
   const [estadisticas_valoraciones, setEstadisticas_valoraciones] = useState([0, 0, 0, 0, 0]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [activeShowMore, setActiveShowMore] = useState(false);
-
   // Almancenar cuantas valoraciones de ese valor hay
   useEffect(() => {
     if (valoraciones.length > 0) {
@@ -35,7 +34,7 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
 
         <article className={styles.valoraciones_statistics}>
           {estadisticas_valoraciones.slice().reverse().map((aparicion_valoracion, index) => (
-            <div key={aparicion_valoracion} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
+            <div key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
               <p>{estadisticas_valoraciones.length - index}</p>
               <progress
                 max="100"

@@ -179,7 +179,7 @@ export default function UserPage({
             <p>{usuarioData.usuario?.reservas_realizadas || 0} reservas</p>
             <div className={styles.user_score}>
               <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
-              <h3>{usuarioData.usuario?.valoracion_media || 0.1}</h3>
+              <h3>{usuarioData.usuario?.valoracion_media || "0.0"}</h3>
             </div>
           </div>
         </div>
@@ -312,7 +312,7 @@ export default function UserPage({
     <section className={styles.valoraciones}>
       <OpinionesMiCuenta
         showSize={true}
-        nota_media={usuarioData.usuario?.valoracion_media}
+        nota_media={usuarioData.usuario?.valoracion_media || 0.0}
         valoraciones={valoraciones}
       />
     </section>

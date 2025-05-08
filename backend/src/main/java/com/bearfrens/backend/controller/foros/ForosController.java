@@ -3,6 +3,7 @@ package com.bearfrens.backend.controller.foros;
 import com.bearfrens.backend.entity.foros.Foros;
 import com.bearfrens.backend.service.foros.ForosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,10 +33,10 @@ public class ForosController {
 
 
   // Obtener foros por paginación
-  @GetMapping("/paginacion/{tamanio}")
-  public Map<String, Object> obtenerForosPorCursor(@PathVariable int tamanio, @RequestParam(required = false) String ultimaFecha) {
+  @GetMapping("/paginacion/{paginaInicial}/{tamanio}")
+  public Map<String, Object> obtenerForosPorCursor(@PathVariable int paginaInicial, @PathVariable int tamanio, @RequestParam(required = false) String ultimaFecha) {
     LocalDate fecha = ultimaFecha == null ? null : LocalDate.parse(ultimaFecha);
-    return forosService.obtenerForosPorCursor(tamanio, fecha);
+    return forosService.obtenerForosPorCursor(tamanio, fecha, paginaInicial);
   }
 
   // Obtener respuestas
