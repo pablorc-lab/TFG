@@ -64,7 +64,7 @@ public class AuthService {
     token.setTipoUsuario(tipo_usuario);
 
     this.revokeAllUserToken(userID, tipo_usuario); // Solo 1 cliente logeado a la vez
-    //tokenRepository.save(token);
+    tokenRepository.save(token);
 
     Map<String, Object> tokenResponse = new HashMap<>();
     tokenResponse.put("User", tipo_usuario == 1 ? "Anfitrion (1)" : "Viajero (2)");

@@ -4,6 +4,7 @@ import ScoreMiCuenta from "../../../components/usuarios/mi_cuenta/Score";
 import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import Footer from "../../../components/footer/footer";
+import AuthService from "../../../services/authentication/AuthService";
 const AnfitrionMobileHeader = lazy(() => import("../../../components/anfitriones/header/AnfitrionMobileHeader"));
 const ViajerosMobileHeader = lazy(() => import("../../../components/viajeros/header/ViajerosMobileHeader"));
 
@@ -89,10 +90,8 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
   };
 
   const handleLogout = () => {
-    localStorage.clear();
-
     navigate("/inicio");
-    //TODO : HACER LLAMADA A LA API EN LOGOUT PARA ELIMINAR ESE TOKEN
+    AuthService.logout();
   }
 
 

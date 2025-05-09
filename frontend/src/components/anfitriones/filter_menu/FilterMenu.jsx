@@ -10,7 +10,7 @@ export default function FilterMenu({
   setViajerosFiltrados, 
   setFiltrosActivos,
   setFiltradosObtenidos,
-  setHasMoreFiltrados
+  
  }) {
   const [mouseEnter, SetMouseEnter] = useState(null);
 

@@ -15,7 +15,6 @@ export default function ViajerosFinalHeader({
   setAnfitrionesFiltrados,
   setHasMoreFiltrados,
   setFiltradosObtenidos,
-  setBuscandoFiltrado
 }) {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 770);
   const inputRef = useRef(null);
@@ -161,7 +160,6 @@ export default function ViajerosFinalHeader({
           setFiltrosActivos={setFiltrosActivos}
           setHasMoreFiltrados={setHasMoreFiltrados}
           setFiltradosObtenidos={setFiltradosObtenidos}
-          setBuscandoFiltrado={setBuscandoFiltrado}
         />
       }
     </>

@@ -30,6 +30,14 @@ public class AppConfig {
   @Bean
   public UserDetailsService userDetailsService() {
     return username -> {
+      if (username.equals("admin@admin.com")) {
+        return org.springframework.security.core.userdetails.User.builder()
+          .username("admin@admin.com")
+          .password(new BCryptPasswordEncoder().encode("admin123")) // Usa una contraseña segura en proyectos reales
+          .roles("ADMIN")
+          .build();
+      }
+
       final Usuario<?> usuario = usuarioService.findByEmail(username);
       return org.springframework.security.core.userdetails.User.builder()
         .username(usuario.getEmail())

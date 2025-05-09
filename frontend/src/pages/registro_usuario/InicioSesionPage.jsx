@@ -29,7 +29,8 @@ export default function InicioSesionPage() {
         setLoginError(false);
         setFinish(true);
 
-        localStorage.setItem("acces_token", response.data.acces_token);
+        localStorage.setItem("acces_token", response.data.acces_token); 
+        localStorage.setItem("refresh_token", response.data.acces_token);
         localStorage.setItem("user", response.data.User);
 
         navigate(response.data.User === "Anfitrion (1)" ? "/anfitriones/inquilinos" : "/viajeros/alojamientos");
@@ -88,7 +89,7 @@ export default function InicioSesionPage() {
                     onChange={(e) => setLoginRequest(prev => ({ ...prev, password: e.target.value }))}
                   />
                 </div>
-                <Link style={{ textAlign: "right", marginTop : "3px" }} to="/">¿Contraseña olvidada?</Link>
+                <Link style={{ textAlign: "right", marginTop: "3px" }} to="/">¿Contraseña olvidada?</Link>
               </fieldset>
 
               <input

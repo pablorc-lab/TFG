@@ -82,7 +82,7 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
     if (opcionesViviendaEscogida[2] !== null) filtros_activos++;
     if (opcionesViviendaEscogida[3] !== null) filtros_activos++;
     if (gustos_actuales.length > 0) filtros_activos += gustos_actuales.length;
-    if (UserIdiomas.length > 0) filtros_activos += UserIdiomas.length;;
+    if (UserIdiomas.length > 0) filtros_activos += UserIdiomas.length;
 
     if(filtros_activos > 0) {
       setAnfitrionesFiltrados([]);

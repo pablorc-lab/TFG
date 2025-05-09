@@ -87,7 +87,7 @@ export default function AlojamientosPage() {
         setHasMoreFiltrados={setHasMoreFiltrados}
         setFiltradosObtenidos={setFiltradosObtenidos}
       />}
-
+  
       {/* PERFILES DE ANFITRIONES*/}
       <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}>
 

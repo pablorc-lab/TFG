@@ -24,6 +24,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
@@ -36,26 +38,35 @@ public class WebSecurityConfig {
   private final JwtAuthFilter jwtAuthFilter;
   private final TokenRepository tokenRepository;
 
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Cambia según tu dominio
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE")); // Los métodos que tu frontend necesita
+    configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Aquí permites Authorization
+    configuration.setAllowCredentials(true); // Permite credenciales como cookies o cabeceras
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+  }
 
   // FILTRO DE SEGURIDAD
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
       .csrf(AbstractHttpConfigurer::disable) // Desactiva la protección CSRF
-//        .authorizeHttpRequests(req -> req
-//            .requestMatchers("/api/auth/login", "/api/anfitriones/auth/register", "/api/viajeros/auth/register") // Permite el acceso sin autenticación a estas rutas
-//            .permitAll()
-//            .anyRequest() // El resto de rutas
-//            .authenticated() // Requieren autenticación
-//        )
+      .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Habilita la configuración CORS
       .authorizeHttpRequests(req -> req
-        .anyRequest().permitAll()
-      )
+            .requestMatchers("/api/auth/login", "/api/auth/logout", "/api/anfitriones/auth/register", "/api/viajeros/auth/register").permitAll() // Permite el acceso sin autenticación a estas rutas
+            .requestMatchers("/admin-panel/**").hasRole("ADMIN")
+            .anyRequest() // El resto de rutas
+            .authenticated() // Requieren autenticación
+        )
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Define que no se usarán sesiones, se trabaja con JWT
         .authenticationProvider(authenticationProvider) // Usa el proveedor de autenticación definido (donde se carga el usuario y se verifica contraseña)
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)  // Añade el filtro JWT antes del filtro estándar de autenticación por usuario y contraseña
           .logout(logout -> // Configura el proceso de logout
-            logout.logoutUrl("/auth/logout")  // Ruta para hacer logout
+            logout.logoutUrl("/api/auth/logout")  // Ruta para hacer logout
               .addLogoutHandler((request, response, authentication) -> { // Obtiene el token
                 final var authHeader = request.getHeader(HttpHeaders.AUTHORIZATION); // Llama al método personalizado para invalidar el token
                 logout(authHeader); // Llama al método personalizado para invalidar el token
@@ -72,7 +83,7 @@ public class WebSecurityConfig {
     }
 
     final String jwtToken = token.substring(7);
-    final Token foundToken = tokenRepository.findByToken(token)
+    final Token foundToken = tokenRepository.findByToken(jwtToken)
       .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
     foundToken.setExpired(true);
     foundToken.setRevoked(true);

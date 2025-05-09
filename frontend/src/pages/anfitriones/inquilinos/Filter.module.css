@@ -44,3 +44,61 @@
   right: -10px;
   top: -33px;
 }
+
+
+/*? Barra de búsqueda*/
+
+.search_form {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 2px solid #0a7273;
+  border-radius: 60px;
+  transition: box-shadow 0.1s ease-in-out;
+}
+/*Aplica estilos al contenedor cuando cualquier elemento hijo dentro de él tiene el foco.*/
+.search_form_container:not(.inactive_form) .search_form:focus-within { box-shadow: 0 0 10px rgba(0, 144, 128, 0.4); }
+.search_form img{
+  cursor: pointer;
+  padding: 11px 2px 11px 10px;
+  width: 40px;
+}
+.search_form img:hover {
+  background-color: #0a717334;
+  border-top-left-radius: 60px;
+  border-bottom-left-radius: 60px;
+
+}
+
+.searcher {
+  background-color: transparent;
+  padding-right: 20px;
+  padding-left: 5px;
+  width: 210px;
+  caret-color: #009080; /* Cambia el color del cursor (caret) */
+  font-family: "Nunito";
+  height: 60px;
+  border: none;
+  border-top-right-radius: 60px;
+  border-bottom-right-radius: 60px;
+  line-height: 50px; 
+  font-size: 28px;
+  outline: none; /* Elimina el borde de enfoque al hacer clic */
+}
+
+.search_form:focus-within { box-shadow: 0 0 10px 5px rgba(0, 144, 128, 0.2); }
+
+.searcher::placeholder{ color: rgb(177, 177, 177);}
+.searcher:focus { outline: none;}
+
+@media (max-width: 770px) {
+  .filters_container{
+    display: grid;
+    gap: 20px;
+  }
+
+  .filters { 
+    margin: 0 auto;
+  }
+
+}

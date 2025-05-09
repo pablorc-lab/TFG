@@ -10,6 +10,7 @@ export default function ViajProfilesGallery({
   viajerosFiltrados = [],
   match = false,
   buscarFiltrado = false,
+  buscarUsuario = false,
   hasMore = false,
   hasMoreFiltrados = false,
   setViajerosObtenidos,
@@ -18,7 +19,7 @@ export default function ViajProfilesGallery({
   const [anfitrionID, setAnfitrionID] = useState(null);
   const [loading, setLoading] = useState(true);
   const [conexionesID, setConexionesID] = useState([]);
-  
+
   useEffect(() => {
     // Obtener el correo decodificado del localstorage
     const token = localStorage.getItem("acces_token");
@@ -60,7 +61,7 @@ export default function ViajProfilesGallery({
 
   return (
     <section className={styles.card_users}>
-      {!loading && anfitrionID != null && (buscarFiltrado ? viajerosFiltrados : viajeros ).map((viajero, index) => (
+      {!loading && anfitrionID != null && ((buscarFiltrado || buscarUsuario) ? viajerosFiltrados : viajeros).map((viajero, index) => (
         <article key={index}>
           <ViajCard
             styles={viaj_card_styles}
@@ -80,7 +81,7 @@ export default function ViajProfilesGallery({
         </article>
       ))}
 
-      {((hasMore && !buscarFiltrado) || (buscarFiltrado && hasMoreFiltrados)) &&
+      {((hasMore && !buscarFiltrado) || (buscarFiltrado && hasMoreFiltrados)) && (!buscarUsuario) &&
         <div className={styles.ver_mas}>
           <button onClick={() => {
             if (buscarFiltrado) setFiltradosObtenidos(prev => prev + 1);
@@ -95,6 +96,8 @@ export default function ViajProfilesGallery({
       {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "50%", left: "0%", margin: "150px 0", transform: "translateY(-50%)" }} />}
 
       {buscarFiltrado && viajerosFiltrados.length == 0 && <h1 className={styles.not_found}>No existen viajeros con esos filtros.</h1>}
+      {buscarUsuario && viajerosFiltrados.length == 0 && <h1 className={styles.not_found}>No existe ningun viajero con ese ID privado.</h1>}
+
     </section>
   )
 }

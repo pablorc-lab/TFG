@@ -7,9 +7,9 @@ import AnfitrionFinalHeader from "../../../components/anfitriones/header/Anfitri
 const ViajProfilesGallery = lazy(() => import("../../../components/anfitriones/inquilinos/ViajProfilesGallery"));
 
 export default function InquilinosPage() {
-
   const [viajeros, SetViajeros] = useState([]);
   const [viajerosFiltrados, setViajerosFiltrados] = useState([]);
+  const [privateID, setPrivateID] = useState("");
 
   const [viajerosObtenidos, setViajerosObtenidos] = useState(0);
   const [hasMore, setHasMore] = useState(true); // Comprueba si hay mas viajeros por buscar
@@ -22,6 +22,7 @@ export default function InquilinosPage() {
   const [filtrosActivos, setFiltrosActivos] = useState(0);
   const [openFilterMenu, setOpenFilterMenu] = useState(null)
   const [buscarFiltrado, setBuscarFiltrado] = useState(false);
+  const [buscarUsuario, setBuscarUsuario] = useState(false);
   const [filterOptions, setFilterOptions] = useState({
     gustos: [],
     idiomas: [],
@@ -37,7 +38,7 @@ export default function InquilinosPage() {
         .then(response => {
           SetViajeros(prev => [...prev, ...response.data.data])
           setHasMore(response.data.hasMore);
-        })        
+        })
         .catch(error => console.error("Error al listar los usuarios : ", error))
         .finally(setLoading(false));
     }
@@ -46,8 +47,8 @@ export default function InquilinosPage() {
   // Obtener los filtrados
   useEffect(() => {
     if (buscarFiltrado) {
-       // Limpiar los usuarios anteriores buscados
-       if(viajeros.length > 0){
+      // Limpiar los usuarios anteriores buscados
+      if (viajeros.length > 0) {
         SetViajeros([]);
         setViajerosObtenidos(0);
         setHasMore(true);
@@ -56,9 +57,9 @@ export default function InquilinosPage() {
       setLoading(true);
       ViajeroService.getViajerosFiltrados(filterOptions, filtradosObtenidos, 3)
         .then(response => {
-          if(viajerosFiltrados.length === 0){
+          if (viajerosFiltrados.length === 0) {
             setViajerosFiltrados(response.data.data)
-          } else{
+          } else {
             setViajerosFiltrados(prev => [...prev, ...response.data.data])
           }
           setHasMoreFiltrados(response.data.hasMore);
@@ -68,7 +69,32 @@ export default function InquilinosPage() {
     }
   }, [buscarFiltrado, filtradosObtenidos, filterOptions]);
 
+  // Buscar un usuario dado un ID privado
+  const buscarIDPrivado = () => {
+    ViajeroService.getByPrivateID(privateID.trim())
+      .then(response => {
+        setViajerosFiltrados([response.data.usuario]);
+        setBuscarUsuario(true);
 
+        // Borrar filtros
+        setFiltrosActivos(0);
+        setFilterOptions({
+          gustos: [],
+          idiomas: [],
+          tiempo_estancia: []
+        });
+        setHasMoreFiltrados(true);
+        setBuscarFiltrado(false);
+      })
+      .catch(error => "Error al buscar el usuario " + error);
+  }
+
+  useEffect(() => {
+    if(buscarUsuario && privateID == ""){
+      setBuscarUsuario(false);
+      setViajerosFiltrados([]);
+    }
+  }, [privateID]);
   return (
     <>
       <title>Inquilinos | Anfitriones</title>
@@ -77,6 +103,24 @@ export default function InquilinosPage() {
       <AnfitrionFinalHeader />
 
       <article className={styles.filters_container}>
+        <form className={styles.search_form}>
+          <img src="/images/viajeros/lupa.webp" width="50" alt='icono lupa' onClick={() => buscarIDPrivado()} />
+          <input
+            type="text"
+            className={styles.searcher}
+            name="buscador"
+            placeholder="@usuario"
+            spellCheck="false"
+            value={privateID === "" ? "" : "@" + privateID}
+            onChange={(e) => setPrivateID(e.target.value.replace(/^@/, ""))}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                buscarIDPrivado();
+              }
+            }}
+          />
+        </form>
         <div className={`${styles.filters} ${filtrosActivos > 0 ? styles.filters_active : ""}`} onClick={() => setOpenFilterMenu(true)}>
           <img src="/images/viajeros/filtros.webp" width="50" alt="icono filtro" />
           <span>Filtros</span>
@@ -93,7 +137,6 @@ export default function InquilinosPage() {
           setViajerosFiltrados={setViajerosFiltrados}
           setFiltrosActivos={setFiltrosActivos}
           setFiltradosObtenidos={setFiltradosObtenidos}
-          setHasMoreFiltrados={setHasMoreFiltrados}
         />
       }
 
@@ -106,6 +149,7 @@ export default function InquilinosPage() {
             viajeros={viajeros}
             viajerosFiltrados={viajerosFiltrados}
             buscarFiltrado={buscarFiltrado}
+            buscarUsuario={buscarUsuario}
             hasMore={hasMore}
             hasMoreFiltrados={hasMoreFiltrados}
             setViajerosObtenidos={setViajerosObtenidos}

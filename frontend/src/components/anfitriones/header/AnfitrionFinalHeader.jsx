@@ -4,6 +4,7 @@ import AnfitrionMobileHeader from "./AnfitrionMobileHeader";
 import { useNavigate } from "react-router-dom";
 import LikesMenu from "../likes_menu/LikesMenu";
 import { jwtDecode } from "jwt-decode";
+import AuthService from "../../../services/authentication/AuthService";
 
 export default function AnfitrionFinalHeader({ activeSectionDefecto = "inquilinos" }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
@@ -31,11 +32,8 @@ export default function AnfitrionFinalHeader({ activeSectionDefecto = "inquilino
   });
 
   const handleLogout = () => {
-    localStorage.clear();
-
     navigate("/inicio");
-
-    //TODO : HACER LLAMADA A LA API EN LOGOUT PARA ELIMINAR ESE TOKEN
+    AuthService.logout();
   }
 
   const menuLinks = [

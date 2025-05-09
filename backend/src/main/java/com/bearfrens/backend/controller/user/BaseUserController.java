@@ -189,14 +189,12 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   public ResponseEntity<Map<String, Object>> obtenerUsuarioPorPrivateID(@PathVariable String privateID) {
     String tipo_user = userType.equals("anfitrion") ? "anfitriones" : "viajeros";
     Map<String, Object> respuesta = new HashMap<>();
-    long userID;
 
     if(tipo_user.equals("anfitriones")){
       Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrionPorIDPrivado(privateID)
         .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese privateID no existe : " + privateID));
 
       respuesta.put("usuario", anfitrion);
-      userID = anfitrion.getId();
     }
 
     else {
@@ -204,15 +202,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
         .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese privateID no existe : " + privateID));
 
       respuesta.put("usuario", viajero);
-      userID = viajero.getId();
     }
-
-    Biografias biografia = biografiasService.obtenerBiografia(tipo_user, userID).orElse(null);
-    List<Valoraciones> valoraciones = valoracionesService.obtenerListaValoracionesConexionesRecibidas(userID, tipo_user);
-
-    respuesta.put("biografia", biografia != null ? biografia : new Biografias());
-    respuesta.put("valoraciones" , valoraciones);
-
     return ResponseEntity.ok(respuesta);
   }
 

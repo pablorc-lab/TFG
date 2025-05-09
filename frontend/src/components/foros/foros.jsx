@@ -1,5 +1,5 @@
 import styles from './foros.module.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ForosService from '../../services/foros/ForosService';
 import { jwtDecode } from 'jwt-decode';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,6 @@ const Foros = ({ tipoUsuario }) => {
 
   const [userID, setUserID] = useState(null);
 
-  const verMasRef = useRef(null);
   const [hasMore, setHasMore] = useState(true);
   const [forosData, setForosData] = useState([]);
   const [lastFecha, setLastFecha] = useState(null);
@@ -37,22 +36,16 @@ const Foros = ({ tipoUsuario }) => {
     }
   };
 
-  useEffect(() => {
-    if (verMasRef.current && forosData.length > 0) {
-      verMasRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }, [forosData]);
-
   // Función para obtener los foros con paginación
   const obtenerForos = (fecha) => {
     setLoading(true);
-    ForosService.getForosPorCursor(ordenPaginacion ,1, fecha)
+    ForosService.getForosPorCursor(ordenPaginacion , 10, fecha)
       .then(response => {
         console.log(response.data)
         setForosData(prev => [...prev, ...response.data.data]);
         setLastFecha(response.data.lastFecha);
         setHasMore(response.data.hasMore);
-        setOrdenPaginacion(prev => prev + 1);
+        setOrdenPaginacion(prev => prev + 1); 
       })
       .catch(error => console.error("Error al obtener los foros:", error))
       .finally(() => setLoading(false));
@@ -241,9 +234,7 @@ const Foros = ({ tipoUsuario }) => {
 
       {hasMore && !loading &&
         <div className={styles.ver_mas} onClick={() => lastFecha != null && obtenerForos(lastFecha)}>
-          <button ref={verMasRef}>
-            Ver más
-          </button>
+          <button> Ver más </button>
         </div>
       }
     </main >

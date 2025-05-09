@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import styles from "./ViajerosHeader.module.css"
 import { Link, useNavigate } from "react-router-dom";
 import DropDownMenu from '../../dropdown_menu/DropDownMenu';
+import AuthService from '../../../services/authentication/AuthService';
 
 export default function ViajerosHeader({
   inputRef,
@@ -21,11 +22,8 @@ export default function ViajerosHeader({
   const navigate = useNavigate();
   
   const handleLogout = () => {
-    localStorage.clear();
-
     navigate("/inicio");
-
-    //TODO : HACER LLAMADA A LA API EN LOGOUT PARA ELIMINAR ESE TOKEN
+    AuthService.logout();
   }
 
   const menuLinks = [
