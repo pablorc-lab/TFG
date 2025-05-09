@@ -377,6 +377,73 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 	)
 };
 
+// Menú que aparece al editar "Galeria"
+export const EditarGaleria = ({ galeriaData = [], userData, setUserData }) => {
+
+	// Actualizar los datos del usuario por primera vez
+	useEffect(() => {
+		if (galeriaData) {
+			setUserData({
+				imagen1: galeriaData.imagen1 || null,
+				imagen2: galeriaData.imagen2 || null,
+				imagen3: galeriaData.imagen3 || null,
+				imagen4: galeriaData.imagen4 || null,
+			});
+		}
+	}, [galeriaData]);
+
+
+	return (
+		<>
+			<h2>EDITAR GALERIA</h2>
+
+			<main className={styles.main}>
+				<section className={styles.modal_sections}>
+					<h3>IMÁGENES <span>(máximo 4)</span></h3>
+
+					<article className={styles.modal_images}>
+						{userData && ["imagen1", "imagen2", "imagen3", "imagen4"].map((img, index) => {
+							if (userData[img] == null) {
+								// Si NO estamos en el primer índice o la imagen anterior es null, no mostramos nada mas
+								if (index !== 0 && userData[`imagen${index}`] == null) return null;
+
+								return (
+									<div key={index} className={styles.file_input_wrapper}>
+										<label className={styles.file_input_label}>
+											<input
+												type="file"
+												accept="image/*"
+												className={styles.file_input}
+												name="archivo"
+												onChange={(e) => setUserData(prev => ({ ...prev, [img]: e.target.files[0] }))}
+											/>
+											<img src="/images/usuarios/account/add_img.svg" alt="Editar vivienda" />
+										</label>
+									</div>
+								)
+							}
+
+							return (
+								<div key={index} className={styles.house_images}>
+									<img
+										src={userData[img] instanceof File ? URL.createObjectURL(userData[img]) : userData[img]}
+										alt={`Vista previa ${img}`}
+									/>
+									<img
+										src="/images/usuarios/account/delete_img.svg"
+										alt="delete img"
+										onClick={() => setUserData(prev => ({ ...prev, [img]: null }))} // Cambié onChange por onClick y actualicé el valor a null
+									/>
+								</div>
+							);
+						})}
+					</article>
+				</section>
+			</main>
+		</>
+	)
+};
+
 // Menu que aparece al editar "Biografia "
 export const EditarBiografia = ({ esViajero = false, biografiaData = [], userData, setUserData }) => {
 	const [UserIdiomas, setUserIdiomas] = useState(biografiaData.idiomas.split(",").map(idioma => idioma.trim()));

@@ -72,7 +72,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
   const userNavItems = [
     { src: "/images/usuarios/account/edit.svg", alt: "Datos personales", text: "Datos personales" },
     { src: "/images/usuarios/account/biografia.svg", alt: "Biografía", text: "Biografía" },
-    { src: "/images/usuarios/account/house.svg", alt: "Vivienda", text: "Vivienda" },
+    { src: `/images/usuarios/account/${esViajero ? "gallery" : "house"}.svg`, alt: esViajero ? "Galeria" : "Vivienda", text: esViajero ? "Galeria personal" : "Vivienda" },
     { src: "/images/usuarios/account/recomendaciones.svg", alt: "Recomendaciones", text: esViajero ? "Experiencias" : "Recomendaciones" },
     { src: "/images/usuarios/account/security.svg", alt: "Seguridad", text: "Seguridad" },
     { src: "/images/usuarios/account/star.svg", alt: "Opiniones", text: "Opiniones" },
@@ -198,7 +198,6 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
             <nav className={styles.user_nav}>
               <ul className={styles.user_nav_ul}>
                 {userNavItems.map((item, index) => {
-                  if (index == 2 && esViajero) return null;
 
                   return (
                     <li key={item.src} className={activeMenu === index ? styles.active : undefined} onClick={() => setActiveMenu(index)}>
@@ -290,6 +289,16 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
               {activeMenu === 2 && !esViajero &&
                 <PerfilMiCuenta
                   showValue={2}
+                  esViajero={esViajero}
+                  usuarioData={usuarioData}
+                  userService={userService}
+                  setEditedData={setEditedData}
+                />
+              }
+              {activeMenu === 2 && esViajero &&
+                <PerfilMiCuenta
+                  showValue={2}
+                  esViajero={esViajero}
                   usuarioData={usuarioData}
                   userService={userService}
                   setEditedData={setEditedData}
@@ -338,7 +347,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
         <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
       )}
 
-      <Footer/>
+      <Footer />
     </>
   )
 }

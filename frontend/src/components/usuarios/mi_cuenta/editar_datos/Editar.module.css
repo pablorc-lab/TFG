@@ -170,7 +170,6 @@ body:has(.modal[open]) {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   background-color: #646464;
   color: rgb(235, 235, 235);
-  position: absolute;
   font-size: 18px;
   font-weight:300;
 }
@@ -482,6 +481,7 @@ body:has(.modal[open]) {
     width: 80vw;
     max-width: 750px;
   }
+  
   .modal h2 {font-size: 30px; margin-top: 20px;}
 
   /*? Imágenes*/

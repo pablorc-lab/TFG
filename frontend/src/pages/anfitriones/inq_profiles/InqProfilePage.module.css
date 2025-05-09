@@ -36,3 +36,92 @@
   outline-offset: -1px;
   background-color: #0a7273;
 }
+
+
+/*? CARRUSEL*/
+.arrow_left, .arrow_right {
+  cursor: pointer;
+  width: 40px;
+  position: absolute;
+  border-radius: 50%;
+  top: calc(50% + 25px);
+  background-color: white;
+  box-shadow: 0 0 10px rgba(65, 65, 65, 0.7);
+  opacity: 0.6;
+}
+.arrow_left {
+  left: 40px;
+  transform: translateY(-50%) rotate(180deg);
+}
+.arrow_right {
+  right: 40px;
+  transform: translateY(-50%);
+}
+.arrow_left:hover , .arrow_right:hover {
+  opacity: 1;
+}
+
+
+/*? IMAGENES VIVIENDA*/
+.galeria_imgs {
+  padding: 20px 30px;
+  padding-top: 50px;
+  padding-bottom: 0;
+  user-select: none;
+  position: relative;
+  background-color: #fafbfd;
+}
+
+.galeria_imgs span {
+  font-weight: 600;
+  font-family: "Nunito";
+  font-size: 17px;
+  border-radius: 50px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.582);
+  padding: 5px 12px;
+  position: absolute;
+  top: 60px;
+  left: 40px;
+}
+.galeria_imgs img:not(.arrow_left, .arrow_right){
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  border-radius: 3px;
+}
+
+/*? INFO VIVIENDA*/
+.vivienda_info h1 {
+  font-weight: 750;
+}
+.vivienda_info p {
+  font-size: 20px;
+}
+
+@media (min-width:771px) {
+  /*? Imagenes de la vivienda*/
+  .galeria_imgs {
+     width: calc(100% - 60px);
+     display: grid;
+     grid-template-columns: auto auto;
+     grid-template-rows: 1fr 1fr;
+     justify-content: center;
+     margin: 0px auto;
+     padding: 20px 30px;
+     gap: 7px;
+     padding-top: 50px;
+   }
+   .galeria_imgs  img {max-width: 500px;}
+   .galeria_imgs img:hover { filter: brightness(0.7);}
+ }
+
+@media (min-width:1251px) {
+  .galeria_imgs {
+    grid-column-start: span 2;
+    padding-bottom: 30px;
+  }
+
+  .vivienda_info {margin-bottom: 30px;}
+  .vivienda_info h1 {font-size: 26px;}
+  .vivienda_info p {font-size: 22px;}
+}

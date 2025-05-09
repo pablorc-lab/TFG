@@ -35,6 +35,18 @@ public class Viajero extends Usuario<Experiencias>{
   @JsonIgnore
   private List<Reservas> reservas;
 
+  @Column(nullable = true)
+  private String imagen1;
+
+  @Column(nullable = true)
+  private String imagen2;
+
+  @Column(nullable = true)
+  private String imagen3;
+
+  @Column(nullable = true)
+  private String imagen4;
+
    // Constructor
   public Viajero() {
     super();

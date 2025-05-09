@@ -12,6 +12,8 @@ export default function InqProfilePage() {
   const [valoraciones, setValoraciones] = useState([]);
   const [Gustos_imgs, setGustos_imgs] = useState([]);
   const [idiomasUser, setIdiomasUser] = useState([]);
+  const [galeria_imgs, setGaleria_imgs] = useState([null, null, null, null]);
+  const [actualImage, setActualImage] = useState(0);
 
   const [loading, SetLoading] = useState(true);
 
@@ -41,6 +43,13 @@ export default function InqProfilePage() {
         SetViajeroInfo(response.data);
         setValoraciones(response.data.valoraciones);
         setIdiomasUser(response.data.biografia?.idiomas ? response.data.biografia.idiomas.trim().split(",") : ["Español"]);
+        
+        setGaleria_imgs([
+          response.data.usuario.imagen1,
+          response.data.usuario.imagen2,
+          response.data.usuario.imagen3,
+          response.data.usuario.imagen4
+        ]);
 
         setGustos_imgs([
           response.data.usuario.gusto1,
@@ -58,7 +67,6 @@ export default function InqProfilePage() {
       ).catch(error => console.error("No se encontró el usuario " + error));
     }
   }, [id, viajeroInfo])
-
 
   return (
     <>
@@ -89,18 +97,49 @@ export default function InqProfilePage() {
 
       {loading
         ? <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", margin: "250px 0", transform: "translateX(-50%)" }} />
-        : <UserPage
-          usuarioData={viajeroInfo}
-          valoraciones={valoraciones}
-          Gustos_imgs={Gustos_imgs}
-          idiomasUser={idiomasUser}
-          isColumns={isColumns}
-          recomendaciones={viajeroInfo.usuario?.experiencias}
-          conectado={conectado}
-          setConectado={setConectado}
-          userID={id}
-          emisorID={emisorID}
-        />
+        :
+        <>
+          <section className={styles.galeria_imgs}>
+            {isMobile ? (
+              <>
+                <img
+                  className={styles.arrow_left}
+                  src="/images/profiles/arrow.svg"
+                  alt="Biografia logo"
+                  onClick={() => setActualImage(actualImage === 0 ? galeria_imgs.length - 1 : actualImage - 1)}
+                />
+                <img
+                  className={styles.arrow_right}
+                  src="/images/profiles/arrow.svg"
+                  alt="Biografia logo"
+                  onClick={() => setActualImage((actualImage + 1) % galeria_imgs.length)}
+                />
+                <img src={galeria_imgs[actualImage] || "/images/not_found/vivienda.webp"} alt="Vivienda" width={100} />
+                <span>{actualImage + 1}</span>
+              </>
+            ) : (
+              <>
+                {galeria_imgs.map((vivienda, index) => (
+                  <img key={index} src={vivienda || "/images/not_found/vivienda.webp"} alt="Vivienda imagen" width={100} />
+                ))}
+              </>
+            )}
+          </section>
+
+          <UserPage
+            usuarioData={viajeroInfo}
+            valoraciones={valoraciones}
+            Gustos_imgs={Gustos_imgs}
+            idiomasUser={idiomasUser}
+            isColumns={isColumns}
+            recomendaciones={viajeroInfo.usuario?.experiencias}
+            conectado={conectado}
+            setConectado={setConectado}
+            userID={id}
+            emisorID={emisorID}
+          />
+        </>
+
       }
 
       <Footer />

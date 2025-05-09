@@ -96,7 +96,7 @@ export const ContenidoVivienda = ({ viviendaData = [] }) => {
 			<article>
 				<div className={styles.miCuenta_data}>
 					<img src="/images/usuarios/account/vivienda_img.svg" alt="Imagen vivienda" />
-					<p>IMÁGENES</p>
+					<p>IMÁGENES - {vivienda_imgs.length}</p>
 				</div>
 				<div className={styles.vivienda_images}>
 					{vivienda_imgs.map((path_img, index) => (
@@ -154,7 +154,34 @@ export const ContenidoVivienda = ({ viviendaData = [] }) => {
 	)
 };
 
+// Contenido de "Galeria"
+export const ContenidoGaleria = ({ galeriaData = [] }) => {
+	const galeria_imgs = [
+		galeriaData.imagen1,
+		galeriaData.imagen2,
+		galeriaData.imagen3,
+		galeriaData.imagen4
+	].filter(img => img != null && img !== "");
 
+	console.log(galeria_imgs);
+
+	return (
+		<section className={styles.miCuenta_section}>
+			<article>
+				<div className={styles.miCuenta_data}>
+					<img src="/images/usuarios/account/vivienda_img.svg" alt="Imagen vivienda" />
+					<p>IMÁGENES - {galeria_imgs.length}</p>
+				</div>
+				<div className={styles.vivienda_images}>
+					{galeria_imgs.map((path_img, index) => (
+						<img key={index} src={path_img} alt={`Imagen ${index}`} />
+					))}
+				</div>
+			</article>
+
+		</section>
+	)
+};
 // Contenido "Biografia"
 export const ContenidoBiografia = ({ esViajero, biografiaData = [] }) => {
 

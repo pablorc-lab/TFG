@@ -1,6 +1,7 @@
 import styles from "./Editar.module.css"
 import { lazy, Suspense, useState } from "react";
 const EditarMiCuenta = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarMiCuenta })));
+const EditarGaleria = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarGaleria })));
 const EditarVivienda = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarVivienda })));
 const EditarBiografia = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarBiografia })));
 const EditarRecomendaciones = lazy(() => import("./EditarValues").then(functions => ({ default: functions.EditarRecomendaciones })));
@@ -15,8 +16,9 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const [userData, setUserData] = useState(null);
   const [biografiaData, setBiografiaData] = useState(null);
   const [viviendaData, setViviendaData] = useState(null);
+  const [galeriaData, setGaleriaData] = useState(null);
   const [contenidoData, setContenidoData] = useState(null);
-    
+
   // Comprueba si hay valores vacios, los gustos e imágenes pueden ser null
   const hayCamposNull = (data) => {
     // Comprobar datos usuario
@@ -94,6 +96,43 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
       });
   };
 
+  // Función asincrona para crear/editar la galeria
+  const updateGaleria = async () => {
+    // Cargar dinámica del servicio
+    const GaleriaService = (await import("../../../../services/galeria/GaleriaService.jsx")).default;
+
+    // Subir cada imágen si son archivos
+    let updatedGaleriaData = { ...galeriaData };
+    const imagenes = [galeriaData.imagen1, galeriaData.imagen2, galeriaData.imagen3, galeriaData.imagen4];
+
+    await Promise.all(imagenes.map(async (image, index) => {
+      if (image instanceof File) {
+        try {
+          const imageUrl = await GaleriaService.uploadImage(image);
+          console.log(`Imagen ${index + 1} subida con éxito: `, imageUrl);
+          updatedGaleriaData[`imagen${index + 1}`] = imageUrl;
+        }
+        catch (error) {
+          console.error("Error al subir la imagen:", error);
+        }
+      }
+    }));
+
+    // Si no hay valores, es porque se está creando
+    const galeriaAction = usuarioData.usuario.galeriaData == null ? GaleriaService.crearGaleria : GaleriaService.editarGaleria;
+
+    galeriaAction(usuarioData.usuario.id, updatedGaleriaData)
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error))
+      .finally(() => {
+        setTimeout(() => {
+          setIsOpen(false);
+          setGaleriaData(null);
+        }, 200);
+        setEditedData(true);
+      });
+  };
+
   // Funcion para crear/editar la experiencia
   const updateExperiencia = async () => {
     const service = (await import("../../../../services/contenido/ExperienciasService.jsx")).default;
@@ -164,6 +203,13 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
       updateVivienda();
     }
 
+    // Si se ha editado los datos de la galeria
+    // Si se ha editado los datos de la vivienda
+    else if (galeriaData !== null && !hayCamposNull(galeriaData)) {
+      SetSendingData(true);
+      updateGaleria();
+    }
+
     // Si se ha editado todos los datos del contenido (recomendación o experiencia)
     else if (contenidoData !== null && !hayCamposNullContenido(contenidoData)) {
       // Si existe una recomendación/experiencia con ese titulo salirse
@@ -206,13 +252,19 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
             userData={biografiaData}
             setUserData={setBiografiaData}
           />}
-        {showValue === 2 &&
+        {!esViajero && showValue === 2 &&
           <EditarVivienda
             addImageState={addImageState}
             viviendaData={usuarioData.usuario.vivienda}
             setAddImageState={setAddImageState}
             userData={viviendaData}
             setUserData={setViviendaData}
+          />}
+        {esViajero && showValue === 2 &&
+          <EditarGaleria
+            galeriaData={usuarioData.usuario}
+            userData={galeriaData}
+            setUserData={setGaleriaData}
           />}
         {showValue === 3 &&
           <EditarRecomendaciones
