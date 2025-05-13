@@ -6,6 +6,10 @@ class AuthService {
     return axios.post("http://localhost:8080/api/auth/login", loginRequest);
   }
 
+  static loginAdmin(loginRequest) {
+    return axios.post("http://localhost:8080/api/auth/login-admin", loginRequest);
+  }
+
   static verify(user, loginRequest) {
     return axios.post(`http://localhost:8080/api/auth/verify/${user}`, loginRequest);
   }

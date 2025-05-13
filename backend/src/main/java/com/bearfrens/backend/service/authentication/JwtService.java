@@ -87,6 +87,19 @@ public class JwtService {
   }
 
   /**
+   * Comprobar si un Token de Admin es válido
+   * @param token String del token
+   * @return Booleano indicando si el token es válido
+   */
+  public boolean isAdminTokenValid(final String token, String adminEmail) {
+    final String username = extractUsername(token);  // Extraemos el email del token
+    boolean isTokenExpired = extractExpiration(token).before(new Date());  // Comprobamos si el token ha expirado
+
+    // Verificamos si el email extraído del token es el del admin y si el token no ha expirado
+    return username.equals(adminEmail) && !isTokenExpired;
+  }
+
+  /**
    * Construye el token de JWT
    * @param usuario Objeto usuario
    * @param tipo_usuario Int indicando el tipo de usuario (1 o 2)
@@ -104,6 +117,38 @@ public class JwtService {
       .compact(); // Generar y devolver el token JWT
   }
 
+  /**
+   * Construye el token para el admin
+   * @param adminEmail Email del admin
+   * @return Token acceso
+   */
+  public String generateAdminToken(String adminEmail) {
+    return buildAdminToken(jwtExpiration,adminEmail);
+  }
+
+  /**
+   * Construye el token de refresco para el admin
+   * @param adminEmail Email del admin
+   * @return Token de refresco
+   */
+  public String generateAdminRefreshToken(String adminEmail) {
+    return buildAdminToken(refreshExpiration, adminEmail);
+  }
+
+  /**
+   * Construye el token de JWT del ADMIN
+   * @param expiration Tiempo que tarda en caducar el token
+   * @return Token construido
+   */
+  private String buildAdminToken(final long expiration, String adminEmail) {
+    return Jwts.builder()
+      .claims(Map.of("tipo", "admin")) // Agregar el nombre como claim
+      .subject(adminEmail)
+      .issuedAt(new Date(System.currentTimeMillis())) // Fecha de emisión del token
+      .expiration(new Date(System.currentTimeMillis() + expiration)) // Fecha de expiración del token
+      .signWith(getSignInKey())  // Firmar el token con la clave secreta
+      .compact(); // Generar y devolver el token JWT
+  }
 
   /**
    * Este método obtiene la clave secreta para la firma de JWT.

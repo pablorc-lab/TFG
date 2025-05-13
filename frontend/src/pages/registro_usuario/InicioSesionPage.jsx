@@ -98,7 +98,7 @@ export default function InicioSesionPage() {
                 value="Iniciar sesión"
                 onClick={handleLogin}
                 style={{
-                  filter: loading ? 'brightness(70%)' : 'none',
+                  filter: loading ? 'brightness(70%)' : '',
                   cursor: loading ? 'wait' : 'pointer'
                 }}
                 disabled={loading}

@@ -29,6 +29,16 @@ public class AuthController {
   }
 
   /**
+   * Logeria a un usuario admin
+   * @return Respueta HTTP con un token JWT y el estado de autenticación
+   */
+  @PostMapping("/login-admin")
+  public ResponseEntity<Map<String, Object>> loginAdmin(@RequestBody LoginRequest loginRequest) {
+    return authService.loginAdmin(loginRequest);
+  }
+
+
+  /**
    * Verifica si una contrasenia es correcta o no
    * @return Respueta booleana
    */

@@ -347,7 +347,7 @@ export default function RegistrarUsuarioPage() {
             <div className={styles.accountCreated}>
               <h1>¡Cuenta creada con éxito!</h1>
               <p>Bienvenido/a a nuestra comunidad</p>
-              <Link to="/iniciar-sesion" className={styles.submit_input}>
+              <Link to="/login" className={styles.submit_input}>
                 Iniciar sesión
               </Link>
             </div>

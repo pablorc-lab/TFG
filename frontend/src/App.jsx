@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom
 import HomePage from './pages/inicio/home/HomePage';
 import ScrollToTop from './components/utilities/ScrollToTop';
 
+const LoginAdmin = lazy(() => import('./pages/admin_panel/LoginAdmin'));
 const ForosViajPage = lazy(() => import('./pages/viajeros/foros/ForosViajPage'));
 const ForosAnfPage = lazy(() => import('./pages/anfitriones/foros/ForosAnfPage'));
 const Soporte = lazy(() => import("./pages/inicio/soporte/Soporte"));
@@ -30,7 +31,7 @@ export default function App() {
     const token = localStorage.getItem("acces_token");
     const user = localStorage.getItem("user");
 
-    return token && user === "Anfitrion (1)" ? <Outlet /> : <Navigate to="/iniciar-sesion" />;
+    return token && user === "Anfitrion (1)" ? <Outlet /> : <Navigate to="/login" replace/>;
   };
 
   // Outlet : Reenderiza las rutas hijas si hay token anfitrión
@@ -38,25 +39,33 @@ export default function App() {
     const token = localStorage.getItem("acces_token");
     const user = localStorage.getItem("user");
 
-    return token && user === "Viajero (2)" ? <Outlet /> : <Navigate to="/iniciar-sesion" />;
+    return token && user === "Viajero (2)" ? <Outlet /> : <Navigate to="/login" replace/>;
+  };
+
+  // Outlet : Reenderiza las rutas hijas si hay token anfitrión
+  const PrivateAdminRoute = () => {
+    const token = localStorage.getItem("acces_token");
+    const user = localStorage.getItem("user");
+
+    return token && user === "Admin (0)" ? <Outlet /> : <Navigate to="/admin-panel/login" replace/>;
   };
 
   const InicioSesionRedirect = () => {
     const token = localStorage.getItem("acces_token");
     const user = localStorage.getItem("user");
-    
+
     if (token && user === "Anfitrion (1)") {
-      return <Navigate to="/anfitriones" />;
+      return <Navigate to="/anfitriones" replace/>;
     }
 
     else if (token && user === "Viajero (2)") {
-      return <Navigate to="/viajeros" />;
-    } 
-    
+      return <Navigate to="/viajeros" replace/>;
+    }
+
     return <InicioSesionPage />;
   };
 
-  
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -91,13 +100,17 @@ export default function App() {
 
           {/* Rutas para REGISTRO o ACCESO*/}
           <Route path="/registro" element={<RegistrarUsuarioPage />} />
-          <Route path="/iniciar-sesion" element={<InicioSesionRedirect  />} />
+          <Route path="/login" element={<InicioSesionRedirect />} />
 
           {/* Rutas para PANEL ADMIN con rutas anidadas */}
-          <Route path="/admin-panel" element={<Navigate to="/admin-panel/anfitrion" />} />
-          <Route path="/admin-panel/:userType" element={<ListTablasPage />} />
-          <Route path="/admin-panel/:userType/crear" element={<FormComponent />} />
-          <Route path="/admin-panel/:userType/editar/:userID" element={<FormComponent />} />
+          <Route path="/admin-panel/login" element={<LoginAdmin />} />
+          <Route element={<PrivateAdminRoute />}>
+            <Route path="/admin-panel" element={<Navigate to="/admin-panel/anfitrion" />} />
+            <Route path="/admin-panel/:userType" element={<ListTablasPage />} />
+            <Route path="/admin-panel/:userType/crear" element={<FormComponent />} />
+            <Route path="/admin-panel/:userType/editar/:userID" element={<FormComponent />} />
+          </Route>
+
         </Routes>
       </Suspense>
     </BrowserRouter>

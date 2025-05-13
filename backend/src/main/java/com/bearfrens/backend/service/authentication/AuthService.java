@@ -11,6 +11,7 @@ import com.bearfrens.backend.repository.user.ViajeroRepository;
 import com.bearfrens.backend.request.LoginRequest;
 import com.bearfrens.backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,6 +43,43 @@ public class AuthService {
 
   @Autowired
   private UsuarioService usuarioService;
+
+  @Value("${ADMIN_EMAIL}")
+  private String adminEmail;
+
+  @Value("${ADMIN_PASSWORD}")
+  private String adminPassword;
+
+  /**
+   * Guarda un token para el administrador en la base de datos.
+   *
+   * @param adminEmail El correo electrónico del administrador (aunque no lo utilizamos directamente en este método, es parte del flujo)
+   * @param jwtToken El token JWT generado para el administrador
+   * @param refresh_token El refresh token generado para el administrador
+   * @return Respuesta con los tokens generados (acceso y refresh) para el administrador
+   */
+  private ResponseEntity<Map<String, Object>> guardarTokenAdmin(String adminEmail, String jwtToken, String refresh_token) {
+    Token token = new Token();
+
+    // Crear el token para el admin (tipo 0)
+    token.setToken(jwtToken);
+    token.setTokenType(Token.TokenType.BEARER);
+    token.setRevoked(false);
+    token.setExpired(false);
+    token.setUserID(0L);  // El admin no tiene un ID de usuario asociado
+    token.setTipoUsuario(0);  // 0 representa el tipo Admin
+
+    this.revokeAllUserToken(null, 0); // Solo un admin logeado a la vez
+    tokenRepository.save(token);
+
+    Map<String, Object> tokenResponse = new HashMap<>();
+    tokenResponse.put("User", "Admin (0)");
+    tokenResponse.put("acces_token", jwtToken);
+    tokenResponse.put("refresh_token", refresh_token);
+
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(tokenResponse);
+  }
+
 
   /**
    * Guarda un token en la BD dado el ID y tipo de usuario
@@ -138,6 +176,56 @@ public class AuthService {
     // Retornar segun sea anfitrión o Viajero
     return this.procesarAutenticacion(usuario, tipo_usuario, loginRequest);
   }
+
+  /**
+   * Realiza el login para un admin
+   *
+   * @param loginRequest Información del login
+   * @return Respuesta con el token
+   */
+  public ResponseEntity<Map<String, Object>> loginAdmin(LoginRequest loginRequest) {
+    if(!adminPassword.equals(loginRequest.getPassword()) || !adminEmail.equals(loginRequest.getEmail())) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("Error","Admin incorrecto"));
+    }
+
+    // Generar el token para el admin si las credenciales son las mismas
+    String jwtToken = jwtService.generateAdminToken(loginRequest.getEmail());
+    String refresh_token = jwtService.generateAdminRefreshToken(loginRequest.getEmail());
+
+    return this.guardarTokenAdmin(adminEmail, jwtToken, refresh_token);
+  }
+
+  /**
+   * Actualiza un token de acceso para el administrador
+   *
+   * @param authHeader Cabecera con la autorización del token
+   * @return ResponseEntity con un nuevo token JWT para el administrador.
+   */
+  public ResponseEntity<Map<String, Object>> refreshTokenAdmin(final String authHeader) {
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+      throw new IllegalArgumentException("Invalid Bearer token");
+    }
+
+    final String refreshToken = authHeader.substring(7);
+    final String tokenAdminEmail = jwtService.extractUsername(refreshToken);  // Extraemos el email del admin desde el token
+
+    if (adminEmail == null || !adminEmail.equals(tokenAdminEmail)) {
+      throw new IllegalArgumentException("Invalid Refresh token");
+    }
+
+    // Verificar si el token es válido para el admin
+    if (!jwtService.isAdminTokenValid(refreshToken, tokenAdminEmail)) {
+      throw new IllegalArgumentException("Invalid Refresh token");
+    }
+
+    // Generar nuevos tokens para el admin
+    final String accesToken = jwtService.generateAdminToken(adminEmail);
+    final String newRefreshToken = jwtService.generateAdminRefreshToken(adminEmail);
+
+    // Guardar los nuevos tokens en la base de datos
+    return guardarTokenAdmin(adminEmail, accesToken, newRefreshToken);
+  }
+
 
   /**
    * Actualiza un token de acceso

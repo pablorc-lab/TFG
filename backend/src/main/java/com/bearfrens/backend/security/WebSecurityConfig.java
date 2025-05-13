@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -50,7 +48,7 @@ public class WebSecurityConfig {
       .csrf(AbstractHttpConfigurer::disable) // Desactiva la protección CSRF
       .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Habilita la configuración CORS
       .authorizeHttpRequests(req -> req
-            .requestMatchers("/api/auth/login", "/api/auth/logout", "/api/anfitriones/auth/register", "/api/viajeros/auth/register").permitAll() // Permite el acceso sin autenticación a estas rutas
+            .requestMatchers("/api/auth/**", "/api/anfitriones/auth/register", "/api/viajeros/auth/register").permitAll() // Permite el acceso sin autenticación a estas rutas
             .anyRequest().authenticated()
         )
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Define que no se usarán sesiones, se trabaja con JWT

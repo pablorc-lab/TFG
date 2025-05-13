@@ -1,23 +1,35 @@
 .soporteMain {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8vh 0;
-  margin: 0 auto;
-  background-color: #f5f7fa;
-  font-family: "Nunito";
-}
-
-.soporteForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: fit-content;
+  transform: translate(-50%, -50%);
   background-color: white;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
+  font-family: "Nunito";
+  box-shadow: 0 0 5px #3767eb3f;
 }
 
-.soporteForm h2 {
+.error_login {
+  margin: 0;
+  text-align: center;
+  color: rgb(199, 53, 53);
+  padding: 5px;
+  font-size: 20px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  font-weight: 650;
+  background-color: rgba(255, 0, 0, 0.199);
+}
+
+.soporteForm {
+  display: grid;
+  gap: 0px;
+  width: 400px;
+}
+
+.soporteMain h1 {
   text-align: center;
   margin-top: 0;
   margin-bottom: 20px;
@@ -26,12 +38,12 @@
 
 .soporteForm label {
   display: block;
-  margin: 10px 0 5px 5px;
+  margin: 0px 0 5px 5px;
   font-weight: 600;
   color: #555;
 }
 
-.soporteForm input, .soporteForm textarea {
+.soporteForm input {
   font-family: "Nunito";
   width: calc(100% - 30px);
   padding: 0.75rem;
@@ -41,24 +53,21 @@
   font-size: 1rem;
 }
 
-.soporteForm textarea {
-  resize: vertical; 
-  min-height: 100px;
-}
-.soporteForm input:focus, .soporteForm textarea:focus {
+.soporteForm input:focus {
   outline: none;
-  outline: 1px solid #009080;
-  border-color: #009080;
-  box-shadow: 4px 4px #009080;
-  resize: vertical; 
+  outline: 1px solid #3767eb;
+  border-color: #3767eb;
+  resize: vertical;
 }
+
 .soporteForm button {
   font-family: "Nunito";
   width: 100%;
   padding: 10px;
-  background-color: #009080;
   color: white;
+  background-color: #3767eb;
   border: none;
+  margin-top: 10px;
   border-radius: 8px;
   font-size: 23px;
   font-weight: 600;

@@ -19,11 +19,11 @@
   cursor: pointer;
   font-size: 20px;
   color:gray;
-  padding: 4px;
   font-weight: 600;
   letter-spacing: 2px;
   padding: 5px 15px;
 }
+
 .header nav a:hover:not(.active){ 
   color: rgb(32, 32, 32);
   background-color: rgb(112, 112, 112);
@@ -33,5 +33,16 @@
   border-color : transparent;
 }
 .header nav .active { 
+  cursor: default;
   color: white;
+}
+
+.header a:last-child {
+  color: rgb(170, 2, 2);
+}
+
+.header nav a:last-child:hover{ 
+  color: white;
+    outline: 9px solid darkred !important;
+  background-color: darkred !important;
 }

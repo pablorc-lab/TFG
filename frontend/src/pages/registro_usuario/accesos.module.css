@@ -82,7 +82,7 @@
 
   background-color: rgba(255, 255, 255, 0.945);
   border-radius: 10px;
-  box-shadow: 0 0 10px rgb(0,0,0,0.8);
+  box-shadow: 0 0px 10px rgb(0,0,0,0.3);
   width: 544px;
 }
 
@@ -185,6 +185,9 @@
 
 .submit_input.error_submit_input { filter: brightness(0.8);}
 
+.submit_input:hover {
+  filter: brightness(0.9);
+}
 /*? Input */
 .input_container { display: grid;}
 .input_container, .acceso_section fieldset{
