@@ -32,7 +32,10 @@ export default function InquilinosPage() {
   // Obtener los viajeros
   useEffect(() => {
     if (hasMore && !buscarFiltrado) {
-      setLoading(true);
+      if (viajeros.length == 0) {
+        setLoading(true);
+      }
+
       // Obtener viajeros
       ViajeroService.getAllPaginacion(viajerosObtenidos, 6)
         .then(response => {
@@ -52,9 +55,10 @@ export default function InquilinosPage() {
         SetViajeros([]);
         setViajerosObtenidos(0);
         setHasMore(true);
+      } else {
+        setLoading(true);
       }
 
-      setLoading(true);
       ViajeroService.getViajerosFiltrados(filterOptions, filtradosObtenidos, 3)
         .then(response => {
           if (viajerosFiltrados.length === 0) {
@@ -90,7 +94,7 @@ export default function InquilinosPage() {
   }
 
   useEffect(() => {
-    if(buscarUsuario && privateID == ""){
+    if (buscarUsuario && privateID == "") {
       setBuscarUsuario(false);
       setViajerosFiltrados([]);
     }

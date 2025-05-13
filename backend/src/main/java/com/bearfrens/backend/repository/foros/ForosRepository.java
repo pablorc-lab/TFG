@@ -11,8 +11,7 @@ import java.util.List;
 @Repository
 public interface ForosRepository extends JpaRepository<Foros, Long> {
   List<Foros> findAllByForoPadreIsNullOrderByFechaDesc(Pageable pageable);
-  List<Foros> findAllByForoPadreIsNullAndFechaLessThanEqualOrderByFechaDesc(LocalDate fecha, Pageable pageable);
-  boolean existsByFechaLessThanEqual(LocalDate fecha);
+  List<Foros> findAllByForoPadreIsNullAndFechaLessThanEqualOrderByFechaDescIdAsc(LocalDate fecha, Pageable pageable);
   boolean existsByFechaLessThanEqualAndIdNot(LocalDate fecha, Long id);
   List<Foros> findByForoPadreId(Long foroPadreID);
 }

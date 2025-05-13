@@ -80,7 +80,8 @@ public class ForosService {
     List<Foros> foros;
 
     if (ultimaFecha != null) {
-      foros = forosRepository.findAllByForoPadreIsNullAndFechaLessThanEqualOrderByFechaDesc(ultimaFecha, page);
+      // Para no repetir foros con ese id, los ordenamos por ID de forma ascendente
+      foros = forosRepository.findAllByForoPadreIsNullAndFechaLessThanEqualOrderByFechaDescIdAsc(ultimaFecha, page);
     }
     else {
       foros = forosRepository.findAllByForoPadreIsNullOrderByFechaDesc(page);

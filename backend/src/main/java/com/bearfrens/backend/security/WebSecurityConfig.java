@@ -3,11 +3,10 @@ package com.bearfrens.backend.security;
 import com.bearfrens.backend.entity.token.Token;
 import com.bearfrens.backend.repository.token.TokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,12 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -41,10 +34,10 @@ public class WebSecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Cambia según tu dominio
-    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE")); // Los métodos que tu frontend necesita
-    configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Aquí permites Authorization
-    configuration.setAllowCredentials(true); // Permite credenciales como cookies o cabeceras
+    configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+    configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+    configuration.setAllowCredentials(true);
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
     return source;
@@ -58,9 +51,7 @@ public class WebSecurityConfig {
       .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Habilita la configuración CORS
       .authorizeHttpRequests(req -> req
             .requestMatchers("/api/auth/login", "/api/auth/logout", "/api/anfitriones/auth/register", "/api/viajeros/auth/register").permitAll() // Permite el acceso sin autenticación a estas rutas
-            .requestMatchers("/admin-panel/**").hasRole("ADMIN")
-            .anyRequest() // El resto de rutas
-            .authenticated() // Requieren autenticación
+            .anyRequest().authenticated()
         )
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Define que no se usarán sesiones, se trabaja con JWT
         .authenticationProvider(authenticationProvider) // Usa el proveedor de autenticación definido (donde se carga el usuario y se verifica contraseña)
@@ -74,6 +65,7 @@ public class WebSecurityConfig {
               .logoutSuccessHandler(((request, response, authentication) -> // Limpia el contexto de seguridad tras logout
                 SecurityContextHolder.clearContext()))
             );
+
     return http.build(); // Construye la cadena de filtros
   }
 

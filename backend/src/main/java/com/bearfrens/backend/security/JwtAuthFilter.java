@@ -13,6 +13,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +25,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
@@ -33,7 +38,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
   private final TokenRepository tokenRepository;
   private final UsuarioService usuarioService;
 
-  // Por cada petición que no esté en "auth" comprobar los filtros
+  // Por cada petición que no esté en "auth" comprobar los filtros para dejar pasar o no
   @Override
   protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
     // Si se hace en "auth" terminar
@@ -44,6 +49,29 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     // Si el header es nulo o no válido, terminar
     final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+    // Verificar si el header es Basic y permitir a un admin
+    if (authHeader != null && authHeader.startsWith("Basic ")) {
+      String basicAuth = authHeader.substring(6);  // Obtener el valor del Basic Auth (username:password en base64)
+
+      // Decodificar las credenciales
+      String decodedAuth = new String(Base64.getDecoder().decode(basicAuth));
+      String[] credentials = decodedAuth.split(":");  // Separar el nombre de usuario y la contraseña
+      if (credentials.length == 2) {
+        String username = credentials[0];
+        String password = credentials[1];
+
+        // Verificar si el usuario es admin
+        if (username.equals("admin@admin.com") && password.equals("admin123")) {
+          // Representar que el admin se ha autenticado correctamente
+          Authentication authentication = new UsernamePasswordAuthenticationToken(username, password, Collections.singletonList(new SimpleGrantedAuthority("ADMIN")));
+          SecurityContextHolder.getContext().setAuthentication(authentication); // Aquí, el usuario es un admin, por lo que permitimos el acceso
+          filterChain.doFilter(request, response);
+          return;
+        }
+      }
+    }
+
     if (authHeader == null || !authHeader.startsWith(("Bearer "))){
       filterChain.doFilter(request,response);
       return;

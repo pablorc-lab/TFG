@@ -7,12 +7,12 @@ import AnfitrionService from "../../../services/users/AnfitrionService";
 export default function AlojamientosPage() {
   const [anfitriones, setAnfitriones] = useState([]);
   const [anfitrionesFiltrados, setAnfitrionesFiltrados] = useState([]);
-  
-  const [anfitrionesObtenidos, setAnfitrionesObtenidos] = useState(0); 
+
+  const [anfitrionesObtenidos, setAnfitrionesObtenidos] = useState(0);
   const [hasMore, setHasMore] = useState(true); // Comprueba si hay mas anfitriones por buscar
 
   const [hasMoreFiltrados, setHasMoreFiltrados] = useState(true); // Comprueba si hay mas anfitriones por buscar filtrados
-  const [filtradosObtenidos, setFiltradosObtenidos] = useState(0); 
+  const [filtradosObtenidos, setFiltradosObtenidos] = useState(0);
 
   const [loading, setLoading] = useState(true);
 
@@ -31,10 +31,13 @@ export default function AlojamientosPage() {
     ciudad: "",
     provincia: "",
   });
- 
+
   useEffect(() => {
-    if(hasMore && !buscarFiltrado && !buscarUsuario){
-      setLoading(true);
+    if (hasMore && !buscarFiltrado && !buscarUsuario) {
+      if (anfitriones.length == 0) {
+        setLoading(true);
+      }
+
       AnfitrionService.getAllPaginacion(anfitrionesObtenidos, 6)
         .then(response => {
           setAnfitriones(prev => [...prev, ...response.data.data])
@@ -49,20 +52,21 @@ export default function AlojamientosPage() {
   useEffect(() => {
     if (buscarFiltrado && hasMoreFiltrados) {
       // Limpiar los usuarios anteriores buscados
-      if(anfitriones.length > 0){
+      if (anfitriones.length > 0) {
         setAnfitriones([]);
         setAnfitrionesObtenidos(0);
         setHasMore(true);
+      } else {
+        setLoading(true);
       }
-
-      setLoading(true);
+      
       setBuscarUsuario(false);
 
       AnfitrionService.getAnfitrionesFiltrados(filterOptions, filtradosObtenidos, 6)
         .then(response => {
-          if(anfitrionesFiltrados.length === 0){
+          if (anfitrionesFiltrados.length === 0) {
             setAnfitrionesFiltrados(response.data.data)
-          } else{
+          } else {
             setAnfitrionesFiltrados(prev => [...prev, ...response.data.data])
           }
           setHasMoreFiltrados(response.data.hasMore);
@@ -87,7 +91,7 @@ export default function AlojamientosPage() {
         setHasMoreFiltrados={setHasMoreFiltrados}
         setFiltradosObtenidos={setFiltradosObtenidos}
       />}
-  
+
       {/* PERFILES DE ANFITRIONES*/}
       <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}>
 
