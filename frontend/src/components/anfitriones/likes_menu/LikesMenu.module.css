@@ -20,7 +20,7 @@ body:has(.dialog[open]) {
   width: 85%;
   max-width: 750px;
   pointer-events: auto;
-  box-shadow: 5 5 15px rgba(0, 0, 0, 1);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
   animation: aparecer 0.25s ease-in-out forwards;
   overflow: none;
 }

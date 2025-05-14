@@ -11,7 +11,7 @@ export default function HeaderHome({ isHome = false }) {
     { path: "/viajeros/alojamientos", label: "Alojamientos", hiddenWhenNavVisible: true },
     { path: "/anfitriones/inquilinos", label: "Inquilinos", hiddenWhenNavVisible: true },
     { path: "/inicio/faq", label: "FAQ", hiddenWhenNavVisible: true },
-    { path: "/iniciar-sesion", label: "Iniciar sesión" },
+    { path: "/login", label: "Iniciar sesión" },
     { path: "/registro", label: "Registrarse" },
     { path: "/inicio/soporte", label: "Soporte" }
   ];

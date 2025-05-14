@@ -263,7 +263,7 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
                 <h2>{esViajero ? user.anfitrion.nombre : user.viajero.nombre}</h2>
                 <div className={styles.score}>
                   <img src="/images/usuarios/estrella.webp" alt="Logo estrella" />
-                  <h2>{esViajero ? user.anfitrion.valoracion : user.viajero.valoracion}</h2>
+                  <h2>{esViajero ? parseInt(user.anfitrion.valoracion).toFixed(1) :parseInt(user.viajero.valoracion).toFixed(1)}</h2>
                 </div>
               </div>
 

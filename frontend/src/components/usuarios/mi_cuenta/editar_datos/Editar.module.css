@@ -15,7 +15,7 @@ body:has(.modal[open]) {
 }
 
 .modal::backdrop {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(10px);
 }
 
@@ -32,7 +32,7 @@ body:has(.modal[open]) {
   max-height: 90vh;
   width: 80%;
   pointer-events: auto;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   animation: aparecer 0.25s ease-in-out forwards;
 }
 
