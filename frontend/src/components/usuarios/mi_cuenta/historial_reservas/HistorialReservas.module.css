@@ -190,7 +190,7 @@ body:has(.modal[open]) {
   gap: 30px;
 }
 .summary_div h2 {
-  width: 200px;
+  width: 210px;
   font-size: 25px;
   color: rgb(97, 97, 97);
   font-weight: normal;
@@ -372,7 +372,7 @@ body:has(.modal[open]) {
   .summary h1 {font-size: 30px;}
   .summary_div h2 {
     font-size: 27px;
-    width: 220px;
+    width: 230px;
   }
   .summary_div p {font-size: 26px;}
 

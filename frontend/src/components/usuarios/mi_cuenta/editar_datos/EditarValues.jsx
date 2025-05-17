@@ -340,6 +340,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 
 				<section className={styles.modal_sections}>
 					<h3>UBICACIÓN</h3>
+
 					<form className={`${styles.input_container} ${styles.input_ubicacion}`}>
 						<div className={`${styles.input_div} ${styles.input_text}`}>
 							<p>Ciudad</p>
@@ -360,7 +361,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 							}
 						</div>
 						<div className={styles.input_div}>
-							<p>Precio (&euro; / noche)</p>
+							<p><strong style={{color : "black"}}>* </strong>Precio (&euro; / noche)</p>
 							<input
 								type="number"
 								value={userData?.precio_noche || ""}
@@ -370,6 +371,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 							<span> </span>
 						</div>
 					</form>
+					<p style={{ marginTop: "6px", fontSize : "20px", color : "gray" }}><strong style={{color : "black"}}>* </strong> Las comisiones del 10 % están añadidas al precio base. En el historial de reservas, el ingreso reflejado corresponderá al monto neto final recibido, una vez descontada dicha comisión.</p>
 				</section>
 			</main>
 

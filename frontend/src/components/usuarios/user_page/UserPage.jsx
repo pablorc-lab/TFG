@@ -23,7 +23,10 @@ export default function UserPage({
 }) {
 
   const [llegada, setLlegada] = useState(new Date());
-  const [salida, setSalida] = useState(new Date());
+
+  const fechaSalida = new Date();
+  fechaSalida.setDate(fechaSalida.getDate() + 1);
+  const [salida, setSalida] = useState(fechaSalida);
 
   const [loadingFechas, setLoadingFechas] = useState(true);
   const [fechasExcluidas, setFechasExcluidas] = useState(["2025-05-08"]);
@@ -56,16 +59,18 @@ export default function UserPage({
     if (fechasExcluidas.length === 0) return;
 
     let hoy = new Date();
-    for (const fecha of fechasExcluidas) {
-      const fechaExcluida = new Date(fecha);
-      // Compara solo el día (sin horas, minutos, etc.), avanzamos a la siguiente fecha si coincide
-      while (hoy.toDateString() === fechaExcluida.toDateString()) {
-        hoy.setDate(hoy.getDate() + 1);
-      }
+
+    while (fechasExcluidas.some(f => new Date(f).toDateString() === hoy.toDateString()) ||
+      fechasExcluidas.some(f => new Date(f).toDateString() === new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 1).toDateString())
+    ) {
+      hoy.setDate(hoy.getDate() + 1);
     }
 
+    let maniana = new Date(hoy);
+    maniana.setDate(maniana.getDate() + 1);
+
     setLlegada(hoy.toISOString().split("T")[0]);
-    setSalida(hoy.toISOString().split("T")[0]);
+    setSalida(maniana.toISOString().split("T")[0]);
   }, [fechasExcluidas]);
 
 
@@ -82,7 +87,7 @@ export default function UserPage({
     // Enviar las fechas ya en formato yyyy-MM-dd
     const ReservasService = (await import("../../../services/reservas/ReservasService.jsx")).default;
     setMensajeReserva(true);
-    
+
     ReservasService.crearReserva(userID, emisorID, llegadaFormatted, salidaFormatted)
       .then(response => {
         console.log(response.data);
@@ -115,58 +120,47 @@ export default function UserPage({
 
 
   const changeFechaLlegada = (date) => {
-    let fechaActual = new Date(date);
     let nuevaLlegada = new Date(date);
     let nuevaSalida = new Date(salida);
 
-    let hayFechaExcluida = false;
-
-    while (fechaActual <= nuevaSalida) {
-      if (fechasExcluidas.some(fecha => new Date(fecha).toDateString() === fechaActual.toDateString())) {
-        hayFechaExcluida = true;
-        break;
-      }
-      fechaActual.setDate(fechaActual.getDate() + 1); // Avanzamos al siguiente día
+    // Si la salida es antes o igual que llegada, ajustamos salida a llegada +1
+    if (nuevaSalida <= nuevaLlegada) {
+      nuevaSalida = new Date(nuevaLlegada);
+      nuevaSalida.setDate(nuevaSalida.getDate() + 1);
     }
 
-    if (hayFechaExcluida) {
-      nuevaLlegada = new Date(date);
-      nuevaSalida = new Date(date);
-    }
-
-    else if (nuevaLlegada > nuevaSalida) {
-      nuevaSalida = nuevaLlegada;
+    // Mientras haya alguna fecha excluida en el rango [llegada, salida)
+    while (fechasExcluidas.some(f => {
+      const fecha = new Date(f);
+      return fecha >= nuevaLlegada && fecha <= nuevaSalida;
+    })) {
+      nuevaLlegada.setDate(nuevaLlegada.getDate() + 1);
+      nuevaSalida = new Date(nuevaLlegada);
+      nuevaSalida.setDate(nuevaSalida.getDate() + 1);
     }
 
     setLlegada(nuevaLlegada);
     setSalida(nuevaSalida);
 
-    setDiasReserva(Math.round((new Date(nuevaSalida) - new Date(nuevaLlegada)) / (1000 * 60 * 60 * 24)) + 1);
+    setDiasReserva(Math.round((new Date(nuevaSalida) - new Date(nuevaLlegada)) / (1000 * 60 * 60 * 24)));
   };
 
   const changeFechaSalida = (date) => {
-    let fechaActual = new Date(llegada);
     let nuevaSalida = new Date(date);
     let nuevaLlegada = new Date(llegada);
 
-    let hayFechaExcluida = false;
-
-    while (fechaActual <= nuevaSalida) {
-      if (fechasExcluidas.some(fecha => new Date(fecha).toDateString() === fechaActual.toDateString())) {
-        hayFechaExcluida = true;
-        break;
-      }
-      fechaActual.setDate(fechaActual.getDate() + 1); // Avanzamos al siguiente día
-    }
-
-    if (hayFechaExcluida) {
-      nuevaLlegada = new Date(date);
-      nuevaSalida = new Date(date);
+    while (fechasExcluidas.some(f => {
+      const fecha = new Date(f);
+      return fecha >= nuevaLlegada && fecha <= nuevaSalida;
+    })) {
+      nuevaLlegada.setDate(nuevaSalida.getDate() + 1);
+      nuevaSalida = new Date(nuevaLlegada);
+      nuevaSalida.setDate(nuevaSalida.getDate() + 1);
     }
 
     setLlegada(nuevaLlegada);
     setSalida(nuevaSalida);
-    setDiasReserva(Math.round((new Date(nuevaSalida) - new Date(nuevaLlegada)) / (1000 * 60 * 60 * 24)) + 1);
+    setDiasReserva(Math.round((new Date(nuevaSalida) - new Date(nuevaLlegada)) / (1000 * 60 * 60 * 24)));
   }
 
   const PerfilUsuario = (
@@ -175,8 +169,9 @@ export default function UserPage({
         <img className={styles.user_img} src={usuarioData.usuario?.profileImage || "/images/not_found/user_img.png"} alt="Imagen de perfil" width={50} />
         <div>
           <h2>{esAnfitrion ? "Anfitrión" : "Viajero"} : {usuarioData.usuario?.nombre || "-"}</h2>
+
           <div className={styles.user_reservas}>
-            <p>{usuarioData.usuario?.reservas_realizadas || 0} reservas</p>
+            <p style={{ margin: "0" }}>{usuarioData.usuario?.reservas_realizadas || 0} reservas</p>
             <div className={styles.user_score}>
               <img src="/images/usuarios/estrella.webp" alt="Ícono de estrella" />
               <h3>{usuarioData.usuario?.valoracion_media || "0.0"}</h3>
@@ -185,6 +180,7 @@ export default function UserPage({
         </div>
       </article>
 
+      <p style={{ margin: "0", marginBottom: "10px", fontStyle: "italic" }}>@{usuarioData.usuario?.privateID || ""}</p>
       <p>{usuarioData.usuario?.descripcion || "Este anfitrión aún no se ha descrito."}</p>
 
       <article className={styles.user_conectar}>
@@ -216,9 +212,9 @@ export default function UserPage({
               <DatePicker
                 readOnly={mensajeReserva}
                 name="llegada"
+                minDate={new Date().toISOString().split('T')[0]}
                 selected={llegada}
                 locale={es}
-                minDate={new Date()} // No permite fechas pasadas
                 excludeDates={fechasExcluidas.map(fecha => new Date(fecha))} // Deshabilita las fechas reservadas
                 dateFormat="dd-MM-yyyy"
                 onChange={date => changeFechaLlegada(date)}

@@ -20,7 +20,7 @@ public class ReservasController {
   private ReservasService reservasService;
 
   @GetMapping("/anfitrion/{id}/ingreso")
-  public int obtenerIngresosTotalesAnfitrion(@PathVariable Long id) {
+  public double obtenerIngresosTotalesAnfitrion(@PathVariable Long id) {
     return reservasService.obtenerIngresosTotalesAnfitrion(id);
   }
 

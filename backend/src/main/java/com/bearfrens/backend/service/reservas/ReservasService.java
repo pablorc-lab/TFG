@@ -30,9 +30,12 @@ public class ReservasService {
    * @param id ID del anfitrión
    * @return Sumatoria de los ingresos
    */
-  public int obtenerIngresosTotalesAnfitrion(Long id){
+  public double obtenerIngresosTotalesAnfitrion(Long id){
     Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(id);
-    return anfitrion.getReservas().stream().mapToInt(Reservas::getPrecio_total).sum();
+    int total = anfitrion.getReservas().stream().mapToInt(Reservas::getPrecio_total).sum();
+
+    // Al total restarle la comisión del 10%
+    return total * 0.9;
   }
 
   /**
@@ -53,8 +56,8 @@ public class ReservasService {
     for (Reservas reserva : reservas) {
       if(reserva.getEstado().equals(Reservas.ReservaType.ACTIVA) || reserva.getEstado().equals(Reservas.ReservaType.PENDIENTE)){
         LocalDate fecha = reserva.getFechaInicio();
-        // Mientras la fecha actual no sea mayor que la fecha fin, se añade a la lista
-        while (!fecha.isAfter(reserva.getFechaFin())) {
+        // Mientras la fecha actual no sea mayor o igiaul que la fecha fin, se añade a la lista
+        while (fecha.isBefore(reserva.getFechaFin())) {
           conteoFechas.put(fecha, conteoFechas.getOrDefault(fecha, 0) + 1);
           fecha = fecha.plusDays(1);
         }
@@ -105,8 +108,8 @@ public class ReservasService {
     for (Reservas reserva : reservas) {
       if(reserva.getEstado().equals(Reservas.ReservaType.ACTIVA) || reserva.getEstado().equals(Reservas.ReservaType.PENDIENTE)){
         LocalDate fecha = reserva.getFechaInicio();
-        // Mientras la fecha actual no sea mayor que la fecha fin, se añade a la lista
-        while (!fecha.isAfter(reserva.getFechaFin())) {
+        // Mientras la fecha actual no sea mayor o igual que la fecha fin, se añade a la lista
+        while (fecha.isBefore(reserva.getFechaFin())) {
           fechasReservadas.add(fecha);
           fecha = fecha.plusDays(1);
         }

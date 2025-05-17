@@ -64,41 +64,45 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
   };
 
   const calcularIngresoGastoMensual = () => {
-    const fechaActual = new Date();
+    const fechaActual = new Date(fechaHistorial + "-01");
     const anioActual = fechaActual.getFullYear();
     const mesActual = fechaActual.getMonth();
 
     let ingresoMensual = 0;
+    const comision = esViajero ? 1 : 0.9;
 
     for (const reserva of reservasData) {
       const inicio = new Date(reserva.fechaInicio);
       const fin = new Date(reserva.fechaFin);
-
-      // Solo considerar reservas que se cruzan con el mes actual
+      
+      // Solo considerar reservas que se cruzan con el mes seleccionado
       if ((inicio.getMonth() === mesActual && inicio.getFullYear() === anioActual) || (fin.getMonth() === mesActual && fin.getFullYear() === anioActual)) {
         // Si alguno no se encuentra en el mes actual, calcular días correspondientes
         if (inicio.getMonth() !== mesActual || fin.getMonth() !== mesActual) {
           // Calcular primer y último día del mes actual
-          const inicioMes = new Date(anioActual, mesActual, 1); // Primer dia mes actual
-          const finMes = new Date(anioActual, mesActual + 1, 0); // Último día mes actual
-
+          const inicioMes = new Date(anioActual, mesActual, 1); // Primer dia mes seleccionado
+          const finMes = new Date(anioActual, mesActual + 1, 0); // Último día mes seleccionado
+          
           // Definir rango efectivo dentro del mes actual
-          // Si el inicio de reserva está en el més, dejarlo, sino contar desde el inicio del mes actual
-          // Si el fin de reserva está en el més, dejarlo, sino contar desde el final del mes actual
+          // Si el inicio de reserva está en el més, dejarlo, sino contar desde el inicio del mes seleccionado
+          // Si el fin de reserva está en el més, dejarlo, sino contar desde el final del mes seleccionado
           const desde = inicio > inicioMes ? inicio : inicioMes;
           const hasta = fin < finMes ? fin : finMes;
 
-          const diasReservadosEnMes = Math.floor((hasta - desde) / (1000 * 60 * 60 * 24)) + 1;
-          ingresoMensual += diasReservadosEnMes * reserva.precio_noche;
+          const desdeMidnight = new Date(desde.getFullYear(), desde.getMonth(), desde.getDate());
+          const hastaMidnight = new Date(hasta.getFullYear(), hasta.getMonth(), hasta.getDate());
+          const diasReservadosEnMes = Math.floor((hastaMidnight - desdeMidnight) / (1000 * 60 * 60 * 24)) + 1;
+
+          ingresoMensual += diasReservadosEnMes * reserva.precio_noche * comision; // Se le quita 10% de comisión
         }
 
         else {
-          ingresoMensual += reserva.precio_total;
+          ingresoMensual += reserva.precio_total * comision;
         }
       }
     }
 
-    return ingresoMensual;
+    return ingresoMensual.toFixed(1);
   }
 
   const printFechasLegible = (fechaInicio, fechaFin) => {
@@ -112,7 +116,7 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
     // Calculamos la diferencia en milisegundos y la convertimos a días
     const diferencia = (fin.getTime() - inicio.getTime()) / (1000 * 60 * 60 * 24);
 
-    return diferencia + 1;
+    return diferencia;
   };
 
   const getUserInfo = (user) => [
@@ -152,9 +156,9 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
         </div>
 
         <div className={styles.summary_div}>
-          <h2>{esViajero ? "Viajes" : "Reservas"} este mes</h2>
+          <h2>{esViajero ? "Viajes" : "Reservas"} ese mes</h2>
           <p>{reservasData.filter(r => r.estado !== "CANCELADA").length}</p>
-          </div>
+        </div>
 
         <div className={styles.summary_div}>
           <h2>{esViajero ? "Gasto" : "Ingreso"} mensual</h2>
@@ -169,7 +173,7 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
 
       <section className={styles.historial_user_section}>
         <div className={styles.div_label}>
-          <img src="/images/usuarios/account/folder.svg" alt="history"/>
+          <img src="/images/usuarios/account/folder.svg" alt="history" />
           <label>
             <h3>{new Date(fechaHistorial).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }).toUpperCase()}</h3>
 
@@ -263,7 +267,7 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
                 <h2>{esViajero ? user.anfitrion.nombre : user.viajero.nombre}</h2>
                 <div className={styles.score}>
                   <img src="/images/usuarios/estrella.webp" alt="Logo estrella" />
-                  <h2>{esViajero ? parseInt(user.anfitrion.valoracion).toFixed(1) :parseInt(user.viajero.valoracion).toFixed(1)}</h2>
+                  <h2>{esViajero ? parseInt(user.anfitrion.valoracion).toFixed(1) : parseInt(user.viajero.valoracion).toFixed(1)}</h2>
                 </div>
               </div>
 

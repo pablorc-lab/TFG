@@ -13,7 +13,7 @@ export default function AnfitrionMobileHeader({ activeSection, setActiveSection,
       {/*Cabecera*/}
       <header className={styles_mobile.header}>
         <nav className={styles_mobile.search_nav}>
-          <Link>
+          <Link to="/anfitriones/foros">
             <div className={getClassName('foros')} onClick={() => setActiveSection("foros")}>
               <img src="/images/viajeros/comunidades_header.webp" width="50" alt='icono comunidades' />
               <span>Foros</span>
