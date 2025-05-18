@@ -23,4 +23,9 @@ public class LikesService extends ValoracionesConexionesService<Likes>{
     int tipoReceptor = gestorUsuarioService.intTipoUsuario(tipoUsuarioEmisor) == 1 ? 2 : 1;
     return likesRepository.findByEmisorIDAndUsuarioIDAndTipoUsuario(emisorID, receptorID, tipoReceptor).isPresent();
   }
+
+  public int contarLikes(String tipoUsuarioEmisor, Long emisorID){
+    int tipoReceptor = gestorUsuarioService.intTipoUsuario(tipoUsuarioEmisor) == 1 ? 2 : 1;
+    return likesRepository.countByEmisorIDAndTipoUsuario(emisorID, tipoReceptor);
+  }
 }

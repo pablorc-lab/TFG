@@ -30,7 +30,7 @@ export default function AnfitrionMobileHeader({ activeSection, setActiveSection,
           <Link to="/anfitriones/conexiones">
             <div className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>
               <img src="/images/viajeros/conexiones.svg" width="50" alt='icono conexiones' />
-              <span>Conexiones</span>
+              <span>Matches</span>
             </div>
           </Link>
           

@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LikesRepository extends ValoracionesConexionesRepository<Likes> {
-
+  // Devolver el número de likes enviados
+  int countByEmisorIDAndTipoUsuario(Long emisorID, int tipoUsuario);
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -29,4 +31,7 @@ public class Matches {
 
   @Column(name = "anfitrion_id", nullable = false)
   private Long anfitrionID;
+
+  @Column
+  private LocalDate fecha;
 }

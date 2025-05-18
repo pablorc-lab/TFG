@@ -106,7 +106,7 @@ body:has(.modal[open]) {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   font-family: "Nunito";
   margin: 20px auto;
   padding: 0;
@@ -183,7 +183,7 @@ body:has(.modal[open]) {
   position: relative;
   background-color: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  border-radius: 10px;
   font-family: "Nunito";
   padding: 30px;
   width: 400px;

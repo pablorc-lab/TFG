@@ -13,7 +13,7 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
   const anfMenuLinks = [
     { path: "/inicio/", label: "Foros", hiddenWhenNavVisible: true },
     { path: "/anfitriones/inquilinos", label: "Inquilinos", hiddenWhenNavVisible: true },
-    { path: "/anfitriones/conexiones", label: "Conexiones", hiddenWhenNavVisible: true },
+    { path: "/anfitriones/conexiones", label: "Matches", hiddenWhenNavVisible: true },
   ].concat(menuLinks);
 
   // Obtener el "classname" del nav actual
@@ -42,7 +42,7 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
           <nav className={styles.search_nav}>
             <Link to="/anfitriones/foros" className={getClassName('foros')} onClick={() => setActiveSection("foros")}>Foros</Link>
             <Link to="/anfitriones/inquilinos" className={getClassName('inquilinos')} onClick={() => setActiveSection("inquilinos")}> Inquilinos </Link>
-            <Link to="/anfitriones/conexiones" className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>Conexiones</Link>
+            <Link to="/anfitriones/conexiones" className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>Matches</Link>
           </nav>
         </section>
       )}

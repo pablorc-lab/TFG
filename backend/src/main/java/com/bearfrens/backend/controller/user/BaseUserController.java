@@ -98,6 +98,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     response.put("data", result.getContent());  // Datos de la página actual
     response.put("hasMore", result.hasNext());  // Si hay más elementos en la base de datos
 
+    System.out.println(result.getContent());
     return response;
   }
 

@@ -30,7 +30,6 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
   private final ValoracionesConexionesRepository<T> repository;
   private final MatchesRepository matchesRepository;
 
-
   public List<T> obtenerTodo(){
     List<T> lista = repository.findAll();
 
@@ -154,6 +153,7 @@ public abstract class ValoracionesConexionesService<T extends ValoracionConexion
         Matches nuevoMatch = new Matches();
         nuevoMatch.setAnfitrionID(tipo_receptor == 1 ? receptorID : usuarioID); // Si el receptor es el anfitrion, guardar el id correspondiente
         nuevoMatch.setViajeroID(tipo_receptor == 1 ? usuarioID : receptorID); // Si el receptor es anfitrion, guardar el id contrario
+        nuevoMatch.setFecha(LocalDate.now());
         matchesRepository.save(nuevoMatch);
       }
     }

@@ -39,6 +39,7 @@ export default function InquilinosPage() {
       // Obtener viajeros
       ViajeroService.getAllPaginacion(viajerosObtenidos, 6)
         .then(response => {
+          console.log(response);
           SetViajeros(prev => [...prev, ...response.data.data])
           setHasMore(response.data.hasMore);
         })

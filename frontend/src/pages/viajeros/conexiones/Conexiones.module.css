@@ -1,0 +1,73 @@
+.conexionSection {
+  display: grid;
+  justify-content: center;
+  gap: 25px;
+  align-items: end;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 30px;
+  border: 2px solid lightgray;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  background-color: white;
+  width: fit-content;
+}
+
+
+.titulo {
+  font-family: "Nunito";
+  font-size: 39px;
+  color: #3a3a3a;
+  text-align: center;
+  margin: 0;
+}
+
+.barraContainer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+
+.barraContainer h1 {
+  text-align: center;
+  margin: 0;
+  font-family: "Nunito";
+  font-size: 30px;
+  color: rgb(66, 66, 66);
+}
+
+.barraFondo {
+  margin: 0 auto;
+  border: 1px solid lightgray;
+  width: 200px;
+  height: 20px;
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.barraProgreso {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 1s ease;
+  background-color: #0a7273;
+}
+
+/* Colores para textos h1 */
+.rojo h1 { color: #ec5353; }
+.naranja h1 { color: #eea069; }
+.verde h1 { color: #0a7273; }
+
+/* Colores para barras de progreso */
+.rojo .barraProgreso { background-color: #ec5353; }
+.naranja .barraProgreso { background-color: #eea069; }
+.verde .barraProgreso { background-color: #0a7273; }
+
+@media (max-width: 780px) {
+  .conexionSection, .barraContainer {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+  }
+}

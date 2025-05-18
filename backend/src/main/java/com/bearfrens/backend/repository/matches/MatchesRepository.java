@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface MatchesRepository extends JpaRepository<Matches, Long> {
   List<Matches> findAllByViajeroID(Long viajeroId);
   List<Matches> findAllByAnfitrionID(Long anfitrionId);
+  int countByViajeroID(Long viajeroId);
+  int countByAnfitrionID(Long anfitrionId);
   Optional<Matches> findByAnfitrionIDAndViajeroID(Long anfitrionId, Long viajeroId);
   Boolean existsByAnfitrionIDAndViajeroID(Long anfitrionId, Long viajeroId);
 }
