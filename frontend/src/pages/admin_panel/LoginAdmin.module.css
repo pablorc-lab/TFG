@@ -1,3 +1,16 @@
+.home {
+  background-color: rgb(24, 24, 24);
+  width: 50px;
+  border-radius: 50px;
+  padding: 5px;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  cursor: pointer;
+}
+.home:hover {
+  filter: brightness(0.8);
+}
 .soporteMain {
   position: absolute;
   top: 50%;

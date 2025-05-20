@@ -98,6 +98,7 @@ export default function HomePage() {
               Descripcion="Soy un hombre apasionado por conocer nuevas personas y sitios desconocidos"
               Gustos_imgs={["pesca", "social", "baseball"]}
               tiempo_estancia={"3 - 6 meses"}
+              enlace={false}
             />
           </article>
 

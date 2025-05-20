@@ -49,6 +49,7 @@ const OpinionesMiCuenta = ({ showSize = false, nota_media = 0.1, valoraciones = 
       </section>
 
       <section className={`${styles.comentarios_section} ${activeShowMore && styles.show_more}`}>
+        {valoraciones.length === 0 && <h2 style={{textAlign : "center"}}>Aún no se tiene valoración alguna</h2>}
         {valoraciones.slice(0, 3).map(valoracion => (
           <Comentarios
             key={valoracion.id}

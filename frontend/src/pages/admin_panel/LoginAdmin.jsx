@@ -1,7 +1,7 @@
 import styles from "./LoginAdmin.module.css";
 import AuthService from "../../services/authentication/AuthService";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginAdmin = () => {
   const [loginError, setLoginError] = useState(false);
@@ -36,6 +36,10 @@ const LoginAdmin = () => {
   return (
     <>
       <title>Login | Admin</title>
+
+      <Link to="/inicio">
+        <img src="/images/admin_panel/home.svg" alt="inicio" className={styles.home}/>
+      </Link>
 
       <main className={styles.soporteMain}>
         <h1>Admin Panel</h1>

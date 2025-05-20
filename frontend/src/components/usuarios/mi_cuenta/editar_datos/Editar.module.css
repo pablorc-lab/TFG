@@ -15,7 +15,7 @@ body:has(.modal[open]) {
 }
 
 .modal::backdrop {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(10px);
 }
 

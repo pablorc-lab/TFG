@@ -2,7 +2,6 @@
 /*?        FAQs
 /*?===========================*/
 .freq_questions {
-  background-color: white;
   font-family: "Nunito";
   padding: 100px 5vw 100px 5vw ;
 }
@@ -20,13 +19,15 @@
   border-radius: 10px;
   margin: 0 auto;
   margin-bottom: 30px;
-  box-shadow: 0 0 4px gray;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
 
-.question_title:hover {
-  filter: brightness(0.95);
+.question_item:hover {
+  outline: 2px solid #0a7273;
 }
+
+
 .question_title {
   cursor: pointer;
   color: #0a7273;

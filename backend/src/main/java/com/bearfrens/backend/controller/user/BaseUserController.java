@@ -98,7 +98,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     response.put("data", result.getContent());  // Datos de la página actual
     response.put("hasMore", result.hasNext());  // Si hay más elementos en la base de datos
 
-    System.out.println(result.getContent());
     return response;
   }
 
@@ -237,9 +236,11 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     try {
       // Llamar al servicio para subir la imagen
       Map<String, Object> response = imgBBService.uploadImage(image);
+      System.out.println("Respuesta de ImgBB: " + response); // Ver qué te devuelve exactamente
       return ResponseEntity.ok(response); // Retornar el JSON
     }
     catch (Exception e) {
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
         .body(Collections.singletonMap("error", "Error en la subida de imágen: " + e.getMessage()));
     }

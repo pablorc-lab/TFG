@@ -167,7 +167,7 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
 
         <div className={styles.summary_div}>
           <h2>{esViajero ? "Gastos" : "Ingresos"} totales</h2>
-          <p>{gastoIngreso} &euro;</p>
+          <p>{gastoIngreso.toFixed(1)} &euro;</p>
         </div>
       </article>
 

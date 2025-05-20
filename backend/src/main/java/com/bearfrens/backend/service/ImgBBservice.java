@@ -31,15 +31,17 @@ public class ImgBBservice {
     String imageBase64 = Base64.getEncoder().encodeToString(image.getBytes());
 
     // Configurar el cuerpo de la solicitud para enviar la imagen en base64
-    MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+    MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
     body.add("image", imageBase64); // Agregar la imagen como cadena base64
 
     // Configurar los headers
     HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.MULTIPART_FORM_DATA); // El tipo es multipart/form-data
+    // Se usa `application/x-www-form-urlencoded` porque la API espera la imagen en base64
+    // como texto en un formulario simple, no como archivo binario multipart.
+    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED); // El tipo es APPLICATION_FORM_URLENCODED
 
     // Crear la solicitud HTTP (combinando body y header)
-    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+    HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
 
     // Enviar la solicitud HTTP POST a ImgBB
     RestTemplate restTemplate = new RestTemplate();

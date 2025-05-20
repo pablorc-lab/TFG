@@ -81,6 +81,7 @@ export default function InqProfilePage() {
             <>
               <Link to="/anfitriones/inquilinos">Inquilinos</Link>
               <Link to="/anfitriones/foros">Foros</Link>
+              <Link to="/anfitriones/conexiones">Matches</Link>
               <Link to="/inicio/soporte">Soporte</Link>
               <Link to="/inicio/faq">FAQ</Link>
               <Link to="/anfitriones/mi-cuenta">Mi Cuenta</Link>

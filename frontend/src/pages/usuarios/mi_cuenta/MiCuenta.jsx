@@ -59,7 +59,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
         .then(response => {
           setUsuarioData(response.data);
           setPerfilImage(response.data.usuario.profileImage);
-          console.log(response.data);
+          //console.log(response.data);
         })
         .catch(error => console.error("Error al mostrar el usuario", error))
         .finally(() => {
@@ -233,7 +233,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
                     <h2>{usuarioData.usuario?.nombre || "-"}, {usuarioData.usuario?.apellido.charAt(0) || "-"}</h2>
                     <p>({calcularEdad(usuarioData.usuario?.fecha_nacimiento) || "18"} años)</p>
                   </div>
-                  <ScoreMiCuenta nota_media={usuarioData.usuario?.valoracion_media || 0.1} valoraciones={usuarioData?.valoraciones} />
+                  <ScoreMiCuenta nota_media={usuarioData.usuario?.valoracion_media || 0.0} valoraciones={usuarioData?.valoraciones} />
 
                   <div className={styles.user_likes}>
                     {[usuarioData.usuario?.gusto1, usuarioData.usuario?.gusto2, usuarioData.usuario?.gusto3].map((gusto, index) => (
@@ -326,7 +326,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
               {activeMenu === 5 &&
                 <OpinionesMiCuenta
                   showSize={true}
-                  nota_media={usuarioData.usuario?.valoracion_media}
+                  nota_media={usuarioData.usuario?.valoracion_media || 0}
                   valoraciones={usuarioData?.valoraciones}
                   MiCuenta={true}
                   userService={userService}
@@ -344,7 +344,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           </div>
         </main>
       ) : (
-        <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
+        <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "0%", left: "50%", margin : "300px 0", transform: "translate(-50%,-50%)" }} />
       )}
 
       <Footer />

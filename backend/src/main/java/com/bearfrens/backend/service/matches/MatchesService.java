@@ -50,7 +50,7 @@ public class MatchesService {
       ? matchesRepository.countByAnfitrionID(emisorID)
       : matchesRepository.countByViajeroID(emisorID);
 
-    return ((double) matches / likes) * 100;
+    return (likes == 0) ? 0 : ((double) matches / likes) * 100;
   }
 
   /**

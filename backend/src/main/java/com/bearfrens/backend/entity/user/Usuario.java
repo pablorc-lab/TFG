@@ -50,7 +50,7 @@ public abstract class Usuario<TC>{
 
   // 3 digitos, con 2 decimales (Ej : 4.7)
   @Column(precision = 3, scale = 1)
-  private BigDecimal valoracion_media;
+  private BigDecimal valoracion_media = BigDecimal.ZERO ;
 
   @Column(nullable = false)
   private int num_valoraciones = 0;

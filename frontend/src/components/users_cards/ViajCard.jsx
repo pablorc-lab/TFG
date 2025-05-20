@@ -81,7 +81,7 @@ export default function Inq_card({
         </article>
 
         {!changeConectado ? (
-          <button className={styles.btn_conectar} onClick={() => !conectado && handleLike(anfitrion_ID)}>
+          <button className={styles.btn_conectar} onClick={() => enlace && !conectado && handleLike(anfitrion_ID)}>
             Conectar
           </button>
         ) : (

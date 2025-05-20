@@ -9,7 +9,7 @@ const ConexionesAnfPage = () => {
   const [viajeros, setViajeros] = useState([]);
 
   const [userID, setUserID] = useState(null);
-  const [afinidad, setAfinidad] = useState(0);
+  const [afinidad, setAfinidad] = useState(0.0);
 
   // Obtener el ID
   useEffect(() => {

@@ -29,7 +29,7 @@ export const ContenidoMiCuenta = ({ usuarioData = [], esViajero = false }) => {
 					{esViajero &&
 						<li>
 							<h2>Tiempo de estancia</h2>
-							<p>{usuarioData.tiempo_estancia}</p>
+							<p>{usuarioData?.tiempo_estancia || "Indefinido"}</p>
 						</li>
 					}
 				</ul>
@@ -192,7 +192,7 @@ export const ContenidoBiografia = ({ esViajero, biografiaData = [] }) => {
 					<img src="/images/usuarios/account/sobre_mi.svg" alt="Info vivienda" />
 					<p>SOBRE MI</p>
 				</div>
-				<p className={styles.miCuenta_text_info}>{biografiaData.sobreMi}</p>
+				<p className={styles.miCuenta_text_info}>{biografiaData?.sobreMi || "No se ha proporcionado descripción personal alguna"}</p>
 			</article>
 
 			<article>
@@ -201,9 +201,13 @@ export const ContenidoBiografia = ({ esViajero, biografiaData = [] }) => {
 					<p>IDIOMAS</p>
 				</div>
 				<ul>
-					{biografiaData.idiomas.split(",").map((idioma, index) => (
-						<li key={index} className={styles.miCuenta_text_info}>{idioma}</li>
-					))}
+					{biografiaData.idiomas != null ? (
+						String(biografiaData.idiomas).split(",").map((idioma, index) => (
+							<li key={index} className={styles.miCuenta_text_info}>{idioma.trim()}</li>
+						))
+					) : (
+						<li className={styles.miCuenta_text_info}>Español</li>
+					)}
 				</ul>
 			</article>
 
@@ -212,7 +216,7 @@ export const ContenidoBiografia = ({ esViajero, biografiaData = [] }) => {
 					<img src="/images/usuarios/account/sobre_necesidad.svg" alt="Localización vivienda" />
 					<p>SOBRE  {esViajero ? "MIS VIAJES" : "EL ALOJAMIENTO"}</p>
 				</div>
-				<p className={styles.miCuenta_text_info}>{biografiaData.descripcionExtra}</p>
+				<p className={styles.miCuenta_text_info}>{biografiaData?.descripcionExtra || "No se ha proporcinonado información sobre tus viajes"}</p>
 			</article>
 		</section>
 	)

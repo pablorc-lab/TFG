@@ -47,7 +47,7 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
     const BiografiaService = (await import("../../../../services/biografias/BiografiasService.jsx")).default;
 
     // Si no hay valores, es porque se está creando
-    const biografiaAction = usuarioData.biografia == null ? BiografiaService.crear : BiografiaService.update;
+    const biografiaAction = (usuarioData.biografia.sobreMi == null || usuarioData.biografia.descripcionExtra == null) ? BiografiaService.crear : BiografiaService.update;
 
     biografiaAction(tipo_usuario, usuarioData.usuario.id, biografiaData)
       .then(response => console.log(response.data))
@@ -236,52 +236,56 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   return (
     <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
 
-      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
-        {/* Editar datos de "Mi cuenta" , "Biografía" o "Vivienda"*/}
-        {showValue === 0 &&
-          <EditarMiCuenta
-            esViajero={esViajero}
-            usuarioData={usuarioData.usuario}
-            userData={userData}
-            setUserData={setUserData}
-          />}
-        {showValue === 1 &&
-          <EditarBiografia
-            esViajero={esViajero}
-            biografiaData={usuarioData.biografia}
-            userData={biografiaData}
-            setUserData={setBiografiaData}
-          />}
-        {!esViajero && showValue === 2 &&
-          <EditarVivienda
-            addImageState={addImageState}
-            viviendaData={usuarioData.usuario.vivienda}
-            setAddImageState={setAddImageState}
-            userData={viviendaData}
-            setUserData={setViviendaData}
-          />}
-        {esViajero && showValue === 2 &&
-          <EditarGaleria
-            galeriaData={usuarioData.usuario}
-            userData={galeriaData}
-            setUserData={setGaleriaData}
-          />}
-        {showValue === 3 &&
-          <EditarRecomendaciones
-            esViajero={esViajero}
-            recomendacionesData={usuarioData}
-            userData={contenidoData}
-            setUserData={setContenidoData}
-          />}
-      </Suspense>
+      {!sendingData ? (
+        <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)" }} />}>
+          {/* Editar datos de "Mi cuenta" , "Biografía" o "Vivienda"*/}
+          {showValue === 0 &&
+            <EditarMiCuenta
+              esViajero={esViajero}
+              usuarioData={usuarioData.usuario}
+              userData={userData}
+              setUserData={setUserData}
+            />}
+          {showValue === 1 &&
+            <EditarBiografia
+              esViajero={esViajero}
+              biografiaData={usuarioData.biografia}
+              userData={biografiaData}
+              setUserData={setBiografiaData}
+            />}
+          {!esViajero && showValue === 2 &&
+            <EditarVivienda
+              addImageState={addImageState}
+              viviendaData={usuarioData.usuario.vivienda}
+              setAddImageState={setAddImageState}
+              userData={viviendaData}
+              setUserData={setViviendaData}
+            />}
+          {esViajero && showValue === 2 &&
+            <EditarGaleria
+              galeriaData={usuarioData.usuario}
+              userData={galeriaData}
+              setUserData={setGaleriaData}
+            />}
+          {showValue === 3 &&
+            <EditarRecomendaciones
+              esViajero={esViajero}
+              recomendacionesData={usuarioData}
+              userData={contenidoData}
+              setUserData={setContenidoData}
+            />}
+        </Suspense>
+      ) : (<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "300px", position: "relative", top: "50%", left: "50%", transform: "translateX(-50%)", margin: "100px 0" }} />)}
 
       {!errorData && errorSameTitle && <h3 className={styles.error_msg}>Ya existe una recomendación con ese titulo</h3>}
       {errorData && <h3 className={styles.error_msg}>Rellene todos los campos</h3>}
 
-      <div className={styles.modal_buttons}>
-        <button onClick={() => closeEditar()}>CANCELAR</button>
-        <button disabled={sendingData} onClick={() => !sendingData && handleSaveChanges()}>GUARDAR</button>
-      </div>
+      {!sendingData &&
+        <div className={styles.modal_buttons}>
+          <button onClick={() => closeEditar()}>CANCELAR</button>
+          <button disabled={sendingData} onClick={() => !sendingData && handleSaveChanges()}>GUARDAR</button>
+        </div>
+      }
     </dialog >
   );
 }

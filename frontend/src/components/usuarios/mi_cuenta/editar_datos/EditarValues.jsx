@@ -49,6 +49,7 @@ export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, 
 						<div className={styles.input_div}>
 							<p>Nombre</p>
 							<input
+								id="nombre"
 								value={userData?.nombre || ''} onChange={(e) => (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]*$/).test(e.target.value) && setUserData(prev => ({ ...prev, nombre: e.target.value }))}
 								type="text"
 								placeholder="Pablo"
@@ -59,6 +60,7 @@ export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, 
 						<div className={styles.input_div}>
 							<p>Apellido</p>
 							<input
+								id="apellido"
 								value={userData?.apellido || ''}
 								onChange={(e) => (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]*$/).test(e.target.value) && setUserData(prev => ({ ...prev, apellido: e.target.value }))}
 								type="text"
@@ -71,6 +73,7 @@ export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, 
 							<p>ID privado</p>
 
 							<input
+								id="privateid"
 								value={userData?.privateID || ''}
 								onChange={(e) => setUserData(prev => ({ ...prev, privateID: e.target.value }))}
 								type="text"
@@ -82,6 +85,7 @@ export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, 
 						<div className={styles.input_div}>
 							<p>Fecha de nacimiento</p>
 							<input
+								id="nacimiento"
 								value={userData?.fecha_nacimiento || ''}
 								onChange={(e) => setUserData(prev => ({ ...prev, fecha_nacimiento: e.target.value }))}
 								type="date"
@@ -117,6 +121,7 @@ export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, 
 						<div className={styles.input_div}>
 							<p>Email</p>
 							<input
+								id="email"
 								value={userData?.email || ''}
 								onChange={(e) => setUserData(prev => ({ ...prev, email: e.target.value }))}
 								type="email"
@@ -129,6 +134,7 @@ export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, 
 						<div className={styles.input_div}>
 							<p>Teléfono</p>
 							<input
+								id="phone"
 								value={userData?.telefono || ''}
 								onChange={(e) => (/^\d{0,9}$/).test(e.target.value) && setUserData(prev => ({ ...prev, telefono: e.target.value }))}
 								type="number"
@@ -266,6 +272,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 									<div key={index} className={styles.file_input_wrapper}>
 										<label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)} >
 											<input
+												id="file"
 												type="file"
 												accept="image/*"
 												className={styles.file_input}
@@ -302,6 +309,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 						<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 							<p>Viajeros</p>
 							<input
+								id="viajeros"
 								type="number"
 								value={userData?.viajeros || ""}
 								onChange={(e) => setUserData(prev => ({ ...prev, viajeros: e.target.value }))}
@@ -311,6 +319,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 						<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 							<p>Habitaciones</p>
 							<input
+								id="habs"
 								type="number"
 								value={userData?.habitaciones || ""}
 								onChange={(e) => setUserData(prev => ({ ...prev, habitaciones: e.target.value }))}
@@ -320,6 +329,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 						<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 							<p>Camas</p>
 							<input
+								id="camas"
 								type="number"
 								value={userData?.camas || ""}
 								onChange={(e) => setUserData(prev => ({ ...prev, camas: e.target.value }))}
@@ -329,6 +339,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 						<div className={`${styles.input_div} ${styles.input_details_vivienda}`}>
 							<p>Baños</p>
 							<input
+								id="banios"
 								type="number"
 								value={userData?.banios || ""}
 								onChange={(e) => setUserData(prev => ({ ...prev, banios: e.target.value }))}
@@ -345,6 +356,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 						<div className={`${styles.input_div} ${styles.input_text}`}>
 							<p>Ciudad</p>
 							<input
+								id="location"
 								ref={inputRef}
 								type="text"
 								name="ubicacion"
@@ -361,8 +373,9 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 							}
 						</div>
 						<div className={styles.input_div}>
-							<p><strong style={{color : "black"}}>* </strong>Precio (&euro; / noche)</p>
+							<p><strong style={{ color: "black" }}>* </strong>Precio (&euro; / noche)</p>
 							<input
+								id="precio"
 								type="number"
 								value={userData?.precio_noche || ""}
 								onChange={(e) => setUserData(prev => ({ ...prev, precio_noche: e.target.value }))}
@@ -371,7 +384,7 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 							<span> </span>
 						</div>
 					</form>
-					<p style={{ marginTop: "6px", fontSize : "20px", color : "gray" }}><strong style={{color : "black"}}>* </strong> Las comisiones del 10 % están añadidas al precio base. En el historial de reservas, el ingreso reflejado corresponderá al monto neto final recibido, una vez descontada dicha comisión.</p>
+					<p style={{ marginTop: "6px", fontSize: "20px", color: "gray" }}><strong style={{ color: "black" }}>* </strong> Las comisiones del 10 % están añadidas al precio base. En el historial de reservas, el ingreso reflejado corresponderá al monto neto final recibido, una vez descontada dicha comisión.</p>
 				</section>
 			</main>
 
@@ -413,6 +426,7 @@ export const EditarGaleria = ({ galeriaData = [], userData, setUserData }) => {
 									<div key={index} className={styles.file_input_wrapper}>
 										<label className={styles.file_input_label}>
 											<input
+												id="imagen"
 												type="file"
 												accept="image/*"
 												className={styles.file_input}
@@ -448,13 +462,15 @@ export const EditarGaleria = ({ galeriaData = [], userData, setUserData }) => {
 
 // Menu que aparece al editar "Biografia "
 export const EditarBiografia = ({ esViajero = false, biografiaData = [], userData, setUserData }) => {
-	const [UserIdiomas, setUserIdiomas] = useState(biografiaData.idiomas.split(",").map(idioma => idioma.trim()));
+	const [UserIdiomas, setUserIdiomas] = useState(
+		(biografiaData.idiomas || "").split(",").map(idioma => idioma.trim())
+	);
 
 	const inputIdiomas = ["Español", "Inglés", "Francés", "Alemán", "Italiano", "Portugués", "Chino", "Árabe", "Ruso", "Japonés"];
 
 	useEffect(() => {
 		setUserData({
-			sobreMi: biografiaData.sobreMi || '',
+			sobreMi: userData?.sobreMi || '',
 			idiomas: UserIdiomas.join(",") || '',
 			descripcionExtra: biografiaData.descripcionExtra || '',
 		});
@@ -556,6 +572,7 @@ export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], use
 						<div className={`${styles.input_div} ${styles.input_recomendacion_title}`}>
 							<p>Titulo</p>
 							<input
+								id="titulo"
 								type="text"
 								placeholder="Restaurante favorito"
 								spellCheck="false"
@@ -587,6 +604,7 @@ export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], use
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/location.svg" alt="Ubicación" className={styles.input_image} />
 								<input
+									id="ubicacion"
 									type="text"
 									placeholder="Dirección del lugar"
 									spellCheck="false"
@@ -602,6 +620,7 @@ export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], use
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/backpack.svg" alt="Recomendación" className={styles.input_image} />
 								<input
+									id="consejos"
 									type="text"
 									placeholder="Consejos para visitar"
 									spellCheck="false"
@@ -617,6 +636,7 @@ export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], use
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/phone.svg" alt="Teléfono" className={styles.input_image} />
 								<input
+									id="telefono"
 									type="number"
 									placeholder="666-777-999"
 									spellCheck="false"
@@ -632,6 +652,7 @@ export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], use
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/clock.svg" alt="Horarios" className={styles.input_image} />
 								<input
+									id="horarios"
 									type="text"
 									placeholder="Horario de apertura y cierre"
 									spellCheck="false"
@@ -647,6 +668,7 @@ export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], use
 							<article className={styles.input_article}>
 								<img src="/images/profiles/recomendaciones/help.svg" alt="Comentarios" className={styles.input_image} />
 								<input
+									id="comentarios"
 									type="text"
 									placeholder="Comentarios adicionales"
 									spellCheck="false"
