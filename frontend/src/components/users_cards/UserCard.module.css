@@ -181,6 +181,8 @@
   color: #737373;
   font-size: 15.36px;
   margin: 4px 0 15px;
+  hyphens: auto;
+  text-align: justify;
 }
 .viaj_prof .description {
   font-size: 17.5px;

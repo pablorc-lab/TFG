@@ -306,7 +306,9 @@ body:has(.modal[open]) {
   resize: vertical; 
   width: calc(100% - 35px);
 }
-
+.biografiaEdit textarea {
+  min-height: 100px;
+}
 .input_div input:focus, .input_div textarea:focus, .input_article:focus-within {
   box-shadow: 6px 6px #00907f4b;
 }
@@ -486,8 +488,7 @@ body:has(.modal[open]) {
 
   /*? Imágenes*/
   .modal_images {
-    margin-left: 20px;
-    margin-right: 30px;
+
     gap: 30px;
     grid-template-columns: 1fr 1fr;
   }

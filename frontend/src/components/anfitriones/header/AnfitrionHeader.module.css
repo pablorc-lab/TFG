@@ -52,7 +52,7 @@
 /*? BUSCADOR MENU*/
 .search_container {
   position: absolute;
-  left: calc(50% + 33px);
+  left: 50%;
   transform:translateX(-50%);
 }
 

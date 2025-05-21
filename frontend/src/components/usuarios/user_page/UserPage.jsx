@@ -16,7 +16,7 @@ export default function UserPage({
   recomendaciones = [],
   conectado = false,
   setConectado,
-  match = true,
+  match = false,
   esAnfitrion = false,
   userID = null,
   emisorID = null
@@ -180,8 +180,8 @@ export default function UserPage({
         </div>
       </article>
 
-      <p style={{ margin: "0", marginBottom: "10px", fontStyle: "italic" }}>@{usuarioData.usuario?.privateID || ""}</p>
-      <p>{usuarioData.usuario?.descripcion || "Este anfitrión aún no se ha descrito."}</p>
+      <p style={{ margin: "0", marginBottom: "10px"}}>@{usuarioData.usuario?.privateID || ""} {match && usuarioData.usuario.telefono && "(" + usuarioData.usuario.telefono + ")"}</p>
+      <p style={{ hyphens: "auto", textAlign: "justify" }}>{usuarioData.usuario?.descripcion || "Este anfitrión aún no se ha descrito."}</p>
 
       <article className={styles.user_conectar}>
         <div className={styles.user_likes}>

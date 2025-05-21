@@ -50,20 +50,24 @@ export default function AlojamientosPage() {
 
   // Si se activa un nuevo filtro llamar desde 0
   useEffect(() => {
+  
     if (buscarFiltrado && hasMoreFiltrados) {
       // Limpiar los usuarios anteriores buscados
       if (anfitriones.length > 0) {
         setAnfitriones([]);
         setAnfitrionesObtenidos(0);
         setHasMore(true);
-      } else {
+      } 
+
+      if(anfitrionesFiltrados.length === 0){
         setLoading(true);
       }
-      
+    
       setBuscarUsuario(false);
 
       AnfitrionService.getAnfitrionesFiltrados(filterOptions, filtradosObtenidos, 6)
         .then(response => {
+          console.log(response.data)
           if (anfitrionesFiltrados.length === 0) {
             setAnfitrionesFiltrados(response.data.data)
           } else {

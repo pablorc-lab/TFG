@@ -48,11 +48,6 @@ public class ViajeroController extends BaseUserController<Viajero, ViajeroReposi
     // Una vez obtenidos todos los anfitriones, filtrar por sus idiomas que se encuentra en la biografia de cada uno
     List<Viajero> viajeros = viajeroSpecificationRepository.findAll(spec);
 
-    int start = pagina * tamanio;
-    int end = Math.min(start + tamanio, viajeros.size());
-    boolean hasMore = end < viajeros.size();
-    viajeros = viajeros.subList(start, end);
-
     if(filtros.getIdiomas() != null && !filtros.getIdiomas().isEmpty()){
       viajeros = viajeros.stream().filter(viajero -> {
         Optional<Biografias> biografia = biografiasService.obtenerBiografia("viajeros", viajero.getId());
@@ -60,12 +55,18 @@ public class ViajeroController extends BaseUserController<Viajero, ViajeroReposi
           List<String> idiomas = Arrays.stream(biografia.get().getIdiomas().split(",")).map(String::trim).toList();
 
           for(String idiomaFiltro : filtros.getIdiomas()){
-            if(idiomas.contains(idiomaFiltro)) return true;
+            if(idiomas.contains(idiomaFiltro))
+              return true;
           }
         }
         return false;
       }).toList();
     }
+
+    int start = pagina * tamanio;
+    int end = Math.min(start + tamanio, viajeros.size());
+    boolean hasMore = end < viajeros.size();
+    viajeros = viajeros.subList(start, end);
 
     Map<String, Object> response = new HashMap<>();
     response.put("data", viajeros);

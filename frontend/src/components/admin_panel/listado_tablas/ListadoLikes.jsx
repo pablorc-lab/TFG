@@ -39,7 +39,7 @@ export default function ListadoLikes({styles}) {
         </tr>
       </thead>
       <tbody>
-        {likes.sort((a,b) => a.id - b.id).map(like => (
+        {likes.map(like => (
           <tr key={like.id}>
             <td>{like.id}</td>
             <td>{like.emisorID}</td>

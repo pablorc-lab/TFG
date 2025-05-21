@@ -60,7 +60,7 @@ export default function InquilinosPage() {
         setLoading(true);
       }
 
-      ViajeroService.getViajerosFiltrados(filterOptions, filtradosObtenidos, 3)
+      ViajeroService.getViajerosFiltrados(filterOptions, filtradosObtenidos, 6)
         .then(response => {
           if (viajerosFiltrados.length === 0) {
             setViajerosFiltrados(response.data.data)
@@ -100,6 +100,7 @@ export default function InquilinosPage() {
       setViajerosFiltrados([]);
     }
   }, [privateID]);
+  
   return (
     <>
       <title>Inquilinos | Anfitriones</title>

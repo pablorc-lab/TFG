@@ -97,6 +97,7 @@ body:has(.modal[open]) {
 .add_recomendacion p,
 .recomendaciones_container li h3,
 .recomendaciones_container li p {
+  hyphens : auto;
   margin: 0;
 }
 

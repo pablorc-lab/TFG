@@ -60,7 +60,7 @@ export const ContenidoMiCuenta = ({ usuarioData = [], esViajero = false }) => {
 				<ul className={`${styles.miCuenta_info} ${styles.miCuenta_biografia}`}>
 					<li>
 						<h2>Breve descripción</h2>
-						<p>{usuarioData.descripcion}</p>
+						<p>{usuarioData?.descripcion || "Aun no has añadido una descripción"}</p>
 					</li>
 					<li>
 						<h2>Gustos :</h2>
@@ -85,10 +85,10 @@ export const ContenidoMiCuenta = ({ usuarioData = [], esViajero = false }) => {
 // Contenido de "Vivienda"
 export const ContenidoVivienda = ({ viviendaData = [] }) => {
 	const vivienda_imgs = [
-		viviendaData.imagen1,
-		viviendaData.imagen2,
-		viviendaData.imagen3,
-		viviendaData.imagen4
+		viviendaData?.imagen1 || null,
+		viviendaData?.imagen2 || null,
+		viviendaData?.imagen3 || null,
+		viviendaData?.imagen4 || null
 	].filter(img => img != null && img !== "");
 
 	return (
@@ -99,7 +99,7 @@ export const ContenidoVivienda = ({ viviendaData = [] }) => {
 					<p>IMÁGENES - {vivienda_imgs.length}</p>
 				</div>
 				<div className={styles.vivienda_images}>
-					{vivienda_imgs.map((path_img, index) => (
+					{vivienda_imgs.length > 0 && vivienda_imgs.map((path_img, index) => (
 						<img key={index} src={path_img} alt={`Imagen ${index}`} />
 					))}
 				</div>
@@ -113,19 +113,19 @@ export const ContenidoVivienda = ({ viviendaData = [] }) => {
 				<ul className={styles.miCuenta_info}>
 					<li>
 						<h2>Viajeros</h2>
-						<p>{viviendaData.viajeros}</p>
+						<p>{viviendaData?.viajeros || 0}</p>
 					</li>
 					<li>
 						<h2>Habitaciones</h2>
-						<p>{viviendaData.habitaciones}</p>
+						<p>{viviendaData?.habitaciones || 0}</p>
 					</li>
 					<li>
 						<h2>Camas</h2>
-						<p>{viviendaData.camas}</p>
+						<p>{viviendaData?.camas || 0}</p>
 					</li>
 					<li>
 						<h2>Baños</h2>
-						<p>{viviendaData.banios}</p>
+						<p>{viviendaData?.banios || 0}</p>
 					</li>
 				</ul>
 			</article>
@@ -138,15 +138,15 @@ export const ContenidoVivienda = ({ viviendaData = [] }) => {
 				<ul className={styles.miCuenta_info}>
 					<li>
 						<h2>Provincia</h2>
-						<p>{viviendaData.provincia}</p>
+						<p>{viviendaData?.provincia || "Sin ciudad"}</p>
 					</li>
 					<li>
 						<h2>Ciudad</h2>
-						<p>{viviendaData.ciudad}</p>
+						<p>{viviendaData?.ciudad || "Sin provincia"}</p>
 					</li>
 					<li>
 						<h2>Precio &euro; / noche</h2>
-						<p>{viviendaData.precio_noche}</p>
+						<p>{viviendaData?.precio_noche || 0}</p>
 					</li>
 				</ul>
 			</article>
@@ -206,7 +206,7 @@ export const ContenidoBiografia = ({ esViajero, biografiaData = [] }) => {
 							<li key={index} className={styles.miCuenta_text_info}>{idioma.trim()}</li>
 						))
 					) : (
-						<li className={styles.miCuenta_text_info}>Español</li>
+						<li className={styles.miCuenta_text_info}>Sin idiomas</li>
 					)}
 				</ul>
 			</article>

@@ -23,11 +23,10 @@ export default function EditarPerfil({ setIsOpen, showValue = 0, usuarioData = [
   const hayCamposNull = (data) => {
     // Comprobar datos usuario
     const valoresNulos = Object.entries(data).some(([key, value]) =>
-      !key.startsWith("gusto") && !key.startsWith("imagen") && (value == null || value === '')
+      !key.startsWith("gusto") && !key.startsWith("imagen") && (value === null || value === '')
     );
 
-    setErrorData(valoresNulos);
-    console.log(valoresNulos);
+    console.log("Errores",valoresNulos);
     return valoresNulos;
   }
 

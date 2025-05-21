@@ -5,6 +5,7 @@ import UserPage from "../../../components/usuarios/user_page/UserPage";
 import AnfitrionMobileHeader from "../../../components/anfitriones/header/AnfitrionMobileHeader";
 import ViajeroService from "../../../services/users/ViajeroService";
 import LikesService from "../../../services/matches/LikesService";
+import MatchesService from "../../../services/matches/MatchesService";
 import styles from "./InqProfilePage.module.css";
 
 export default function InqProfilePage() {
@@ -17,6 +18,8 @@ export default function InqProfilePage() {
 
   const [loading, SetLoading] = useState(true);
 
+  const [match, SetMatch] = useState(false);
+
   const location = useLocation();
   const id = location.state?.id;
   const emisorID = location.state?.emisorID;
@@ -24,6 +27,7 @@ export default function InqProfilePage() {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
   const [isColumns, setIsColumns] = useState(window.innerWidth <= 1350);
+
   // Controlar cuando es pantalla pequeña 
   useEffect(() => {
     const handleResize = () => {
@@ -43,7 +47,7 @@ export default function InqProfilePage() {
         SetViajeroInfo(response.data);
         setValoraciones(response.data.valoraciones);
         setIdiomasUser(response.data.biografia?.idiomas ? response.data.biografia.idiomas.trim().split(",") : ["Español"]);
-        
+
         setGaleria_imgs([
           response.data.usuario.imagen1,
           response.data.usuario.imagen2,
@@ -59,7 +63,12 @@ export default function InqProfilePage() {
 
         // Ver si se ha dado like
         LikesService.haDadoLike("anfitriones", emisorID, id)
-          .then(likeDado => setConectado(likeDado))
+          .then(likeDado => setConectado(likeDado.data))
+          .catch(error => console.error("Error al buscar el match " + error));
+
+        // Ver si se tiene match con el
+        MatchesService.getTwoUsersMatchs(id, emisorID)
+          .then(match => SetMatch(match.data))
           .catch(error => console.error("Error al buscar el match " + error));
 
         SetLoading(false);
@@ -136,11 +145,11 @@ export default function InqProfilePage() {
             recomendaciones={viajeroInfo.usuario?.experiencias}
             conectado={conectado}
             setConectado={setConectado}
+            match={match}
             userID={id}
             emisorID={emisorID}
           />
         </>
-
       }
 
       <Footer />

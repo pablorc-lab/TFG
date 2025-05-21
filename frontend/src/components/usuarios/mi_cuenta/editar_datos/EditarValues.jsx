@@ -3,7 +3,7 @@ import styles from "./Editar.module.css"
 const FilteredList = lazy(() => import("../../../utilities/filteresCities/FilteredList"));
 
 // Menu que aparece al editar "Mi Cuenta"
-export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, setUserData }) => {
+export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData = [], setUserData }) => {
 
 	const [gustos_actuales, SetGustos_actuales] = useState([usuarioData.gusto1, usuarioData.gusto2, usuarioData.gusto3]);
 	const [tiempoActive, setTiempoActive] = useState(usuarioData.tiempo_estancia);
@@ -19,6 +19,7 @@ export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, 
 		"ciclismo", "fotografia", "viajar", "gimnasio"
 	];
 
+	console.log(usuarioData);
 	useEffect(() => {
 		if (usuarioData) {
 			setUserData({
@@ -27,15 +28,24 @@ export const EditarMiCuenta = ({ esViajero = false, usuarioData = [], userData, 
 				privateID: usuarioData.privateID || '',
 				fecha_nacimiento: usuarioData.fecha_nacimiento || '',
 				email: usuarioData.email || '',
-				telefono: usuarioData.telefono || '',
 				tiempo_estancia: tiempoActive,
+				telefono: usuarioData.telefono || '',
 				descripcion: usuarioData.descripcion || '',
 				gusto1: gustos_actuales[0] || '',
 				gusto2: gustos_actuales[1] || '',
 				gusto3: gustos_actuales[2] || ''
 			});
 		}
-	}, [usuarioData, gustos_actuales, tiempoActive]);
+	}, [usuarioData]);
+
+	useEffect(() => {
+		setUserData(prev => ({
+			...prev,
+			gusto1: gustos_actuales[0] || '',
+			gusto2: gustos_actuales[1] || '',
+			gusto3: gustos_actuales[2] || ''
+		}));
+	}, [gustos_actuales]);
 
 	return (
 		<>
@@ -253,7 +263,6 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 		}
 	}, [editarStates.location]);
 
-
 	return (
 		<>
 			<h2>EDITAR VIVIENDA</h2>
@@ -263,6 +272,23 @@ export const EditarVivienda = ({ addImageState, viviendaData = [], setAddImageSt
 					<h3>IMÁGENES <span>(máximo 4)</span></h3>
 
 					<article className={styles.modal_images}>
+						{(userData && ["imagen1", "imagen2", "imagen3", "imagen4"].every(img => userData[img] === null)) || (userData == null) && (
+							<div className={styles.file_input_wrapper}>
+								<label className={styles.file_input_label} onMouseEnter={() => setAddImageState(true)} onMouseLeave={() => setAddImageState(false)} >
+									<input
+										id="file"
+										type="file"
+										accept="image/*"
+										className={styles.file_input}
+										name="archivo"
+										onChange={(e) => setUserData(prev => ({ ...prev, [img]: e.target.files[0] }))}
+									/>
+									<img src="/images/usuarios/account/add_img.svg" alt="Editar vivienda" />
+								</label>
+								{addImageState && <p className={styles.add_image_tooltip}>Añadir imagen</p>}
+							</div>
+						)}
+
 						{userData && ["imagen1", "imagen2", "imagen3", "imagen4"].map((img, index) => {
 							if (userData[img] == null) {
 								// Si NO estamos en el primer índice o la imagen anterior es null, no mostramos nada mas
@@ -470,11 +496,18 @@ export const EditarBiografia = ({ esViajero = false, biografiaData = [], userDat
 
 	useEffect(() => {
 		setUserData({
-			sobreMi: userData?.sobreMi || '',
-			idiomas: UserIdiomas.join(",") || '',
-			descripcionExtra: biografiaData.descripcionExtra || '',
+			sobreMi: biografiaData?.sobreMi || '',
+			idiomas: UserIdiomas.filter(i => i.trim() !== "").join(",") || '',
+			descripcionExtra: biografiaData?.descripcionExtra || '',
 		});
-	}, [biografiaData, UserIdiomas]);
+	}, [biografiaData]);
+
+	useEffect(() => {
+		setUserData(prev => ({
+			...prev,
+			idiomas: UserIdiomas.filter(i => i.trim() !== "").join(",") || '',
+		}));
+	}, [UserIdiomas]);
 
 	const handleChangeIdioma = (idiomaValue) => {
 		UserIdiomas.includes(idiomaValue)
@@ -491,7 +524,7 @@ export const EditarBiografia = ({ esViajero = false, biografiaData = [], userDat
 					<h3>SOBRE MI</h3>
 
 					<form className={styles.input_container} >
-						<div className={styles.input_div}>
+						<div className={`${styles.input_div} ${styles.biografiaEdit}`}>
 							<p>Descripción personal {userData?.sobreMi?.length || 0} / 500</p>
 							<textarea
 								value={userData?.sobreMi || ''}
@@ -527,7 +560,7 @@ export const EditarBiografia = ({ esViajero = false, biografiaData = [], userDat
 					<h3>SOBRE {esViajero ? "MIS VIAJES" : "EL ALOJAMIENTO"}</h3>
 
 					<form className={styles.input_container} >
-						<div className={styles.input_div}>
+						<div className={`${styles.input_div} ${styles.biografiaEdit}`}>
 							<p>Descripción  {esViajero ? "de tus viajes" : "del alojamiento"} {userData?.descripcionExtra?.length || 0}  / 500</p>
 							<textarea
 								value={userData?.descripcionExtra || ''}
@@ -558,7 +591,7 @@ export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], use
 			horarios: recomendacionesData.horario || '',
 			ayuda: recomendacionesData.ayuda || ''
 		});
-	}, []);
+	}, [recomendacionesData]);
 
 
 	return (
@@ -582,7 +615,7 @@ export const EditarRecomendaciones = ({ esViajero, recomendacionesData = [], use
 							/>
 						</div>
 
-						<div className={styles.input_div}>
+						<div className={`${styles.input_div} ${styles.biografiaEdit}`}>
 							<p>Descripción  {userData?.descripcion.length || 0} / 500</p>
 							<textarea
 								placeholder="Si te encanta la comida local, no puedes perderte ‘La Taberna de Juan’"

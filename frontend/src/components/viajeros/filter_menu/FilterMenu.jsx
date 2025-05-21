@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./FilterMenu.module.css";
 
-export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setFiltrosActivos, setHasMoreFiltrados, setAnfitrionesFiltrados, setFiltradosObtenidos}) {
+export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilterOptions, setBuscarFiltrado, setFiltrosActivos, setHasMoreFiltrados, setAnfitrionesFiltrados, setFiltradosObtenidos, setFiltradoEliminado}) {
   const [mouseEnter, SetMouseEnter] = useState(null);
   
   const [rango, setRango] = useState({ min: filterOptions.min, max: filterOptions.max });
@@ -112,7 +112,14 @@ export default function FilterMenu({ setOpenFilterMenu, filterOptions, setFilter
     setAnfitrionesFiltrados([]);
     setFiltradosObtenidos(0);
     setOpenFilterMenu(false);
-    setBuscarFiltrado(false);
+    if(filterOptions.ciudad === "" || filterOptions.provincia === ""){
+      setBuscarFiltrado(false);
+    }
+    else{
+      setBuscarFiltrado(true);
+      setHasMoreFiltrados(true);
+    }
+    
   }
 
   return (

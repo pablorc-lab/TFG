@@ -55,7 +55,7 @@ export default function AnfProfilesGallery({
               Casa_img={anfitrion.vivienda?.imagen1 || "/images/not_found/vivienda.webp"}
               Perfil_img={anfitrion.profileImage || "/images/not_found/user_img.png"}
               Nombre={anfitrion.nombre}
-              Gustos_imgs={[anfitrion.gusto1, anfitrion.gusto2, anfitrion.gusto3].filter(gusto => gusto != null)}
+              Gustos_imgs={[anfitrion.gusto1, anfitrion.gusto2, anfitrion.gusto3]}
               Valoracion={anfitrion.valoracion_media || 0}
               Ubicacion={`${anfitrion.vivienda?.ciudad || "No disponible"}, ${anfitrion.vivienda?.provincia || "No disponible"}`}
               Precio={anfitrion.vivienda?.precio_noche || "0"}
@@ -75,7 +75,7 @@ export default function AnfProfilesGallery({
         }
 
         {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "50%", left: "0%", margin: "150px 0", transform: "translateY(-50%)" }} />}
-
+        
         {buscarFiltrado && anfitrionesFiltrados.length === 0 && <h1 className={styles.not_found}>No existen anfitriones con esos filtros.</h1>}
       </article>
     </section>

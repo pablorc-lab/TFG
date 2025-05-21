@@ -38,7 +38,7 @@ export default function ViajerosFinalHeader({
    */
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if ((!inputRef.current || !inputRef.current.contains(event.target))&& (!filteredCitiesListRef.current || !filteredCitiesListRef.current.contains(event.target))) {
+      if ((!inputRef.current || !inputRef.current.contains(event.target)) && (!filteredCitiesListRef.current || !filteredCitiesListRef.current.contains(event.target))) {
         updateHeaderStates({ locationFocus: false });
       }
     };
@@ -65,14 +65,20 @@ export default function ViajerosFinalHeader({
    */
   useEffect(() => {
     // Si no hay nada escrito
-    if (headerStates.location.length === 0 && setBuscarUsuario) {
-      setBuscarUsuario(false);
-      setBuscarFiltrado(false);
+    if (headerStates.location.length === 0 && setBuscarUsuario && (filterOptions.ciudad !== "" || filterOptions.provincia !== "")) {
+      // Se reinician esos filtros SI YA HABIA ALGO ESCRITO ANTES
+      setHasMoreFiltrados(true);
       setFilterOptions(prev => ({
         ...prev,
         ciudad: "",
         provincia: ""
       }));
+
+      // Si no hay filtros activos termina busqueda
+      if (filtrosActivos === 0) {
+        setAnfitrionesFiltrados([]);
+        setBuscarFiltrado(false);
+      }
     }
 
     else if (realizarBusqueda) {
@@ -112,6 +118,8 @@ export default function ViajerosFinalHeader({
           ciudad: ciudad,
           provincia: provincia
         }));
+        setAnfitrionesFiltrados([]);
+        setHasMoreFiltrados(true);
         setBuscarFiltrado(true);
       }
     }

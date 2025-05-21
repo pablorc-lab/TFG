@@ -209,13 +209,18 @@
 .user_descripcion h2:first-of-type {
   margin-top: 15px;
 }
-
+.user_descripcion p {
+  text-align: justify;
+  hyphens: auto;
+}
 .user_descripcion p, .user_descripcion ul, .user_recomendations p, .recomendacion_not_found {
   margin: 0;
   font-size: 19px;
   color: #696969;
 }
 .user_recomendations p {
+  text-align: justify;
+  hyphens: auto;
   font-weight: 350;
   margin: 5px 0;
 }
@@ -230,7 +235,7 @@
 .user_recomendations {
   margin-top: 30px;
   margin-bottom: 30px;
-  padding: 15px;
+  padding: 20px;
   padding-bottom: 20px;
   border-radius: 5px;
 }

@@ -72,8 +72,8 @@ export default function ViajProfilesGallery({
             Num_viajes={viajero.viajes_realizados || 0}
             Edad={calcularEdad(viajero.fecha_nacimiento) || 18}
             Profesion={viajero.profesion || "Sin información"}
-            Descripcion={viajero.descripcion}
-            Gustos_imgs={[viajero.gusto1, viajero.gusto2, viajero.gusto3].filter(gusto => gusto != null)}
+            Descripcion={viajero.descripcion || "Este anfitrión aún no se ha descrito"}
+            Gustos_imgs={[viajero.gusto1, viajero.gusto2, viajero.gusto3]}
             tiempo_estancia={viajero.tiempo_estancia || "Indefinido"}
             conectado={likeDado(viajero.id)}
             anfitrion_ID={anfitrionID}

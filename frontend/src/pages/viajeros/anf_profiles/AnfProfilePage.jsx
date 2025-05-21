@@ -61,11 +61,11 @@ export default function AnfProfilePage() {
 
         // Ver si se ha dado like
         LikesService.haDadoLike("viajeros", emisorID, id)
-          .then(likeDado => setConectado(likeDado))
+          .then(likeDado => setConectado(likeDado.data))
           .catch(error => console.error("Error al buscar el match " + error));
 
         // Ver si se tiene match con el
-        MatchesService.getTwoUsersMatchs(id, 1)
+        MatchesService.getTwoUsersMatchs(id, emisorID)
           .then(match => SetMatch(match.data))
           .catch(error => console.error("Error al buscar el match " + error));
       })

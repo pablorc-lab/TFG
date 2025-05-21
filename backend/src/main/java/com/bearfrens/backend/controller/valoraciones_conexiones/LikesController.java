@@ -32,7 +32,7 @@ public class LikesController{
   // Obtener todos los likes existentes
   @GetMapping("/likes")
   public List<Likes> obtenerListaLikesTodos(){
-    return likesRepository.findAll();
+    return likesRepository.findAllByOrderByFechaDesc();
   }
 
   // Devuelve si se ha dado like a ese usuario
