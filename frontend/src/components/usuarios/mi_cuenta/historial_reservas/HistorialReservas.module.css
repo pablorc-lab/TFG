@@ -381,6 +381,21 @@ body:has(.modal[open]) {
   .historial_user_section h3 {font-size: 33px}
 }
 
+/*?  COLORES SEGUN EL ESTADO*/
+.ACTIVA strong, .FINALIZADA strong, .CANCELADA strong, .PENDIENTE strong {
+  padding: 3px 7px;
+  border-radius: 5px;
+  color: white;
+}
+
+.ACTIVA strong { background: linear-gradient(90deg, #c9941a, #e6b644);}
+
+.FINALIZADA strong { background: linear-gradient(90deg, #007d70, #0ba797);}
+
+.CANCELADA strong { background: linear-gradient(90deg, #902f33, #bc4b4f);}
+
+.PENDIENTE strong { background: linear-gradient(90deg, #1f4e8a, #2971c4);}
+
 @media (min-width: 1400px) {
   .details img { width: 35px;}
   .details p { font-size: 23px; }

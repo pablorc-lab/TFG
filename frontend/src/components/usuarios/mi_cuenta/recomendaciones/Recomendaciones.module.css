@@ -103,7 +103,7 @@ body:has(.modal[open]) {
 
 .recomendaciones_main {
   background-color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 0 5px rgba(65, 65, 65, 0.3);
   padding: 0 30px;
 }
@@ -161,12 +161,12 @@ body:has(.modal[open]) {
 }
 
 .recomendaciones_container li:nth-child(even):not(.add_recomendacion) {
-  background-color: rgb(210, 234, 248);
+  background-color: rgb(221, 241, 253);
   box-shadow: 8px 8px rgb(175, 205, 223);
 }
 
 .recomendaciones_container li:nth-child(odd):not(.add_recomendacion) {
-  background-color: rgb(253, 253, 216); 
+  background-color: rgb(255, 255, 224); 
   box-shadow: 8px 8px rgb(212, 212, 192);
 }
 

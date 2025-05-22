@@ -85,6 +85,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
     left: "50%",
     transform: "translateX(-50%)",
     padding: "50px",
+    borderRadius : "10px",
     backgroundColor: "white",
     boxShadow: "0 0 5px rgba(65, 65, 65, 0.3)",
   };
@@ -344,7 +345,7 @@ export default function MiCuenta({ activeSection = "perfil", esViajero = true })
           </div>
         </main>
       ) : (
-        <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "0%", left: "50%", margin : "300px 0", transform: "translate(-50%,-50%)" }} />
+        <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "250px", position: "relative", top: "0%", left: "50%", margin : "30vh 0", transform: "translate(-50%,-50%)" }} />
       )}
 
       <Footer />

@@ -11,7 +11,7 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
 
   // Añadimos al menu de anfitriones los nuevos de navegación para escritorio
   const anfMenuLinks = [
-    { path: "/inicio/", label: "Foros", hiddenWhenNavVisible: true },
+    { path: "/anfitriones/foros", label: "Foros", hiddenWhenNavVisible: true },
     { path: "/anfitriones/inquilinos", label: "Inquilinos", hiddenWhenNavVisible: true },
     { path: "/anfitriones/conexiones", label: "Matches", hiddenWhenNavVisible: true },
   ].concat(menuLinks);
@@ -42,7 +42,7 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
           <nav className={styles.search_nav}>
             <Link to="/anfitriones/foros" className={getClassName('foros')} onClick={() => setActiveSection("foros")}>Foros</Link>
             <Link to="/anfitriones/inquilinos" className={getClassName('inquilinos')} onClick={() => setActiveSection("inquilinos")}> Inquilinos </Link>
-            <Link to="/anfitriones/conexiones" className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>Matches</Link>
+            <Link to="/anfitriones/conexiones" className={getClassName('matches')} onClick={() => setActiveSection("matches")}>Matches</Link>
           </nav>
         </section>
       )}
@@ -64,7 +64,7 @@ export default function AnfitrionHeader({ activeSection, setActiveSection, menuL
           {isMenuOpen && (
             <DropDownMenu
               userRef={userRef}
-              setIsMenuOpen={setIsMenuOpen}
+              setMenuOpen={setIsMenuOpen}
               menuLinks={anfMenuLinks}
               visibleWidth={1050}
               activeSection={activeSection}

@@ -9,7 +9,7 @@ const stateMap = new Map(states.map(({ id, ...state }) => [id, state]));
 const countryMap = new Map(countries.map(({ id, ...country }) => [id, country]));
 
 // Ciudades mostradas al buscar
-export default function FilteredList({ filteredListRef, listStates,  updateListStates, menuEdit = false, setRealizarBusqueda = null}) {
+export default function FilteredList({ filteredListRef, listStates,  updateListStates, menuEdit = false, setRealizarBusqueda = null, scrollDesktop = false}) {
   const [filteredCities, setFilteredCities] = useState([]);
 
   const removeAccents = (str) => {
@@ -32,13 +32,13 @@ export default function FilteredList({ filteredListRef, listStates,  updateListS
       return cityMatch;
     }).slice(0, menuEdit ? 3 : 5);
     
-    setFilteredCities(matches ? matches : []);
+    setFilteredCities(matches);
   }, [listStates.location]);
 
 
   if(filteredCities.length === 0) return null;
   return (
-    <ul className={`${styles.filteredCities} ${menuEdit ? styles.editarMenu : undefined}`} ref={filteredListRef}>
+    <ul className={`${styles.filteredCities} ${menuEdit ? styles.editarMenu : undefined}`} ref={filteredListRef} style={{ top: scrollDesktop ? '52px' : "" }}>
       {filteredCities.map(({ id, name, id_state }) => {
         const provincia = stateMap.get(id_state);
         const pais = countryMap.get(provincia.id_country);

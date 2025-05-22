@@ -3,6 +3,7 @@ const AnfProfilesGallery = lazy(() => import('../../../components/viajeros/aloja
 import Footer from '../../../components/footer/footer';
 import ViajerosFinalHeader from '../../../components/viajeros/header/ViajerosFinalHeader';
 import AnfitrionService from "../../../services/users/AnfitrionService";
+import styles from "./AlojamientosPage.module.css";
 
 export default function AlojamientosPage() {
   const [anfitriones, setAnfitriones] = useState([]);
@@ -96,10 +97,12 @@ export default function AlojamientosPage() {
         setFiltradosObtenidos={setFiltradosObtenidos}
       />}
 
-      {/* PERFILES DE ANFITRIONES*/}
-      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}>
+      <div className={styles.invisbleDiv}></div>
 
-        {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}
+      {/* PERFILES DE ANFITRIONES*/}
+      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "30vh auto" }} />}>
+
+        {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "30vh auto" }} />}
         {!loading &&
           <AnfProfilesGallery
             anfitriones={anfitriones}

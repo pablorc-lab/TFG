@@ -101,7 +101,7 @@ const Foros = ({ tipoUsuario }) => {
   }
 
   return (
-    <main className={styles.forosContainer}>
+    <main className={`${styles.forosContainer} ${tipoUsuario === 1 ? styles.foroAnf : styles.foroViaj}`}>
       <section className={styles.add_foro}>
         {foroCreado && <h2 style={{ marginTop: "15px", textAlign: "center", fontSize: "30px" }}>¡Foro creado con éxito!</h2>}
 

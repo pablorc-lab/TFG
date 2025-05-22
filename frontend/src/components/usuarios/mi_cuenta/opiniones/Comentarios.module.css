@@ -44,7 +44,11 @@
 }
 
 /*? COMENTARIO*/
-.comentario { font-size: 18px;}
+.comentario {
+  font-size: 18px;
+  hyphens: auto;
+  text-align: justify;
+}
 
 @media (min-width: 1300px){
   .profile_img { font-size: 20px;}

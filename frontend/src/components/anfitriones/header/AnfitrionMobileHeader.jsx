@@ -28,7 +28,7 @@ export default function AnfitrionMobileHeader({ activeSection, setActiveSection,
           </Link>
 
           <Link to="/anfitriones/conexiones">
-            <div className={getClassName('conexiones')} onClick={() => setActiveSection("conexiones")}>
+            <div className={getClassName('matches')} onClick={() => setActiveSection("matches")}>
               <img src="/images/viajeros/conexiones.svg" width="50" alt='icono conexiones' />
               <span>Matches</span>
             </div>
@@ -48,7 +48,7 @@ export default function AnfitrionMobileHeader({ activeSection, setActiveSection,
 
       {/*Sección del usuario*/}
       <div className={styles_mobile.conectado_container} onClick={() => SetOpenLikesMenu(true)}>
-        <img src="/images/usuarios/heart_green.svg" className={styles_mobile.conectado} />
+        <img src="/images/usuarios/heart_green.svg" className={styles_mobile.conectado} alt="like img"/>
       </div>
     </>
   )

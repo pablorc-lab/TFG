@@ -9,6 +9,7 @@
   flex-wrap: wrap;
   column-gap: 20px;
   row-gap: 50px;
+  margin-bottom: 70px;
 }
 .card_users div { z-index: 0;}
 

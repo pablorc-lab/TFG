@@ -143,7 +143,7 @@ body:has(.dialog_container[open]) {
   gap: 35px;
   max-height: calc(78vh - 61px - 30px);
   overflow-y: auto;
-  padding-right: 15px;
+  padding-right: 30px;
 }
 .dialog_main::-webkit-scrollbar { width: 15px;}
 .dialog_main::-webkit-scrollbar-button { padding: 5px;}

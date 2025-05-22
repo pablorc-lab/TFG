@@ -30,6 +30,7 @@ export default function SearchAlojamiento({ inputRef, filteredListRef, FilteredL
               listStates={headerStates}
               updateListStates={updateHeaderStates}
               setRealizarBusqueda={setRealizarBusqueda}
+              scrollDesktop={false}
             />
           }
         </div>

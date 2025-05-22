@@ -1,9 +1,9 @@
 .filters_container {
+  margin-top: 150px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
 }
 .filters {
   position: relative;
@@ -96,6 +96,7 @@
   .filters_container{
     display: grid;
     gap: 20px;
+    margin-top: 60px;
   }
 
   .filters { 

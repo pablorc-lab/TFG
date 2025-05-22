@@ -1,0 +1,15 @@
+.invisbleDiv {
+  margin-top: 160px;
+}
+
+@media (min-width: 770px) and (max-width: 1299px) {
+  .invisbleDiv {
+    margin-top: 260px;
+  }
+}
+
+@media (max-width: 770px)  {
+.invisbleDiv {
+    margin-top: 0px;
+  }
+}

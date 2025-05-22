@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import ViajeroService from "../../../services/users/ViajeroService";
 import styles from "./Filter.module.css"
 
+import Footer from "../../../components/footer/footer";
 import FilterMenu from "../../../components/anfitriones/filter_menu/FilterMenu";
 import AnfitrionFinalHeader from "../../../components/anfitriones/header/AnfitrionFinalHeader"
 const ViajProfilesGallery = lazy(() => import("../../../components/anfitriones/inquilinos/ViajProfilesGallery"));
@@ -147,8 +148,8 @@ export default function InquilinosPage() {
       }
 
       {/* PERFILES DE VIAJEROS  */}
-      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}>
-        {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "25vh auto" }} />}
+      <Suspense fallback={<img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "30vh auto" }} />}>
+        {loading && <img src="/images/loading_gif.gif" alt="Cargando..." style={{ width: "350px", position: "relative", top: "0", left: "50%", transform: "translateX(-50%)", margin: "30vh auto" }} />}
 
         {!loading &&
           <ViajProfilesGallery
@@ -163,6 +164,8 @@ export default function InquilinosPage() {
           />
         }
       </Suspense>
+
+      <Footer/>
     </>
   )
 }

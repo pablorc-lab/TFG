@@ -55,14 +55,6 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
       .catch(error => console.error("Error al calcular el ingreso costo " + error))
   }, [userID, esViajero]);
 
-
-  const estadoColores = {
-    "ACTIVA": { color: "#D9A520" },
-    "FINALIZADA": { color: "#009080" },
-    "CANCELADA": { color: "#A63D40" },
-    "PENDIENTE": { color: "#215ba4" }
-  };
-
   const calcularIngresoGastoMensual = () => {
     const fechaActual = new Date(fechaHistorial + "-01");
     const anioActual = fechaActual.getFullYear();
@@ -204,8 +196,9 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
                     <img src={esViajero ? user.anfitrion.profile_image : user.viajero.profile_image} alt="Imagen perfil" className={styles.user_profile_img} style={{ width: "100px" }} />
                   </div>
 
-                  <h2 style={{ textAlign: "center", marginBottom: "5px", fontWeight: "600" }}>{esViajero ? user.anfitrion.nombre : user.viajero.nombre}, {user.precio_total} €</h2>
-                  <h2 style={{ textAlign: "center", marginBottom: "25px", fontWeight: "600" }}>{printFechasLegible(user.fechaInicio, user.fechaFin)}</h2>
+                  <h2 style={{ textAlign: "center", marginBottom: "5px", marginTop : "25px", fontWeight: "600" }}>{esViajero ? user.anfitrion.nombre : user.viajero.nombre}, {user.precio_total} €</h2>
+                  <h2 style={{ textAlign: "center", marginBottom: "25px", fontWeight: "600" }}>{user.ubicacion}</h2>
+                  <h2 style={{ textAlign: "center", marginBottom: "25px", fontWeight: "600", fontStyle : "italic" }}>{printFechasLegible(user.fechaInicio, user.fechaFin)}</h2>
                   <div>
                     <button onClick={() => setOpenModal(false)}>CANCELAR</button>
                     <button onClick={() => cancelarReserva(user.anfitrion.id, user.viajero.id, user.fechaInicio, user.fechaFin)}>ANULAR</button>
@@ -274,7 +267,7 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
               {userInfo.map((item) => (
                 <div key={item.alt} className={styles.details}>
                   <img src={item.img} alt={item.alt} />
-                  <p> {item.value} {item.strong && <strong style={estadoColores[user.estado]}>{item.strong}</strong>} </p>
+                  <p className={styles[user.estado]}> {item.value} {item.strong && <strong>{item.strong}</strong>} </p>
                   {item.extra && <span>{item.extra}</span>}
                 </div>
               ))}

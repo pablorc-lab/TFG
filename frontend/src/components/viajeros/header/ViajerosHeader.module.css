@@ -1,19 +1,29 @@
 /*? ==================
 /*?      HEADER
 /*? ===================*/
-.header{
+.header {
   z-index: 1;
   user-select: none;
   font-family: "Nunito";
-  width: (100%-100px) ;
-  padding: 25px 50px 60px 50px;
-  background-color: #eddbc8;
+  width: calc(100% - 100px);
+  padding: 25px 50px 100px 50px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
-  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: start;
+  position: fixed;
+  top: 0;
+  background-color: #eddbc8d8;
+  backdrop-filter: blur(5px);
+}
+
+.headerNav {
+  padding-bottom: 25px;
+}
+
+.sinInqulinos {
+  padding-bottom: 25px;
 }
 
 /*? LOGO*/
@@ -24,15 +34,14 @@
 
 .header_logo {
   user-select: none;
-  width:max-content;
+  width: max-content;
   text-align: center;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0px;
+  gap: 15px;
 }
 
-.header_logo h1{
+.header_logo h1 {
   color: #009080;
   font-weight: 800;
   margin: 0;
@@ -40,7 +49,8 @@
   line-height: 22px;
 }
 
-.header_logo h2{
+.header_logo h2 {
+  text-align: start;
   color: #3c302a;
   font-family: "Chewy";
   margin: 0px;
@@ -51,7 +61,7 @@
 .search_container {
   position: absolute;
   left: 50%;
-  transform:translateX(-50%);
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,11 +85,13 @@
   margin-bottom: 4px;
   transition: border-bottom 0.1s ease-in-out;
 }
+
 .search_nav .active_section {
   color: #0a7273;
   font-weight: 750;
 }
-.search_nav a:not(.active_section):hover  {
+
+.search_nav a:not(.active_section):hover {
   color: #0a7273;
   margin-bottom: 0px;
   border-bottom: 4px solid #0a7273;
@@ -91,12 +103,15 @@
   cursor: not-allowed;
   opacity: 0.5;
 }
+
 .inactive_form img {
   cursor: not-allowed !important;
 }
-.search_form_container.inactive_form .searcher, .search_form_container.inactive_form .filters {
+
+.search_form_container.inactive_form .searcher,
+.search_form_container.inactive_form .filters {
   cursor: not-allowed;
-  pointer-events:none; 
+  pointer-events: none;
 }
 
 .search_form_container {
@@ -113,13 +128,18 @@
   border-radius: 60px;
   transition: box-shadow 0.1s ease-in-out;
 }
+
 /*Aplica estilos al contenedor cuando cualquier elemento hijo dentro de él tiene el foco.*/
-.search_form_container:not(.inactive_form) .search_form:focus-within { box-shadow: 0 0 10px 5px rgba(0, 144, 128, 0.2); }
-.search_form img{
+.search_form_container:not(.inactive_form) .search_form:focus-within {
+  box-shadow: 0 0 10px 5px rgba(0, 144, 128, 0.2);
+}
+
+.search_form img {
   cursor: pointer;
   padding: 11px 2px 11px 10px;
   width: 40px;
 }
+
 .search_form img:hover {
   background-color: #0a717334;
   border-top-left-radius: 60px;
@@ -133,27 +153,37 @@
   top: 120px;
   left: 10px;
 }
-.search_form ul li {font-size: 20px;}
+
+.search_form ul li {
+  font-size: 20px;
+}
 
 .searcher {
   background-color: transparent;
   padding-right: 20px;
   padding-left: 5px;
   width: 480px;
-  caret-color: #009080; /* Cambia el color del cursor (caret) */
+  caret-color: #009080;
+  /* Cambia el color del cursor (caret) */
   font-family: "Nunito";
   height: 60px;
   border: none;
   border-top-right-radius: 60px;
   border-bottom-right-radius: 60px;
-  line-height: 50px; 
+  line-height: 50px;
   font-size: 28px;
-  outline: none; /* Elimina el borde de enfoque al hacer clic */
+  outline: none;
+  /* Elimina el borde de enfoque al hacer clic */
 }
 
 
-.search_form_container:not(.inactive_form) .searcher::placeholder{ color: rgb(177, 177, 177);}
-.search_form_container:not(.inactive_form) .searcher:focus { outline: none;}
+.search_form_container:not(.inactive_form) .searcher::placeholder {
+  color: rgb(177, 177, 177);
+}
+
+.search_form_container:not(.inactive_form) .searcher:focus {
+  outline: none;
+}
 
 .filters {
   position: relative;
@@ -165,14 +195,17 @@
   display: flex;
   align-items: center;
   gap: 10px;
-} 
-.search_form_container:not(.inactive_form) .filters:hover{ 
+}
+
+.search_form_container:not(.inactive_form) .filters:hover {
   filter: brightness(0.9);
   box-shadow: 0 0 7px gray;
 }
+
 .filters_active {
   outline: 3px solid black;
 }
+
 .filters p {
   position: absolute;
   padding: 5px 10px;
@@ -182,8 +215,12 @@
   right: -5px;
   top: -30px;
 }
-.filters img {width: 30px;}
-.filters span{
+
+.filters img {
+  width: 30px;
+}
+
+.filters span {
   letter-spacing: 1px;
   font-size: 23px;
   color: white;
@@ -192,7 +229,9 @@
 
 
 /*? PARTE DEL USUARIO*/
-.header_user_section { position: relative;}
+.header_user_section {
+  position: relative;
+}
 
 .header_prof_user {
   cursor: pointer;
@@ -203,28 +242,41 @@
   display: flex;
   align-items: center;
   padding: 4px 15px;
-  gap: 10px; 
+  gap: 10px;
 }
+
 .header_prof_user article {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.header_prof_user article div{
+.header_prof_user article div {
   background-color: white;
-  height: 2px ;
+  height: 2px;
   width: 35px;
   transition: all .4s;
   transform-origin: left;
   border-radius: 5px;
 }
-.header_prof_user.open article div:first-child { transform: rotate(45deg);  }
-.header_prof_user.open article div:nth-child(2) { opacity: 0; }
-.header_prof_user.open article div:last-child { transform: rotate(-45deg); }
-.header_prof_user:hover { filter: brightness(0.8); }
 
-.header_prof_user img { 
+.header_prof_user.open article div:first-child {
+  transform: rotate(45deg);
+}
+
+.header_prof_user.open article div:nth-child(2) {
+  opacity: 0;
+}
+
+.header_prof_user.open article div:last-child {
+  transform: rotate(-45deg);
+}
+
+.header_prof_user:hover {
+  filter: brightness(0.8);
+}
+
+.header_prof_user img {
   filter: brightness(0) invert(1);
   width: 45px;
 }
@@ -238,14 +290,24 @@
   border: 2px solid #757575;
   border-radius: 15px;
 }
-.user_search_form span{
+
+.user_search_form span {
   margin-left: 3px;
   font-size: 25px;
   color: #858585;
 }
-.user_search_form:focus-within { border-color: #0a7273;}
-.user_search_form:focus-within img { border-color: #053435;}
-.user_search_form:focus-within span{ color: #272727;}
+
+.user_search_form:focus-within {
+  border-color: #0a7273;
+}
+
+.user_search_form:focus-within img {
+  border-color: #053435;
+}
+
+.user_search_form:focus-within span {
+  color: #272727;
+}
 
 .user_search_form img {
   filter: brightness(1.5);
@@ -256,15 +318,21 @@
 
 .user_search {
   width: 110px;
-  color:#272727;
-  caret-color: #0a7273; 
-  font-family: "Nunito";  
+  color: #272727;
+  caret-color: #0a7273;
+  font-family: "Nunito";
   border: none;
   font-size: 20px;
   font-weight: 500;
 }
-.user_search::placeholder{ color: rgb(177, 177, 177);}
-.user_search:focus { outline: none;}
+
+.user_search::placeholder {
+  color: rgb(177, 177, 177);
+}
+
+.user_search:focus {
+  outline: none;
+}
 
 
 /*? =============
@@ -276,13 +344,24 @@
 @media (min-width: 770px) and (max-width: 1299px) {
   .header {
     display: grid;
-    grid-template-rows: auto auto; /* Dos filas: una para el logo y otra para el contenedor de búsqueda */
-    grid-template-columns: 1fr; /* Una sola columna que ocupa todo el espacio */
+    grid-template-rows: auto auto;
+    /* Dos filas: una para el logo y otra para el contenedor de búsqueda */
+    grid-template-columns: 1fr;
+    /* Una sola columna que ocupa todo el espacio */
     padding-bottom: 185px;
   }
 
-  .header_logo { 
-    grid-row: 1; /* Primera fila */
+  .headerNav {
+    padding-bottom: 120px;
+  }
+
+  .sinInqulinos{
+    padding-bottom: 100px;
+  }
+  
+  .header_logo {
+    grid-row: 1;
+    /* Primera fila */
     flex-direction: row;
     text-align: start;
     gap: 15px;
@@ -293,13 +372,16 @@
     flex-direction: row;
     align-items: center;
   }
-  
+
   .search_container {
     margin-top: 30px;
-    grid-row: 2; /* Segunda fila */
+    grid-row: 2;
+    /* Segunda fila */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centrado horizontal */
-    justify-content: center; /* Centrado vertical */
+    align-items: center;
+    /* Centrado horizontal */
+    justify-content: center;
+    /* Centrado vertical */
   }
 }

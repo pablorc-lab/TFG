@@ -5,15 +5,17 @@
   z-index: 1;
   user-select: none;
   font-family: "Nunito";
-  width: (100%-100px) ;
+  width: calc(100% - 100px) ;
   padding: 25px 50px;
-  background-color: #eddbc8;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
-  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: start;
+  position: fixed;
+  top: 0;
+  background-color: #eddbc8d8;
+  backdrop-filter: blur(5px);
 }
 
 /*? LOGO*/
