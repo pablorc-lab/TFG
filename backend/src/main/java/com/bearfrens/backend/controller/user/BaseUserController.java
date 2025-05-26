@@ -216,7 +216,7 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   @PostMapping("/auth/register")
   @Transactional
   public T crearUsuario(@RequestBody T user){
-    if(user == null || usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isBlank() || user.getTelefono() == null || !user.getTelefono().matches("\\d{9}")){
+    if(user == null || user.getPassword().isEmpty() ||  usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isBlank() || user.getTelefono() == null || !user.getTelefono().matches("\\d{9}")){
       return null;
     }
 
@@ -236,7 +236,6 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     try {
       // Llamar al servicio para subir la imagen
       Map<String, Object> response = imgBBService.uploadImage(image);
-      System.out.println("Respuesta de ImgBB: " + response); // Ver qué te devuelve exactamente
       return ResponseEntity.ok(response); // Retornar el JSON
     }
     catch (Exception e) {
@@ -484,9 +483,4 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
     repository.save(user);
     return ResponseEntity.ok(Collections.singletonMap("delete", true));
   }
-
-  //  @DeleteMapping("/{id}")
-  //  public ResponseEntity<Map<String,Boolean>> eliminarImagenDePerfil(@PathVariable Long id) {
-  //
-  //  }
 }

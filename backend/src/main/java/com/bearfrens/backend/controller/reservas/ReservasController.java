@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -30,12 +31,12 @@ public class ReservasController {
   }
 
   @GetMapping("/anfitrion/{id}/{fecha}")
-  public List<Reservas> obtenerReservasPorAnfitrion(@PathVariable Long id, @PathVariable String fecha) {
+  public Map<String, Object> obtenerReservasPorAnfitrion(@PathVariable Long id, @PathVariable String fecha) {
     return reservasService.obtenerReservasPorAnfitrion(id, fecha);
   }
 
   @GetMapping("/viajero/{id}/{fecha}")
-  public List<Reservas> obtenerReservasPorViajero(@PathVariable Long id, @PathVariable String fecha) {
+  public Map<String, Object> obtenerReservasPorViajero(@PathVariable Long id, @PathVariable String fecha) {
     return reservasService.obtenerReservasPorViajero(id, fecha);
   }
 

@@ -18,5 +18,8 @@ public interface ReservasRepository extends JpaRepository<Reservas, Long> {
   List<Reservas> findByViajeroAndFechaInicioLessThanEqualAndFechaFinGreaterThanEqual(Viajero viajero, LocalDate fechaInicio, LocalDate fechaFin);
   List<Reservas> findByAnfitrionAndEstadoAndFechaFinGreaterThanEqual(Anfitrion anfitrion, Reservas.ReservaType estado, LocalDate fechaFin);
   List<Reservas> findByViajeroAndEstadoAndFechaFinGreaterThanEqual(Viajero viajero, Reservas.ReservaType estado, LocalDate fechaFin);
+
+  List<Reservas> findByAnfitrionAndEstadoNot(Anfitrion anfitrion, Reservas.ReservaType estadoCancelada);
+  List<Reservas> findByViajeroAndEstadoNot(Viajero viajero, Reservas.ReservaType estadoCancelada);
 }
 

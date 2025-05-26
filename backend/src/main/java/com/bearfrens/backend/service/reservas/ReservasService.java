@@ -5,12 +5,12 @@ import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.repository.reservas.ReservasRepository;
 import com.bearfrens.backend.service.GestorUsuarioService;
+import com.bearfrens.backend.service.matches.MatchesService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -25,6 +25,9 @@ public class ReservasService {
   @Autowired
   private ReservasRepository reservasRepository;
 
+  @Autowired
+  private MatchesService matchesService;
+
   /**
    * Devuelve los ingresos totales de un anfitrión
    * @param id ID del anfitrión
@@ -32,7 +35,9 @@ public class ReservasService {
    */
   public double obtenerIngresosTotalesAnfitrion(Long id){
     Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(id);
-    int total = anfitrion.getReservas().stream().mapToInt(Reservas::getPrecio_total).sum();
+    int total = reservasRepository.findByAnfitrionAndEstadoNot(anfitrion, Reservas.ReservaType.CANCELADA).stream()
+      .mapToInt(Reservas::getPrecio_total)
+      .sum();
 
     // Al total restarle la comisión del 10%
     return total * 0.9;
@@ -45,7 +50,10 @@ public class ReservasService {
    */
   public int obtenerGastosTotalesViajero(Long id){
     Viajero viajero = gestorUsuarioService.obtenerViajero(id);
-    return viajero.getReservas().stream().mapToInt(Reservas::getPrecio_total).sum();
+
+    return reservasRepository.findByViajeroAndEstadoNot(viajero, Reservas.ReservaType.CANCELADA).stream()
+      .mapToInt(Reservas::getPrecio_total)
+      .sum();
   }
 
   // Dado un listado de reservas devuelve las reservadas
@@ -173,6 +181,11 @@ public class ReservasService {
    */
   @Transactional
   public Reservas crearReserva(Long anfitrionID, Long viajeroID, LocalDate fecha_inicio, LocalDate fecha_fin) {
+    // Debe existir un match entre ambos usuarios
+    if(!matchesService.existeMatchEntreAmbos(anfitrionID, viajeroID)){
+      throw new IllegalArgumentException("No existe un match entre ambos usuarios.");
+    }
+
     Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(anfitrionID);
     Viajero viajero = gestorUsuarioService.obtenerViajero(viajeroID);
 
@@ -239,13 +252,13 @@ public class ReservasService {
 
 
   /**
-   * Obtener todas las reservas asociadas a un anfitrión.
+   * Obtener todas las reservas asociadas a un anfitrión y su ingreso mensual.
    *
    * @param anfitrionId ID del anfitrión.
    * @param fecha Fecha de la reserva estilo YYYY-MM
    * @return Lista de reservas correspondientes al anfitrión.
    */
-  public List<Reservas> obtenerReservasPorAnfitrion(Long anfitrionId, String fecha) {
+  public Map<String, Object> obtenerReservasPorAnfitrion(Long anfitrionId, String fecha) {
     Anfitrion anfitrion = gestorUsuarioService.obtenerAnfitrion(anfitrionId);
     LocalDate inicioMes = LocalDate.parse(fecha + "-01"); // Convierte la cadena YYYY-MM en formato YYYY-MM-01
     LocalDate finMes = inicioMes.withDayOfMonth(inicioMes.lengthOfMonth()); // Trasnforma al último dia del mes
@@ -254,17 +267,39 @@ public class ReservasService {
       .findByAnfitrionAndFechaInicioLessThanEqualAndFechaFinGreaterThanEqual(anfitrion, finMes, inicioMes);
 
     this.actualizarEstadoReservas(reservas);
-    return reservas;
+
+    double ingresoTotal = 0.0;
+    for (Reservas reserva : reservas) {
+      // No puede estar cancelada
+      if(!reserva.getEstado().equals(Reservas.ReservaType.CANCELADA)){
+        LocalDate inicio = reserva.getFechaInicio();
+        LocalDate fin = reserva.getFechaFin().minusDays(1);
+
+        LocalDate desde = inicio.isAfter(inicioMes) ? inicio : inicioMes;
+        LocalDate hasta = fin.isBefore(finMes) ? fin : finMes;
+
+        long diasReservados = ChronoUnit.DAYS.between(desde, hasta) + 1;
+        ingresoTotal += diasReservados * reserva.getPrecio_noche();
+      }
+    }
+
+    // Se le resta el 10% de comisión
+
+    Map<String, Object> resultado = new HashMap<>();
+    resultado.put("reservas", reservas);
+    resultado.put("costomensual", ingresoTotal * 0.9);
+
+    return resultado;
   }
 
   /**
-   * Obtener todas las reservas asociadas a un viajero.
+   * Obtener todas las reservas asociadas a un viajero y el costo mensual.
    *
    * @param viajeroId ID del viajero.
    * @param fecha Fecha de la reserva estilo YYYY-MM
    * @return Lista de reservas correspondientes al viajero.
    */
-  public List<Reservas> obtenerReservasPorViajero(Long viajeroId, String fecha) {
+  public Map<String, Object> obtenerReservasPorViajero(Long viajeroId, String fecha) {
     Viajero viajero = gestorUsuarioService.obtenerViajero(viajeroId);
     LocalDate inicioMes = LocalDate.parse(fecha + "-01"); // Convierte la cadena YYYY-MM en formato YYYY-MM-01
     LocalDate finMes = inicioMes.withDayOfMonth(inicioMes.lengthOfMonth()); // Trasnforma al último dia del mes
@@ -273,7 +308,27 @@ public class ReservasService {
       .findByViajeroAndFechaInicioLessThanEqualAndFechaFinGreaterThanEqual(viajero, finMes, inicioMes);
 
     this.actualizarEstadoReservas(reservas);
-    return reservas;
+
+    double ingresoTotal = 0.0;
+    for (Reservas reserva : reservas) {
+      // No puede estar cancelada
+      if(!reserva.getEstado().equals(Reservas.ReservaType.CANCELADA)){
+        LocalDate inicio = reserva.getFechaInicio();
+        LocalDate fin = reserva.getFechaFin().minusDays(1);
+
+        LocalDate desde = inicio.isAfter(inicioMes) ? inicio : inicioMes;
+        LocalDate hasta = fin.isBefore(finMes) ? fin : finMes;
+
+        long diasReservados = ChronoUnit.DAYS.between(desde, hasta) + 1;
+        ingresoTotal += diasReservados * reserva.getPrecio_noche();
+      }
+    }
+
+    Map<String, Object> resultado = new HashMap<>();
+    resultado.put("reservas", reservas);
+    resultado.put("costomensual", ingresoTotal);
+
+    return resultado;
   }
 
   /**

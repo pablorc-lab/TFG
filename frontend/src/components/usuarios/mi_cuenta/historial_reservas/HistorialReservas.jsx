@@ -9,6 +9,8 @@ import { es } from 'date-fns/locale';
 
 const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, reservasViajesTotales = 0 }) => {
   const [reservasData, setReservasData] = useState([]);
+  const [costoMensual, setCostoMensual] = useState(0);
+
   const [estadoValoraciones, setEstadoValoraciones] = useState({});
 
   const [gastoIngreso, setGastoIngreso] = useState(0); // Estado para guardar el total
@@ -26,6 +28,7 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
   // Obtener las reservas en ese mes
   useEffect(() => {
     if (fechaHistorial) {
+    
       setEditedData(false);
       const obtenerReservas = esViajero
         ? ReservasService.getReservasViajero(userID, fechaHistorial)
@@ -33,14 +36,16 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
 
       obtenerReservas
         .then(response => {
-          setReservasData(response.data);
+          setReservasData(response.data.reservas);
+          setCostoMensual(response.data.costomensual);
 
-          const receptoresIDs = new Set(response.data.map(reserva => esViajero ? reserva.anfitrion.id : reserva.viajero.id));
+          const receptoresIDs = new Set(response.data.reservas.map(reserva => esViajero ? reserva.anfitrion.id : reserva.viajero.id));
 
           // Ahora guardamos el estado de esas reservas para ver si se ha dejado valoración o no
           ValoracionesService.obtenerValoracionEstado(esViajero ? "viajeros" : "anfitriones", userID, [...receptoresIDs])
             .then(response => setEstadoValoraciones(response.data))
-            .catch(error => "Error al obtener el estado " + error);
+            .catch(error => "Error al obtener el estado " + error)
+            .finally();
         })
         .catch(error => "Error al obtener reservas para esa fecha " + error);
     }
@@ -54,48 +59,6 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
       .then(response => setGastoIngreso(response.data))
       .catch(error => console.error("Error al calcular el ingreso costo " + error))
   }, [userID, esViajero]);
-
-  const calcularIngresoGastoMensual = () => {
-    const fechaActual = new Date(fechaHistorial + "-01");
-    const anioActual = fechaActual.getFullYear();
-    const mesActual = fechaActual.getMonth();
-
-    let ingresoMensual = 0;
-    const comision = esViajero ? 1 : 0.9;
-
-    for (const reserva of reservasData) {
-      const inicio = new Date(reserva.fechaInicio);
-      const fin = new Date(reserva.fechaFin);
-      
-      // Solo considerar reservas que se cruzan con el mes seleccionado
-      if ((inicio.getMonth() === mesActual && inicio.getFullYear() === anioActual) || (fin.getMonth() === mesActual && fin.getFullYear() === anioActual)) {
-        // Si alguno no se encuentra en el mes actual, calcular días correspondientes
-        if (inicio.getMonth() !== mesActual || fin.getMonth() !== mesActual) {
-          // Calcular primer y último día del mes actual
-          const inicioMes = new Date(anioActual, mesActual, 1); // Primer dia mes seleccionado
-          const finMes = new Date(anioActual, mesActual + 1, 0); // Último día mes seleccionado
-          
-          // Definir rango efectivo dentro del mes actual
-          // Si el inicio de reserva está en el més, dejarlo, sino contar desde el inicio del mes seleccionado
-          // Si el fin de reserva está en el més, dejarlo, sino contar desde el final del mes seleccionado
-          const desde = inicio > inicioMes ? inicio : inicioMes;
-          const hasta = fin < finMes ? fin : finMes;
-
-          const desdeMidnight = new Date(desde.getFullYear(), desde.getMonth(), desde.getDate());
-          const hastaMidnight = new Date(hasta.getFullYear(), hasta.getMonth(), hasta.getDate());
-          const diasReservadosEnMes = Math.floor((hastaMidnight - desdeMidnight) / (1000 * 60 * 60 * 24)) + 1;
-
-          ingresoMensual += diasReservadosEnMes * reserva.precio_noche * comision; // Se le quita 10% de comisión
-        }
-
-        else {
-          ingresoMensual += reserva.precio_total * comision;
-        }
-      }
-    }
-
-    return ingresoMensual.toFixed(1);
-  }
 
   const printFechasLegible = (fechaInicio, fechaFin) => {
     return `${new Date(fechaInicio).toLocaleDateString()} - ${new Date(fechaFin).toLocaleDateString()}`;
@@ -154,7 +117,7 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
 
         <div className={styles.summary_div}>
           <h2>{esViajero ? "Gasto" : "Ingreso"} mensual</h2>
-          <p>{calcularIngresoGastoMensual()} &euro;</p>
+          <p>{costoMensual.toFixed(1)} &euro;</p>
         </div>
 
         <div className={styles.summary_div}>
