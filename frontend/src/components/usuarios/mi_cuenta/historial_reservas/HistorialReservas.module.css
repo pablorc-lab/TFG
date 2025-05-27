@@ -39,6 +39,15 @@ body:has(.modal[open]) {
   100% {opacity: 1; transform: translateY(0px);}
 }
 
+.modal p {
+  font-size: 20px !important;
+  color: rgb(97, 97, 97) !important;
+  font-weight: 500 !important;
+}
+.modal p strong{
+  font-weight: 650;
+  color: black !important;
+}
 .modal h1 {
   color: #0a7273;
   font-size: 33px;

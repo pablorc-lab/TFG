@@ -143,7 +143,6 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
           </label>
         </div>
 
-
         {reservasData.length === 0 && <h2 style={{ textAlign: "center", margin: "30px 0" }}>No existen reservas en este mes</h2>}
 
         {reservasData.map((user) => {
@@ -159,9 +158,12 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
                     <img src={esViajero ? user.anfitrion.profile_image : user.viajero.profile_image} alt="Imagen perfil" className={styles.user_profile_img} style={{ width: "100px" }} />
                   </div>
 
-                  <h2 style={{ textAlign: "center", marginBottom: "5px", marginTop : "25px", fontWeight: "600" }}>{esViajero ? user.anfitrion.nombre : user.viajero.nombre}, {user.precio_total} €</h2>
-                  <h2 style={{ textAlign: "center", marginBottom: "25px", fontWeight: "600" }}>{user.ubicacion}</h2>
-                  <h2 style={{ textAlign: "center", marginBottom: "25px", fontWeight: "600", fontStyle : "italic" }}>{printFechasLegible(user.fechaInicio, user.fechaFin)}</h2>
+                  <p style={{ textAlign: "start", marginBottom: "10px", marginTop: "25px", fontWeight: "600" }}><strong>Nombre :</strong> {esViajero ? user.anfitrion.nombre : user.viajero.nombre}</p>
+                  <p style={{ textAlign: "start", marginBottom: "10px", fontWeight: "600" }}><strong>Ubicación : </strong> {user.ubicacion} </p>
+                  <p style={{ textAlign: "start", marginBottom: "10px", fontWeight: "600" }}><strong>Precio : </strong>{user.precio_total} &euro; </p>
+                  <p style={{ textAlign: "start", marginBottom: "10px", fontWeight: "600"}}><strong>Fecha : </strong>  {new Date(user.fechaInicio).toLocaleDateString()} - {new Date(user.fechaFin).toLocaleDateString()}</p>
+                  <p style={{ textAlign: "start", marginBottom: "25px", fontWeight: "600" }}><strong>{obtenerDiasReservados(user.fechaInicio, user.fechaFin)} noches</strong>  ({user.precio_noche} &euro; / noche)</p>
+
                   <div>
                     <button onClick={() => setOpenModal(false)}>CANCELAR</button>
                     <button onClick={() => cancelarReserva(user.anfitrion.id, user.viajero.id, user.fechaInicio, user.fechaFin)}>ANULAR</button>
@@ -223,7 +225,7 @@ const HistorialReservasMiCuenta = ({ userService, esViajero = false, userID, res
                 <h2>{esViajero ? user.anfitrion.nombre : user.viajero.nombre}</h2>
                 <div className={styles.score}>
                   <img src="/images/usuarios/estrella.webp" alt="Logo estrella" />
-                  <h2>{esViajero ? parseInt(user.anfitrion.valoracion).toFixed(1) : parseInt(user.viajero.valoracion).toFixed(1)}</h2>
+                  <h2>{esViajero ? parseInt(user.anfitrion?.valoracion || 0.0).toFixed(1) : parseInt(user.viajero?.valoracion || 0.0).toFixed(1)}</h2>
                 </div>
               </div>
 

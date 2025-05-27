@@ -30,6 +30,7 @@ export default function UserPage({
 
   const [loadingFechas, setLoadingFechas] = useState(true);
   const [fechasExcluidas, setFechasExcluidas] = useState(["2025-05-08"]);
+  const [openModal, setOpenModal] = useState(false);
 
   // Obtener fechas de reservas excluidas
   useEffect(() => {
@@ -92,6 +93,7 @@ export default function UserPage({
       .then(response => {
         console.log(response.data);
         setMensajeReserva(true);
+        setOpenModal(false);
       })
       .catch(error => console.error(error));
   }
@@ -204,48 +206,71 @@ export default function UserPage({
       </article>
 
       {match && esAnfitrion && !loadingFechas && (
-        <section className={styles.reserva_section}>
-          <h2 className={styles.titulo_reserva}>{diasReserva * usuarioData.usuario?.vivienda?.precio_noche} &euro; - ({diasReserva} {diasReserva > 1 ? "noches" : "noche"})</h2>
-          <div className={styles.reserva_div}>
-            <label>
-              Llegada
-              <DatePicker
-                readOnly={mensajeReserva}
-                name="llegada"
-                minDate={new Date().toISOString().split('T')[0]}
-                selected={llegada}
-                locale={es}
-                excludeDates={fechasExcluidas.map(fecha => new Date(fecha))} // Deshabilita las fechas reservadas
-                dateFormat="dd-MM-yyyy"
-                onChange={date => changeFechaLlegada(date)}
-              />
-            </label>
-            <div className={styles.border_label}></div>
-            <label>
-              Salida
-              <DatePicker
-                readOnly={mensajeReserva}
-                name="salida"
-                selected={salida}
-                locale={es}
-                minDate={llegada} // No permite fechas anteriores al de llegada
-                excludeDates={fechasExcluidas.map(fecha => new Date(fecha))} // Deshabilita las fechas reservadas
-                dateFormat="dd-MM-yyyy"
-                onChange={date => changeFechaSalida(date)}
-              />
-            </label>
-          </div>
+        <>
+          {openModal &&
+            <dialog className={styles.modal} ref={(el) => el && el.showModal()}>
+              <h1>¿Crear una reserva?</h1>
+              <div>
+                <img src={usuarioData.usuario?.profileImage || "/images/not_found/user_img.png"} alt="Imagen perfil" className={styles.user_profile_img}/>
+              </div>
 
-          {!mensajeReserva
-            ? <button className={styles.reservar_btn} onClick={handleReserva}>Reservar</button>
-            : <p style={{ color: "black", textAlign: "center", maxWidth: "550px" }}>
-              <strong>
-                Reserva del {new Date(llegada).toLocaleDateString()} al {new Date(salida).toLocaleDateString()}, creada con éxito.
-                Puede ver el seguimiento de la misma en <a href="/viajeros/mi-cuenta" style={{ color: "blue" }}>su perfil</a>.
-              </strong>
-            </p>
+              <p style={{ textAlign: "start", marginBottom: "10px", marginTop: "25px", fontWeight: "600" }}><strong>Nombre :</strong> {usuarioData.usuario?.nombre || "-"}</p>
+              <p style={{ textAlign: "start", marginBottom: "10px", fontWeight: "600" }}><strong>Ubicación : </strong> {usuarioData.usuario?.vivienda?.ciudad || <i>Ciudad</i>}, {usuarioData.usuario?.vivienda?.provincia || <i>Provincia</i>} </p>
+              <p style={{ textAlign: "start", marginBottom: "10px", fontWeight: "600" }}><strong>Precio : </strong>{diasReserva * usuarioData.usuario?.vivienda?.precio_noche} &euro; </p>
+              <p style={{ textAlign: "start", marginBottom: "10px", fontWeight: "600"}}><strong>Fecha : </strong>  {new Date(llegada).toLocaleDateString()} - {new Date(salida).toLocaleDateString()}</p>
+              <p style={{ textAlign: "start", marginBottom: "25px", fontWeight: "600" }}><strong>{diasReserva} noches</strong> ({usuarioData.usuario?.vivienda?.precio_noche} &euro; / noche)</p>
+
+              <div>
+                <button onClick={() => setOpenModal(false)}>CANCELAR</button>
+                <button onClick={handleReserva}>RESERVAR</button>
+              </div>
+            </dialog>
           }
-        </section>
+
+          <section className={styles.reserva_section}>
+            <h2 className={styles.titulo_reserva}>{diasReserva * usuarioData.usuario?.vivienda?.precio_noche} &euro; - ({diasReserva} {diasReserva > 1 ? "noches" : "noche"})</h2>
+            <div className={styles.reserva_div}>
+              <label>
+                Llegada
+                <DatePicker
+                  readOnly={mensajeReserva}
+                  name="llegada"
+                  minDate={new Date().toISOString().split('T')[0]}
+                  selected={llegada}
+                  locale={es}
+                  excludeDates={fechasExcluidas.map(fecha => new Date(fecha))} // Deshabilita las fechas reservadas
+                  dateFormat="dd-MM-yyyy"
+                  onChange={date => changeFechaLlegada(date)}
+                />
+              </label>
+              <div className={styles.border_label}></div>
+              <label>
+                Salida
+                <DatePicker
+                  readOnly={mensajeReserva}
+                  name="salida"
+                  selected={salida}
+                  locale={es}
+                  minDate={llegada} // No permite fechas anteriores al de llegada
+                  excludeDates={fechasExcluidas.map(fecha => new Date(fecha))} // Deshabilita las fechas reservadas
+                  dateFormat="dd-MM-yyyy"
+                  onChange={date => changeFechaSalida(date)}
+                />
+              </label>
+            </div>
+
+            {!mensajeReserva
+              ? <button className={styles.reservar_btn} onClick={() => setOpenModal(true)}>Reservar</button>
+              : <p style={{ color: "black", textAlign: "center", maxWidth: "550px" }}>
+                <strong>
+                  Reserva del {new Date(llegada).toLocaleDateString()} al {new Date(salida).toLocaleDateString()}, creada con éxito.
+                  Puede ver el seguimiento de la misma en <a href="/viajeros/mi-cuenta" style={{ color: "blue" }}>su perfil</a>.
+                </strong>
+              </p>
+            }
+          </section>
+        </>
+
       )}
 
     </section>
