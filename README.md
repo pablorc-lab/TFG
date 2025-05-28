@@ -53,7 +53,7 @@ npm run dev
 
 ### **Paso 5. Iniciar MySQL**
 ```bash
-net start MySQL84
+net start MySQL<VERSION_INSTALADA>
 ```
 
 ### **Paso 6. Configurar la base de datos**
@@ -72,7 +72,18 @@ spring.datasource.url=jdbc:mysql://localhost:3306/bearfrens_db
 spring.datasource.username=TU_USUARIO
 spring.datasource.password=TU_CONTRASEÑA
 spring.jpa.hibernate.ddl-auto=update
+
 IMGBB_API_KEY=TU_CLAVE_API
+
+JWT_SECRET_KEY=CLAVE_SECRETA_TOKEN
+JWT_EXPIRATION=TIEMPO_EXPIRACIÓN
+JWT_REFRESH_EXPIRATION=TIEMPO_REFRESCO
+
+ADMIN_EMAIL=EMAIL_ADMIN
+ADMIN_PASSWORD=PASSWORD_ADMIN
+
+spring.servlet.multipart.max-file-size=31MB
+spring.servlet.multipart.max-request-size=31MB
 ```
 
 
