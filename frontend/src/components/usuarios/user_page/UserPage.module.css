@@ -50,11 +50,11 @@ body:has(.modal[open]) {
 
 .modal p {
   font-size: 20px !important;
-  color: rgb(97, 97, 97) !important;
+  color: rgb(75, 75, 75) !important;
   font-weight: 500 !important;
 }
 .modal p strong{
-  font-weight: 650;
+  font-weight: 600;
   color: black !important;
 }
 .modal .user_img {
@@ -85,6 +85,19 @@ body:has(.modal[open]) {
   width: 60px;
 }
 
+
+.userDescripcion {
+  position: relative;
+  background-color: #a6a6a63f; 
+  border-radius: 3px;
+  text-align: left;
+  padding: 10px;
+}
+
+.userDescripcion {
+  color: rgb(104, 104, 104);
+  font-size: 17px;
+}
 .modal textarea {
   min-height: 120px;
   max-height: 400px;
@@ -274,14 +287,14 @@ body:has(.modal[open]) {
 }
 
 .user_likes img {
-  width: 35px;
+  width: 40px;
   aspect-ratio: 1 / 1;
 }
 
 .user_conectar {
-  margin: 0px 0 15px 0;
+  margin: 30px 0 30px 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   padding: 0 10px;
   gap: 30px;
 }
@@ -454,8 +467,7 @@ body:has(.modal[open]) {
   .user_score img { width: 23px;}
 
   .user_conectar {
-    margin-bottom: 10px;
-    justify-content: center;
+    justify-content: space-evenly;
     gap: 40px;
   }
   .btn_conectar {
@@ -464,7 +476,7 @@ body:has(.modal[open]) {
   }
   
   .user_likes{gap: 30px;}
-  .user_likes img{ width: 42px;}
+  .user_likes img{ width: 50px;}
   
 
    .border_label { margin: 0 20px;}

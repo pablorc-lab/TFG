@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { es } from 'date-fns/locale';
 import "react-datepicker/dist/react-datepicker.css";
+import MatchesService from "../../../services/matches/MatchesService.jsx";
 
 export default function UserPage({
   usuarioData,
@@ -22,6 +23,7 @@ export default function UserPage({
   emisorID = null
 }) {
 
+  const [matches, setMatches] = useState("");
   const [llegada, setLlegada] = useState(new Date());
 
   const fechaSalida = new Date();
@@ -32,6 +34,20 @@ export default function UserPage({
   const [fechasExcluidas, setFechasExcluidas] = useState(["2025-05-08"]);
   const [openModal, setOpenModal] = useState(false);
 
+  // Obtener numero de matches
+  useEffect(() => {
+  if (matches === "") {
+    const llamadaFuncion = esAnfitrion
+      ? MatchesService.getCantidadAnfitrion(userID)
+      : MatchesService.getCantidadViajero(userID);
+
+    llamadaFuncion
+      .then(response => setMatches(response.data))
+      .catch(err => console.log("Error al obtener cantidad de matches:", err));
+  }
+}, [usuarioData]);
+
+  
   // Obtener fechas de reservas excluidas
   useEffect(() => {
     if (esAnfitrion && match) {
@@ -182,8 +198,10 @@ export default function UserPage({
         </div>
       </article>
 
-      <p style={{ margin: "0", marginBottom: "10px"}}>@{usuarioData.usuario?.privateID || ""} {match && usuarioData.usuario.telefono && "(" + usuarioData.usuario.telefono + ")"}</p>
-      <p style={{ hyphens: "auto", textAlign: "justify" }}>{usuarioData.usuario?.descripcion || "Este anfitrión aún no se ha descrito."}</p>
+      <p style={{ margin: "0", marginBottom: "10px"}}><strong >ID : </strong>@{usuarioData.usuario?.privateID || ""}</p>
+      <p style={{ margin: "0", marginBottom: "10px"}}><strong >Matches : </strong>{matches}</p>
+      {match && <p style={{ margin: "0", marginBottom: "10px"}}><strong>Teléfono : </strong>{usuarioData.usuario.telefono}</p>}
+      <p className={styles.userDescripcion} style={{ hyphens: "auto", textAlign: "justify" }}>{usuarioData.usuario?.descripcion || "Este anfitrión aún no se ha descrito."}</p>
 
       <article className={styles.user_conectar}>
         <div className={styles.user_likes}>

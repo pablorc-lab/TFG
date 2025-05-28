@@ -19,8 +19,16 @@ class MatchesService {
     return axios.get(`${this.MATCHES_BASE_REST_API_URL}/anfitrion/${anfitrionID}`);
   }
 
+   static getCantidadAnfitrion(anfitrionID){
+    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/anfitrion/size/${anfitrionID}`);
+  }
+
   static getAllAnfitriones(viajeroID){
     return axios.get(`${this.MATCHES_BASE_REST_API_URL}/viajero/${viajeroID}`);
+  }
+
+  static getCantidadViajero(viajeroID){
+    return axios.get(`${this.MATCHES_BASE_REST_API_URL}/viajero/size/${viajeroID}`);
   }
 
   static deleteMatch(matchID){

@@ -41,11 +41,11 @@ body:has(.modal[open]) {
 
 .modal p {
   font-size: 20px !important;
-  color: rgb(97, 97, 97) !important;
+  color: rgb(75, 75, 75) !important;
   font-weight: 500 !important;
 }
 .modal p strong{
-  font-weight: 650;
+  font-weight: 600;
   color: black !important;
 }
 .modal h1 {

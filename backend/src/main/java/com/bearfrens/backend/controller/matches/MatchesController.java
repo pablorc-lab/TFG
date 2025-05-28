@@ -44,9 +44,19 @@ public class MatchesController {
     return matchesService.obtenerPorViajero(viajeroId);
   }
 
+  @GetMapping("/viajero/size/{viajeroId}")
+  public int obtenerCantidadPorViajero(@PathVariable Long viajeroId) {
+    return matchesService.obtenerCantidadPorViajero(viajeroId);
+  }
+
   @GetMapping("/anfitrion/{anfitrionId}")
   public Set<Viajero> obtenerPorAnfitrion(@PathVariable Long anfitrionId) {
     return matchesService.obtenerPorAnfitrion(anfitrionId);
+  }
+
+  @GetMapping("/anfitrion/size/{anfitrionId}")
+  public int obtenerCantidadPorAnfitrion(@PathVariable Long anfitrionId) {
+    return matchesService.obtenerCantidadPorAnfitrion(anfitrionId);
   }
 
   @PostMapping("/crear/{viajeroId}-{anfitrionId}")

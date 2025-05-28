@@ -88,6 +88,15 @@ public class MatchesService {
   }
 
   /**
+   * Obtener cantidad matches por ID de viajero
+   * @param viajeroId ID del viajero
+   * @return Cantidad de matches
+   */
+  public int obtenerCantidadPorViajero(Long viajeroId) {
+    return obtenerPorViajero(viajeroId).size();
+  }
+
+  /**
    * Obtener matches por ID de anfitrión
    * @param anfitrionId ID del anfitrión
    * @return Lista de viajeros del anfitrión con los que se ha hecho match
@@ -96,6 +105,15 @@ public class MatchesService {
     return matchesRepository.findAllByAnfitrionID(anfitrionId).stream()
       .map(match -> gestorUsuarioService.obtenerViajero(match.getViajeroID()))
       .collect(Collectors.toSet());
+  }
+
+  /**
+   * Obtener matches por ID de anfitrión
+   * @param anfitrionId ID del anfitrión
+   * @return Cantidad de matches
+   */
+  public int obtenerCantidadPorAnfitrion(Long anfitrionId) {
+    return obtenerPorAnfitrion(anfitrionId).size();
   }
 
   /**
