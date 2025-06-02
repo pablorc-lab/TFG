@@ -16,21 +16,21 @@ public class Token {
 
   @Id
   @GeneratedValue
-  public Long id;
+  private Long id;
 
   @Column(unique = true)
-  public String token;
+  private String token;
 
   @Enumerated(EnumType.STRING)
-  public TokenType tokenType = TokenType.BEARER;
+  private TokenType tokenType = TokenType.BEARER;
 
-  public boolean revoked;
+  private boolean revoked;
 
-  public boolean expired;
+  private boolean expired;
 
   @Column(nullable = false)
-  public Long userID;
+  private Long userID;
 
   @Column(name = "tipo_usuario", nullable = false)
-  public int tipoUsuario; // 0: Admin, 1 : Anfitrión, 2 : Viajero
+  private int tipoUsuario; // 0: Admin, 1 : Anfitrión, 2 : Viajero
 }
