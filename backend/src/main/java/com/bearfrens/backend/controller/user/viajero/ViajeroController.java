@@ -76,7 +76,7 @@ public class ViajeroController extends BaseUserController<Viajero, ViajeroReposi
   }
 
   // Eliminar un viajero
-  @DeleteMapping("/{userID}")
+  @DeleteMapping("/id/{userID}")
   public ResponseEntity<Map<String,Boolean>> eliminarViajero(@PathVariable Long userID){
     return eliminarUsuario(userID, "viajeros");
   }

@@ -21,4 +21,15 @@ public class GlobalExceptionHandler {
     errorBody.put("message", ex.getMessage());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
   }
+
+  @ExceptionHandler(ResourceConflictException.class)
+  public ResponseEntity<Map<String, Object>> handleResourceConflictException(ResourceConflictException ex) {
+    Map<String, Object> errorBody = new LinkedHashMap<>();
+    errorBody.put("timestamp", LocalDateTime.now());
+    errorBody.put("status", HttpStatus.CONFLICT.value());
+    errorBody.put("error", "Conflict");
+    errorBody.put("message", ex.getMessage());
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(errorBody);
+  }
+
 }

@@ -8,6 +8,7 @@ import com.bearfrens.backend.entity.user.Anfitrion;
 import com.bearfrens.backend.entity.user.Usuario;
 import com.bearfrens.backend.entity.user.Viajero;
 import com.bearfrens.backend.entity.valoracione_conexiones.Valoraciones;
+import com.bearfrens.backend.exception.ResourceConflictException;
 import com.bearfrens.backend.exception.ResourceNotFoundException;
 import com.bearfrens.backend.repository.reservas.ReservasRepository;
 import com.bearfrens.backend.repository.token.TokenRepository;
@@ -27,6 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -216,7 +218,12 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   @PostMapping("/auth/register")
   @Transactional
   public T crearUsuario(@RequestBody T user){
-    if(user == null || user.getPassword().isEmpty() ||  usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isBlank() || user.getTelefono() == null || !user.getTelefono().matches("\\d{9}")){
+    // Comprobar que no se repita el email
+    if (user == null || usuarioService.existsByEmail(user.getEmail())) {
+      throw new ResourceConflictException("Ya existe un usuario con el email " + user.getEmail());
+    }
+
+    if(user.getPassword().isEmpty() ||  usuarioService.existsByEmail(user.getEmail()) || user.getEmail().isBlank() || user.getTelefono() == null || !user.getTelefono().matches("\\d{9}")){
       return null;
     }
 
@@ -251,9 +258,16 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
    * @param userRequest Contenido del nuevo usuario
    * @return Response Entity, en caso de ser ok, devuelve el usuario modificado
    */
-  @PutMapping("/{userID}")
+  @PutMapping("/id/{userID}")
   @Transactional
   public ResponseEntity<T> actualizarUsuario(@PathVariable Long userID, @RequestBody T userRequest){
+    // Comprobar que no se repita el email
+    if (!userRequest.getEmail().isEmpty()) {
+      if (usuarioService.existsByEmail(userRequest.getEmail())) {
+        throw new ResourceConflictException("Ya existe un usuario con el email " + userRequest.getEmail());
+      }
+    }
+
     T user = repository.findById(userID)
       .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 

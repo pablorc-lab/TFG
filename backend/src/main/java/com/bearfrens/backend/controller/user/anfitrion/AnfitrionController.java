@@ -44,7 +44,7 @@ public class AnfitrionController extends BaseUserController<Anfitrion, Anfitrion
   }
 
   // Eliminar un anfitrion
-  @DeleteMapping("/{userID}")
+  @DeleteMapping("/id/{userID}")
   public ResponseEntity<Map<String,Boolean>> eliminarAnfitrion(@PathVariable Long userID){
     return eliminarUsuario(userID, "anfitriones");
   }

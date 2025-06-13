@@ -36,11 +36,11 @@ class UsuarioService {
   }
 
   update(userID, userData) {
-    return axios.put(`${this.baseUrl}/${userID}`, userData);
+    return axios.put(`${this.baseUrl}/id/${userID}`, userData);
   }
 
   delete(userID) {
-    return axios.delete(`${this.baseUrl}/${userID}`);
+    return axios.delete(`${this.baseUrl}/id/${userID}`);
   }
 
   static existEmail(email) {
