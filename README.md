@@ -22,9 +22,7 @@ La web permite crear y explorar perfiles detallados de viajeros y anfitriones, a
 >
 > Antes de ejecutar el proyecto, es **muy importante** configurar correctamente el archivo `application.properties` ubicado en `src/main/resources/` (explicado en el **Paso 6**). Este archivo contiene las **configuraciones necesarias** para la conexión a la base de datos y otras propiedades clave.
 
-# Bearfrens - Guía de instalación y ejecución
-
-# Bearfrens - Guía de instalación y ejecución
+# 📚 Bearfrens - Guía de instalación y ejecución
 
 ## Paso 1: Clonar el repositorio
 Descarga el código fuente en tu máquina local:
