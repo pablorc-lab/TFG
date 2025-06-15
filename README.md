@@ -20,7 +20,7 @@ La web permite crear y explorar perfiles detallados de viajeros y anfitriones, a
 >
 > **Configuración de la clave API de ImgBB**
 >
-> Para que la aplicación funcione correctamente, es **fundamental** crear una cuenta en ImgBB (https://es.imgbb.com/signup) y obtener la clave API desde https://api.imgbb.com/. Esta clave debe configurarse en el archivo \texttt{application.properties}, ubicado en \texttt{src/main/resources/}, para permitir el acceso al servicio externo de imágenes. Sin esta configuración, las funcionalidades relacionadas con la gestión de imágenes no estarán disponibles.
+> Para que la aplicación funcione correctamente, es **fundamental** crear una cuenta en ImgBB (https://es.imgbb.com/signup) y obtener la clave API desde https://api.imgbb.com/. Esta clave debe configurarse en el archivo ``application.properties``, ubicado en ``src/main/resources/``, para permitir el acceso al servicio externo de imágenes. Sin esta configuración, las funcionalidades relacionadas con la gestión de imágenes no estarán disponibles.
 
 
 > [!CAUTION]
