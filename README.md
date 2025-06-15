@@ -18,11 +18,19 @@ La web permite crear y explorar perfiles detallados de viajeros y anfitriones, a
 
 > [!IMPORTANT]
 >
+> **Configuración de la clave API de ImgBB**
+>
+> Para que la aplicación funcione correctamente, es **fundamental** crear una cuenta en ImgBB (https://es.imgbb.com/signup) y obtener la clave API desde https://api.imgbb.com/. Esta clave debe configurarse en el archivo \texttt{application.properties}, ubicado en \texttt{src/main/resources/}, para permitir el acceso al servicio externo de imágenes. Sin esta configuración, las funcionalidades relacionadas con la gestión de imágenes no estarán disponibles.
+
+
+> [!CAUTION]
+>
 > **Configuración del archivo** `application.properties`
 >
-> Antes de ejecutar el proyecto, es **muy importante** configurar correctamente el archivo `application.properties` ubicado en `src/main/resources/` (explicado en el **Paso 6**). Este archivo contiene las **configuraciones necesarias** para la conexión a la base de datos y otras propiedades clave.
+> Antes de ejecutar el proyecto, es **muy importante** configurar correctamente el archivo `application.properties` ubicado en `src/main/resources/` (explicado en el **Paso 4**). Este archivo contiene las **configuraciones necesarias** para la conexión a la base de datos y otras propiedades clave.
 
-# 📚 Bearfrens - Guía de instalación y ejecución
+
+# 📚 Bearfrens - Guía de instalación y ejecución (Windows 10)
 
 ## Paso 1: Clonar el repositorio
 Descarga el código fuente en tu máquina local:
@@ -42,6 +50,8 @@ Verifica que la base de datos `bearfrens_db` exista. Si no, créala con:
 ```bash
 CREATE DATABASE bearfrens_db;
 ```
+
+## Paso 4: Configurar el backend
 
 Luego, configura el archivo `application.properties` para definir las credenciales de acceso. Si no existe, créalo en `src/main/resources/application.properties` dentro del proyecto Spring Boot:
 
@@ -65,31 +75,30 @@ spring.servlet.multipart.max-request-size=31MB
 ```
 
 
-## Paso 4: Compilar y ejecutar el backend
+## Paso 5: Compilar y ejecutar el backend
 Desde el directorio del backend, compila y ejecuta:
 ```bash
 mvn clean install
 java -jar target/BearfrensBackendApplication.jar
 ```
 
-## Paso 5: Instalar dependencias frontend
+## Paso 6: Instalar dependencias frontend
 Instala las dependencias necesarias para ejecutar el frontend:
 ```bash
 npm install
 ```
 
-## Paso 6: (Opcional) Instalar Vite si no está configurado
+## Paso 7: (Opcional) Instalar Vite si no está configurado
 ```bash
 npm install @vitejs/plugin-react --save-dev
 ```
 
-## Paso 7: Iniciar el frontend
+## Paso 8: Iniciar el frontend
 Ejecuta el servidor local de desarrollo:
 ```bash
 npm run dev
 ```
 
-
-## Paso 8: Verificar la ejecución
+## Paso 9 Verificar la ejecución
 El backend debería estar disponible en `http://localhost:8080/` por defecto y el frontend en `http://localhost:3000/`.
 
