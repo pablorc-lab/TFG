@@ -261,15 +261,18 @@ public abstract class BaseUserController<T extends Usuario<TC>, R extends JpaRep
   @PutMapping("/id/{userID}")
   @Transactional
   public ResponseEntity<T> actualizarUsuario(@PathVariable Long userID, @RequestBody T userRequest){
+
+    T user = repository.findById(userID)
+      .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
+
+
     // Comprobar que no se repita el email
-    if (!userRequest.getEmail().isEmpty()) {
+    if (!userRequest.getEmail().isEmpty() && !user.getEmail().equals(userRequest.getEmail())) {
       if (usuarioService.existsByEmail(userRequest.getEmail())) {
         throw new ResourceConflictException("Ya existe un usuario con el email " + userRequest.getEmail());
       }
     }
 
-    T user = repository.findById(userID)
-      .orElseThrow(() -> new ResourceNotFoundException("El " + userType + " con ese ID no existe : " + userID));
 
     // Actualizar los valores de cada campo que no sean null
     Optional.ofNullable(userRequest.getPrivateID()).ifPresent(user::setPrivateID);

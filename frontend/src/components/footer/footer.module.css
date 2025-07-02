@@ -1,6 +1,7 @@
 .footer {
   background-color: #0a7273;
   padding: 1.6vw 0px;
+  margin-top: 25vh;
   font-family: "Nunito";
   display: flex;
   justify-content: space-between;
