@@ -6,6 +6,14 @@ Aplicación web full stack desarrollada como Trabajo de Fin de Grado (TFG) en In
 
 La web permite crear y explorar perfiles detallados de viajeros y anfitriones, aplicar filtros según gustos, experiencias y valoraciones, y participar en eventos comunitarios que fomentan la conexión entre ambos perfiles. Todo el sistema está diseñado para ser intuitivo, funcional y eficiente, aprovechando al máximo las capacidades de React y Spring Boot para asegurar una experiencia fluida y sólida tanto en la navegación como en la gestión de datos.
 
+<div align="center">
+  <img src="img/04_DISEÑO_ESTÁTICO-ARQUITECTURA_FISICA.drawio.png" border="0" width=600>
+</div>
+
+<br>
+<div align="center">
+  <img src="img/04_DISEÑO_ESTÁTICO-CLASES.drawio.png" border="0" width=600>
+</div>
 --- 
 
 ## 🛠️ Instrucciones para poder visualizar el proyecto
