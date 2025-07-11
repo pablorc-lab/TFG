@@ -2,19 +2,78 @@
 
 [![My Skills](https://skillicons.dev/icons?i=react,js,html,css,java,spring,mysql)](https://skillicons.dev)
 
-Aplicación web full stack desarrollada como Trabajo de Fin de Grado (TFG) en Ingeniería Informática por la Universidad de Granada (UGR), creada con **React en el frontend** y **Spring Boot en el backend**, cuyo objetivo es poner en contacto a viajeros con anfitriones de forma personalizada. La idea surge para ofrecer alternativas de alojamiento más humanas y económicas, donde los viajeros puedan hospedarse en casas de personas con las que comparten intereses, valores o afinidades, y los anfitriones puedan elegir a los inquilinos que mejor encajen con su estilo de vida, generando así un sistema de emparejamiento más significativo que el simple alquiler. 
+Aplicación web full stack desarrollada como Trabajo de Fin de Grado (TFG) en Ingeniería Informática por la Universidad de Granada (UGR), creada con **React en el frontend** y **Spring Boot en el backend**, cuyo objetivo es poner en **contacto a viajeros con anfitriones** de forma personalizada. La idea surge para ofrecer alternativas de alojamiento más humanas y económicas, donde los viajeros puedan hospedarse en casas de personas con las que comparten intereses, valores o afinidades, y los anfitriones puedan elegir a los inquilinos que mejor encajen con su estilo de vida, generando así un sistema de emparejamiento más significativo que el simple alquiler. 
 
 La web permite crear y explorar perfiles detallados de viajeros y anfitriones, aplicar filtros según gustos, experiencias y valoraciones, y participar en eventos comunitarios que fomentan la conexión entre ambos perfiles. Todo el sistema está diseñado para ser intuitivo, funcional y eficiente, aprovechando al máximo las capacidades de React y Spring Boot para asegurar una experiencia fluida y sólida tanto en la navegación como en la gestión de datos.
 
-<div align="center">
-  <img src="img/04_DISEÑO_ESTÁTICO-ARQUITECTURA_FISICA.drawio.png" border="0" width=600>
-</div>
+<img src="img/04_DISEÑO_ESTÁTICO-ARQUITECTURA_FISICA.drawio.png" border="0" width=600>
 
-<br>
-<div align="center">
-  <img src="img/04_DISEÑO_ESTÁTICO-CLASES.drawio.png" border="0" width=600>
-</div>
+<img src="img/04_DISEÑO_ESTÁTICO-CLASES.drawio.png" border="0" width=600>
+
+
 --- 
+
+## 📘 Manual de Usuario
+
+Landing Page diseñada para dar la bienvenida a cualquier usuario, con una sección de preguntas frecuentes (FAQ) e integración para iniciar sesión.
+
+<img src="img/manual_1.PNG" border="0" width=600>
+
+Podremos iniciar sesión utilizando credenciales como el correo y la contraseña; en caso de que sean incorrectas, se notificará al usuario con un mensaje de error.
+
+<img src="img/manual_3.PNG" border="0" width=600>
+
+Si iniciamos sesión como anfitrión, seremos dirigidos a la sección destinada a anfitriones, donde podremos ver a los viajeros, buscar por su identificador privado, aplicar filtros, y pulsar en un ícono con forma de corazón para visualizar los últimos 'likes' recibidos. En cada perfil se muestra si se ha dado me gusta o no.
+
+<img src="img/manual_4.PNG" border="0" width=600>
+
+Para fomentar un entorno social, se incluye una sección de foros comunes donde podremos ver y responder a cada tema creado por los usuarios, así como crear nuevos; además, aparecerá información relevante de cada uno.
+
+<img src="img/manual_5.png" border="0" width=600>
+
+También podemos acceder a una sección donde se muestran los matches realizados, junto con un porcentaje que indica cuántos likes dados han resultado en match, y desde allí podremos visitar los perfiles de cada usuario.
+
+<img src="img/manual_6.PNG" border="0" width=600>
+
+Al acceder a nuestra cuenta, podremos editar y visualizar todos nuestros datos, así como crear, modificar o eliminar recomendaciones y experiencias, además de ver las valoraciones recibidas y el historial de reservas, entre otras opciones.
+
+<img src="img/manual_7.png" border="0" width=600>
+
+<img src="img/manual_8.png" border="0" width=600>
+
+<img src="img/manual_9.png" border="0" width=600>
+
+<img src="img/manual_10.png" border="0" width=600>
+
+Al iniciar sesión como viajero, veremos los perfiles de los anfitriones 
+
+<img src="img/manual_11.PNG" border="0" width=600>
+
+Podremos buscar usuarios por la ubicación de su vivienda 
+
+<img src="img/manual_12.PNG" border="0" width=600>
+
+Así como aplicar filtros de búsqueda para facilitar la selección.
+
+<img src="img/manual_13.PNG" border="0" width=600>
+
+<img src="img/manual_14.PNG" border="0" width=600>
+
+También podremos ingresar individualmente en el perfil de cada usuario, en este caso de un anfitrión, para ver toda la información referente; además, solo si se ha hecho match, se podrá realizar una reserva mediante un menú que se habilitará, junto con su posterior confirmación.
+
+<img src="img/manual_16.png" border="0" width=600>
+
+<img src="img/manual_17.PNG" border="0" width=600>
+
+Finalmente, se cuenta con un panel de administrador donde, tras iniciar sesión, se podrán visualizar los registros más importantes de la base de datos, con opciones para añadir, eliminar o editar algunos de ellos según sea necesario.
+
+<img src="img/manual_18.PNG" border="0" width=600>
+
+<img src="img/manual_19.PNG" border="0" width=600>
+
+--- 
+
+
 
 ## 🛠️ Instrucciones para poder visualizar el proyecto
 
